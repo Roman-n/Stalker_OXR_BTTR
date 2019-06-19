@@ -1,0 +1,7 @@
+1. Проверка голода актера, при 0.32 активировать функцию
+
+.Работа:
+...
+if db.actor.satiety < 0.32 and time_global()>(self.upd_time_l or 0) then 
+end
+...

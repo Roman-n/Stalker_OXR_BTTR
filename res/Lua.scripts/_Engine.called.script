@@ -1,0 +1,45 @@
+-- Новые функции для вызова из движка
+
+
+1. --\\+\\-- level.set_monster_relation( from, to, rel ) --\\+\\++
+.Описание:
+
+Эта функция позволяет менять отношения мутантов, т.е. то, что описано
+в секции [monster_relations] в game_relations.ltx. Пример
+использования:
+
+-- сделать крыс нейтральными к актору
+level.set_monster_relation( "rat", "actor",  0 )
+
+-- сделать крыс врагами для актора
+level.set_monster_relation( "rat", "actor", -1 )
+
+
+2. --\\+\\-- spawn_artefacts() --\\+\\--
+.Описание:
+
+Эта функция позволяет одиночным аномалиям присвоить self:spawn_artefacts()
+т.е. при срабатывании аномалии вызываем [секция аномали]:...
+.float = 0.f
+строку artefacts = af_..., chance(float)
+
+
+3. --\\+\\-- ... --\\+\\--
+.Описание:
+
+Для полтергейста, потеря энергии
+
+Invisible_Energy_Restore_Velocity        		= 0.0; 		Поставил 0.0 чтобы опять не взлетал, поставьте 0.05 взлетит через время.  
+Invisible_Energy_Decline_Velocity        		= 0.4; 		Поставил 0.4 чтобы быстро упал на землю после появления. 
+Invisible_Energy_Critical_Value            		= 0.05; 	...
+Invisible_Energy_Activate_Value            		= 0.99;		...																				
+Invisible_Energy_Aggressive_Restore_Velocity    = 0.5;		...
+
+
+4. --\\+\\-- start_game_timer, start_real_timer --\\+\\--
+.Описание:
+
+LUA таймеры из Lost Alpha
+
+start_game_timer(30, function.call)
+start_real_timer(60, function.call)
