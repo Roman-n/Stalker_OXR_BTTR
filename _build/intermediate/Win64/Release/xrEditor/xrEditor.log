@@ -1,4 +1,0 @@
-﻿  pch.cpp
-  entry_point.cpp
-  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
-LINK : fatal error LNK1181: не удается открыть входной файл "C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\lib\Win64\Release\xrEngine.lib"

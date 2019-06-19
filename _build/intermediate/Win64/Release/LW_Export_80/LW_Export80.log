@@ -1,4 +1,0 @@
-﻿  stdafx.cpp
-c:\users\сибирь\documents\github\oxr_coc\src\plugins\lw\export\stdafx.h(9): warning C4005: ENGINE_API: изменение макроопределения
-  c:\users\сибирь\documents\github\oxr_coc\src\common\commonimportexport.inl(82): note: см. предыдущее определение "ENGINE_API"
-c:\users\сибирь\documents\github\oxr_coc\src\plugins\lw\export\stdafx.h(41): fatal error C1083: Не удается открыть файл включение: lwsdk/lwrender.h: No such file or directory,

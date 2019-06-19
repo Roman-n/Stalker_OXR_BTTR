@@ -1,3 +1,0 @@
-﻿  stdafx.cpp
-c:\users\сибирь\documents\github\oxr_coc\src\editors\actoreditor\stdafx.h(5): warning C4068: неизвестная директива pragma
-c:\users\сибирь\documents\github\oxr_coc\src\editors\actoreditor\stdafx.h(22): fatal error C1083: Не удается открыть файл включение: fastmath.h: No such file or directory,

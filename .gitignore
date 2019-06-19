@@ -1,5 +1,5 @@
 # Prerequisites
-_build/
+_build/intermediate/
 *.d
 
 # Compiled Object files

@@ -1,5 +1,0 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets(1879,5): warning : The referenced project 'C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\utils\xrMiscMath_lib\xrMiscMath_lib.vcxproj' does not exist.
-  stdafx.cpp
-c:\users\сибирь\documents\github\oxr_coc\src\plugins\maya\export\stdafx.h(8): warning C4005: ENGINE_API: изменение макроопределения
-  c:\users\сибирь\documents\github\oxr_coc\src\common\commonimportexport.inl(82): note: см. предыдущее определение "ENGINE_API"
-c:\users\сибирь\documents\github\oxr_coc\src\plugins\maya\export\stdafx.h(21): fatal error C1083: Не удается открыть файл включение: maya/MPxLocatorNode.h: No such file or directory,

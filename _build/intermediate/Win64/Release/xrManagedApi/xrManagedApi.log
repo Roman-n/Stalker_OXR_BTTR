@@ -1,7 +1,0 @@
-﻿  Pch.cpp
-  AssemblyInfo.cpp
-  Core.cpp
-  FS.cpp
-  PostProcessAnimator.cpp
-  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
-  xrManagedApi.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\xrManagedApi.dll

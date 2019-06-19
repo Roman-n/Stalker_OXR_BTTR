@@ -1,9 +1,0 @@
-﻿  pch.cpp
-  entry_point.cpp
-  screenshots_common.cpp
-  screenshots_reader.cpp
-  screenshots_writer.cpp
-  Создание кода
-  Создание кода завершено
-  All 46 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  mp_screenshots_info.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\mp_screenshots_info.exe
