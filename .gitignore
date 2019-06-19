@@ -1,4 +1,5 @@
 # Prerequisites
+_build/
 *.d
 
 # Compiled Object files
@@ -30,5 +31,3 @@
 *.exe
 *.out
 *.app
-
-_build/
