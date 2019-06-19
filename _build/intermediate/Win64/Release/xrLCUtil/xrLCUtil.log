@@ -1,0 +1,9 @@
+﻿  pch.cpp
+  LevelCompilerLoggerWindow.cpp
+  xrThread.cpp
+  xrLCUtil.cpp
+     Создается библиотека C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrLCUtil.lib и объект C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrLCUtil.exp
+  Создание кода
+  All 255 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  xrLCUtil.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\xrLCUtil.dll

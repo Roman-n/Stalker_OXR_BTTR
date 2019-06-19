@@ -1,0 +1,8 @@
+﻿  servdesc.c
+  shutdown.c
+c:\users\сибирь\documents\github\oxr_coc\src\plugins\lw\server\servdesc.c(10): fatal error C1083: Не удается открыть файл включение: lwsdk/lwserver.h: No such file or directory, (компилируется исходный файл Server\servdesc.c)
+c:\users\сибирь\documents\github\oxr_coc\src\plugins\lw\server\shutdown.c(7): fatal error C1083: Не удается открыть файл включение: lwsdk/lwserver.h: No such file or directory, (компилируется исходный файл Server\shutdown.c)
+  startup.c
+  username.c
+c:\users\сибирь\documents\github\oxr_coc\src\plugins\lw\server\startup.c(7): fatal error C1083: Не удается открыть файл включение: lwsdk/lwserver.h: No such file or directory, (компилируется исходный файл Server\startup.c)
+c:\users\сибирь\documents\github\oxr_coc\src\plugins\lw\server\username.c(8): fatal error C1083: Не удается открыть файл включение: lwsdk/lwserver.h: No such file or directory, (компилируется исходный файл Server\username.c)

@@ -1,0 +1,25 @@
+﻿  stdafx.cpp
+  OpenALDeviceList.cpp
+  SoundRender_Cache.cpp
+  SoundRender_Core.cpp
+  SoundRender_CoreA.cpp
+  SoundRender_Core_Processor.cpp
+  SoundRender_Core_SourceManager.cpp
+  SoundRender_Core_StartStop.cpp
+  SoundRender_Emitter.cpp
+  SoundRender_Emitter_FSM.cpp
+  SoundRender_Emitter_StartStop.cpp
+  SoundRender_Emitter_streamer.cpp
+  SoundRender_Environment.cpp
+  SoundRender_Source.cpp
+  SoundRender_Source_loader.cpp
+  SoundRender_Target.cpp
+  SoundRender_TargetA.cpp
+  sound.cpp
+     Создается библиотека C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrSound.lib и объект C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrSound.exp
+  Создание кода
+  0 of 1475 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Создание кода завершено
+  xrSound.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\xrSound.dll

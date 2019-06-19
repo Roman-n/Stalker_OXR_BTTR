@@ -1,0 +1,9 @@
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\bin\Win64\Release\xrPostprocessEditor.exe
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.csprojAssemblyReference.cache
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.MainDialog.resources
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.KeyFrameBox.resources
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.Properties.Resources.resources
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.csproj.GenerateResource.cache
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.csproj.CoreCompileInputs.cache
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.csproj.CopyComplete
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\_build\intermediate\Win64\Release\xrPostprocessEditor\xrPostprocessEditor.exe

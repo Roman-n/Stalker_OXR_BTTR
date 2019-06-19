@@ -1,0 +1,2 @@
+﻿  test_project.cpp
+c:\users\сибирь\documents\github\oxr_coc\src\test_project\test_project.cpp(13): fatal error C1010: непредвиденный конец файла во время поиска предкомпилированного заголовка. Возможно, вы забыли добавить директиву "#include "stdafx.h"" в источник.

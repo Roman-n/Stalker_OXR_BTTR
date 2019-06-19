@@ -1,0 +1,86 @@
+﻿  gsAssert.c
+  gsAvailable.c
+  gsCore.c
+  gsCrypt.c
+  gsLargeInt.c
+  gsRC4.c
+  gsSHA1.c
+  gsSoap.c
+  gsSSL.c
+  gsStringUtil.c
+  gsUdpEngine.c
+  gsXML.c
+  darray.c
+  gcdkeyc.c
+  gcdkeys.c
+  ghttpBuffer.c
+  ghttpCallbacks.c
+  ghttpCommon.c
+  ghttpConnection.c
+  ghttpEncryption.c
+  ghttpMain.c
+  ghttpPost.c
+  ghttpProcess.c
+  gp.c
+  gpi.c
+  gpiBuddy.c
+  gpiBuffer.c
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpibuddy.c(971): warning C4311: приведение типов: усечение указателя из "void *" в "unsigned long" (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiBuddy.c)
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpibuddy.c(1033): warning C4312: приведение типов: преобразование из "unsigned long" в "void *" большего размера (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiBuddy.c)
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpibuddy.c(1058): warning C4312: приведение типов: преобразование из "unsigned long" в "void *" большего размера (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiBuddy.c)
+  gpiCallback.c
+  gpiConnect.c
+  gpiInfo.c
+  gpiKeys.c
+  gpiOperation.c
+  gpiPeer.c
+  gpiProfile.c
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpiprofile.c(1158): warning C4312: приведение типов: преобразование из "unsigned long" в "void *" большего размера (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiProfile.c)
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpiprofile.c(1180): warning C4312: приведение типов: преобразование из "unsigned long" в "void *" большего размера (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiProfile.c)
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpiprofile.c(1225): warning C4311: приведение типов: усечение указателя из "void *" в "unsigned long" (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiProfile.c)
+c:\users\сибирь\documents\github\oxr_coc\externals\gamespy\src\gamespy\gp\gpiprofile.c(1259): warning C4312: приведение типов: преобразование из "unsigned long" в "void *" большего размера (компилируется исходный файл GameSpy\src\GameSpy\GP\gpiProfile.c)
+  gpiPS3.c
+  gpiSearch.c
+  gpiTransfer.c
+  gpiUnique.c
+  gpiUtility.c
+  gbucket.c
+  gstats.c
+  gt2Auth.c
+  gt2Buffer.c
+  gt2Callback.c
+  gt2Connection.c
+  gt2Encode.c
+  gt2Filter.c
+  gt2Main.c
+  gt2Message.c
+  gt2Socket.c
+  gt2Utility.c
+  hashtable.c
+  md5c.c
+  NATify.c
+  natneg.c
+  nonport.c
+  ptMain.c
+  qr2.c
+  qr2regkeys.c
+  sakeMain.c
+  sakeRequest.c
+  sakeRequestMisc.c
+  sakeRequestModify.c
+  sakeRequestRead.c
+  sciInterface.c
+  sciMain.c
+  sciReport.c
+  sciSerialize.c
+  sciWebServices.c
+  sb_crypt.c
+  sb_queryengine.c
+  sb_server.c
+  sb_serverbrowsing.c
+  sb_serverlist.c
+  AuthService.c
+nonport.obj : warning LNK4006: _gsDebugAssert єцх юяЁхфхыхэ т nonport.obj; тЄюЁюх юяЁхфхыхэшх яЁюяє∙хэю
+nonport.obj : warning LNK4006: gsDebugAssert єцх юяЁхфхыхэ т nonport.obj; тЄюЁюх юяЁхфхыхэшх яЁюяє∙хэю
+nonport.obj : warning LNK4006: gsDebugAssertCallbackSet єцх юяЁхфхыхэ т nonport.obj; тЄюЁюх юяЁхфхыхэшх яЁюяє∙хэю
+  GameSpy.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\GameSpy.lib

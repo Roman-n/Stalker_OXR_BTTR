@@ -1,0 +1,7 @@
+﻿  minilua.c
+     Создается библиотека C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\minilua.lib и объект C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\minilua.exp
+  Создание кода
+  All 681 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  minilua.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\Externals\LuaJIT-proj\..\LuaJIT\bin\x64\minilua.exe
+  Creating buildvm_arch_x64.h

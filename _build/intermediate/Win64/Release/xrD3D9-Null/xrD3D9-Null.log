@@ -1,0 +1,21 @@
+﻿  stdafx.cpp
+  IDirect3D9.cpp
+  IDirect3DCubeTexture9.cpp
+  IDirect3DDevice9.cpp
+  IDirect3DDevice9_Caps.cpp
+  IDirect3DIndexBuffer9.cpp
+  IDirect3DPixelShader9.cpp
+  IDirect3DQuery9.cpp
+  IDirect3DStateBlock9.cpp
+  IDirect3DSurface9.cpp
+  IDirect3DTexture9.cpp
+  IDirect3DVertexBuffer9.cpp
+  IDirect3DVertexDeclaration9.cpp
+  IDirect3DVertexShader9.cpp
+  xrD3D9-Null.cpp
+  xrD3D9-Null_OutProc.cpp
+     Создается библиотека C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrD3D9-Null.lib и объект C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrD3D9-Null.exp
+  Создание кода
+  All 295 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  xrD3D9-Null.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\xrD3D9-Null.dll

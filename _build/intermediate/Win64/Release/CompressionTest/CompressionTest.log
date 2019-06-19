@@ -1,0 +1,8 @@
+﻿  Model.cpp
+  CompressionTest.cpp
+c:\users\сибирь\documents\github\oxr_coc\src\utils\compressiontest\compressiontest.cpp(140): warning C4311: приведение типов: усечение указателя из "char *" в "unsigned int" (компилируется исходный файл CompressionTest.cpp)
+c:\users\сибирь\documents\github\oxr_coc\src\utils\compressiontest\compressiontest.cpp(140): warning C4312: приведение типов: преобразование из "unsigned int" в "char *" большего размера (компилируется исходный файл CompressionTest.cpp)
+Model.obj : error LNK2001: неразрешенный внешний символ ""__declspec(dllimport) class xrMemory Memory" (__imp_?Memory@@3VxrMemory@@A)"
+Model.obj : error LNK2001: неразрешенный внешний символ ""__declspec(dllimport) public: void __cdecl xrMemory::mem_free(void *)" (__imp_?mem_free@xrMemory@@QEAAXPEAX@Z)"
+Model.obj : error LNK2001: неразрешенный внешний символ ""__declspec(dllimport) public: void * __cdecl xrMemory::mem_alloc(unsigned __int64)" (__imp_?mem_alloc@xrMemory@@QEAAPEAX_K@Z)"
+C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\CompressionTest.exe : fatal error LNK1120: неразрешенных внешних элементов: 3

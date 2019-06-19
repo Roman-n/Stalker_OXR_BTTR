@@ -1,0 +1,16 @@
+﻿  StdAfx.cpp
+  ETextureParams.cpp
+  DXT.cpp
+  Image_DXTC.cpp
+  NormalMapGen.cpp
+  NVI_Convolution.cpp
+  NVI_Image.cpp
+c:\users\сибирь\documents\github\oxr_coc\src\utils\xrdxt\image_dxtc.cpp(555): warning C4311: приведение типов: усечение указателя из "DWORD *" в "DWORD" (компилируется исходный файл Image_DXTC.cpp)
+c:\users\сибирь\documents\github\oxr_coc\src\utils\xrdxt\image_dxtc.cpp(555): warning C4312: приведение типов: преобразование из "DWORD" в "DWORD *" большего размера (компилируется исходный файл Image_DXTC.cpp)
+c:\users\сибирь\documents\github\oxr_coc\src\utils\xrdxt\image_dxtc.cpp(558): warning C4311: приведение типов: усечение указателя из "DWORD *" в "DWORD" (компилируется исходный файл Image_DXTC.cpp)
+c:\users\сибирь\documents\github\oxr_coc\src\utils\xrdxt\image_dxtc.cpp(558): warning C4312: приведение типов: преобразование из "DWORD" в "DWORD *" большего размера (компилируется исходный файл Image_DXTC.cpp)
+     Создается библиотека C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\DXT.lib и объект C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\DXT.exp
+  Создание кода
+  All 654 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  DXT.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\DXT.dll

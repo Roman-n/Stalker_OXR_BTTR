@@ -1,0 +1,20 @@
+﻿  ximacfg.cpp
+  ximaenc.cpp
+c:\users\сибирь\documents\github\oxr_coc\externals\jpeg\jmorecfg.h(215): warning C4005: FAR: изменение макроопределения (компилируется исходный файл ximaenc.cpp)
+  c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(150): note: см. предыдущее определение "FAR" (компилируется исходный файл ximaenc.cpp)
+  ximaexif.cpp
+  xImage.cpp
+  ximainfo.cpp
+c:\users\сибирь\documents\github\oxr_coc\externals\jpeg\jmorecfg.h(215): warning C4005: FAR: изменение макроопределения (компилируется исходный файл ximaexif.cpp)
+  c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(150): note: см. предыдущее определение "FAR" (компилируется исходный файл ximaexif.cpp)
+  ximaint.cpp
+  ximajpg.cpp
+  ximalpha.cpp
+c:\users\сибирь\documents\github\oxr_coc\externals\jpeg\jmorecfg.h(215): warning C4005: FAR: изменение макроопределения (компилируется исходный файл ximajpg.cpp)
+  c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(150): note: см. предыдущее определение "FAR" (компилируется исходный файл ximajpg.cpp)
+  ximalyr.cpp
+  ximapal.cpp
+  ximasel.cpp
+  ximath.cpp
+  xmemfile.cpp
+  cximage.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\CxImage.lib

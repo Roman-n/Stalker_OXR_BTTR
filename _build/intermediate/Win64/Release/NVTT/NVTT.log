@@ -1,0 +1,127 @@
+﻿  Debug.cpp
+  Library.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\Debug.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\Debug.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\Library.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\Library.cpp)
+  Memory.cpp
+c:\program files (x86)\windows kits\8.1\include\um\dbghelp.h(1544): warning C4091: typedef : пропускается слева от "<unnamed-enum-hdBase>", когда ни одна переменная не объявлена (компилируется исходный файл src\nvcore\Debug.cpp)
+c:\program files (x86)\windows kits\8.1\include\um\dbghelp.h(3190): warning C4091: typedef : пропускается слева от "<unnamed-enum-sfImage>", когда ни одна переменная не объявлена (компилируется исходный файл src\nvcore\Debug.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\Memory.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\Memory.cpp)
+  Radix.cpp
+  StrLib.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\StrLib.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\StrLib.cpp)
+  TextReader.cpp
+  TextWriter.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\TextReader.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\TextReader.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\TextWriter.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\TextWriter.cpp)
+  Tokenizer.cpp
+  BlockDXT.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\BlockDXT.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\BlockDXT.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvcore\Tokenizer.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvcore\Tokenizer.cpp)
+  ColorBlock.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\ColorBlock.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\ColorBlock.cpp)
+  ConeMap.cpp
+  DirectDrawSurface.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\DirectDrawSurface.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\DirectDrawSurface.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\ConeMap.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\ConeMap.cpp)
+  Filter.cpp
+  FloatImage.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\Filter.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\Filter.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\FloatImage.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\FloatImage.cpp)
+  HoleFilling.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\HoleFilling.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\HoleFilling.cpp)
+  Image.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\Image.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\Image.cpp)
+  ImageIO.cpp
+  NormalMap.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\ImageIO.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\ImageIO.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\NormalMap.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\NormalMap.cpp)
+  NormalMipmap.cpp
+  Quantize.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\NormalMipmap.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\NormalMipmap.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvimage\Quantize.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvimage\Quantize.cpp)
+  Basis.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\Basis.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\Basis.cpp)
+  Montecarlo.cpp
+  Plane.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\Montecarlo.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\Montecarlo.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\Plane.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\Plane.cpp)
+  Random.cpp
+  SphericalHarmonic.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\SphericalHarmonic.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\SphericalHarmonic.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\Random.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\Random.cpp)
+  Triangle.cpp
+  TriBox.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\TriBox.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\TriBox.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvmath\Triangle.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvmath\Triangle.cpp)
+  CompressDXT.cpp
+  CompressionOptions.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\CompressDXT.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\CompressDXT.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\CompressionOptions.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\CompressionOptions.cpp)
+  Compressor.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\Compressor.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\Compressor.cpp)
+  CompressRGB.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\CompressRGB.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\CompressRGB.cpp)
+  CudaCompressDXT.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\cuda\CudaCompressDXT.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\cuda\CudaCompressDXT.cpp)
+  CudaUtils.cpp
+  InputOptions.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\cuda\CudaUtils.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\cuda\CudaUtils.cpp)
+  nvtt.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\InputOptions.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\InputOptions.cpp)
+  nvtt_wrapper.cpp
+  OptimalCompressDXT.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\OptimalCompressDXT.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\OptimalCompressDXT.cpp)
+  OutputOptions.cpp
+  QuickCompressDXT.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\QuickCompressDXT.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\QuickCompressDXT.cpp)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdarg.h(20): warning C4005: va_copy: изменение макроопределения (компилируется исходный файл src\nvtt\OutputOptions.cpp)
+  c:\users\сибирь\documents\github\oxr_coc\externals\nvtt\src\nvcore\defsvcwin32.h(28): note: см. предыдущее определение "va_copy" (компилируется исходный файл src\nvtt\OutputOptions.cpp)
+  alpha.cpp
+  clusterfit.cpp
+  colourblock.cpp
+  colourfit.cpp
+  colourset.cpp
+  fastclusterfit.cpp
+  maths.cpp
+  rangefit.cpp
+  singlechannelfit.cpp
+  singlecolourfit.cpp
+  squish.cpp
+  weightedclusterfit.cpp
+  posh.c
+  NVTT.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\NVTT.lib

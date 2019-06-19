@@ -1,0 +1,116 @@
+  XRay.Editor.Windows.WindowIDE.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Windows.WindowLog.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.ItemList.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.PropertiesList.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.GameType.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.NumericVector.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.SelectItem.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.ShaderFunction.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Controls.TextEdit.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Windows.WindowView.resources - Embedded, ContainedInManifestFile, 
+  XRay.Editor.Windows.WindowSplash.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly xrECore, Version=0.0.*, Culture=Инвариантный язык (Инвариантная страна): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly Flobbster.Windows.Forms.PropertyGrid, Version=0.0.*, Culture=Инвариантный язык (Инвариантная страна): 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly WeifenLuo.WinFormsUI.Docking, Version=3.0.4.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481: 
+	hash=None, flags=None
+Assembly WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.0.4.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481: 
+	hash=None, flags=None
+Assembly WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35: 
+	hash=None, flags=None
+Assembly xrSdkControls, Version=1.0.*, Culture=Инвариантный язык (Инвариантная страна): 
+	hash=None, flags=None
+Class XRay.Editor.Windows.WindowLog: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :WeifenLuo.WinFormsUI.Docking.DockContent
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    AddMessage(String): PrivateScope, Public, HideBySig
+    AddMessage(MessageType, String): PrivateScope, Public, HideBySig
+    AddDialogMessage(String): PrivateScope, Public, HideBySig
+    AddDialogMessage(MessageType, String): PrivateScope, Public, HideBySig
+Class XRay.Editor.Windows.WindowLog+AddMessageDelegate: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, SpecialName, RTSpecialName
+  Methods:
+    Invoke(MessageType, String): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    BeginInvoke(MessageType, String, AsyncCallback, Object): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+Class XRay.Editor.Controls.Serializer: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    SerializeDockPanelRoot(Form, DockPanel, String): PrivateScope, Public, Static, HideBySig
+    DeserializeDockPanelRoot(Form, DockPanel, String, DeserializeDockContent): PrivateScope, Public, Static, HideBySig
+Class XRay.Editor.Windows.WindowIDE: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    View(): PrivateScope, Public, HideBySig
+    Log(): PrivateScope, Public, HideBySig
+Class XRay.Editor.Windows.WindowView: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :WeifenLuo.WinFormsUI.Docking.DockContent
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    GetView(): PrivateScope, Public, HideBySig
+    GetViewHandle(): PrivateScope, Public, HideBySig
+Class XRay.Editor.Controls.GameType: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Run(SByte*, GameTypeChooser*): PrivateScope, Public, HideBySig
+Class XRay.Editor.Controls.ItemList: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    AssignItems(vector<ListItem \*\,xalloc<ListItem \*> >* IsImplicitlyDereferenced, Boolean(HasFieldMarshal), Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+Class XRay.Editor.Controls.NumericVector: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Run(SByte*, _vector3<float>*, Int32, _vector3<float>*, _vector3<float>*, _vector3<float>*, Int32*, Int32*): PrivateScope, Public, HideBySig
+Class XRay.Editor.Controls.PropertiesList: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class XRay.Editor.Controls.ShaderFunction: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Run(WaveForm*): PrivateScope, Public, HideBySig
+    FillFunctionsFromToken(xr_token*): PrivateScope, Public, HideBySig
+    GetTokenFromValue(Int32): PrivateScope, Public, HideBySig
+Class XRay.Token: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(Int32, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int32, SByte*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    ToString(): PrivateScope, Public, Final, Virtual, HideBySig
+    ToInt32(): PrivateScope, Public, HideBySig
+    ToInt64(): PrivateScope, Public, HideBySig
+Class XRay.Editor.Controls.TextEdit: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,xalloc<char> >*, SByte*, Boolean, Int32, SByte*, fastdelegate.FastDelegate1<char const \*\,bool>*, fastdelegate.FastDelegate0<bool>*, fastdelegate.FastDelegate3<std::basic_string<char\,std::char_traits<char>\,xalloc<char> > const \&\,std::basic_string<char\,std::char_traits<char>\,xalloc<char> > \&\,bool \&\,void>*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Run(basic_string<char\,std::char_traits<char>\,xalloc<char> >* IsImplicitlyDereferenced, SByte*, Boolean(HasFieldMarshal), Int32, SByte*, FastDelegate1<char const \*\,bool>*, FastDelegate0<bool>*, FastDelegate3<std::basic_string<char\,std::char_traits<char>\,xalloc<char> > const \&\,std::basic_string<char\,std::char_traits<char>\,xalloc<char> > \&\,bool \&\,void>*): PrivateScope, Public, HideBySig
+Class XRay.Editor.Controls.SelectItem: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class XRay.Editor.Windows.WindowSplash: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    SetStatus(String): PrivateScope, Public, HideBySig
+    Show(): PrivateScope, Public, HideBySig

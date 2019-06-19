@@ -1,0 +1,395 @@
+  XRay.SdkControls.ColorPicker.resources - Embedded, ContainedInManifestFile, 
+  XRay.SdkControls.NumericSlider.resources - Embedded, ContainedInManifestFile, 
+  XRay.SdkControls.IntegerSlider.resources - Embedded, ContainedInManifestFile, 
+  XRay.SdkControls.NumericSpinner.resources - Embedded, ContainedInManifestFile, 
+  XRay.SdkControls.TreeViewFilterPanel.resources - Embedded, ContainedInManifestFile, 
+  XRay.SdkControls.TreeViewSearchPanel.resources - Embedded, ContainedInManifestFile, 
+  XRay.SdkControls.Properties.Resources.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly xrSdkControls, Version=1.0.*, Culture=Инвариантный язык (Инвариантная страна): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly Flobbster.Windows.Forms.PropertyGrid, Version=0.0.*, Culture=Инвариантный язык (Инвариантная страна): 
+	hash=None, flags=None
+Assembly System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class XRay.SdkControls.NumericSlider: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Decimal Value 'get set' : 
+    System.Decimal Minimum 'get set' : 
+    System.Decimal Maximum 'get set' : 
+    Boolean Hexadecimal 'get set' : 
+    System.Windows.Forms.HorizontalAlignment TextAlign 'get set' : 
+    Int32 DecimalPlaces 'get set' : 
+    Int32 SliderPrecision 'get set' : 
+    Int32 TickFrequency 'get set' : 
+    System.Windows.Forms.TickStyle TickStyle 'get set' : 
+    Int32 SpinnerWidth 'get set' : 
+    System.Drawing.Size MinimumSize 'get set' : 
+  Events:
+    System.EventHandler ValueChanged: 
+  Methods:
+    add_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Decimal): PrivateScope, Public, HideBySig, SpecialName
+    get_Minimum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Minimum(Decimal): PrivateScope, Public, HideBySig, SpecialName
+    get_Maximum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Maximum(Decimal): PrivateScope, Public, HideBySig, SpecialName
+    get_Hexadecimal(): PrivateScope, Public, HideBySig, SpecialName
+    set_Hexadecimal(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_TextAlign(): PrivateScope, Public, HideBySig, SpecialName
+    set_TextAlign(HorizontalAlignment): PrivateScope, Public, HideBySig, SpecialName
+    get_DecimalPlaces(): PrivateScope, Public, HideBySig, SpecialName
+    set_DecimalPlaces(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_SliderPrecision(): PrivateScope, Public, HideBySig, SpecialName
+    set_SliderPrecision(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_TickFrequency(): PrivateScope, Public, HideBySig, SpecialName
+    set_TickFrequency(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_TickStyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_TickStyle(TickStyle): PrivateScope, Public, HideBySig, SpecialName
+    get_SpinnerWidth(): PrivateScope, Public, HideBySig, SpecialName
+    set_SpinnerWidth(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_MinimumSize(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_MinimumSize(Size): PrivateScope, Public, Virtual, HideBySig, SpecialName
+Class XRay.SdkControls.MenuButton: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Button
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Windows.Forms.ContextMenu Menu 'get ' : 
+  Methods:
+    get_Menu(): PrivateScope, Public, HideBySig, SpecialName
+Class XRay.SdkControls.ColorPicker: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Drawing.Color Value 'get set' : 
+    Byte Red   'get set' : 
+    Byte Green 'get set' : 
+    Byte Blue  'get set' : 
+    Byte Alpha 'get set' : 
+    Boolean AlphaEnabled 'get set' : 
+    Boolean Hexadecimal 'get set' : 
+    System.Windows.Forms.HorizontalAlignment TextAlign 'get set' : 
+  Events:
+    ColorChangedEventHandler ColorChanged: 
+  Methods:
+    add_ColorChanged(ColorChangedEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ColorChanged(ColorChangedEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_Red(): PrivateScope, Public, HideBySig, SpecialName
+    get_Green(): PrivateScope, Public, HideBySig, SpecialName
+    get_Blue(): PrivateScope, Public, HideBySig, SpecialName
+    get_Alpha(): PrivateScope, Public, HideBySig, SpecialName
+    get_AlphaEnabled(): PrivateScope, Public, HideBySig, SpecialName
+    set_AlphaEnabled(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Hexadecimal(): PrivateScope, Public, HideBySig, SpecialName
+    set_Hexadecimal(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_TextAlign(): PrivateScope, Public, HideBySig, SpecialName
+    set_TextAlign(HorizontalAlignment): PrivateScope, Public, HideBySig, SpecialName
+Class XRay.SdkControls.IntegerUpDown: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.UpDownBase
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.ComponentModel.ISupportInitialize
+  Properties:
+    XRay.SdkControls.IntegerUpDownAccelerationCollection Accelerations 'get ' : 
+    Boolean Hexadecimal 'get set' : 
+    Int32 Increment 'get set' : 
+    Int32 Maximum 'get set' : 
+    Int32 Minimum 'get set' : 
+    System.Windows.Forms.Padding Padding 'get set' : 
+    System.String Text 'get set' : 
+    Int32 Value 'get set' : 
+  Events:
+    System.EventHandler PaddingChanged: 
+    System.EventHandler TextChanged: 
+    System.EventHandler ValueChanged: 
+  Methods:
+    get_Accelerations(): PrivateScope, Public, HideBySig, SpecialName
+    get_Hexadecimal(): PrivateScope, Public, HideBySig, SpecialName
+    set_Hexadecimal(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Increment(): PrivateScope, Public, HideBySig, SpecialName
+    set_Increment(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Maximum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Maximum(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Minimum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Minimum(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Padding(): PrivateScope, Public, HideBySig, SpecialName
+    set_Padding(Padding): PrivateScope, Public, HideBySig, SpecialName
+    get_Text(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_Text(String): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Int32): PrivateScope, Public, HideBySig, SpecialName
+    BeginInit(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    EndInit(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    add_PaddingChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_PaddingChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    DownButton(): PrivateScope, Public, Virtual, HideBySig
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+    UpButton(): PrivateScope, Public, Virtual, HideBySig
+Class XRay.SdkControls.IntegerUpDownAcceleration: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Int32, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Seconds 'get set' : 
+    Int32 Increment 'get set' : 
+  Methods:
+    get_Seconds(): PrivateScope, Public, HideBySig, SpecialName
+    set_Seconds(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Increment(): PrivateScope, Public, HideBySig, SpecialName
+    set_Increment(Int32): PrivateScope, Public, HideBySig, SpecialName
+Class XRay.SdkControls.IntegerUpDownAccelerationCollection: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.MarshalByRefObject
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.Collections.Generic.ICollection`1[XRay.SdkControls.IntegerUpDownAcceleration]
+    System.Collections.Generic.IEnumerable`1[XRay.SdkControls.IntegerUpDownAcceleration]
+    System.Collections.IEnumerable
+  Properties:
+    XRay.SdkControls.IntegerUpDownAcceleration Item [Int32] 'get ' : 
+    Int32 Count 'get ' : 
+    Boolean IsReadOnly 'get ' : 
+  Methods:
+    get_Item(Int32): PrivateScope, Public, HideBySig, SpecialName
+    Add(IntegerUpDownAcceleration): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Clear(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Contains(IntegerUpDownAcceleration): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    CopyTo(IntegerUpDownAcceleration[], Int32): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    get_Count(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsReadOnly(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    Remove(IntegerUpDownAcceleration): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    AddRange(IntegerUpDownAcceleration[]): PrivateScope, Public, HideBySig
+Class XRay.SdkControls.ColorSampleBox: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Drawing.Color ColorSample 'get set' : 
+    System.Drawing.Image BackgroundImage 'get set' : 
+    System.Windows.Forms.ImageLayout BackgroundImageLayout 'get set' : 
+  Methods:
+    get_ColorSample(): PrivateScope, Public, HideBySig, SpecialName
+    set_ColorSample(Color): PrivateScope, Public, HideBySig, SpecialName
+    get_BackgroundImage(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_BackgroundImage(Image): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    get_BackgroundImageLayout(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_BackgroundImageLayout(ImageLayout): PrivateScope, Public, Virtual, HideBySig, SpecialName
+Class XRay.SdkControls.IntegerSlider: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Value 'get set' : 
+    Int32 Minimum 'get set' : 
+    Int32 Maximum 'get set' : 
+    Boolean Hexadecimal 'get set' : 
+    Int32 SmallChange 'get set' : 
+    Int32 LargeChange 'get set' : 
+    Int32 TickFrequency 'get set' : 
+    System.Windows.Forms.TickStyle TickStyle 'get set' : 
+    Int32 SpinnerWidth 'get set' : 
+    System.Drawing.Size MinimumSize 'get set' : 
+  Events:
+    System.EventHandler ValueChanged: 
+  Methods:
+    add_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Minimum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Minimum(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Maximum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Maximum(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Hexadecimal(): PrivateScope, Public, HideBySig, SpecialName
+    set_Hexadecimal(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_SmallChange(): PrivateScope, Public, HideBySig, SpecialName
+    set_SmallChange(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_LargeChange(): PrivateScope, Public, HideBySig, SpecialName
+    set_LargeChange(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_TickFrequency(): PrivateScope, Public, HideBySig, SpecialName
+    set_TickFrequency(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_TickStyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_TickStyle(TickStyle): PrivateScope, Public, HideBySig, SpecialName
+    get_SpinnerWidth(): PrivateScope, Public, HideBySig, SpecialName
+    set_SpinnerWidth(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_MinimumSize(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_MinimumSize(Size): PrivateScope, Public, Virtual, HideBySig, SpecialName
+Class XRay.SdkControls.NumericSpinner: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Decimal Value 'get set' : 
+    System.Decimal Minimum 'get set' : 
+    System.Decimal Maximum 'get set' : 
+    Boolean Hexadecimal 'get set' : 
+    System.Windows.Forms.HorizontalAlignment TextAlign 'get set' : 
+    Int32 DecimalPlaces 'get set' : 
+    System.Decimal Precision 'get set' : 
+  Events:
+    System.EventHandler ValueChanged: 
+  Methods:
+    add_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ValueChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Decimal): PrivateScope, Public, HideBySig, SpecialName
+    get_Minimum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Minimum(Decimal): PrivateScope, Public, HideBySig, SpecialName
+    get_Maximum(): PrivateScope, Public, HideBySig, SpecialName
+    set_Maximum(Decimal): PrivateScope, Public, HideBySig, SpecialName
+    get_Hexadecimal(): PrivateScope, Public, HideBySig, SpecialName
+    set_Hexadecimal(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_TextAlign(): PrivateScope, Public, HideBySig, SpecialName
+    set_TextAlign(HorizontalAlignment): PrivateScope, Public, HideBySig, SpecialName
+    get_DecimalPlaces(): PrivateScope, Public, HideBySig, SpecialName
+    set_DecimalPlaces(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Precision(): PrivateScope, Public, HideBySig, SpecialName
+    set_Precision(Decimal): PrivateScope, Public, HideBySig, SpecialName
+Class XRay.SdkControls.PropertyGrid: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.PropertyGrid
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Initialize(): PrivateScope, Public, HideBySig
+    OnChildControlMouseDoubleClick(Object, MouseEventArgs): PrivateScope, Public, HideBySig
+    OnChildControlMouseMove(Object, MouseEventArgs): PrivateScope, Public, HideBySig
+    OnChildControlMouseDown(Object, MouseEventArgs): PrivateScope, Public, HideBySig
+    SetupEventHandlers(): PrivateScope, Public, HideBySig
+    save(RegistryKey, String): PrivateScope, Public, HideBySig
+    load(RegistryKey, String): PrivateScope, Public, HideBySig
+Struct XRay.SdkControls.TreeNodeType: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    XRay.SdkControls.TreeNodeType SingleItem = 0 : Public, Static, Literal, HasDefault
+    XRay.SdkControls.TreeNodeType GroupItem = 1 : Public, Static, Literal, HasDefault
+Class XRay.SdkControls.TreeNode: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.TreeNode
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String, Int32, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String, Int32, Int32, System.Windows.Forms.TreeNode[]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String, System.Windows.Forms.TreeNode[]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    XRay.SdkControls.TreeNodeType NodeType : Public
+    Boolean IsSelected : Public
+    Int32 ImageIndexExpanded : Public
+    Int32 ImageIndexCollapsed : Public
+  Properties:
+    XRay.SdkControls.TreeNode Parent 'get ' : 
+  Methods:
+    get_Parent(): PrivateScope, Public, HideBySig, SpecialName
+    AddNodeSingle(String, Int32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    AddNodeGroup(String, Int32(Optional, HasDefault), Int32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+Interface XRay.SdkControls.ITreeViewSource: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    XRay.SdkControls.TreeView Parent 'get set' : 
+  Methods:
+    get_Parent(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    set_Parent(TreeView): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    Refresh(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class XRay.SdkControls.TreeViewFilterPanel: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    XRay.SdkControls.TreeView ParentTreeView : Public
+    Boolean AutoExpandOnFilter : Public
+Class XRay.SdkControls.TreeViewSearchPanel: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.UserControl
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    XRay.SdkControls.TreeView ParentTreeView : Public
+    System.Windows.Forms.TextBox searchBox : Public
+    System.Windows.Forms.Button searchNext : Public
+Class XRay.SdkControls.TreeView: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.TreeView
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.Windows.Forms.Panel TreeViewContainer : Public
+    System.Windows.Forms.TreeNode Root : Public
+  Properties:
+    System.Windows.Forms.ContextMenuStrip NodesContextMenu 'get set' : 
+    XRay.SdkControls.ITreeViewSource Source 'get set' : 
+    Boolean AutoExpandOnFilter 'get set' : 
+    Boolean FilterVisible 'get set' : 
+    Boolean MultiSelect 'get set' : 
+    Boolean SelectableGroups 'get set' : 
+    System.Collections.ObjectModel.ReadOnlyCollection`1[System.Windows.Forms.TreeNode] SelectedNodes 'get ' : 
+    System.Windows.Forms.TreeNodeCollection Nodes 'get ' : 
+  Events:
+    System.EventHandler ItemCreate: 
+    System.EventHandler GroupCreate: 
+    System.EventHandler ItemRemove: 
+    System.EventHandler ItemsLoaded: 
+    System.EventHandler SelectedItemsChanged: 
+  Methods:
+    add_ItemCreate(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ItemCreate(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_GroupCreate(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_GroupCreate(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_ItemRemove(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ItemRemove(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_ItemsLoaded(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ItemsLoaded(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_SelectedItemsChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_SelectedItemsChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    get_NodesContextMenu(): PrivateScope, Public, HideBySig, SpecialName
+    set_NodesContextMenu(ContextMenuStrip): PrivateScope, Public, HideBySig, SpecialName
+    get_Source(): PrivateScope, Public, HideBySig, SpecialName
+    set_Source(ITreeViewSource): PrivateScope, Public, HideBySig, SpecialName
+    get_AutoExpandOnFilter(): PrivateScope, Public, HideBySig, SpecialName
+    set_AutoExpandOnFilter(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_FilterVisible(): PrivateScope, Public, HideBySig, SpecialName
+    set_FilterVisible(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_MultiSelect(): PrivateScope, Public, HideBySig, SpecialName
+    set_MultiSelect(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_SelectableGroups(): PrivateScope, Public, HideBySig, SpecialName
+    set_SelectableGroups(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_SelectedNodes(): PrivateScope, Public, HideBySig, SpecialName
+    get_Nodes(): PrivateScope, Public, HideBySig, SpecialName
+    TrackActiveNode(String): PrivateScope, Public, HideBySig
+    GetNode(String): PrivateScope, Public, HideBySig
+    Refresh(): PrivateScope, Public, HideBySig
+    AddItem(IEnumerable`1): PrivateScope, Public, HideBySig
+    AddItem(String): PrivateScope, Public, HideBySig
+    AddItem(String, Int32): PrivateScope, Public, HideBySig
+    AddGroup(String): PrivateScope, Public, HideBySig
+    AddGroup(String, Int32, Int32): PrivateScope, Public, HideBySig
+    RemoveItem(String): PrivateScope, Public, HideBySig
+    RemoveGroup(String): PrivateScope, Public, HideBySig
+    ChangeItemContext(String, Object): PrivateScope, Public, HideBySig
+    CreateItem(Object, EventArgs): PrivateScope, Public, HideBySig
+    CreateGroup(Object, EventArgs): PrivateScope, Public, HideBySig
+    RemoveItem(Object, EventArgs): PrivateScope, Public, HideBySig
+    OnItemsLoaded(): PrivateScope, Public, HideBySig
+Interface XRay.SdkControls.IPropertyContainer: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    GetProperty(PropertySpec): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface XRay.SdkControls.IIncrementable: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    Increment(Single): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface XRay.SdkControls.IMouseListener: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    OnDoubleClick(PropertyGrid): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface XRay.SdkControls.IProperty: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    GetValue(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    SetValue(Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class XRay.SdkControls.ColorPicker+ColorChangedEventHandler: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Object, Color): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Object, Color, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask

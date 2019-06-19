@@ -1,0 +1,21 @@
+﻿  pch.cpp
+  BindingsDumper.cpp
+  LuaStudio.cpp
+  ScriptEngineScript.cpp
+  ScriptExporter.cpp
+  script_callStack.cpp
+  script_debugger.cpp
+  script_debugger_threads.cpp
+  script_engine.cpp
+  script_lua_helper.cpp
+  script_process.cpp
+  script_stack_tracker.cpp
+  script_thread.cpp
+  xrScriptEngine.cpp
+     Создается библиотека C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrScriptEngine.lib и объект C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\lib\Win64\Release\xrScriptEngine.exp
+  Создание кода
+  0 of 3546 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Создание кода завершено
+  xrScriptEngine.vcxproj -> C:\Users\сибирь\Documents\GitHub\OXR_CoC\src\..\_build\bin\Win64\Release\xrScriptEngine.dll
