@@ -66,7 +66,7 @@ void CMincer::net_Destroy()
 	inherited::net_Destroy();
 	m_telekinetics.clear_impacts();
 }
-void CMincer::feel_touch_new				(CObject* O)
+void CMincer::feel_touch_new(CGameObject* O)
 {
 	
 	inherited::feel_touch_new(O);
@@ -76,7 +76,7 @@ void CMincer::feel_touch_new				(CObject* O)
 		Telekinesis().activate(GO, m_fThrowInImpulse, m_fTeleHeight, 100000);
 	}
 }
-bool	CMincer::feel_touch_contact				(CObject* O)
+bool CMincer::feel_touch_contact(CGameObject* O)
 {
 	return inherited::feel_touch_contact(O)&&smart_cast<CPhysicsShellHolder *>(O);
 }

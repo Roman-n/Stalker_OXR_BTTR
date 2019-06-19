@@ -33,8 +33,8 @@ public:
 					CMincer						();
 	virtual			~CMincer					();
 	virtual void	OnStateSwitch				(EZoneState new_state);
-	virtual	bool	feel_touch_contact			(CObject* O);
-	virtual void	feel_touch_new				(CObject* O);
+    virtual bool    feel_touch_contact          (CGameObject* O);
+    virtual void    feel_touch_new              (CGameObject* O);
 	virtual void	Load						(LPCSTR section);
 	virtual bool	BlowoutState				();
 	virtual void	AffectPullDead				(CPhysicsShellHolder* GO,const Fvector& throw_in_dir,float dist){}
