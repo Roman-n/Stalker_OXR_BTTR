@@ -1,5 +1,6 @@
 # Prerequisites
 _build/intermediate/
+_build/bin/
 *.d
 
 # Compiled Object files
