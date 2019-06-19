@@ -98,8 +98,7 @@ void CSE_ALifeAnomalousZone::spawn_artefacts				()
                 break;
         }
         if (p < n) {
-            CSE_Abstract		*l_tpSE_Abstract =
-alife().spawn_item(*weights[p].first,position(),m_tNodeID,m_tGraphID,0xffff);
+            CSE_Abstract		*l_tpSE_Abstract = alife().spawn_item(*weights[p].first,position(),m_tNodeID,m_tGraphID,0xffff);
             R_ASSERT3			(l_tpSE_Abstract,"Can't spawn artefact ",*weights[p].first);
             CSE_ALifeDynamicObject	*i = smart_cast<CSE_ALifeDynamicObject*>(l_tpSE_Abstract);
             R_ASSERT2			(i,"Non-ALife object in the 'game.spawn'");
@@ -117,11 +116,9 @@ alife().spawn_item(*weights[p].first,position(),m_tNodeID,m_tGraphID,0xffff);
             i->m_fDistance		= q;
 
             CSE_ALifeItemArtefact *l_tpALifeItemArtefact = smart_cast<CSE_ALifeItemArtefact*>(i);
-            R_ASSERT2		(l_tpALifeItemArtefact,"Anomalous zone can't generate non-artefact objects since they don't
-have an 'anomaly property'!");
+            R_ASSERT2		(l_tpALifeItemArtefact,"Anomalous zone can't generate non-artefact objects since they don'thave an 'anomaly property'!");
 
-            l_tpALifeItemArtefact->m_fAnomalyValue = m_maxPower*(1.f -
-i->o_Position.distance_to(o_Position)/m_offline_interactive_radius);
+            l_tpALifeItemArtefact->m_fAnomalyValue = m_maxPower*(1.f - i->o_Position.distance_to(o_Position)/m_offline_interactive_radius);
         }
     }
 }

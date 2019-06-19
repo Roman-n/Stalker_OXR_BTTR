@@ -141,7 +141,9 @@ class CSE_ALifeCustomZone : public CSE_ALifeSpaceRestrictor
     using inherited = CSE_ALifeSpaceRestrictor;
 
 public:
-    //. f32                             m_maxPower;
+#ifdef ARTEFACT_SPAWN_ANOMALUS_ZONE
+    f32 m_maxPower;
+#endif	
     ALife::EHitType m_tHitType;
     u32 m_owner_id;
     u32 m_enabled_time;
