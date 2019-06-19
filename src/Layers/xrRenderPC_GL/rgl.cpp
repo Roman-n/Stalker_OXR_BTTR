@@ -794,13 +794,22 @@ HRESULT CRender::shader_compile(
     u32 len = 0;
     // options
     {
-        xr_sprintf(c_smapsize, "%04d", u32(o.smapsize));
-        defines[def_it].Name = "SMAP_size";
-        defines[def_it].Definition = c_smapsize;
+        // skyloader: smap size changed to smap quality because something wrong happens with the conversion of defines to float data on amd videocards
+		u8 uSmapQuality = 2;
+		switch (o.smapsize)
+		{
+			case 1536: uSmapQuality = 1; break;
+			case 2048: uSmapQuality = 2; break;
+			case 2560: uSmapQuality = 3; break;
+			case 3072: uSmapQuality = 4; break;
+			case 4096: uSmapQuality = 5; break;
+		}
+        xr_sprintf						(c_smapsize, "%d", uSmapQuality);
+        defines[def_it].Name			= "SMAP_QUALITY";
+        defines[def_it].Definition		= c_smapsize;
         def_it++;
-        VERIFY(xr_strlen(c_smapsize) == 4);
-        xr_strcat(sh_name, c_smapsize);
-        len += 4;
+        xr_strcat						(sh_name, c_smapsize);
+        ++len;
     }
 
     if (o.fp16_filter)

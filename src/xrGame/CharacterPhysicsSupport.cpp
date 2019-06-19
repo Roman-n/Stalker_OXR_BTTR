@@ -513,26 +513,6 @@ IC void CCharacterPhysicsSupport::UpdateDeathAnims()
         m_flags.set(fl_death_anim_on, true);
     }
 }
-#ifdef DEBUG
-void DBG_PhysBones(CObject& O);
-void DBG_DrawBones(CObject& O);
-void DBG_DrawBind(CObject& O);
-BOOL dbg_draw_character_bones = false;
-BOOL dbg_draw_character_physics = false;
-BOOL dbg_draw_character_binds = false;
-BOOL dbg_draw_character_physics_pones = false;
-
-void dbg_draw_geoms(xr_vector<CODEGeom*>& m_weapon_geoms)
-{
-    xr_vector<CODEGeom*>::iterator ii = m_weapon_geoms.begin(), ee = m_weapon_geoms.end();
-    for (; ii != ee; ++ii)
-    {
-        CODEGeom* g = (*ii);
-
-        g->dbg_draw(0.01f, D3DCOLOR_XRGB(0, 255, 100), Flags32());
-    }
-}
-#endif
 
 void CCharacterPhysicsSupport::in_UpdateCL()
 {
