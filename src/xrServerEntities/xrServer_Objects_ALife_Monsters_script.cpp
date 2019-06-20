@@ -85,18 +85,22 @@ SCRIPT_EXPORT(CSE_ALifeCustomZone, (CSE_ALifeDynamicObject, CSE_Shape),
 		)
 	];
 });
-
+#ifdef ARTEFACT_SPAWN_ANOMALUS_ZONE
 SCRIPT_EXPORT(CSE_ALifeAnomalousZone, (CSE_ALifeCustomZone), {
     module(luaState)
     [
         luabind_class_dynamic_alife1(CSE_ALifeAnomalousZone, "cse_anomalous_zone", CSE_ALifeCustomZone)
-#ifdef XRGAME_EXPORTS
-#ifdef ARTEFACT_SPAWN_ANOMALUS_ZONE
 		.def("spawn_artefacts",	&CSE_ALifeAnomalousZone::spawn_artefacts)
-#endif
-#endif	
     ];
 });
+#else
+SCRIPT_EXPORT(CSE_ALifeAnomalousZone, (CSE_ALifeCustomZone), {
+    module(luaState)
+    [
+        luabind_class_dynamic_alife1(CSE_ALifeAnomalousZone, "cse_anomalous_zone", CSE_ALifeCustomZone)
+    ];
+});
+#endif	
 
 SCRIPT_EXPORT(CSE_ALifeMonsterRat, (CSE_ALifeMonsterAbstract, CSE_ALifeInventoryItem),
 {

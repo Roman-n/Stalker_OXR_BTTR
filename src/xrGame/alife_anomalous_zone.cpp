@@ -92,7 +92,8 @@ void CSE_ALifeAnomalousZone::spawn_artefacts				()
     for (u32 ii=0; ii<m_artefact_count; ++ii) {
         float fProbability		= randF(1.f);
         float fSum				= 0.f;
-        for (u16 p=0; p<n; ++p) {
+        float p = 0.f;
+        for (u16_ p=0; p<n; ++p) {
             fSum				+= weights[p].second;
             if (fSum > fProbability)
                 break;
@@ -128,6 +129,7 @@ void CSE_ALifeAnomalousZone::on_spawn()
     inherited::on_spawn();
 #ifdef ARTEFACT_SPAWN_ANOMALUS_ZONE	
     spawn_artefacts();
+//	msg("Spawn artefact - CSE_ALifeAnomalousZone::on_spawn()");
 #endif	
 }
 

@@ -104,6 +104,19 @@ void CTorch::Switch()
     }
 }
 
+void CTorch::mode_sound()
+{
+    if (pSettings->line_exist(cNameSect(), "switch_sound_mode"))
+    {
+        if (m_switch_sound._feedback())
+            m_switch_sound.stop();
+
+        shared_str snd_name = pSettings->r_string(cNameSect(), "switch_sound");
+        m_switch_sound.create(snd_name.c_str(), st_Effect, sg_SourceType);
+        m_switch_sound.play(NULL, sm_2D);
+    }	
+}
+
 void CTorch::Switch(bool light_on)
 {
     m_switched_on = light_on;
@@ -208,6 +221,7 @@ void CTorch::SwitchTorchMode()
         light_render->set_range(range);
         light_omni->set_range(range_o);
         glow_render->set_radius(glow_radius);
+		mode_sound()
     }
     else
     {
@@ -215,6 +229,7 @@ void CTorch::SwitchTorchMode()
         light_render->set_range(range2);
         light_omni->set_range(range_o2);
         glow_render->set_radius(glow_radius2);
+		mode_sound()
     }
 }
 

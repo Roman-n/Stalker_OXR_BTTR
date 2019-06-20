@@ -8,10 +8,12 @@ _build/bin/
 *.lo
 *.o
 *.obj
+*.iobj
 
 # Precompiled Headers
 *.gch
 *.pch
+*.pdb
 
 # Compiled Dynamic libraries
 *.so
@@ -28,6 +30,7 @@ _build/bin/
 *.a
 *.lib
 
+*.exp
 # Executables
 *.exe
 *.out

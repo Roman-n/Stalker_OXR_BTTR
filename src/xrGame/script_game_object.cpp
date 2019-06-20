@@ -177,6 +177,7 @@ cphysics_shell_scripted* CScriptGameObject::get_physics_shell() const
     return get_script_wrapper<cphysics_shell_scripted>(*ph_shell_holder->PPhysicsShell());
 }
 #ifdef FIX_ACTORCONDITION
+#include "ActorCondition.h"
 float CScriptGameObject::GetSatiety() const 
 { 
 return Actor()->conditions().GetSatiety(); 

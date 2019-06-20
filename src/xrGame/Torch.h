@@ -58,6 +58,7 @@ public:
     virtual void UpdateCL();
     void SwitchTorchMode();
     void Switch();
+	void mode_sound();
     void Switch(bool light_on);
     bool torch_active() const;
 

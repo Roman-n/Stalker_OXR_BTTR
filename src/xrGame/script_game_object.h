@@ -906,9 +906,11 @@ public:
     float GetArtefactBleedingRestoreSpeed();
 #ifdef ENGINE_SLEEP
 	float GetArtefactSleepRestoreSpeed();
+    void SetArtefactSleepRestoreSpeed(float value);
 #endif			
 #ifdef ENGINE_THIRST
-	float GetArtefactThirstRestoreSpeed();			
+	float GetArtefactThirstRestoreSpeed();	
+    void SetArtefactThirstRestoreSpeed(float value);
 #endif	
 	
     void SetArtefactHealthRestoreSpeed(float value);

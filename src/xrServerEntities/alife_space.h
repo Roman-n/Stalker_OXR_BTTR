@@ -124,6 +124,12 @@ enum EConditionRestoreType
     eBleedingRestoreSpeed,
     eRadiationRestoreSpeed,
     eRestoreTypeMax,
+#ifdef ENGINE_SLEEP
+    eSleepRestoreSpeed,
+#endif
+#ifdef ENGINE_THIRST
+    eThirstRestoreSpeed,
+#endif
 };
 
 enum ETakeType
@@ -170,4 +176,4 @@ using SCHEDULE_P_VECTOR = xr_vector<CSE_ALifeSchedulable*>;
 
 using D_OBJECT_P_MAP = xr_map<_OBJECT_ID, CSE_ALifeDynamicObject*>;
 using STORY_P_MAP = xr_map<_STORY_ID, CSE_ALifeDynamicObject*>;
-}
+} // namespace ALife

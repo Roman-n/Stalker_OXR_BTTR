@@ -876,7 +876,7 @@ IC static void CLevel_Export(lua_State* luaState)
         def("game_id", &GameID),
         def("ray_pick", &ray_pick)],
 #ifdef SET_MONSTER_RELATION
-		def("set_monster_relation", 			&set_monster_relation)
+		def("set_monster_relation", 			&set_monster_relation),
 #endif		
         module(luaState, "actor_stats")[def("add_points", &add_actor_points),
             def("add_points_str", &add_actor_points_str), def("get_points", &get_actor_points)];
