@@ -125,4 +125,7 @@
     <ClInclude Include="$(SolutionDir)utils\LWO\lwo2.h" />
     <ClInclude Include="$(SolutionDir)utils\LWO\StdAfx.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

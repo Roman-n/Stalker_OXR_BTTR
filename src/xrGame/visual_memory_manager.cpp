@@ -420,7 +420,37 @@ bool CVisualMemoryManager::visible(const CGameObject* game_object, float time_de
 
     return (object->m_value >= current_state().m_visibility_threshold);
 }
+#ifdef NEW_ZOMBIE
+bool CVisualMemoryManager::should_ignore_object(IGameObject const* object) const
+{
+    if (!object)
+    {
+        return true;
+    }
 
+#ifndef MASTER_GOLD
+    if (smart_cast<CActor const*>(object) && psAI_Flags.test(aiIgnoreActor))
+    {
+        return true;
+    }
+    else
+#endif // MASTER_GOLD
+
+    CBaseMonster const* monster = smart_cast<CBaseMonster const*>(object);
+	
+	if(monster)		
+    {
+        if (!monster->can_be_seen())
+            return true;
+	CZombie const* zombie = smart_cast<CZombie const*>(object);	
+	
+		if (zombie && zombie->fake_death_is_active())
+			return true;
+    }
+
+    return false;
+}
+#else
 bool CVisualMemoryManager::should_ignore_object(IGameObject const* object) const
 {
     if (!object)
@@ -446,7 +476,7 @@ bool CVisualMemoryManager::should_ignore_object(IGameObject const* object) const
 
     return false;
 }
-
+#endif
 void CVisualMemoryManager::add_visible_object(const IGameObject* object, float time_delta, bool fictitious)
 {
     if (!fictitious && should_ignore_object(object))

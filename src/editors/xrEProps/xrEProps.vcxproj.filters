@@ -105,4 +105,7 @@
   <ItemGroup>
     <Resource Include="xrEProps.res" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

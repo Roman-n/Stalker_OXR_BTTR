@@ -80,4 +80,7 @@
     <Image Include="Material\dmtlbut.bmp" />
     <Image Include="Material\dmtlmsk.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

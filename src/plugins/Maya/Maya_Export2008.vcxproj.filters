@@ -331,4 +331,7 @@
       <Filter>Export\Object</Filter>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="test_project.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

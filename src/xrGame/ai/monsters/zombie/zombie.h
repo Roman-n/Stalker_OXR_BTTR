@@ -41,14 +41,20 @@ public:
     u32 time_dead_start;
     u32 last_hit_frame;
     u32 time_resurrect;
-
+#ifdef NEW_zombie
+	bool fakedeath_is_active;
+#endif
+	
+	
     u8 fake_death_count;
     float health_death_threshold;
     u8 fake_death_left;
 
     bool fake_death_fall_down(); // return true if everything is ok
     void fake_death_stand_up();
-
+#ifdef NEW_zombie
+	virtual bool fake_death_is_active() const { return fakedeath_is_active;}	
+#endif	
 #ifdef _DEBUG
     virtual void debug_on_key(int key);
 #endif

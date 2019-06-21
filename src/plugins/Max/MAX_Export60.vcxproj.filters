@@ -139,4 +139,7 @@
       <Filter>Kernel</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

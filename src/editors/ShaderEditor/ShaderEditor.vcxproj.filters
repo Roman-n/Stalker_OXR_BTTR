@@ -111,4 +111,7 @@
   <ItemGroup>
     <None Include="ShaderEditor.todo" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\TypeHelper.natvis" />
+  </ItemGroup>
 </Project>

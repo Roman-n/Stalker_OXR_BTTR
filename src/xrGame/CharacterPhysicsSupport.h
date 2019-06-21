@@ -11,26 +11,24 @@
 #include "death_anims.h"
 #include "character_shell_control.h"
 #include "animation_utils.h"
-
-class IPhysicsShellEx;
+class CPhysicsShell;
 class CPHMovementControl;
 class CIKLimbsController;
 class interactive_motion;
 class interactive_animation;
 class physics_shell_animated;
 class CODEGeom;
-class IPhysicsElementEx;
+class CPhysicsElement;
 class activating_character_delay;
 
-class CCharacterPhysicsSupport : /* public ICharacterPhysicsSupport ,*/ public CPHSkeleton, public CPHDestroyable
+class CCharacterPhysicsSupport : public CPHSkeleton, public CPHDestroyable
 {
 public:
     enum EType
     {
         etActor,
         etStalker,
-        etBitting,
-        etEmpty
+        etBitting
     };
 
     enum EState
@@ -90,22 +88,18 @@ private:
     u32 m_physics_shell_animated_time_destroy;
 
 public:
-    IC EType Type() { return m_eType; }
-
+    EType Type() { return m_eType; }
 private:
     EState STate() { return m_eState; }
     void SetState(EState astate) { m_eState = astate; }
     IC bool isDead() { return m_eState == esDead; }
     IC bool isAlive() { return !m_pPhysicsShell; }
-
 protected:
     virtual void SpawnInitPhysics(CSE_Abstract* D);
     virtual CPhysicsShellHolder* PPhysicsShellHolder() { return m_EntityAlife.PhysicsShellHolder(); }
-
     virtual bool CanRemoveObject();
 
 public:
-    virtual const Fvector MovementVelocity() { return m_PhysicMovementControl->GetVelocity(); }
     IC CPHMovementControl* movement() { return m_PhysicMovementControl; }
     IC const CPHMovementControl* movement() const { return m_PhysicMovementControl; }
     IC CPHSoundPlayer* ph_sound_player() { return &m_ph_sound_player; }
@@ -169,7 +163,7 @@ private:
 
     void ActivateShell(IGameObject* who);
     void CreateShell(IGameObject* who, Fvector& dp, Fvector& velocity);
-    void AddActiveWeaponCollision();
+//    void AddActiveWeaponCollision();
     void bone_chain_disable(u16 bone, u16 r_bone, IKinematics& K);
     void bone_fix_clear();
     void EndActivateFreeShell(

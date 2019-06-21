@@ -114,7 +114,7 @@ void CTorch::mode_sound()
         shared_str snd_name = pSettings->r_string(cNameSect(), "switch_sound");
         m_switch_sound.create(snd_name.c_str(), st_Effect, sg_SourceType);
         m_switch_sound.play(NULL, sm_2D);
-    }	
+    }
 }
 
 void CTorch::Switch(bool light_on)
@@ -138,10 +138,7 @@ void CTorch::Switch(bool light_on)
     }
 }
 
-bool CTorch::torch_active() const 
-{ 
-    return (m_switched_on); 
-}
+bool CTorch::torch_active() const { return (m_switched_on); }
 
 BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 {
@@ -191,19 +188,17 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
     light_render->set_texture(pUserData->r_string("torch_definition", "spot_texture"));
 
 #ifdef VOLUMETRIK_TORCH
-	light_render->set_volumetric(pUserData->r_bool("torch_definition", "volumetric")); // Enable or not
-	light_render->set_volumetric_distance(pUserData->r_float("torch_definition", "volumetric_distance"));
-	light_render->set_volumetric_intensity(pUserData->r_float("torch_definition", "volumetric_intensity"));
-	light_render->set_volumetric_quality(pUserData->r_float("torch_definition", "volumetric_quality"));
+    light_render->set_volumetric(pUserData->r_bool("torch_definition", "volumetric")); // Enable or not
+    light_render->set_volumetric_distance(pUserData->r_float("torch_definition", "volumetric_distance"));
+    light_render->set_volumetric_intensity(pUserData->r_float("torch_definition", "volumetric_intensity"));
+    light_render->set_volumetric_quality(pUserData->r_float("torch_definition", "volumetric_quality"));
 #endif
 
     glow_render->set_color(clr);
     glow_render->set_texture(pUserData->r_string("torch_definition", "glow_texture"));
     glow_render->set_radius(glow_radius);
 
-    
     Switch(torch->m_active);
-    
 
     m_delta_h = PI_DIV_2 - atan((range * 0.5f) / _abs(TORCH_OFFSET.x));
 
@@ -221,7 +216,7 @@ void CTorch::SwitchTorchMode()
         light_render->set_range(range);
         light_omni->set_range(range_o);
         glow_render->set_radius(glow_radius);
-		mode_sound()
+        mode_sound();
     }
     else
     {
@@ -229,7 +224,7 @@ void CTorch::SwitchTorchMode()
         light_render->set_range(range2);
         light_omni->set_range(range_o2);
         glow_render->set_radius(glow_radius2);
-		mode_sound()
+        mode_sound();
     }
 }
 
@@ -240,10 +235,7 @@ void CTorch::net_Destroy()
     inherited::net_Destroy();
 }
 
-void CTorch::OnH_A_Chield()
-{
-    inherited::OnH_A_Chield();
-}
+void CTorch::OnH_A_Chield() { inherited::OnH_A_Chield(); }
 
 void CTorch::OnH_B_Independent(bool just_before_destroy)
 {
@@ -314,17 +306,17 @@ void CTorch::UpdateCL()
                 light_render->set_volumetric(false);
 #endif
 
-//                if (true /*false*/)
-//                {
-                    offset = M.c;
-                    offset.mad(M.i, OMNI_OFFSET.x);
-                    offset.mad(M.j, OMNI_OFFSET.y);
-                    offset.mad(M.k, OMNI_OFFSET.z);
-                    light_omni->set_position(offset);
-//                }
+                //                if (true /*false*/)
+                //                {
+                offset = M.c;
+                offset.mad(M.i, OMNI_OFFSET.x);
+                offset.mad(M.j, OMNI_OFFSET.y);
+                offset.mad(M.k, OMNI_OFFSET.z);
+                light_omni->set_position(offset);
+                //                }
 
- //               if (actor->cam_FirstEye())
-//                    light_omni->set_shadow(false);
+                //               if (actor->cam_FirstEye())
+                //                    light_omni->set_shadow(false);
             } // if (true)
             glow_render->set_position(M.c);
 
@@ -404,7 +396,7 @@ void CTorch::net_Export(NET_Packet& P)
 
     BYTE F = 0;
     F |= (m_switched_on ? eTorchActive : 0);
- 
+
     const CActor* pA = smart_cast<const CActor*>(H_Parent());
     if (pA)
     {
