@@ -35,3 +35,10 @@ _build/bin/
 *.exe
 *.out
 *.app
+*.exp
+src/.vs/engine/v16/Server/sqlite3/db.lock
+src/.vs/engine/v16/Server/sqlite3/storage.ide
+src/.vs/engine/v16/Server/sqlite3/storage.ide-shm
+src/.vs/engine/v16/Server/sqlite3/storage.ide-wal
+src/.vs/engine/v16/Solution.VC.db-wal
+*.db-shm
