@@ -13,7 +13,10 @@
 
 #include "xr_object.h"
 #include "xr_object_list.h"
-
+#ifdef COLLISION_WPN
+ENGINE_API float	psHUD_FOV_def=0.45f;
+ENGINE_API float	psHUD_FOV=psHUD_FOV_def;
+#endif
 ENGINE_API xr_vector<xr_token> AvailableVideoModes;
 xr_vector<xr_token> vid_quality_token;
 
@@ -623,9 +626,9 @@ public:
     virtual void Status(TStatus& S) { S[0] = 0; }
     virtual void Info(TInfo& I) { xr_sprintf(I, sizeof(I), "hide console"); }
 };
-
+#ifndef COLLISION_WPN
 ENGINE_API float psHUD_FOV = 0.45f;
-
+#endif
 // extern int psSkeletonUpdate;
 extern int rsDVB_Size;
 extern int rsDIB_Size;

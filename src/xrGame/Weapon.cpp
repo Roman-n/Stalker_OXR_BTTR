@@ -28,7 +28,10 @@
 #include "xrCore/xr_token.h"
 #include "CameraLook.h"
 #include "ActorNightVision.h"
-
+#include "CharacterPhysicsSupport.h"
+#ifdef COLLISION_WPN
+#include "hudmanager.h"
+#endif
 #define WEAPON_REMOVE_TIME 60000
 #define ROTATION_TIME 0.25f
 
@@ -83,6 +86,9 @@ CWeapon::CWeapon()
     m_ef_weapon_type = u32(-1);
     m_UIScope = nullptr;
     m_set_next_ammoType_on_reload = undefined_ammo_type;
+#ifdef COLLISION_WPN	
+	m_nearwall_last_hud_fov = psHUD_FOV_def;
+#endif	
     m_crosshair_inertion = 0.f;
     m_activation_speed_is_overriden = false;
     m_cur_addon.data = 0;
@@ -517,6 +523,17 @@ void CWeapon::Load(LPCSTR section)
 	m_flags.set( FUsingCondition, READ_IF_EXISTS( pSettings, r_bool, section, "use_condition", true ));
 
 	m_APk = READ_IF_EXISTS(pSettings, r_float, section, "ap_modifier",1.0f);
+#ifdef COLLISION_WPN	
+	m_nearwall_on = READ_IF_EXISTS(pSettings, r_bool, section, "nearwall_on", false);
+	if (m_nearwall_on)
+	{
+		// Параметры изменения HUD FOV когда игрок стоит вплотную к стене
+		m_nearwall_target_hud_fov = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_target_hud_fov", 0.27f);
+		m_nearwall_dist_min = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_dist_min", 0.5f);
+		m_nearwall_dist_max = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_dist_max", 1.f);
+		m_nearwall_speed_mod = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_speed_mod", 10.f);
+#endif	
+	}
 }
 
 void CWeapon::LoadFireParams(LPCSTR section)
@@ -780,6 +797,9 @@ void CWeapon::OnH_B_Independent(bool just_before_destroy)
     m_strapped_mode = false;
     m_zoom_params.m_bIsZoomModeNow = false;
     UpdateXForm();
+#ifdef COLLISION_WPN	
+	m_nearwall_last_hud_fov = psHUD_FOV_def;
+#endif	
 }
 
 void CWeapon::OnH_A_Independent()
@@ -805,6 +825,8 @@ void CWeapon::OnActiveItem()
     //. Show
     SwitchState(eShowing);
     //-
+
+//    character_physics_support()->AddActiveWeaponCollision();
 
     inherited::OnActiveItem();
     //если мы занружаемся и оружие было в руках
@@ -851,6 +873,9 @@ void CWeapon::OnH_B_Chield()
 
     OnZoomOut();
     m_set_next_ammoType_on_reload = undefined_ammo_type;
+#ifdef COLLISION_WPN	
+	m_nearwall_last_hud_fov = psHUD_FOV_def;
+#endif 	
 }
 
 extern u32 hud_adj_mode;
@@ -2060,3 +2085,30 @@ void CWeapon::SyncronizeWeaponToServer()
     packet.w_u8(m_bGrenadeMode ? 1 : 0);
     obj->u_EventSend(packet, net_flags(TRUE, TRUE, FALSE, TRUE));
 }
+#ifdef COLLISION_WPN
+float CWeapon::GetHudFov()
+{
+	// Рассчитываем HUD FOV от бедра (с учётом упирания в стены)
+	if (m_nearwall_on && ParentIsActor() && Level().CurrentViewEntity() == H_Parent())
+	{
+		// Получаем расстояние от камеры до точки в прицеле
+		collide::rq_result& RQ = HUD().GetCurrentRayQuery();
+		float dist = RQ.range;
+
+		// Интерполируем расстояние в диапазон от 0 (min) до 1 (max)
+		clamp(dist, m_nearwall_dist_min, m_nearwall_dist_max);
+		float fDistanceMod = ((dist - m_nearwall_dist_min) / (m_nearwall_dist_max - m_nearwall_dist_min)); // 0.f ... 1.f
+
+		 // Рассчитываем базовый HUD FOV от бедра
+		float fBaseFov = psHUD_FOV_def;
+		clamp(fBaseFov, 0.0f, FLT_MAX);
+
+		// Плавно высчитываем итоговый FOV от бедра
+		float src = m_nearwall_speed_mod * Device.fTimeDelta;
+		clamp(src, 0.f, 1.f);
+
+		float fTrgFov = m_nearwall_target_hud_fov + fDistanceMod * (fBaseFov - m_nearwall_target_hud_fov);
+		m_nearwall_last_hud_fov = m_nearwall_last_hud_fov * (1 - src) + fTrgFov * src;
+	}
+}
+#endif

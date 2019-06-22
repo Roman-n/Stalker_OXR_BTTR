@@ -1038,6 +1038,9 @@ void CWeaponMagazined::switch2_Hidden()
 
     signal_HideComplete();
     RemoveShotEffector();
+#ifdef COLLISION_WPN
+	m_nearwall_last_hud_fov = psHUD_FOV_def;
+#endif	
 }
 void CWeaponMagazined::switch2_Showing()
 {

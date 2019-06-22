@@ -3,42 +3,42 @@
   <ImportGroup Label="PropertySheets" />
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Mixed_COC'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;COC_DEBUG;COC_EDITION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release_COC'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;COC_EDITION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;Call_of_Chernobyl_OXR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
-      <PreprocessorDefinitions>DEBUG;COC_DEBUG;COC_EDITION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug_Dedicated'">
     <ClCompile>
-      <PreprocessorDefinitions>DEBUG;COC_DEBUG;COC_EDITION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Mixed'">
     <ClCompile>
-      <PreprocessorDefinitions>DEBUG;COC_DEBUG;COC_EDITION;MIXED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;MIXED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Mixed_Dedicated'">
     <ClCompile>
-      <PreprocessorDefinitions>DEBUG;COC_DEBUG;COC_EDITION;MIXED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;MIXED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;COC_DEBUG;COC_EDITION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release_Dedicated'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;COC_DEBUG;COC_EDITION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;Call_of_Chernobyl;Call_of_Chernobyl_OXR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>

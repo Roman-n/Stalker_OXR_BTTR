@@ -555,7 +555,7 @@ BOOL dbg_draw_character_physics_pones = false;
 
 void dbg_draw_geoms(xr_vector<CODEGeom*>& m_weapon_geoms)
 {
-    xr_vector<CODEGeom*>::iterator ii = m_weapon_geoms.begin(), ee = m_weapon_geoms.end();
+    xr_vector<CODEGeom *>::iterator ii = m_weapon_geoms.begin(), ee = m_weapon_geoms.end();
     for (; ii != ee; ++ii)
     {
         CODEGeom* g = (*ii);
@@ -797,26 +797,16 @@ bool CCharacterPhysicsSupport::has_shell_collision_place(const CPhysicsShellHold
 }
 void CCharacterPhysicsSupport::on_child_shell_activate(CPhysicsShellHolder* obj)
 {
+	Msg("CCharacterPhysicsSupport::on_child_shell_activate");
     if (!has_shell_collision_place(obj))
         return;
 
     VERIFY(obj->PPhysicsShell());
-#if 0
-//	DBG_OpenCashedDraw();
-	//m_pPhysicsShell->dbg_draw_geometry( 0.2f, color_xrgb( 255, 100, 0 ) );
-	m_pPhysicsShell->dbg_draw_velocity( 0.01f, color_xrgb( 100, 255, 0 ) );
-	m_pPhysicsShell->dbg_draw_force( 0.1f, color_xrgb( 100, 0, 255 ) );
-	DBG_ClosedCashedDraw( 50000 );
-#endif
-    // DBG_OpenCashedDraw();
-    // obj->PPhysicsShell()->dbg_draw_geometry( 0.2f, color_xrgb( 255, 100, 0 ) );
-
-    // DBG_ClosedCashedDraw( 50000 );
 }
 
 void CCharacterPhysicsSupport::bone_fix_clear()
 {
-    xr_vector<anim_bone_fix*>::iterator i = m_weapon_bone_fixes.begin(), e = m_weapon_bone_fixes.end();
+    xr_vector<anim_bone_fix *>::iterator i = m_weapon_bone_fixes.begin(), e = m_weapon_bone_fixes.end();
     for (; i != e; ++i)
     {
         (*i)->deinit();
@@ -844,7 +834,74 @@ void CCharacterPhysicsSupport::bone_chain_disable(u16 bone, u16 r_bone, IKinemat
         // K.LL_GetBoneInstance( bid ).set_callback( bctCustom, 0, 0, TRUE );
     }
 }
+#ifdef COLLISIA_ACTIVE_ITEM
+void CCharacterPhysicsSupport::AddActiveWeaponCollision()
+{
+    if (m_eType != etStalker)
+        return;
+    VERIFY(!m_weapon_attach_bone);
+    VERIFY(!m_active_item_obj);
+    VERIFY(m_weapon_geoms.empty());
+    VERIFY(m_weapon_bone_fixes.empty());
+	Msg("CCharacterPhysicsSupport::AddActiveWeaponCollision");
+    CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&m_EntityAlife);
+    VERIFY(inv_owner);
+    PIItem active_weapon_item = inv_owner->inventory().ActiveItem();
+    if (!active_weapon_item)
+        return;
+    int bl = -1, br = -1, br2 = -1;
+    m_EntityAlife.g_WeaponBones(bl, br, br2);
+    if (br == -1)
+        return;
 
+    active_weapon_item->UpdateXForm();
+
+    CPhysicsShell* weapon_shell = P_build_Shell(&active_weapon_item->object(), true, (BONE_P_MAP*)(0), true);
+
+    VERIFY(m_pPhysicsShell);
+    CPhysicsElement* weapon_attach_bone = m_pPhysicsShell->get_PhysicsParrentElement((u16)br);
+
+    bone_chain_disable((u16)br, weapon_attach_bone->m_SelfID, *m_pPhysicsShell->PKinematics());
+    if (bl != br && bl != -1)
+    {
+        CPhysicsElement* p = m_pPhysicsShell->get_PhysicsParrentElement((u16)bl);
+        VERIFY(p);
+        bone_chain_disable((u16)bl, p->m_SelfID, *m_pPhysicsShell->PKinematics());
+    }
+    if (br2 != bl && br2 != br && br2 != -1)
+    {
+        CPhysicsElement* p = m_pPhysicsShell->get_PhysicsParrentElement((u16)br2);
+        VERIFY(p);
+        bone_chain_disable((u16)br2, weapon_attach_bone->m_SelfID, *m_pPhysicsShell->PKinematics());
+    }
+
+    CPhysicsElement* weapon_element = weapon_shell->get_ElementByStoreOrder(0);
+
+    u16 geom_num = weapon_element->numberOfGeoms();
+    for (u16 i = 0; i < geom_num; ++i)
+        m_weapon_geoms.push_back(weapon_element->geometry(i));
+    xr_vector<CODEGeom *>::iterator ii = m_weapon_geoms.begin(), ee = m_weapon_geoms.end();
+
+    // DBG_OpenCashedDraw();
+
+    for (; ii != ee; ++ii)
+    {
+        CODEGeom* g = (*ii);
+        // g->dbg_draw( 0.01f, color_xrgb( 255, 0, 0 ), Flags32() );
+        weapon_element->remove_geom(g);
+        g->set_bone_id(weapon_attach_bone->m_SelfID);
+        weapon_attach_bone->add_geom(g);
+        // g->dbg_draw( 0.01f, color_xrgb( 0, 255, 0 ), Flags32() );
+    }
+    m_weapon_attach_bone = weapon_attach_bone;
+    m_active_item_obj = &(active_weapon_item->object());
+
+    destroy_physics_shell(weapon_shell);
+
+    // m_pPhysicsShell->dbg_draw_geometry( 1, color_xrgb( 0, 0, 255 ) );
+    // DBG_ClosedCashedDraw( 50000 );
+}
+#endif
 void CCharacterPhysicsSupport::CreateShell(IGameObject* who, Fvector& dp, Fvector& velocity)
 {
     xr_delete(m_collision_activating_delay);
@@ -888,7 +945,6 @@ void CCharacterPhysicsSupport::CreateShell(IGameObject* who, Fvector& dp, Fvecto
         if (m_eState == esRemoved)
             return;
     }
-
     //////////////////////this needs to evaluate object box//////////////////////////////////////////////////////
     if (m_eType != etBitting)
         K->LL_SetBoneRoot(anim_root);
@@ -949,148 +1005,17 @@ void CCharacterPhysicsSupport::CreateShell(IGameObject* who, Fvector& dp, Fvecto
     if (IsGameTypeSingle())
     {
         m_pPhysicsShell->SetPrefereExactIntegration(); // use exact integration for ragdolls in single
-
-    if (m_eType != etStalker)
-            return;
-        VERIFY(!m_weapon_attach_bone);
-        VERIFY(!m_active_item_obj);
-        VERIFY(m_weapon_geoms.empty());
-        VERIFY(m_weapon_bone_fixes.empty());
-
-        CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&m_EntityAlife);
-        VERIFY(inv_owner);
-        PIItem active_weapon_item = inv_owner->inventory().ActiveItem();
-        if (!active_weapon_item)
-            return;
-        int bl = -1, br = -1, br2 = -1;
-        m_EntityAlife.g_WeaponBones(bl, br, br2);
-        if (br == -1)
-            return;
-
-        active_weapon_item->UpdateXForm();
-
-        CPhysicsShell* weapon_shell = P_build_Shell(&active_weapon_item->object(), true, (BONE_P_MAP*)(0), true);
-
-        VERIFY(m_pPhysicsShell);
-        CPhysicsElement* weapon_attach_bone = m_pPhysicsShell->get_PhysicsParrentElement((u16)br);
-
-        bone_chain_disable((u16)br, weapon_attach_bone->m_SelfID, *m_pPhysicsShell->PKinematics());
-        if (bl != br && bl != -1)
-        {
-            CPhysicsElement* p = m_pPhysicsShell->get_PhysicsParrentElement((u16)bl);
-            VERIFY(p);
-            bone_chain_disable((u16)bl, p->m_SelfID, *m_pPhysicsShell->PKinematics());
-        }
-        if (br2 != bl && br2 != br && br2 != -1)
-        {
-            CPhysicsElement* p = m_pPhysicsShell->get_PhysicsParrentElement((u16)br2);
-            VERIFY(p);
-            bone_chain_disable((u16)br2, weapon_attach_bone->m_SelfID, *m_pPhysicsShell->PKinematics());
-        }
-
-        CPhysicsElement* weapon_element = weapon_shell->get_ElementByStoreOrder(0);
-
-        u16 geom_num = weapon_element->numberOfGeoms();
-        for (u16 i = 0; i < geom_num; ++i)
-            m_weapon_geoms.push_back(weapon_element->geometry(i));
-        xr_vector<CODEGeom*>::iterator ii = m_weapon_geoms.begin(), ee = m_weapon_geoms.end();
-
-        // DBG_OpenCashedDraw();
-
-        for (; ii != ee; ++ii)
-        {
-            CODEGeom* g = (*ii);
-            // g->dbg_draw( 0.01f, color_xrgb( 255, 0, 0 ), Flags32() );
-            weapon_element->remove_geom(g);
-            g->set_bone_id(weapon_attach_bone->m_SelfID);
-            weapon_attach_bone->add_geom(g);
-            // g->dbg_draw( 0.01f, color_xrgb( 0, 255, 0 ), Flags32() );
-        }
-        m_weapon_attach_bone = weapon_attach_bone;
-        m_active_item_obj = &(active_weapon_item->object());
-
-        destroy_physics_shell(weapon_shell);
-
-        // m_pPhysicsShell->dbg_draw_geometry( 1, color_xrgb( 0, 0, 255 ) );
-        // DBG_ClosedCashedDraw( 50000 );
-
-//        AddActiveWeaponCollision();
+#ifdef COLLISIA_ACTIVE_ITEM
+		AddActiveWeaponCollision();
+#endif
 #ifndef DEAD_BODY_COLLISION
         m_pPhysicsShell->SetRemoveCharacterCollLADisable();
 #endif
     }
     else
-        m_pPhysicsShell->SetIgnoreDynamic();
+    m_pPhysicsShell->SetIgnoreDynamic();
     m_pPhysicsShell->SetIgnoreSmall();
 }
-/*
-void CCharacterPhysicsSupport::AddActiveWeaponCollision()
-{
-    if (m_eType != etStalker)
-        return;
-    VERIFY(!m_weapon_attach_bone);
-    VERIFY(!m_active_item_obj);
-    VERIFY(m_weapon_geoms.empty());
-    VERIFY(m_weapon_bone_fixes.empty());
-
-    CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&m_EntityAlife);
-    VERIFY(inv_owner);
-    PIItem active_weapon_item = inv_owner->inventory().ActiveItem();
-    if (!active_weapon_item)
-        return;
-    int bl = -1, br = -1, br2 = -1;
-    m_EntityAlife.g_WeaponBones(bl, br, br2);
-    if (br == -1)
-        return;
-
-    active_weapon_item->UpdateXForm();
-
-    CPhysicsShell* weapon_shell = P_build_Shell(&active_weapon_item->object(), true, (BONE_P_MAP*)(0), true);
-
-    VERIFY(m_pPhysicsShell);
-    CPhysicsElement* weapon_attach_bone = m_pPhysicsShell->get_PhysicsParrentElement((u16)br);
-
-    bone_chain_disable((u16)br, weapon_attach_bone->m_SelfID, *m_pPhysicsShell->PKinematics());
-    if (bl != br && bl != -1)
-    {
-        CPhysicsElement* p = m_pPhysicsShell->get_PhysicsParrentElement((u16)bl);
-        VERIFY(p);
-        bone_chain_disable((u16)bl, p->m_SelfID, *m_pPhysicsShell->PKinematics());
-    }
-    if (br2 != bl && br2 != br && br2 != -1)
-    {
-        CPhysicsElement* p = m_pPhysicsShell->get_PhysicsParrentElement((u16)br2);
-        VERIFY(p);
-        bone_chain_disable((u16)br2, weapon_attach_bone->m_SelfID, *m_pPhysicsShell->PKinematics());
-    }
-
-    CPhysicsElement* weapon_element = weapon_shell->get_ElementByStoreOrder(0);
-
-    u16 geom_num = weapon_element->numberOfGeoms();
-    for (u16 i = 0; i < geom_num; ++i)
-        m_weapon_geoms.push_back(weapon_element->geometry(i));
-    xr_vector<CODEGeom*>::iterator ii = m_weapon_geoms.begin(), ee = m_weapon_geoms.end();
-
-    // DBG_OpenCashedDraw();
-
-    for (; ii != ee; ++ii)
-    {
-        CODEGeom* g = (*ii);
-        // g->dbg_draw( 0.01f, color_xrgb( 255, 0, 0 ), Flags32() );
-        weapon_element->remove_geom(g);
-        g->set_bone_id(weapon_attach_bone->m_SelfID);
-        weapon_attach_bone->add_geom(g);
-        // g->dbg_draw( 0.01f, color_xrgb( 0, 255, 0 ), Flags32() );
-    }
-    m_weapon_attach_bone = weapon_attach_bone;
-    m_active_item_obj = &(active_weapon_item->object());
-
-    destroy_physics_shell(weapon_shell);
-
-    // m_pPhysicsShell->dbg_draw_geometry( 1, color_xrgb( 0, 0, 255 ) );
-    // DBG_ClosedCashedDraw( 50000 );
-}
-*/
 void CCharacterPhysicsSupport::EndActivateFreeShell(
     IGameObject* who, const Fvector& inital_entity_position, const Fvector& dp, const Fvector& velocity)
 {

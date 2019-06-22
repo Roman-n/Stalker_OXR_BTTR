@@ -24,7 +24,10 @@ class CParticlesObject;
 class CUIWindow;
 class CBinocularsVision;
 class CNightVisionEffector;
-
+#ifdef COLLISION_WPN
+ENGINE_API extern float psHUD_FOV;
+ENGINE_API extern float psHUD_FOV_def;
+#endif
 class CWeapon : public CHudItemObject, public CShootingObject
 {
     typedef CHudItemObject inherited;
@@ -557,7 +560,18 @@ protected:
     // therefore we should hold them by ourself :-((
     float m_addon_holder_range_modifier;
     float m_addon_holder_fov_modifier;
+#ifdef COLLISION_WPN	
 
+	float m_nearwall_last_hud_fov;
+
+	float m_nearwall_target_hud_fov = 0.f;
+	float m_nearwall_dist_max = 0.f;
+	float m_nearwall_dist_min = 0.f;
+	float m_nearwall_speed_mod = 0.f;
+
+	bool m_nearwall_on = false;
+	
+#endif
 public:
     virtual void modify_holder_params(float& range, float& fov) const;
     virtual bool use_crosshair() const { return true; }
@@ -591,4 +605,7 @@ public:
     virtual void SetActivationSpeedOverride(Fvector const& speed);
     virtual void DumpActiveParams(shared_str const& section_name, CInifile& dst_ini) const;
     virtual shared_str const GetAnticheatSectionName() const { return cNameSect(); };
+#ifdef COLLISION_WPN	
+	float GetHudFov();
+#endif	
 };

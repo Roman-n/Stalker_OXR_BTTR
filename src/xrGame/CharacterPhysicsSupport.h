@@ -1,7 +1,6 @@
-
-#ifndef CHARACTER_PHYSICS_SUPPORT
-#define CHARACTER_PHYSICS_SUPPORT
-
+//#define CHARACTER_PHYSICS_SUPPORT //(?) Каво1
+//#ifndef CHARACTER_PHYSICS_SUPPORT
+#pragma once
 #include "alife_space.h"
 #include "PHSkeleton.h"
 #include "Entity_Alive.h"
@@ -117,7 +116,7 @@ public:
     void CreateCharacterSafe();
     void CreateCharacter();
     bool CollisionCorrectObjPos();
-
+   
     void in_UpdateCL();
     void in_shedule_Update(u32 DT);
     void in_NetSpawn(CSE_Abstract* e);
@@ -148,6 +147,7 @@ private:
     void update_animation_collision();
 
 public:
+    //		void							on_active_weapon_shell_activate();
     bool has_shell_collision_place(const CPhysicsShellHolder* obj) const;
     virtual void on_child_shell_activate(CPhysicsShellHolder* obj);
     /////////////////////////////////////////////////////////////////
@@ -163,7 +163,6 @@ private:
 
     void ActivateShell(IGameObject* who);
     void CreateShell(IGameObject* who, Fvector& dp, Fvector& velocity);
-//    void AddActiveWeaponCollision();
     void bone_chain_disable(u16 bone, u16 r_bone, IKinematics& K);
     void bone_fix_clear();
     void EndActivateFreeShell(
@@ -173,11 +172,13 @@ private:
     void CreateIKController();
     void DestroyIKController();
     bool CollisionCorrectObjPos(const Fvector& start_from, bool character_create = false);
-
+#ifdef COLLISIA_ACTIVE_ITEM
+    void AddActiveWeaponCollision();
+#endif
     void FlyTo(const Fvector& disp);
     IC void UpdateDeathAnims();
     IC bool DoCharacterShellCollide();
     void UpdateCollisionActivatingDellay();
     void SpawnCharacterCreate();
 };
-#endif // CHARACTER_PHYSICS_SUPPORT
+//#endif // CHARACTER_PHYSICS_SUPPORT
