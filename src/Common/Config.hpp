@@ -43,6 +43,7 @@
 #define NEW_SOUNDS                                  // Новые звуки для оружие Р1
 #define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
 #define COLLISIA_ACTIVE_ITEM                        // Коллизия активного предмета
+#define DIST_TO_POINT_CS							// Показать дистанцию до цели на карте 
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay

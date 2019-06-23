@@ -2086,7 +2086,7 @@ void CWeapon::SyncronizeWeaponToServer()
     obj->u_EventSend(packet, net_flags(TRUE, TRUE, FALSE, TRUE));
 }
 #ifdef COLLISION_WPN
-float CWeapon::GetHudFov() const
+float CWeapon::GetHudFov() 
 {
 	// Рассчитываем HUD FOV от бедра (с учётом упирания в стены)
 	if (m_nearwall_on && ParentIsActor() && Level().CurrentViewEntity() == H_Parent())
@@ -2110,5 +2110,7 @@ float CWeapon::GetHudFov() const
 		float fTrgFov = m_nearwall_target_hud_fov + fDistanceMod * (fBaseFov - m_nearwall_target_hud_fov);
 		m_nearwall_last_hud_fov = m_nearwall_last_hud_fov * (1 - src) + fTrgFov * src;
 	}
+    // От бедра
+    return m_nearwall_last_hud_fov;
 }
 #endif

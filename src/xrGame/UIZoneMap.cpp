@@ -126,17 +126,17 @@ void CUIZoneMap::UpdateRadar		(Fvector pos)
 	m_clipFrame.Update();
 	m_background.Update();
 	m_activeMap->SetActivePoint( pos );
-
+#ifdef DIST_TO_POINT_CS
 	if(IsGameTypeSingle()){
-		if(m_activeMap->GetPointerDistance()>0.5f){
+		if(m_activeMap->GetPointerDistance1()>0.5f){
 			string64	str;
-			sprintf_s		(str,"%.1f ì",m_activeMap->GetPointerDistance());
+			sprintf_s		(str,"%.0f m",m_activeMap->GetPointerDistance1());
 			m_pointerDistanceText.SetText(str);
 		}else{
 			m_pointerDistanceText.SetText("");
 		}
 	}
-
+#endif
 }
 
 bool CUIZoneMap::ZoomIn()

@@ -14,6 +14,9 @@ protected:
 	Flags16			m_flags;
 	enum EFlags{	eLocked	=(1<<0),};
 	float			m_pointer_dist;
+#ifdef DIST_TO_POINT_CS		
+	float			m_pointer_dist1;	
+#endif	
 	Frect			m_workingArea;
 public:
 	Frect&			WorkingArea						() {return m_workingArea;}
@@ -51,6 +54,11 @@ public:
 			void	SetLocked						(bool b)		{m_flags.set(eLocked,b);}
 			void	SetPointerDistance				(float d)		{m_pointer_dist=d;};
 			float	GetPointerDistance				()				{return m_pointer_dist;};
+#ifdef DIST_TO_POINT_CS				
+			void	SetPointerDistance1				(float d)		{m_pointer_dist1=d;};
+			float	GetPointerDistance1				()				{return m_pointer_dist1;};	
+#endif			
+			
 protected:
 	virtual void	Init_internal					(const shared_str& name, CInifile& pLtx, const shared_str& sect_name, LPCSTR sh_name);
 	virtual void	UpdateSpots						() {};
