@@ -51,7 +51,7 @@ static BOOL bException = FALSE;
 #endif
 #pragma comment(lib, "FaultRep.lib")
 
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
 #define USE_OWN_ERROR_MESSAGE_WINDOW
 #else
 #define USE_OWN_MINI_DUMP
@@ -439,7 +439,7 @@ void xrDebug::Fail(bool& ignoreAlways, const ErrorLocation& loc, const char* exp
 
     lock.Leave();
 
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
     if (needTerminate)
         TerminateProcess(GetCurrentProcess(), 1);
 #endif

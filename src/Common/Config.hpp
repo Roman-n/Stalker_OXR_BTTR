@@ -69,5 +69,4 @@
 //#define LOST_ALPHA_HUD_IND				        // Движковые индикаторы на худ как в Лост Альфе
 //#define AURA_CONTROLLER_FIX				        // Фикс звука ауры контролера при смерти гг, при перезагрузки звук продолжал играть
 //#define VOLUMETRIK_TORCH					        // Объемный свет фонаря
-//#define COLLISION_ACTIVE_ITEM				        // Включить коллизию оружия
 //#define NEW_ZOMBIE						        // НПС не видят зомби пока активна фейк смерть

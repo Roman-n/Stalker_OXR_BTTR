@@ -323,7 +323,7 @@ float CVisualMemoryManager::get_visible_value(const CGameObject *game_object, fl
     if (distance <= always_visible_distance + EPS_L)
         return (current_state().m_visibility_threshold);
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
     //Alundaio: hijack not_yet_visible_object to lua
     luabind::functor<float>	funct;
     if (GEnv.ScriptEngine->functor("visual_memory_manager.get_visible_value", funct))

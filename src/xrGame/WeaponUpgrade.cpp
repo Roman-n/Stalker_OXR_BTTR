@@ -161,7 +161,7 @@ bool CWeapon::install_upgrade_hit(LPCSTR section, bool test)
     if (result2 && !test)
     {
         string32 buffer;
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
         fvHitPower[egdMaster] += (float)atof(_GetItem(*s_sHitPower, 0, buffer));
 #else
         fvHitPower[egdMaster] = (float)atof(_GetItem(*s_sHitPower, 0, buffer));
@@ -169,7 +169,7 @@ bool CWeapon::install_upgrade_hit(LPCSTR section, bool test)
         fvHitPower[egdNovice] = fvHitPower[egdStalker] = fvHitPower[egdVeteran] = fvHitPower[egdMaster];
 
         int num_game_diff_param = _GetItemCount(*s_sHitPower);
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
         if (num_game_diff_param > 1)
         {
             fvHitPower[egdVeteran] += (float)atof(_GetItem(*s_sHitPower, 1, buffer));

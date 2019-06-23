@@ -92,7 +92,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
     else if (inventory().Action((u16)cmd, CMD_START))
         return;
 
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
     if (psActorFlags.test(AF_NO_CLIP))
     {
         NoClipFly(cmd);
@@ -290,7 +290,7 @@ void CActor::IR_OnKeyboardHold(int cmd)
         return;
     }
 
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
     if (psActorFlags.test(AF_NO_CLIP) &&
         (cmd == kFWD || cmd == kBACK || cmd == kL_STRAFE || cmd == kR_STRAFE || cmd == kJUMP || cmd == kCROUCH))
     {
@@ -719,7 +719,7 @@ void CActor::actorKick()
 }
 #endif
 
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
 void CActor::NoClipFly(int cmd)
 {
     Fvector cur_pos; // = Position();

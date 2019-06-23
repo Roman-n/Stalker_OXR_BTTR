@@ -107,7 +107,7 @@ extern BOOL g_invert_zoom;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
 extern u32 gLanguage;
 extern xr_vector<xr_token> gLanguagesToken;
 #endif
@@ -217,7 +217,7 @@ public:
     virtual void Info(TInfo& I) { xr_strcpy(I, "game difficulty"); }
 };
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
 class CCC_GameLanguage : public CCC_Token
 {
 public:
@@ -1739,7 +1739,7 @@ void CCC_RegisterCommands()
     // game
     CMD3(CCC_Mask, "g_crouch_toggle", &psActorFlags, AF_CROUCH_TOGGLE);
     CMD1(CCC_GameDifficulty, "g_game_difficulty");
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
     CMD1(CCC_GameLanguage, "g_language");
 #endif
 

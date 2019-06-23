@@ -765,7 +765,7 @@ void CWeaponMagazined::state_Fire(float dt)
 
         while (!m_magazine.empty() && fShotTimeCounter < 0 && (IsWorking() || m_bFireSingleShot) && (m_iQueueSize < 0 || m_iShotNum < m_iQueueSize))
         {
-#ifndef COC_EDITION
+#ifndef Call_of_Chernobyl_OXR
             if (CheckForMisfire())
             {
                 StopShooting();
@@ -792,7 +792,7 @@ void CWeaponMagazined::state_Fire(float dt)
             else
                 FireTrace(m_vStartPos, m_vStartDir);
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
             if (CheckForMisfire())
             {
                 StopShooting();

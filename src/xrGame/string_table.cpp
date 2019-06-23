@@ -7,7 +7,7 @@
 
 STRING_TABLE_DATA* CStringTable::pData = NULL;
 BOOL CStringTable::m_bWriteErrorsToLog = FALSE;
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
 u32 gLanguage = -1;
 xr_vector<xr_token> gLanguagesToken;
 #endif
@@ -29,7 +29,7 @@ void CStringTable::Init()
 
     pData = new STRING_TABLE_DATA();
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
     if (gLanguagesToken.size() == 0)
     {
         u32 lineCount = pSettings->line_count("Languages");
@@ -140,7 +140,7 @@ void CStringTable::ReparseKeyBindings()
 
 void CStringTable::ReloadLanguage()
 {
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
     if (0 == xr_strcmp(gLanguagesToken.at(gLanguage).name, pData->m_sLanguage.c_str()))
         return;
 #else

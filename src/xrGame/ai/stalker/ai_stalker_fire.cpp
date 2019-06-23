@@ -770,7 +770,7 @@ bool CAI_Stalker::inside_anomaly()
     for (; I != E; ++I)
     {
         CCustomZone* zone = smart_cast<CCustomZone*>(*I);
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
         if (zone)
 #else
         if (zone && (zone->restrictor_type() != RestrictionSpace::eRestrictorTypeNone))

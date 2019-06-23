@@ -61,7 +61,7 @@ void CALifeSwitchManager::add_online(CSE_ALifeDynamicObject* object, bool update
     server().Process_spawn(tNetPacket, clientID, FALSE, l_tpAbstract);
     object->s_flags._and (u16(-1) ^ M_SPAWN_UPDATE);
 
-#ifndef COC_EDITION
+#ifndef Call_of_Chernobyl_OXR
     if (!object->used_ai_locations() || ai().level_graph().valid_vertex_id(object->m_tNodeID))
         Msg("Invalid vertex for object %s", object->name_replace());
 #endif

@@ -780,7 +780,7 @@ void CActorCondition::BoostTelepaticProtection(const float value) { m_fBoostTele
 void CActorCondition::BoostChemicalBurnProtection(const float value) { m_fBoostChemicalBurnProtection += value; }
 void CActorCondition::UpdateTutorialThresholds()
 {
-#ifndef COC_EDITION
+#ifndef Call_of_Chernobyl_OXR
     string256 cb_name;
     static float _cPowerThr = pSettings->r_float("tutorial_conditions_thresholds", "power");
     static float _cPowerMaxThr = pSettings->r_float("tutorial_conditions_thresholds", "max_power");

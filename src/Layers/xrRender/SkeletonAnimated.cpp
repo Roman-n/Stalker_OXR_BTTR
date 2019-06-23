@@ -290,7 +290,7 @@ float CKinematicsAnimated::get_animation_length(MotionID motion_ID)
 void CKinematicsAnimated::IBlendSetup(CBlend& B, u16 part, u8 channel, MotionID motion_ID, BOOL bMixing,
     float blendAccrue, float /*blendFalloff*/, float Speed, BOOL noloop, PlayCallback Callback, LPVOID CallbackParam)
 {
-#if defined(DEBUG) || defined (COC_DEBUG)
+#if defined(DEBUG) || defined (Call_of_Chernobyl)
     VERIFY(B.channel < MAX_CHANNELS);
 #endif
     // Setup blend params

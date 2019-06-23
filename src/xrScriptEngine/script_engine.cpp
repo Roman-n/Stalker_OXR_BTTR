@@ -352,7 +352,7 @@ int CScriptEngine::script_log(LuaMessageType message, LPCSTR caFormat, ...)
     int result = vscript_log(message, caFormat, marker);
     va_end(marker);
 
-#if defined(DEBUG) || defined(COC_EDITION)
+#if defined(DEBUG) || defined(Call_of_Chernobyl_OXR)
     if (message == LuaMessageType::Error)
         print_stack();
 #endif
@@ -831,7 +831,7 @@ CScriptEngine::~CScriptEngine()
         lua_close(m_virtual_machine);
     while (!m_script_processes.empty())
         remove_script_process(m_script_processes.begin()->first);
-#if defined(DEBUG) || defined(COC_EDITION)
+#if defined(DEBUG) || defined(Call_of_Chernobyl_OXR)
     flush_log();
 #endif
 #ifdef USE_DEBUGGER

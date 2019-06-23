@@ -37,7 +37,7 @@ private:
     static STRING_TABLE_DATA* pData;
 };
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
 extern u32 gLanguage;
 extern xr_vector<xr_token> gLanguagesToken;
 #endif

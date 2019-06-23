@@ -867,7 +867,7 @@ void CActor::g_Physics(Fvector& _accel, float jump, float dt)
         {
             SwitchOutBorder(new_border_state);
         }
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
         if (!psActorFlags.test(AF_NO_CLIP))
             character_physics_support()->movement()->GetPosition(Position());
 #else // DEBUG

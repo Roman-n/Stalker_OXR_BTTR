@@ -569,7 +569,7 @@ BOOL CBulletManager::firetrace_callback(collide::rq_result& result, LPVOID param
     Fvector& collide_position = data.collide_position;
     collide_position = Fvector().mad(bullet.bullet_pos, bullet.dir, result.range);
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
     float const air_resistance = bullet.air_resistance;
 #else
     float const air_resistance =
@@ -686,7 +686,7 @@ bool CBulletManager::process_bullet(collide::rq_results& storage, SBullet& bulle
     float const time_delta = delta_time / 1000.f;
     Fvector const gravity = Fvector().set(0.f, -m_fGravityConst, 0.f);
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
     float const air_resistance = bullet.air_resistance;
 #else
     float const air_resistance = (GameID() == eGameIDSingle) ? m_fAirResistanceK : bullet.air_resistance;

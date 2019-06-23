@@ -684,7 +684,7 @@ public:
     void SwitchNightVision();
     void SwitchTorch();
 	void SwitchTorchMode();
-#if defined(DEBUG) || defined(COC_DEBUG)
+#if defined(DEBUG) || defined(Call_of_Chernobyl)
     void NoClipFly(int cmd);
 #endif // DEBUG
 

@@ -25,7 +25,7 @@
 #include "UICharacterInfo.h"
 #include "ui_base.h"
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
 #define PDA_RANKING_XML "pda_ranking.xml"
 #else
 #ifdef CALLOFCHERNOBYL_RANKING

@@ -539,6 +539,11 @@ public:
     const decltype(m_magazine)& GetMagazine() { return m_magazine; };
     float GetMagazineWeight(const decltype(m_magazine)& mag) const;
 
+#ifdef COLLISION_WPN
+    float GetHudFov();
+#endif	
+
+
 protected:
     u32 m_ef_main_weapon_type;
     u32 m_ef_weapon_type;
@@ -605,7 +610,4 @@ public:
     virtual void SetActivationSpeedOverride(Fvector const& speed);
     virtual void DumpActiveParams(shared_str const& section_name, CInifile& dst_ini) const;
     virtual shared_str const GetAnticheatSectionName() const { return cNameSect(); };
-#ifdef COLLISION_WPN	
-	float GetHudFov();
-#endif	
 };
