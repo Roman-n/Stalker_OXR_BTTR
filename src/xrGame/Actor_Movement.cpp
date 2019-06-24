@@ -28,7 +28,12 @@ static const float s_fLandingTime2 = 0.3f; // через сколько снят
 static const float s_fJumpTime = 0.3f;
 static const float s_fJumpGroundTime = 0.1f; // для снятия флажка Jump если на земле
 const float s_fFallTime = 0.2f;
-
+#ifdef DSAJ
+// Rietmon: Уменьшение скорости после прыжка
+float f_CoefReturnSpeed = 11.5f; // Rietmon: этот коэф. * DT 
+float s_fDecreaseSpeed = 14.f; // Rietmon: насколько уменьшаем скорость после прыжка
+float m_fDecreaseWalkAccel;
+#endif
 IC static void generate_orthonormal_basis1(const Fvector& dir, Fvector& updir, Fvector& right)
 {
     right.crossproduct(dir, updir); //. <->
@@ -219,7 +224,10 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
         }
         // jump
         m_fJumpTime -= dt;
-
+#ifdef DSAJ
+		if (m_fDecreaseWalkAccel > 0) m_fDecreaseWalkAccel -= dt * f_CoefReturnSpeed;
+		if (m_fDecreaseWalkAccel < 0) m_fDecreaseWalkAccel = 0;
+#endif		
         if (CanJump() && (mstate_wf & mcJump))
         {
             mstate_real |= mcJump;
@@ -245,7 +253,9 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 
             Jump = jumpSpd;
             m_fJumpTime = s_fJumpTime;
-
+#ifdef DSAJ
+			m_fDecreaseWalkAccel = s_fDecreaseSpeed;
+#endif			
             //уменьшить силу игрока из-за выполненого прыжка
             if (!GodMode())
                 conditions().ConditionJump(inventory().TotalWeight() / MaxCarryWeight());
@@ -303,7 +313,11 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
             float scale = vControlAccel.magnitude();
             if (scale > EPS)
             {
+#ifdef DSAJ
+				scale	=	(m_fWalkAccel- m_fDecreaseWalkAccel)/scale;
+#else				
                 float accel_k = m_fWalkAccel;
+#endif				
                 TIItemContainer::iterator it = inventory().m_belt.begin();
                 TIItemContainer::iterator ite = inventory().m_belt.end();
                 for (; it != ite; ++it)
