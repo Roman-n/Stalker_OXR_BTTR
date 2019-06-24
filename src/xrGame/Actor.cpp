@@ -203,7 +203,9 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 
     // Alex ADD: for smooth crouch fix
     CurrentHeight = 0.f;
-
+#ifdef HIT_SLOWMO
+	hit_slowmo = 0.f;
+#endif	
     m_night_vision = NULL;
     m_bNightVisionAllow = true;
     m_bNightVisionOn = false;
@@ -331,7 +333,9 @@ void CActor::Load(LPCSTR section)
 
     m_fWalk_StrafeFactor = READ_IF_EXISTS(pSettings, r_float, section, "walk_strafe_coef", 1.0f);
     m_fRun_StrafeFactor = READ_IF_EXISTS(pSettings, r_float, section, "run_strafe_coef", 1.0f);
-
+#ifdef HIT_SLOWMO
+	m_hit_slowmo_jump = READ_IF_EXISTS( pSettings, r_bool, section, "hit_slowmo_jump", true );
+#endif	
     m_fCamHeightFactor = pSettings->r_float(section, "camera_height_factor");
     character_physics_support()->movement()->SetJumpUpVelocity(m_fJumpSpeed);
     float AirControlParam = pSettings->r_float(section, "air_control_param");

@@ -643,9 +643,14 @@ bool CActor::CanSprint()
 
 bool CActor::CanJump()
 {
+#ifdef HIT_SLOWMO	
+	bool can_Jump = /*!IsLimping() &&*/
+		!character_physics_support()->movement()->PHCapture() &&((mstate_real&mcJump)==0) && (m_fJumpTime<=0.f) && 
+		( !m_hit_slowmo_jump || fis_zero( hit_slowmo ) ) && !m_bJumpKeyPressed &&!m_bZoomAimingMode;
+#else
     bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() &&
         ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && !m_bJumpKeyPressed && !IsZoomAimingMode();
-
+#endif	
     return can_Jump;
 }
 

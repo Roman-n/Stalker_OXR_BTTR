@@ -206,6 +206,9 @@ protected:
     // Death
     float m_hit_slowmo;
     float m_hit_probability;
+#ifdef HIT_SLOWMO
+	bool  m_hit_slowmo_jump;
+#endif	
     s8 m_block_sprint_counter;
 
     // media
