@@ -72,7 +72,7 @@ void light::set_texture(LPCSTR name)
         return;
     }
 
-#pragma todo("Only shadowed spot implements projective texture")
+//#pragma todo("Only shadowed spot implements projective texture")
     string256 temp;
 
     strconcat(sizeof(temp), temp, "r2\\accum_spot_", name);

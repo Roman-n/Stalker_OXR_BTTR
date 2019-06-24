@@ -1,6 +1,5 @@
-//#define CHARACTER_PHYSICS_SUPPORT //(?) Каво1
-//#ifndef CHARACTER_PHYSICS_SUPPORT
-#pragma once
+#ifndef CHARACTER_PHYSICS_SUPPORT
+#define CHARACTER_PHYSICS_SUPPORT
 #include "alife_space.h"
 #include "PHSkeleton.h"
 #include "Entity_Alive.h"
@@ -88,11 +87,13 @@ private:
 
 public:
     EType Type() { return m_eType; }
+
 private:
     EState STate() { return m_eState; }
     void SetState(EState astate) { m_eState = astate; }
     IC bool isDead() { return m_eState == esDead; }
     IC bool isAlive() { return !m_pPhysicsShell; }
+
 protected:
     virtual void SpawnInitPhysics(CSE_Abstract* D);
     virtual CPhysicsShellHolder* PPhysicsShellHolder() { return m_EntityAlife.PhysicsShellHolder(); }
@@ -116,7 +117,7 @@ public:
     void CreateCharacterSafe();
     void CreateCharacter();
     bool CollisionCorrectObjPos();
-   
+
     void in_UpdateCL();
     void in_shedule_Update(u32 DT);
     void in_NetSpawn(CSE_Abstract* e);
@@ -181,4 +182,4 @@ private:
     void UpdateCollisionActivatingDellay();
     void SpawnCharacterCreate();
 };
-//#endif // CHARACTER_PHYSICS_SUPPORT
+#endif // CHARACTER_PHYSICS_SUPPORT

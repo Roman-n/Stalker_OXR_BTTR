@@ -532,8 +532,8 @@ void CWeapon::Load(LPCSTR section)
 		m_nearwall_dist_min = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_dist_min", 0.5f);
 		m_nearwall_dist_max = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_dist_max", 1.f);
 		m_nearwall_speed_mod = READ_IF_EXISTS(pSettings, r_float, section, "nearwall_speed_mod", 10.f);
-#endif	
 	}
+#endif
 }
 
 void CWeapon::LoadFireParams(LPCSTR section)

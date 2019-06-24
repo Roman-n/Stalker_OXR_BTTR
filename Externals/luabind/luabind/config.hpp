@@ -42,7 +42,7 @@
 #define LUABIND_MAX_BASES 1
 #endif
 
-#ifdef COC_EDITION
+#ifdef Call_of_Chernobyl_OXR
 # ifndef LUABIND_NO_ERROR_CHECKING
 #  define LUABIND_NO_ERROR_CHECKING
 # endif

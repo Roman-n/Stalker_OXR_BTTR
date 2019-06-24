@@ -14,7 +14,7 @@ void CPHShell::applyHit(const Fvector& pos, const Fvector& dir, float val, const
 {
     if (id == u16(-1))
         return; //
-#pragma todo("Kosya to kosya:this code shold treat all hit types")
+//#pragma todo("Kosya to kosya:this code shold treat all hit types")
     if (!m_pKinematics)
     {
         applyImpulseTrace(pos, dir, val);

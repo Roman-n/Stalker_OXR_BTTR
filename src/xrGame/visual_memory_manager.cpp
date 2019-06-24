@@ -27,6 +27,7 @@
 #include "client_spawn_manager.h"
 #include "memory_manager.h"
 #include "ai/monsters/basemonster/base_monster.h"
+#include "ai/monsters/zombie/zombie.h"
 
 #ifndef MASTER_GOLD
 #include "actor.h"
@@ -435,17 +436,18 @@ bool CVisualMemoryManager::should_ignore_object(IGameObject const* object) const
     }
     else
 #endif // MASTER_GOLD
-
-    CBaseMonster const* monster = smart_cast<CBaseMonster const*>(object);
-	
-	if(monster)		
+        
+    if (CBaseMonster const* const monster = smart_cast<CBaseMonster const*>(object))
     {
         if (!monster->can_be_seen())
+        {
             return true;
-	CZombie const* zombie = smart_cast<CZombie const*>(object);	
-	
+        }
+    CZombie const* zombie = smart_cast<CZombie const*>(object);	
 		if (zombie && zombie->fake_death_is_active())
+		{	
 			return true;
+		}	
     }
 
     return false;

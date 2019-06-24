@@ -44,6 +44,7 @@
 #define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
 #define COLLISIA_ACTIVE_ITEM                        // Коллизия активного предмета
 #define DIST_TO_POINT_CS							// Показать дистанцию до цели на карте 
+#define NEW_ZOMBIE						        	// НПС не видят зомби пока активна фейк смерть
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -70,4 +71,3 @@
 //#define LOST_ALPHA_HUD_IND				        // Движковые индикаторы на худ как в Лост Альфе
 //#define AURA_CONTROLLER_FIX				        // Фикс звука ауры контролера при смерти гг, при перезагрузки звук продолжал играть
 //#define VOLUMETRIK_TORCH					        // Объемный свет фонаря
-//#define NEW_ZOMBIE						        // НПС не видят зомби пока активна фейк смерть

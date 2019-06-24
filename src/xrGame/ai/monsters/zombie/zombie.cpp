@@ -85,7 +85,7 @@ void CZombie::reinit()
     time_dead_start = 0;
     last_hit_frame = 0;
     time_resurrect = 0;
-#ifdef 	NEW_ZOMBIE
+#ifdef NEW_ZOMBIE
 	fakedeath_is_active		= false;
 #endif	
     fake_death_left = fake_death_count;
