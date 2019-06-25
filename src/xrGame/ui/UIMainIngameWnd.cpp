@@ -153,7 +153,7 @@ void CUIMainIngameWnd::Init()
     UIWeaponJammedIcon->Show(false);
 	
 #ifdef LOST_ALPHA_HUD_IND
-    xml_init.InitStatic = UIHelper::CreateStatic(uiXml, "radiation_static_hud_la", NULL);
+    UIRadiaitionIcon = UIHelper::CreateStatic(uiXml, "radiation_static_hud_la", NULL);
     UIRadiaitionIcon->Show(true);
 #endif
 
