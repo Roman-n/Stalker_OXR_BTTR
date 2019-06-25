@@ -315,6 +315,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
             {
 #ifdef DSAJ
 				scale	=	(m_fWalkAccel- m_fDecreaseWalkAccel)/scale;
+                float accel_k = (m_fWalkAccel - m_fDecreaseWalkAccel)/scale;
 #else				
                 float accel_k = m_fWalkAccel;
 #endif				
@@ -660,7 +661,7 @@ bool CActor::CanJump()
 #ifdef HIT_SLOWMO	
 	bool can_Jump = /*!IsLimping() &&*/
 		!character_physics_support()->movement()->PHCapture() &&((mstate_real&mcJump)==0) && (m_fJumpTime<=0.f) && 
-		( !m_hit_slowmo_jump || fis_zero( hit_slowmo ) ) && !m_bJumpKeyPressed &&!m_bZoomAimingMode;
+		( !m_hit_slowmo_jump || fis_zero( m_hit_slowmo ) ) && !m_bJumpKeyPressed &&!m_bZoomAimingMode;
 #else
     bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() &&
         ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && !m_bJumpKeyPressed && !IsZoomAimingMode();

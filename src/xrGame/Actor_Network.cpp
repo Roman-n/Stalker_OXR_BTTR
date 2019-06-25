@@ -620,9 +620,9 @@ BOOL CActor::net_Spawn(CSE_Abstract* DC)
     {
         setEnabled(TRUE);
     }
-
+#ifdef HIT_SLOWMO
     m_hit_slowmo = 0.f;
-
+#endif
     OnChangeVisual();
     //----------------------------------
     m_bAllowDeathRemove = false;

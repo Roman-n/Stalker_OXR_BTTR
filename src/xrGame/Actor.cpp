@@ -204,7 +204,7 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
     // Alex ADD: for smooth crouch fix
     CurrentHeight = 0.f;
 #ifdef HIT_SLOWMO
-	hit_slowmo = 0.f;
+	m_hit_slowmo = 0.f;
 #endif	
     m_night_vision = NULL;
     m_bNightVisionAllow = true;
@@ -519,7 +519,6 @@ void CActor::Hit(SHit* pHDS)
 
     // slow actor, only when he gets hit
     m_hit_slowmo = conditions().HitSlowmo(pHDS);
-
     //---------------------------------------------------------------
     if ((Level().CurrentViewEntity() == this) && !GEnv.isDedicatedServer && (HDS.hit_type == ALife::eHitTypeFireWound))
     {
@@ -855,12 +854,13 @@ void CActor::g_Physics(Fvector& _accel, float jump, float dt)
     // Correct accel
     Fvector accel;
     accel.set(_accel);
+#ifdef HIT_SLOWMO	
     m_hit_slowmo -= dt;
     if (m_hit_slowmo < 0)
         m_hit_slowmo = 0.f;
 
     accel.mul(1.f - m_hit_slowmo);
-
+#endif
     if (g_Alive())
     {
         if (mstate_real & mcClimb && !cameras[eacFirstEye]->bClampYaw)
