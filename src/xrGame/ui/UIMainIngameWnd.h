@@ -81,7 +81,9 @@ protected:
     // - голода
     // - усталости
     CUIStatic* UIWeaponJammedIcon;
-    //	CUIStatic			UIRadiaitionIcon;
+#ifdef LOST_ALPHA_HUD_IND
+    CUIStatic* UIRadiaitionIcon;
+#endif
     //	CUIStatic			UIWoundIcon;
     //	CUIStatic			UIStarvationIcon;
     //	CUIStatic			UIPsyHealthIcon;
@@ -99,7 +101,9 @@ public:
     {
         ewiAll = 0,
         ewiWeaponJammed,
-        //		ewiRadiation,
+#ifdef LOST_ALPHA_HUD_IND		
+        ewiRadiation,
+#endif		
         //		ewiWound,
         //		ewiStarvation,
         //		ewiPsyHealth,

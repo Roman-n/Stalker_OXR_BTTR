@@ -47,6 +47,7 @@
 #define NEW_ZOMBIE						        	// НПС не видят зомби пока активна фейк смерть
 #define HIT_SLOWMO									// Опциональный запрет на прыжок при замедлении после укуса
 #define DSAJ										// Снижение скорости после прыжка
+#define LOST_ALPHA_HUD_IND				        	// Движковые индикаторы на худ как в Лост Альфе
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -70,6 +71,5 @@
 #endif
 
 // Планы: 
-//#define LOST_ALPHA_HUD_IND				        // Движковые индикаторы на худ как в Лост Альфе
 //#define AURA_CONTROLLER_FIX				        // Фикс звука ауры контролера при смерти гг, при перезагрузки звук продолжал играть
 //#define VOLUMETRIK_TORCH					        // Объемный свет фонаря
