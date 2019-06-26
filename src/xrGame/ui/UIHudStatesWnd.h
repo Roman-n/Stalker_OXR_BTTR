@@ -39,6 +39,31 @@ public:
     CUIStatic* m_overweight_lvl_1;
     CUIStatic* m_overweight_lvl_2;
     CUIStatic* m_overweight_lvl_3;
+
+    CUIStatic* m_broken_helmet_lvl_0;
+    CUIStatic* m_broken_helmet_lvl_1;
+    CUIStatic* m_broken_helmet_lvl_2;
+    CUIStatic* m_broken_helmet_lvl_3;
+
+    CUIStatic* m_broken_weapon_lvl_0;
+    CUIStatic* m_broken_weapon_lvl_1;
+    CUIStatic* m_broken_weapon_lvl_2;
+    CUIStatic* m_broken_weapon_lvl_3;
+
+    CUIStatic* m_broken_armor_lvl_0;
+    CUIStatic* m_broken_armor_lvl_1;
+    CUIStatic* m_broken_armor_lvl_2;
+    CUIStatic* m_broken_armor_lvl_3;
+
+    CUIStatic* m_thirst_lvl_0;
+    CUIStatic* m_thirst_lvl_1;
+    CUIStatic* m_thirst_lvl_2;
+    CUIStatic* m_thirst_lvl_3;
+
+    CUIStatic* m_sleep_lvl_0;
+    CUIStatic* m_sleep_lvl_1;
+    CUIStatic* m_sleep_lvl_2;
+    CUIStatic* m_sleep_lvl_3;
 #endif	
 	CUIStatic* m_eff_bleeding;
 	CUIStatic* m_psy_grenn;

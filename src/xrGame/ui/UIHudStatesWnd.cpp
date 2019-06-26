@@ -92,37 +92,97 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
     m_bleeding_lvl_0->Show(true); // Белый значок всегда виден
 
     m_bleeding_lvl_1 = UIHelper::CreateStatic(xml, "bleeding_lvl_1", this);
-    m_bleeding_lvl_1->Show(true);
+    m_bleeding_lvl_1->Show(false);
 
     m_bleeding_lvl_2 = UIHelper::CreateStatic(xml, "bleeding_lvl_2", this);
-    m_bleeding_lvl_2->Show(true);
+    m_bleeding_lvl_2->Show(false);
 
     m_bleeding_lvl_3 = UIHelper::CreateStatic(xml, "bleeding_lvl_3", this);
-    m_bleeding_lvl_3->Show(true);
+    m_bleeding_lvl_3->Show(false);
 
     m_starvation_lvl_0 = UIHelper::CreateStatic(xml, "satiety_lvl_0", this);
     m_starvation_lvl_0->Show(true);
 
     m_starvation_lvl_1 = UIHelper::CreateStatic(xml, "satiety_lvl_1", this);
-    m_starvation_lvl_1->Show(true);
+    m_starvation_lvl_1->Show(false);
 
     m_starvation_lvl_2 = UIHelper::CreateStatic(xml, "satiety_lvl_2", this);
-    m_starvation_lvl_2->Show(true);
+    m_starvation_lvl_2->Show(false);
 
     m_starvation_lvl_3 = UIHelper::CreateStatic(xml, "satiety_lvl_3", this);
-    m_starvation_lvl_3->Show(true);
+    m_starvation_lvl_3->Show(false);
 
     m_overweight_lvl_0 = UIHelper::CreateStatic(xml, "overweight_lvl_0", this);
     m_overweight_lvl_0->Show(true);
 
     m_overweight_lvl_1 = UIHelper::CreateStatic(xml, "overweight_lvl_1", this);
-    m_overweight_lvl_1->Show(true);
+    m_overweight_lvl_1->Show(false);
 
     m_overweight_lvl_2 = UIHelper::CreateStatic(xml, "overweight_lvl_2", this);
-    m_overweight_lvl_2->Show(true);
+    m_overweight_lvl_2->Show(false);
 
     m_overweight_lvl_3 = UIHelper::CreateStatic(xml, "overweight_lvl_3", this);
-    m_overweight_lvl_3->Show(true);
+    m_overweight_lvl_3->Show(false);
+
+    m_broken_helmet_lvl_0 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_0", this);
+    m_broken_helmet_lvl_0->Show(true);
+
+    m_broken_helmet_lvl_1 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_1", this);
+    m_broken_helmet_lvl_1->Show(false);
+
+    m_broken_helmet_lvl_2 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_2", this);
+    m_broken_helmet_lvl_2->Show(false);
+
+    m_broken_helmet_lvl_3 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_3", this);
+    m_broken_helmet_lvl_3->Show(false);
+
+    m_broken_weapon_lvl_0 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_0", this);
+    m_broken_weapon_lvl_0->Show(true);
+
+    m_broken_weapon_lvl_1 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_1", this);
+    m_broken_weapon_lvl_1->Show(false);
+
+    m_broken_weapon_lvl_2 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_2", this);
+    m_broken_weapon_lvl_2->Show(false);
+
+    m_broken_weapon_lvl_3 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_3", this);
+    m_broken_weapon_lvl_3->Show(false);
+
+    m_broken_armor_lvl_0 = UIHelper::CreateStatic(xml, "broken_armor_lvl_0", this);
+    m_broken_armor_lvl_0->Show(true);
+
+    m_broken_armor_lvl_1 = UIHelper::CreateStatic(xml, "broken_armor_lvl_1", this);
+    m_broken_armor_lvl_1->Show(false);
+
+    m_broken_armor_lvl_2 = UIHelper::CreateStatic(xml, "broken_armor_lvl_2", this);
+    m_broken_armor_lvl_2->Show(false);
+
+    m_broken_armor_lvl_3 = UIHelper::CreateStatic(xml, "broken_armor_lvl_3", this);
+    m_broken_armor_lvl_3->Show(false);
+
+    m_thirst_lvl_0 = UIHelper::CreateStatic(xml, "thirst_lvl_0", this);
+    m_thirst_lvl_0->Show(true);
+
+    m_thirst_lvl_1 = UIHelper::CreateStatic(xml, "thirst_lvl_1", this);
+    m_thirst_lvl_1->Show(false);
+
+    m_thirst_lvl_2 = UIHelper::CreateStatic(xml, "thirst_lvl_2", this);
+    m_thirst_lvl_2->Show(false);
+
+    m_thirst_lvl_3 = UIHelper::CreateStatic(xml, "thirst_lvl_3", this);
+    m_thirst_lvl_3->Show(false);
+
+    m_sleep_lvl_0 = UIHelper::CreateStatic(xml, "sleeping_lvl_0", this);
+    m_sleep_lvl_0->Show(true);
+
+    m_sleep_lvl_1 = UIHelper::CreateStatic(xml, "sleeping_lvl_1", this);
+    m_sleep_lvl_1->Show(false);
+
+    m_sleep_lvl_2 = UIHelper::CreateStatic(xml, "sleeping_lvl_2", this);
+    m_sleep_lvl_2->Show(false);
+
+    m_sleep_lvl_3 = UIHelper::CreateStatic(xml, "sleeping_lvl_3", this);
+    m_sleep_lvl_3->Show(false);
 
 #endif
 #ifdef NEWIND
@@ -291,7 +351,7 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
             m_starvation_lvl_3->Show(false);
         }
         else
-        m_starvation_lvl_0->Show(false);
+            m_starvation_lvl_0->Show(false);
         m_starvation_lvl_1->Show(false);
         m_starvation_lvl_2->Show(false);
         m_starvation_lvl_3->Show(true);
@@ -321,11 +381,175 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
                 m_overweight_lvl_3->Show(false);
             }
             else
-            m_overweight_lvl_0->Show(false);
+                m_overweight_lvl_0->Show(false);
             m_overweight_lvl_1->Show(true);
             m_overweight_lvl_2->Show(false);
-            m_overweight_lvl_3->Show(true);
+            m_overweight_lvl_3->Show(false);
         }
+    }
+
+    u16 slot = actor->inventory().GetActiveSlot();
+    if (slot == INV_SLOT_2 || slot == INV_SLOT_3)
+    {
+        CWeapon* weapon = smart_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
+        if (weapon)
+        {
+            float condition = weapon->GetCondition();
+            float start_misf_cond = weapon->GetMisfireStartCondition();
+            float end_misf_cond = weapon->GetMisfireEndCondition();
+            if (condition < start_misf_cond)
+            {
+                m_broken_weapon_lvl_0->Show(true);
+                if (condition > (start_misf_cond + end_misf_cond) / 2)
+                { //зеленый
+                    m_broken_weapon_lvl_0->Show(false);
+                    m_broken_weapon_lvl_1->Show(true);
+                    m_broken_weapon_lvl_2->Show(false);
+                    m_broken_weapon_lvl_3->Show(false);
+                }
+
+                else if (condition > end_misf_cond)
+                { //желтый
+                    m_broken_weapon_lvl_0->Show(false);
+                    m_broken_weapon_lvl_1->Show(false);
+                    m_broken_weapon_lvl_2->Show(true);
+                    m_broken_weapon_lvl_3->Show(false);
+                }
+                else //красный
+                    m_broken_weapon_lvl_0->Show(false);
+                m_broken_weapon_lvl_1->Show(false);
+                m_broken_weapon_lvl_2->Show(false);
+                m_broken_weapon_lvl_3->Show(true);
+            }
+        }
+    }
+
+    CHelmet* helmet = smart_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
+    if (helmet)
+    {
+        float condition = helmet->GetCondition();
+        m_broken_helmet_lvl_0->Show(true);
+        if (condition < 0.75f)
+        {
+            if (condition > 0.5f)
+            { //зеленый
+                m_broken_helmet_lvl_0->Show(false);
+                m_broken_helmet_lvl_1->Show(true);
+                m_broken_helmet_lvl_2->Show(false);
+                m_broken_helmet_lvl_3->Show(false);
+            }
+            else if (condition > 0.25f)
+            { //желтый
+                m_broken_helmet_lvl_0->Show(false);
+                m_broken_helmet_lvl_1->Show(false);
+                m_broken_helmet_lvl_2->Show(true);
+                m_broken_helmet_lvl_3->Show(false);
+            }
+            else // красный
+                m_broken_helmet_lvl_0->Show(false);
+            m_broken_helmet_lvl_1->Show(false);
+            m_broken_helmet_lvl_2->Show(false);
+            m_broken_helmet_lvl_3->Show(true);
+        }
+    }
+
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(actor->inventory().ItemFromSlot(OUTFIT_SLOT));
+    if (outfit)
+    {
+        float condition = outfit->GetCondition();
+        if (condition < 0.75f)
+        {
+            m_broken_armor_lvl_0->Show(true);
+            if (condition > 0.5f) // зеленый
+            {
+                m_broken_armor_lvl_0->Show(false);
+                m_broken_armor_lvl_1->Show(true);
+                m_broken_armor_lvl_2->Show(false);
+                m_broken_armor_lvl_3->Show(false);
+            }
+            else if (condition > 0.25f)
+            { // желтый
+                m_broken_armor_lvl_0->Show(false);
+                m_broken_armor_lvl_1->Show(false);
+                m_broken_armor_lvl_2->Show(true);
+                m_broken_armor_lvl_3->Show(false);
+            }
+            else
+            m_broken_armor_lvl_0->Show(false);
+            m_broken_armor_lvl_1->Show(false);
+            m_broken_armor_lvl_2->Show(false);
+            m_broken_armor_lvl_3->Show(true);
+        }
+    }
+
+    float thirst = actor->conditions().GetThirst();
+    float thirst_critical = actor->conditions().ThirstCritical();
+    float thirst_koef =
+        (thirst - thirst_critical) / (thirst >= thirst_critical ? 1 - thirst_critical : thirst_critical);
+
+    if (thirst_koef > 0.5)
+    {
+        m_thirst_lvl_0->Show(true);
+        m_thirst_lvl_1->Show(false);
+        m_thirst_lvl_2->Show(false);
+        m_thirst_lvl_3->Show(false);
+    }
+    else
+    {
+        if (thirst_koef > 0.0f)
+        {
+            m_thirst_lvl_0->Show(false);
+            m_thirst_lvl_1->Show(true);
+            m_thirst_lvl_2->Show(false);
+            m_thirst_lvl_3->Show(false);
+        }
+        else if (thirst_koef > -0.5f)
+        {
+            m_thirst_lvl_0->Show(false);
+            m_thirst_lvl_1->Show(false);
+            m_thirst_lvl_2->Show(true);
+            m_thirst_lvl_3->Show(false);
+        }
+        else
+            m_thirst_lvl_0->Show(false);
+        m_thirst_lvl_1->Show(false);
+        m_thirst_lvl_2->Show(false);
+        m_thirst_lvl_3->Show(true);
+    }
+
+    float sleep = actor->conditions().GetSleep();
+    float sleep_critical = actor->conditions().SleepCritical();
+    float sleep_koef =
+        (sleep - sleep_critical) / (sleep >= sleep_critical ? 1 - sleep_critical : sleep_critical);
+
+    if (sleep_koef > 0.5)
+    {
+        m_sleep_lvl_0->Show(true);
+        m_sleep_lvl_1->Show(false);
+        m_sleep_lvl_2->Show(false);
+        m_sleep_lvl_3->Show(false);
+    }
+    else
+    {
+        if (sleep_koef > 0.0f)
+        {
+            m_sleep_lvl_0->Show(false);
+            m_sleep_lvl_1->Show(true);
+            m_sleep_lvl_2->Show(false);
+            m_sleep_lvl_3->Show(false);
+        }
+        else if (sleep_koef > -0.5f)
+        {
+            m_sleep_lvl_0->Show(false);
+            m_sleep_lvl_1->Show(false);
+            m_sleep_lvl_2->Show(true);
+            m_sleep_lvl_3->Show(false);
+        }
+        else
+            m_sleep_lvl_0->Show(false);
+        m_sleep_lvl_1->Show(false);
+        m_sleep_lvl_2->Show(false);
+        m_sleep_lvl_3->Show(true);
     }
 
 /////////////////////////////////////////////////////////////
