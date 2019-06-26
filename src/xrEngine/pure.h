@@ -106,7 +106,9 @@ public:
         {
             for (const auto& message : messages)
                 if (message.Prio != REG_PRIORITY_INVALID)
+#ifdef __ERROR_PURE_
                     message.Object->OnPure();
+#endif
         }
 
         if (changed)

@@ -48,6 +48,7 @@
 #define DSAJ										// Снижение скорости после прыжка
 #define LOST_ALPHA_HUD_IND				        	// Движковые индикаторы на худ как в Лост Альфе
 #define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
+#define __ERROR_PURE_								// НЕ ВЫКЛЮЧАТЬ!!!; Требует фикса, иногда вылетает при запуске движка, потому что одновременно два потока вторгаются в pure.h
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
