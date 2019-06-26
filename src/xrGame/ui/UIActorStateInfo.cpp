@@ -50,9 +50,8 @@ void ui_actor_state_wnd::init_from_xml(CUIXml& xml, LPCSTR path)
         AttachChild(m_state[i]);
         m_state[i]->set_hint_wnd(m_hint_wnd);
     }
-    m_state[stt_stamina]->init_from_xml( xml, "stamina_state" );
+    //	m_state[stt_stamina]->init_from_xml( xml, "stamina_state" );
     m_state[stt_health]->init_from_xml(xml, "health_state");
-	m_state[stt_psyhealth]->init_from_xml( xml, "psyhealth_state");
     m_state[stt_bleeding]->init_from_xml(xml, "bleeding_state");
     m_state[stt_radiation]->init_from_xml(xml, "radiation_state");
     //	m_state[stt_armor]->init_from_xml( xml, "armor_state");
@@ -79,20 +78,8 @@ void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
     }
 
     float value = 0.0f;
-	//OldSerpskiStalker
-	// Вывод в инвентарь здоровья
-	{
-	value = actor->conditions().GetHealth(); 			m_state[stt_health]->set_progress(value);
-	}
-	// Вывод в инвентарь пси-здоровья
-	{
-	value = actor->conditions().GetPsyHealth();						m_state[stt_psyhealth]->set_progress( value );
-	}	
-	// Вывод в инвентарь стамины
-	{
-	value = actor->conditions().GetPower();						m_state[stt_stamina]->set_progress( value );
-	}		
-   
+
+    value = actor->conditions().GetHealth();
     value = floor(value * 55) / 55; // number of sticks in progress bar
     // show bleeding icon
     m_state[stt_health]->set_progress(value);

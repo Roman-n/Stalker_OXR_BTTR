@@ -40,9 +40,7 @@ IC static void CActor_Export(lua_State* luaState)
             .def("GetFireDispersion", &CActor::GetFireDispertion)
             .def("GetWeaponAccuracy", &CActor::GetWeaponAccuracy)
             .def("use_HolderEx", &CActor::use_HolderEx)
-#ifdef HIT_SLOWMO		
-			.def_readwrite("hit_slowmo", &CActor::hit_slowmo)
-#endif			
+	
             .def_readwrite("m_fWalkAccel", &CActor::m_fWalkAccel)
             .def_readwrite("m_fJumpSpeed", &CActor::m_fJumpSpeed)
             .def_readwrite("m_fRunFactor", &CActor::m_fRunFactor)

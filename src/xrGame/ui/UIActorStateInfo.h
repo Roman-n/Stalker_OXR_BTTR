@@ -29,9 +29,8 @@ private:
 
     enum EStateType
     {
-        stt_stamina,
-        stt_health,
-		stt_psyhealth,
+        //		stt_stamina = 0,
+        stt_health = 0,
         stt_bleeding,
         stt_radiation,
         //		stt_armor,

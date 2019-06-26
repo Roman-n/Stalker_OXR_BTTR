@@ -161,7 +161,7 @@ public:
 
 private:
     void CreateSkeleton(CPhysicsShell*& pShell);
-
+	void AddActiveWeaponCollision();
     void ActivateShell(IGameObject* who);
     void CreateShell(IGameObject* who, Fvector& dp, Fvector& velocity);
     void bone_chain_disable(u16 bone, u16 r_bone, IKinematics& K);
@@ -173,9 +173,6 @@ private:
     void CreateIKController();
     void DestroyIKController();
     bool CollisionCorrectObjPos(const Fvector& start_from, bool character_create = false);
-#ifdef COLLISIA_ACTIVE_ITEM
-    void AddActiveWeaponCollision();
-#endif
     void FlyTo(const Fvector& disp);
     IC void UpdateDeathAnims();
     IC bool DoCharacterShellCollide();

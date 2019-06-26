@@ -623,32 +623,6 @@ void CMapLocation::UpdateSpotPointer(CUICustomMap* map, CMapSpotPointer* sp)
 
             sp->SetTextureColor(subst_alpha(clr, a));
         }
-#ifdef DIST_TO_POINT_CS		
-		if (IsGameTypeSingle())
-		{
-			float dist_to_target1 = Level().CurrentEntity()->Position().distance_to(ttt);
-			CGameTask*	T = Level().GameTaskManager().HasGameTask(this, true);
-			if(T && T->GetTaskType()==eTaskTypeStoryline)
-			{
-				map->SetPointerDistance1	(dist_to_target1);
-			}
-
-			u32 clr = sp->GetTextureColor();
-			u32 a	= 0xff;
-			if(dist_to_target1>=0.0f && dist_to_target1<10.0f)
-				a=255;
-			else
-			if(dist_to_target1>=10.0f && dist_to_target1<50.0f)
-				a=200;
-			else
-			if(dist_to_target1>=50.0f && dist_to_target1<100.0f)
-				a=150;
-			else
-				a=100;
-
-			sp->SetTextureColor( subst_alpha(clr,a));
-		}
-#endif		
     }
 }
 

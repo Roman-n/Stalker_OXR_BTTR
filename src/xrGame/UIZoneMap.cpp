@@ -43,14 +43,12 @@ void CUIZoneMap::Init()
 		
 	xml_init.InitStatic				(uiXml, "minimap:center",		0, &m_center);
 	
-//	if(IsGameTypeSingle())
-//	{////////////////////////////////////////////////////////////////////////////////////////////
-	xml_init.InitWindow			(uiXml, "minimap:dist_text", 0, &m_pointerDistanceText);
-	m_background.AttachChild	(&m_pointerDistanceText);
-//	}/////////////////////////////////////////////////////////////////////////////////////////////
-	
 	m_clock_wnd						= UIHelper::CreateStatic(uiXml, "minimap:clock_wnd", &m_background);
 
+    if (IsGameTypeSingle())
+    {
+        m_pointerDistanceText = UIHelper::CreateStatic(uiXml, "minimap:background:dist_text", &m_background);
+    }
 
 	m_activeMap						= new CUIMiniMap();
 	m_clipFrame.AttachChild			(m_activeMap);
@@ -127,15 +125,19 @@ void CUIZoneMap::UpdateRadar		(Fvector pos)
 	m_background.Update();
 	m_activeMap->SetActivePoint( pos );
 #ifdef DIST_TO_POINT_CS
-	if(IsGameTypeSingle()){
-		if(m_activeMap->GetPointerDistance1()>0.5f){
-			string64	str;
-			sprintf_s		(str,"%.0f m",m_activeMap->GetPointerDistance1());
-			m_pointerDistanceText.SetText(str);
-		}else{
-			m_pointerDistanceText.SetText("");
-		}
-	}
+    if (m_pointerDistanceText)
+    {
+        if (m_activeMap->GetPointerDistance() > 0.5f)
+        {
+            string64 str;
+            xr_sprintf(str, "%.0f m", m_activeMap->GetPointerDistance());
+            m_pointerDistanceText->TextItemControl()->SetText(str);
+        }
+        else
+        {
+            m_pointerDistanceText->TextItemControl()->SetText("");
+        }
+    }
 #endif
 }
 

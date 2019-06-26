@@ -23,11 +23,13 @@ private:
 	CUIStatic					m_center;
 	CUIStatic					m_times;
 	CUIStatic					m_compass;
-//	CUIStatic					m_pointerDistanceText;
+#ifdef DIST_TO_POINT_CS
+    CUIStatic*					m_pointerDistanceText;
+#endif
 	CUIWindow					m_clipFrame;
 	CUIStatic					m_Counter;
 	CUITextWnd					m_Counter_text;
-	CUITextWnd					m_pointerDistanceText;	
+//	CUITextWnd					m_pointerDistanceText;	
 	u8							m_current_map_idx;
 
 public:

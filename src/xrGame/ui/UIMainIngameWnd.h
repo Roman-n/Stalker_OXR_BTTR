@@ -81,16 +81,8 @@ protected:
     // - голода
     // - усталости
     CUIStatic* UIWeaponJammedIcon;
-#ifdef LOST_ALPHA_HUD_IND
-    CUIStatic* UIRadiaitionIcon;
-#endif
-    //	CUIStatic			UIWoundIcon;
-    //	CUIStatic			UIStarvationIcon;
-    //	CUIStatic			UIPsyHealthIcon;
     CUIStatic* UIInvincibleIcon;
-    //	CUIStatic			UISleepIcon;
     CUIStatic* UIArtefactIcon;
-
     CUIScrollView* m_UIIcons;
     CUIWindow* m_pMPChatWnd;
     CUIWindow* m_pMPLogWnd;
@@ -101,13 +93,6 @@ public:
     {
         ewiAll = 0,
         ewiWeaponJammed,
-#ifdef LOST_ALPHA_HUD_IND		
-        ewiRadiation,
-#endif		
-        //		ewiWound,
-        //		ewiStarvation,
-        //		ewiPsyHealth,
-        //		ewiSleep,
         ewiInvincible,
         ewiArtefact,
     };

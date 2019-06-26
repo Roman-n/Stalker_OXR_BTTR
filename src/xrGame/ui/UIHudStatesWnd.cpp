@@ -62,9 +62,7 @@ ALife::EInfluenceType CUIHudStatesWnd::get_indik_type(ALife::EHitType hit_type)
     case ALife::eHitTypeBurn: iz_type = ALife::infl_fire; break;
     case ALife::eHitTypeChemicalBurn: iz_type = ALife::infl_acid; break;
     case ALife::eHitTypeTelepatic: iz_type = ALife::infl_psi; break;
-    case ALife::eHitTypeShock:
-        iz_type = ALife::infl_electra;
-        break; // it hasnt CStatic
+    case ALife::eHitTypeShock: iz_type = ALife::infl_electra; break; // it hasnt CStatic
 
     case ALife::eHitTypeStrike:
     case ALife::eHitTypeWound:
@@ -89,86 +87,81 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
     m_back = UIHelper::CreateStatic(xml, "back", this);
     m_ui_health_bar = UIHelper::CreateProgressBar(xml, "progress_bar_health", this);
     m_ui_stamina_bar = UIHelper::CreateProgressBar(xml, "progress_bar_stamina", this);
-#ifdef NEWIND	
-	m_ui_psy_health   = UIHelper::CreateProgressBar( xml, "progress_bar_PsyHealth", this );	
-	m_ui_armor_bar    = UIHelper::CreateProgressBar( xml, "progress_bar_armor", this );
-	m_static_armor    = UIHelper::CreateStatic( xml, "static_armor", this );
-	m_bleeding = UIHelper::CreateStatic( xml, "bleeding", this );
-	m_bleeding->Show( false );
-	m_eff_bleeding = UIHelper::CreateStatic( xml, "eff_bleeding_screen", this );
-	m_eff_bleeding->Show( false );
-	m_psy_grenn = UIHelper::CreateStatic( xml, "GetPsy_grenn", this );
-	m_psy_grenn->Show( false );
-	m_psy_yellow = UIHelper::CreateStatic( xml, "GetPsy_yellow", this );
-	m_psy_yellow->Show( false );
-	m_psy_red = UIHelper::CreateStatic( xml, "GetPsy_red", this );
-	m_psy_red->Show( false );	
-	
-	m_weapon_ammo				= UIHelper::CreateTextWnd(xml, "ammo_name", this);
-	
-#endif	
+#ifdef LOST_ALPHA_HUD_IND
+    m_bleeding_lvl_0 = UIHelper::CreateStatic(xml, "bleeding_lvl_0", this);
+    m_bleeding_lvl_0->Show(true); // Белый значок всегда виден
+
+    m_bleeding_lvl_1 = UIHelper::CreateStatic(xml, "bleeding_lvl_1", this);
+    m_bleeding_lvl_1->Show(true);
+
+    m_bleeding_lvl_2 = UIHelper::CreateStatic(xml, "bleeding_lvl_2", this);
+    m_bleeding_lvl_2->Show(true);
+
+    m_bleeding_lvl_3 = UIHelper::CreateStatic(xml, "bleeding_lvl_3", this);
+    m_bleeding_lvl_3->Show(true);
+
+    m_starvation_lvl_0 = UIHelper::CreateStatic(xml, "satiety_lvl_0", this);
+    m_starvation_lvl_0->Show(true);
+
+    m_starvation_lvl_1 = UIHelper::CreateStatic(xml, "satiety_lvl_1", this);
+    m_starvation_lvl_1->Show(true);
+
+    m_starvation_lvl_2 = UIHelper::CreateStatic(xml, "satiety_lvl_2", this);
+    m_starvation_lvl_2->Show(true);
+
+    m_starvation_lvl_3 = UIHelper::CreateStatic(xml, "satiety_lvl_3", this);
+    m_starvation_lvl_3->Show(true);
+
+    m_overweight_lvl_0 = UIHelper::CreateStatic(xml, "overweight_lvl_0", this);
+    m_overweight_lvl_0->Show(true);
+
+    m_overweight_lvl_1 = UIHelper::CreateStatic(xml, "overweight_lvl_1", this);
+    m_overweight_lvl_1->Show(true);
+
+    m_overweight_lvl_2 = UIHelper::CreateStatic(xml, "overweight_lvl_2", this);
+    m_overweight_lvl_2->Show(true);
+
+    m_overweight_lvl_3 = UIHelper::CreateStatic(xml, "overweight_lvl_3", this);
+    m_overweight_lvl_3->Show(true);
+
+#endif
+#ifdef NEWIND
+    m_ui_psy_health = UIHelper::CreateProgressBar(xml, "progress_bar_PsyHealth", this);
+    m_ui_armor_bar = UIHelper::CreateProgressBar(xml, "progress_bar_armor", this);
+    m_static_armor = UIHelper::CreateStatic(xml, "static_armor", this);
+    m_bleeding = UIHelper::CreateStatic(xml, "bleeding", this);
+    m_bleeding->Show(false);
+    m_eff_bleeding = UIHelper::CreateStatic(xml, "eff_bleeding_screen", this);
+    m_eff_bleeding->Show(false);
+    m_psy_grenn = UIHelper::CreateStatic(xml, "GetPsy_grenn", this);
+    m_psy_grenn->Show(false);
+    m_psy_yellow = UIHelper::CreateStatic(xml, "GetPsy_yellow", this);
+    m_psy_yellow->Show(false);
+    m_psy_red = UIHelper::CreateStatic(xml, "GetPsy_red", this);
+    m_psy_red->Show(false);
+    m_weapon_ammo = UIHelper::CreateTextWnd(xml, "ammo_name", this);
+#endif
     m_indik[ALife::infl_rad] = UIHelper::CreateStatic(xml, "indik_rad", this);
     m_indik[ALife::infl_fire] = UIHelper::CreateStatic(xml, "indik_fire", this);
     m_indik[ALife::infl_acid] = UIHelper::CreateStatic(xml, "indik_acid", this);
     m_indik[ALife::infl_psi] = UIHelper::CreateStatic(xml, "indik_psi", this);
 
-
     m_ui_weapon_cur_ammo = UIHelper::CreateTextWnd(xml, "static_cur_ammo", this);
     m_ui_weapon_fmj_ammo = UIHelper::CreateTextWnd(xml, "static_fmj_ammo", this);
     m_ui_weapon_ap_ammo = UIHelper::CreateTextWnd(xml, "static_ap_ammo", this);
-    m_ui_weapon_third_ammo = UIHelper::CreateTextWnd(xml, "static_third_ammo", this); //Alundaio: Option to display a third ammo type
+    m_ui_weapon_third_ammo =
+        UIHelper::CreateTextWnd(xml, "static_third_ammo", this); // Alundaio: Option to display a third ammo type
 
     m_ui_weapon_ammo_color_active = CUIXmlInit::GetColor(xml, "active_ammo_color", 0, color_rgba(238, 155, 23, 255));
-    m_ui_weapon_ammo_color_inactive = CUIXmlInit::GetColor(xml, "inactive_ammo_color", 0, color_rgba(238, 155, 23, 150));
+    m_ui_weapon_ammo_color_inactive =
+        CUIXmlInit::GetColor(xml, "inactive_ammo_color", 0, color_rgba(238, 155, 23, 150));
 
     m_fire_mode = UIHelper::CreateTextWnd(xml, "static_fire_mode", this);
     m_ui_grenade = UIHelper::CreateTextWnd(xml, "static_grenade", this);
 
     m_ui_weapon_icon = UIHelper::CreateStatic(xml, "static_wpn_icon", this);
     m_ui_weapon_icon->SetShader(InventoryUtilities::GetEquipmentIconsShader());
-    //	m_ui_weapon_icon->Enable	( false );
     m_ui_weapon_icon_rect = m_ui_weapon_icon->GetWndRect();
-
-    //	m_ui_armor_bar    = UIHelper::CreateProgressBar( xml, "progress_bar_armor", this );
-
-    //	m_progress_self = new CUIProgressShape();
-    //	m_progress_self->SetAutoDelete(true);
-    //	AttachChild( m_progress_self );
-    //	CUIXmlInit::InitProgressShape( xml, "progress", 0, m_progress_self );
-
-    //	m_arrow				= new UI_Arrow();
-    //	m_arrow_shadow		= new UI_Arrow();
-
-    //	m_arrow->init_from_xml( xml, "arrow", this );
-    //	m_arrow_shadow->init_from_xml( xml, "arrow_shadow", this );
-
-    //	m_back_over_arrow = UIHelper::CreateStatic( xml, "back_over_arrow", this );
-
-    /*
-        m_bleeding_lev1 = UIHelper::CreateStatic( xml, "bleeding_level_1", this );
-        m_bleeding_lev1->Show( false );
-
-        m_bleeding_lev2 = UIHelper::CreateStatic( xml, "bleeding_level_2", this );
-        m_bleeding_lev2->Show( false );
-
-        m_bleeding_lev3 = UIHelper::CreateStatic( xml, "bleeding_level_3", this );
-        m_bleeding_lev3->Show( false );
-
-        m_radiation_lev1 = UIHelper::CreateStatic( xml, "radiation_level_1", this );
-        m_radiation_lev1->Show( false );
-
-        m_radiation_lev2 = UIHelper::CreateStatic( xml, "radiation_level_2", this );
-        m_radiation_lev2->Show( false );
-
-        m_radiation_lev3 = UIHelper::CreateStatic( xml, "radiation_level_3", this );
-        m_radiation_lev3->Show( false );
-
-        for ( int i = 0; i < it_max; ++i )
-        {
-            m_cur_state_LA[i] = true;
-            SwitchLA( false, (ALife::EInfluenceType)i );
-        }
-    */
     xml.SetLocalRoot(stored_root);
 }
 
@@ -181,10 +174,7 @@ void CUIHudStatesWnd::Load_section()
         Level().create_hud_zones_list();
         VERIFY(Level().hud_zones_list);
     }
-
-    //	m_actor_radia_factor = pSettings->r_float( "radiation_zone_detector", "actor_radia_factor" );
     Level().hud_zones_list->load("all_zone_detector", "zone");
-
     Load_section_type(ALife::infl_rad, "radiation_zone_detector");
     Load_section_type(ALife::infl_fire, "fire_zone_detector");
     Load_section_type(ALife::infl_acid, "acid_zone_detector");
@@ -194,11 +184,6 @@ void CUIHudStatesWnd::Load_section()
 
 void CUIHudStatesWnd::Load_section_type(ALife::EInfluenceType type, LPCSTR section)
 {
-    /*m_zone_max_power[type] = pSettings->r_float( section, "max_power" );
-    if ( m_zone_max_power[type] <= 0.0f )
-    {
-        m_zone_max_power[type] = 1.0f;
-    }*/
     m_zone_feel_radius[type] = pSettings->r_float(section, "zone_radius");
     if (m_zone_feel_radius[type] <= 0.0f)
     {
@@ -230,11 +215,6 @@ void CUIHudStatesWnd::Update()
 
 void CUIHudStatesWnd::UpdateHealth(CActor* actor)
 {
-    //	if ( Device.dwTimeGlobal - m_timer_1sec > 1000 ) // 1 sec
-    //	{
-    //		m_timer_1sec = Device.dwTimeGlobal;
-    //	}
-
     float cur_health = actor->GetfHealth();
     m_ui_health_bar->SetProgressPos(iCeil(cur_health * 100.0f * 35.f) / 35.f);
     if (_abs(cur_health - m_last_health) > m_health_blink)
@@ -249,79 +229,181 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     {
         m_ui_stamina_bar->m_UIProgressItem.ResetColorAnimation();
     }
-#ifdef NEWIND
-	float cur_psy_health = actor->conditions().GetPsyHealth();//actor->GetPsyHealth();
-	m_ui_psy_health->SetProgressPos(iCeil(cur_psy_health * 100.0f * 35.f) / 35.f);
-	if ( _abs(cur_psy_health - m_last_psyhealth) > m_psy_health_blink )
-	{
-		m_last_psyhealth = cur_psy_health;
-		m_ui_psy_health->m_UIProgressItem.ResetColorAnimation();
-	}			
+// Код в UIMainIngameWnd очень старый, не совместим с новыми функциями. Пришлось переносить сюда
+// Потому что эти статики накладываются ПОВЕРХ статика _back
+#ifdef LOST_ALPHA_HUD_IND
+    float bleeding_float = actor->conditions().BleedingSpeed();
+    if (fis_zero(bleeding_float, EPS))
+    {
+        m_bleeding_lvl_0->Show(true);
+        m_bleeding_lvl_1->Show(false);
+        m_bleeding_lvl_2->Show(false);
+        m_bleeding_lvl_3->Show(false);
+    }
+    else if (bleeding_float < 0.35f)
+    {
+        m_bleeding_lvl_0->Show(false);
+        m_bleeding_lvl_1->Show(true);
+        m_bleeding_lvl_2->Show(false);
+        m_bleeding_lvl_3->Show(false);
+    }
+    else if (bleeding_float < 0.7f)
+    {
+        m_bleeding_lvl_0->Show(false);
+        m_bleeding_lvl_1->Show(false);
+        m_bleeding_lvl_2->Show(true);
+        m_bleeding_lvl_3->Show(false);
+    }
+    else // Показать красный значок кровотечения
+    {
+        m_bleeding_lvl_0->Show(false);
+        m_bleeding_lvl_1->Show(false);
+        m_bleeding_lvl_2->Show(false);
+        m_bleeding_lvl_3->Show(true);
+    }
 
-    CCustomOutfit* outfit = actor->GetOutfit();
-    if ( outfit )
+    float satiety = actor->conditions().GetSatiety();
+    float satiety_critical = actor->conditions().SatietyCritical();
+    float satiety_koef =
+        (satiety - satiety_critical) / (satiety >= satiety_critical ? 1 - satiety_critical : satiety_critical);
+
+    if (satiety_koef > 0.5)
+    {
+        m_starvation_lvl_0->Show(true);
+        m_starvation_lvl_1->Show(false);
+        m_starvation_lvl_2->Show(false);
+        m_starvation_lvl_3->Show(false);
+    }
+    else
+    {
+        if (satiety_koef > 0.0f)
         {
-            m_static_armor->Show( true );
-            m_ui_armor_bar->Show( true );
-            m_ui_armor_bar->SetProgressPos( outfit->GetCondition() * 100.0f );
+            m_starvation_lvl_0->Show(false);
+            m_starvation_lvl_1->Show(true);
+            m_starvation_lvl_2->Show(false);
+            m_starvation_lvl_3->Show(false);
+        }
+        else if (satiety_koef > -0.5f)
+        {
+            m_starvation_lvl_0->Show(false);
+            m_starvation_lvl_1->Show(false);
+            m_starvation_lvl_2->Show(true);
+            m_starvation_lvl_3->Show(false);
+        }
+        else
+        m_starvation_lvl_0->Show(false);
+        m_starvation_lvl_1->Show(false);
+        m_starvation_lvl_2->Show(false);
+        m_starvation_lvl_3->Show(true);
+    }
+
+    float cur_weight = actor->inventory().TotalWeight();
+    float max_weight = actor->MaxWalkWeight();
+    float max_carry_weight = actor->MaxCarryWeight();
+
+    m_overweight_lvl_0->Show(true);
+    if (cur_weight >= max_carry_weight)
+    {
+        if (cur_weight >= max_weight)
+        {
+            m_overweight_lvl_0->Show(false);
+            m_overweight_lvl_1->Show(false);
+            m_overweight_lvl_2->Show(false);
+            m_overweight_lvl_3->Show(true);
         }
         else
         {
-            m_static_armor->Show( false );
-            m_ui_armor_bar->Show( false );
+            if (max_carry_weight / max_weight >= 0.5f)
+            {
+                m_overweight_lvl_0->Show(false);
+                m_overweight_lvl_1->Show(false);
+                m_overweight_lvl_2->Show(true);
+                m_overweight_lvl_3->Show(false);
+            }
+            else
+            m_overweight_lvl_0->Show(false);
+            m_overweight_lvl_1->Show(true);
+            m_overweight_lvl_2->Show(false);
+            m_overweight_lvl_3->Show(true);
         }
-		
-	if ( actor->conditions().BleedingSpeed() > 0.01f )
-	{
-		m_bleeding->Show( true );
-	}
-	else
-	{
-		m_bleeding->Show( false );
-	}
-	//Эффект кровотечения на экране из Мизери, чтобы не заменять значок кровотечения
-	if ( actor->conditions().BleedingSpeed() > 0.01f )
-	{
-		m_eff_bleeding->Show( true );
-	}
-	else
-	{
-		m_eff_bleeding->Show( false );
-	}		
-	
-	if ( actor->conditions().GetPsyHealth() > 0.70f )
-	{
-		m_psy_grenn->Show( false );
-		m_psy_yellow->Show( false );
-		m_psy_red->Show( false );
-	}
-	if ( actor->conditions().GetPsyHealth() < 0.70f )
-	{
-		m_psy_grenn->Show( true );
-	}
-	else if ( actor->conditions().GetPsyHealth() < 0.50f )
-	{
-		m_psy_grenn->Show( false );
-	}
-	
-	if ( actor->conditions().GetPsyHealth() < 0.50f )
-	{
-		m_psy_yellow->Show( true );
-	}
-	else if ( actor->conditions().GetPsyHealth() < 0.30f )
-	{
-		m_psy_yellow->Show( false );
-	}
+    }
 
-	if ( actor->conditions().GetPsyHealth() < 0.30f )
-	{
-		m_psy_red->Show( true );
-	}
-	else if ( actor->conditions().GetPsyHealth() < 0.01f )
-	{
-		m_psy_red->Show( false );
-	}		
-#endif	
+/////////////////////////////////////////////////////////////
+#endif
+
+#ifdef NEWIND
+    float cur_psy_health = actor->conditions().GetPsyHealth(); // actor->GetPsyHealth();
+    m_ui_psy_health->SetProgressPos(iCeil(cur_psy_health * 100.0f * 35.f) / 35.f);
+    if (_abs(cur_psy_health - m_last_psyhealth) > m_psy_health_blink)
+    {
+        m_last_psyhealth = cur_psy_health;
+        m_ui_psy_health->m_UIProgressItem.ResetColorAnimation();
+    }
+
+    CCustomOutfit* outfit = actor->GetOutfit();
+    if (outfit)
+    {
+        m_static_armor->Show(true);
+        m_ui_armor_bar->Show(true);
+        m_ui_armor_bar->SetProgressPos(outfit->GetCondition() * 100.0f);
+    }
+    else
+    {
+        m_static_armor->Show(false);
+        m_ui_armor_bar->Show(false);
+    }
+
+    if (actor->conditions().BleedingSpeed() > 0.01f)
+    {
+        m_bleeding->Show(true);
+    }
+    else
+    {
+        m_bleeding->Show(false);
+    }
+    //Эффект кровотечения на экране из Мизери, чтобы не заменять значок кровотечения
+    if (actor->conditions().BleedingSpeed() > 0.01f)
+    {
+        m_eff_bleeding->Show(true);
+    }
+    else
+    {
+        m_eff_bleeding->Show(false);
+    }
+
+    if (actor->conditions().GetPsyHealth() > 0.70f)
+    {
+        m_psy_grenn->Show(false);
+        m_psy_yellow->Show(false);
+        m_psy_red->Show(false);
+    }
+    if (actor->conditions().GetPsyHealth() < 0.70f)
+    {
+        m_psy_grenn->Show(true);
+    }
+    else if (actor->conditions().GetPsyHealth() < 0.50f)
+    {
+        m_psy_grenn->Show(false);
+    }
+
+    if (actor->conditions().GetPsyHealth() < 0.50f)
+    {
+        m_psy_yellow->Show(true);
+    }
+    else if (actor->conditions().GetPsyHealth() < 0.30f)
+    {
+        m_psy_yellow->Show(false);
+    }
+
+    if (actor->conditions().GetPsyHealth() < 0.30f)
+    {
+        m_psy_red->Show(true);
+    }
+    else if (actor->conditions().GetPsyHealth() < 0.01f)
+    {
+        m_psy_red->Show(false);
+    }
+#endif
 }
 
 void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
@@ -341,8 +423,8 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_fire_mode->SetText(m_item_info.fire_mode.c_str());
         SetAmmoIcon(m_item_info.icon.c_str());
 #ifdef NEWIND
-		m_weapon_ammo->SetText( m_item_info.name.c_str() );
-#endif	
+        m_weapon_ammo->SetText(m_item_info.name.c_str());
+#endif
         m_ui_weapon_cur_ammo->Show(true);
         m_ui_weapon_fmj_ammo->Show(true);
         m_ui_weapon_ap_ammo->Show(true);
@@ -351,13 +433,13 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_fire_mode->Show(true);
         m_ui_grenade->Show(true);
 #ifdef NEWIND
-		m_weapon_ammo->Show(true);		
-#endif			
+        m_weapon_ammo->Show(true);
+#endif
         m_ui_weapon_cur_ammo->SetText(m_item_info.cur_ammo.c_str());
         m_ui_weapon_fmj_ammo->SetText(m_item_info.fmj_ammo.c_str());
         m_ui_weapon_ap_ammo->SetText(m_item_info.ap_ammo.c_str());
 
-        //Alundaio: Third ammo type and also set text color for each ammo type
+        // Alundaio: Third ammo type and also set text color for each ammo type
         if (m_ui_weapon_third_ammo)
             m_ui_weapon_third_ammo->SetText(m_item_info.third_ammo.c_str());
 
@@ -368,15 +450,20 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_ui_weapon_third_ammo->SetTextColor(m_ui_weapon_ammo_color_inactive);
 
         CWeaponMagazinedWGrenade* wpn = smart_cast<CWeaponMagazinedWGrenade*>(item);
-        if (wpn && wpn->m_bGrenadeMode) m_ui_grenade->SetTextColor(m_ui_weapon_ammo_color_active);
-        else m_ui_grenade->SetTextColor(m_ui_weapon_ammo_color_inactive);
+        if (wpn && wpn->m_bGrenadeMode)
+            m_ui_grenade->SetTextColor(m_ui_weapon_ammo_color_active);
+        else
+            m_ui_grenade->SetTextColor(m_ui_weapon_ammo_color_inactive);
 
         CWeaponMagazined* wpnm = smart_cast<CWeaponMagazined*>(item);
         if (wpnm)
         {
-            if (wpnm->m_ammoType.type1 == 0) m_ui_weapon_fmj_ammo->SetTextColor(m_ui_weapon_ammo_color_active);
-            else if (wpnm->m_ammoType.type1 == 1) m_ui_weapon_ap_ammo->SetTextColor(m_ui_weapon_ammo_color_active);
-            else if (wpnm->m_ammoType.type1 == 2) m_ui_weapon_third_ammo->SetTextColor(m_ui_weapon_ammo_color_active);
+            if (wpnm->m_ammoType.type1 == 0)
+                m_ui_weapon_fmj_ammo->SetTextColor(m_ui_weapon_ammo_color_active);
+            else if (wpnm->m_ammoType.type1 == 1)
+                m_ui_weapon_ap_ammo->SetTextColor(m_ui_weapon_ammo_color_active);
+            else if (wpnm->m_ammoType.type1 == 2)
+                m_ui_weapon_third_ammo->SetTextColor(m_ui_weapon_ammo_color_active);
         }
         //-Alundaio
     }
@@ -390,9 +477,9 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_ui_weapon_third_ammo->Show(false);
         m_fire_mode->Show(false);
         m_ui_grenade->Show(false);
-#ifdef NEWIND		
-		m_weapon_ammo->Show			(false);
-#endif		
+#ifdef NEWIND
+        m_weapon_ammo->Show(false);
+#endif
     }
 }
 

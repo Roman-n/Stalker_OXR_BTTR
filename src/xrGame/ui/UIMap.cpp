@@ -18,9 +18,6 @@ CUICustomMap::CUICustomMap ()
 	SetWindowName			("map");
 	m_flags.zero			();
 	SetPointerDistance		(0.0f);
-#ifdef 	DIST_TO_POINT_CS
-	SetPointerDistance1		(0.0f);
-#endif		
 }
 
 void CUICustomMap::Initialize(shared_str name, LPCSTR sh_name)
@@ -54,10 +51,7 @@ CUICustomMap::~CUICustomMap()
 {}
 
 void CUICustomMap::Update()
-{
-#ifdef 	DIST_TO_POINT_CS
-	SetPointerDistance1		(0.0f);
-#endif		
+{	
 	SetPointerDistance		(0.0f);
 	if(!Locked())
 		UpdateSpots			();

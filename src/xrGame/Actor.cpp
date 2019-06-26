@@ -854,13 +854,12 @@ void CActor::g_Physics(Fvector& _accel, float jump, float dt)
     // Correct accel
     Fvector accel;
     accel.set(_accel);
-#ifdef HIT_SLOWMO	
+	
     m_hit_slowmo -= dt;
     if (m_hit_slowmo < 0)
         m_hit_slowmo = 0.f;
-
     accel.mul(1.f - m_hit_slowmo);
-#endif
+
     if (g_Alive())
     {
         if (mstate_real & mcClimb && !cameras[eacFirstEye]->bClampYaw)

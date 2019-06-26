@@ -42,12 +42,12 @@
 #define CONFIG_SUN_MOVEMENT                         // Движение солнца по конфигам погоды в .ltx
 #define NEW_SOUNDS                                  // Новые звуки для оружие Р1
 #define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
-#define COLLISIA_ACTIVE_ITEM                        // Коллизия активного предмета
 #define DIST_TO_POINT_CS							// Показать дистанцию до цели на карте 
 #define NEW_ZOMBIE						        	// НПС не видят зомби пока активна фейк смерть
 #define HIT_SLOWMO									// Опциональный запрет на прыжок при замедлении после укуса
 #define DSAJ										// Снижение скорости после прыжка
 #define LOST_ALPHA_HUD_IND				        	// Движковые индикаторы на худ как в Лост Альфе
+#define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay

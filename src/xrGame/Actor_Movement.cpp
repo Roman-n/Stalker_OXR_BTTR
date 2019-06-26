@@ -313,12 +313,8 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
             float scale = vControlAccel.magnitude();
             if (scale > EPS)
             {
-#ifdef DSAJ
-				scale	=	(m_fWalkAccel- m_fDecreaseWalkAccel)/scale;
-                float accel_k = (m_fWalkAccel - m_fDecreaseWalkAccel)/scale;
-#else				
                 float accel_k = m_fWalkAccel;
-#endif				
+				
                 TIItemContainer::iterator it = inventory().m_belt.begin();
                 TIItemContainer::iterator ite = inventory().m_belt.end();
                 for (; it != ite; ++it)
@@ -348,8 +344,11 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 
 				if (inventory().TotalWeight() > MaxCarryWeight())
 					accel_k *= m_fOverweightWalkAccel;
-
+#ifdef DSAJ
+				scale	=	(accel_k- m_fDecreaseWalkAccel)/scale;
+#else
 				scale	=	accel_k/scale;
+#endif				
 				if (bAccelerated)
 					if (mstate_real&mcBack)
 						scale *= m_fRunBackFactor;
@@ -658,13 +657,12 @@ bool CActor::CanSprint()
 
 bool CActor::CanJump()
 {
-#ifdef HIT_SLOWMO	
-	bool can_Jump = /*!IsLimping() &&*/
-		!character_physics_support()->movement()->PHCapture() &&((mstate_real&mcJump)==0) && (m_fJumpTime<=0.f) && 
-		( !m_hit_slowmo_jump || fis_zero( m_hit_slowmo ) ) && !m_bJumpKeyPressed &&!m_bZoomAimingMode;
-#else
-    bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() &&
-        ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && !m_bJumpKeyPressed && !IsZoomAimingMode();
+#ifdef HIT_SLOWMO
+    bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() && ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && 
+	( !m_hit_slowmo_jump || fis_zero( m_hit_slowmo ) ) && !m_bJumpKeyPressed && !IsZoomAimingMode();
+#else	
+    bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() && ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && 
+	!m_bJumpKeyPressed && !IsZoomAimingMode();
 #endif	
     return can_Jump;
 }

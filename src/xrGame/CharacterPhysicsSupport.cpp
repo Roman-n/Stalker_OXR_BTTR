@@ -802,6 +802,7 @@ void CCharacterPhysicsSupport::on_child_shell_activate(CPhysicsShellHolder* obj)
         return;
 
     VERIFY(obj->PPhysicsShell());
+	
 }
 
 void CCharacterPhysicsSupport::bone_fix_clear()
@@ -815,26 +816,6 @@ void CCharacterPhysicsSupport::bone_fix_clear()
     m_weapon_bone_fixes.clear();
 }
 
-void CCharacterPhysicsSupport::bone_chain_disable(u16 bone, u16 r_bone, IKinematics& K)
-{
-    VERIFY(&K);
-    u16 bid = bone;
-    // K.LL_GetBoneInstance( bid ).set_callback( bctCustom, 0, 0, TRUE );
-
-    while (bid != r_bone && bid != K.LL_GetBoneRoot())
-    {
-        CBoneData& bd = K.LL_GetData(bid);
-        if (K.LL_GetBoneInstance(bid).callback() != anim_bone_fix::callback)
-        {
-            m_weapon_bone_fixes.push_back(new anim_bone_fix());
-            m_weapon_bone_fixes.back()->fix(bid, K);
-        }
-        bid = bd.GetParentID();
-
-        // K.LL_GetBoneInstance( bid ).set_callback( bctCustom, 0, 0, TRUE );
-    }
-}
-#ifdef COLLISIA_ACTIVE_ITEM
 void CCharacterPhysicsSupport::AddActiveWeaponCollision()
 {
     if (m_eType != etStalker)
@@ -843,7 +824,7 @@ void CCharacterPhysicsSupport::AddActiveWeaponCollision()
     VERIFY(!m_active_item_obj);
     VERIFY(m_weapon_geoms.empty());
     VERIFY(m_weapon_bone_fixes.empty());
-	Msg("CCharacterPhysicsSupport::AddActiveWeaponCollision");
+
     CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&m_EntityAlife);
     VERIFY(inv_owner);
     PIItem active_weapon_item = inv_owner->inventory().ActiveItem();
@@ -901,7 +882,27 @@ void CCharacterPhysicsSupport::AddActiveWeaponCollision()
     // m_pPhysicsShell->dbg_draw_geometry( 1, color_xrgb( 0, 0, 255 ) );
     // DBG_ClosedCashedDraw( 50000 );
 }
-#endif
+
+void CCharacterPhysicsSupport::bone_chain_disable(u16 bone, u16 r_bone, IKinematics& K)
+{
+    VERIFY(&K);
+    u16 bid = bone;
+    // K.LL_GetBoneInstance( bid ).set_callback( bctCustom, 0, 0, TRUE );
+
+    while (bid != r_bone && bid != K.LL_GetBoneRoot())
+    {
+        CBoneData& bd = K.LL_GetData(bid);
+        if (K.LL_GetBoneInstance(bid).callback() != anim_bone_fix::callback)
+        {
+            m_weapon_bone_fixes.push_back(new anim_bone_fix());
+            m_weapon_bone_fixes.back()->fix(bid, K);
+        }
+        bid = bd.GetParentID();
+
+        // K.LL_GetBoneInstance( bid ).set_callback( bctCustom, 0, 0, TRUE );
+    }
+}
+
 void CCharacterPhysicsSupport::CreateShell(IGameObject* who, Fvector& dp, Fvector& velocity)
 {
     xr_delete(m_collision_activating_delay);
@@ -1005,9 +1006,6 @@ void CCharacterPhysicsSupport::CreateShell(IGameObject* who, Fvector& dp, Fvecto
     if (IsGameTypeSingle())
     {
         m_pPhysicsShell->SetPrefereExactIntegration(); // use exact integration for ragdolls in single
-#ifdef COLLISIA_ACTIVE_ITEM
-		AddActiveWeaponCollision();
-#endif
 #ifndef DEAD_BODY_COLLISION
         m_pPhysicsShell->SetRemoveCharacterCollLADisable();
 #endif
@@ -1015,6 +1013,7 @@ void CCharacterPhysicsSupport::CreateShell(IGameObject* who, Fvector& dp, Fvecto
     else
     m_pPhysicsShell->SetIgnoreDynamic();
     m_pPhysicsShell->SetIgnoreSmall();
+	AddActiveWeaponCollision();
 }
 void CCharacterPhysicsSupport::EndActivateFreeShell(
     IGameObject* who, const Fvector& inital_entity_position, const Fvector& dp, const Fvector& velocity)

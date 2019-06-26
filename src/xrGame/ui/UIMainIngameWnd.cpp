@@ -151,11 +151,6 @@ void CUIMainIngameWnd::Init()
 
     UIWeaponJammedIcon = UIHelper::CreateStatic(uiXml, "weapon_jammed_static", NULL);
     UIWeaponJammedIcon->Show(false);
-	
-#ifdef LOST_ALPHA_HUD_IND
-    UIRadiaitionIcon = UIHelper::CreateStatic(uiXml, "radiation_static_hud_la", NULL);
-    UIRadiaitionIcon->Show(true);
-#endif
 
     UIInvincibleIcon = UIHelper::CreateStatic(uiXml, "invincible_static", NULL);
     UIInvincibleIcon->Show(false);
@@ -304,60 +299,6 @@ void CUIMainIngameWnd::Update()
     if (Device.dwFrame % 10)
         return;
 
-#ifdef LOST_ALPHA_HUD_IND	
-		EWarningIcons i					= ewiWeaponJammed;
-
-		while (i < ewiInvincible)
-		{
-			float value = 0;
-			switch (i)
-			{
-				//radiation
-			case ewiRadiation:
-				value = Actor()->conditions().GetRadiation();
-				break;
-//			case ewiWound:
-//				value = m_pActor->conditions().BleedingSpeed();
-//				break;
-//			case ewiWeaponJammed:
-//				if (m_pWeapon)
-//					value = 1 - m_pWeapon->GetConditionToShow();
-//				break;
-//			case ewiStarvation:
-//				value = 1 - m_pActor->conditions().GetSatiety();
-//				break;		
-//			case ewiPsyHealth:
-//				value = 1 - m_pActor->conditions().GetPsyHealth();
-//				break;
-			default:
-				R_ASSERT(!"Unknown type of warning icon");
-			}
-
-			xr_vector<float>::reverse_iterator	rit;
-
-			// Сначала проверяем на точное соответсвие
-			rit  = std::find(m_Thresholds[i].rbegin(), m_Thresholds[i].rend(), value);
-
-			// Если его нет, то берем последнее меньшее значение ()
-			if (rit == m_Thresholds[i].rend())
-				rit = std::find_if(m_Thresholds[i].rbegin(), m_Thresholds[i].rend(), std::bind2nd(std::less<float>(), value));
-
-			// Минимальное и максимальное значения границы
-			float min = m_Thresholds[i].front();
-			float max = m_Thresholds[i].back();
-
-			if (rit != m_Thresholds[i].rend()){
-				float v = *rit;
-				SetWarningIconColor(i, color_argb(0xFF, clampr<u32>(static_cast<u32>(255 * ((v - min) / (max - min) * 2)), 0, 255), 
-					clampr<u32>(static_cast<u32>(255 * (2.0f - (v - min) / (max - min) * 2)), 0, 255),
-					0));
-			}else
-				TurnOffWarningIcon(i);
-
-			i = (EWarningIcons)(i + 1);
-		}	
-#endif	
-	
     game_PlayerState* lookat_player = Game().local_player;
     bool b_God = (GodMode() || (!lookat_player)) ? true : lookat_player->testFlag(GAME_PLAYER_FLAG_INVINCIBLE);
     if (b_God)
@@ -459,23 +400,6 @@ void CUIMainIngameWnd::SetWarningIconColor(EWarningIcons icon, const u32 cl)
         SetWarningIconColorUI(UIWeaponJammedIcon, cl);
         if (bMagicFlag)
             break;
-#ifdef LOST_ALPHA_HUD_IND
-    	case ewiRadiation:
-            SetWarningIconColorUI	(UIRadiaitionIcon, cl);
-            if (bMagicFlag) break;
-#endif			
-/*			
-        case ewiWound:
-            SetWarningIconColorUI	(&UIWoundIcon, cl);
-            if (bMagicFlag) break;
-
-        case ewiStarvation:
-            SetWarningIconColorUI	(&UIStarvationIcon, cl);
-            if (bMagicFlag) break;
-        case ewiPsyHealth:
-            SetWarningIconColorUI	(&UIPsyHealthIcon, cl);
-            if (bMagicFlag) break;
-    */
     case ewiInvincible:
         SetWarningIconColorUI(UIInvincibleIcon, cl);
         if (bMagicFlag)

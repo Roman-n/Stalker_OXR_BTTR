@@ -24,6 +24,22 @@ public:
 	CUIStatic* m_static_armor;
 	CUIStatic* m_static_health;
     CUIStatic* m_bleeding;
+#ifdef LOST_ALPHA_HUD_IND
+	CUIStatic* m_bleeding_lvl_0;
+	CUIStatic* m_bleeding_lvl_1;
+	CUIStatic* m_bleeding_lvl_2;
+	CUIStatic* m_bleeding_lvl_3;
+
+    CUIStatic* m_starvation_lvl_0;
+    CUIStatic* m_starvation_lvl_1;
+    CUIStatic* m_starvation_lvl_2;
+    CUIStatic* m_starvation_lvl_3;
+
+    CUIStatic* m_overweight_lvl_0;
+    CUIStatic* m_overweight_lvl_1;
+    CUIStatic* m_overweight_lvl_2;
+    CUIStatic* m_overweight_lvl_3;
+#endif	
 	CUIStatic* m_eff_bleeding;
 	CUIStatic* m_psy_grenn;
 	CUIStatic* m_psy_yellow;
