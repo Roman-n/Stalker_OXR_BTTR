@@ -87,103 +87,49 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
     m_back = UIHelper::CreateStatic(xml, "back", this);
     m_ui_health_bar = UIHelper::CreateProgressBar(xml, "progress_bar_health", this);
     m_ui_stamina_bar = UIHelper::CreateProgressBar(xml, "progress_bar_stamina", this);
+// Убрал m_..._lvl_0,1,2,3->Show(true\false);
+// Прописывать их сюда не имеет значения т.к false перекрывает true в функции UpdateIndicators, приводит к багам, когда
+// красный значок горит за желтым и т.д -> путаница
 #ifdef LOST_ALPHA_HUD_IND
     m_bleeding_lvl_0 = UIHelper::CreateStatic(xml, "bleeding_lvl_0", this);
-    m_bleeding_lvl_0->Show(true); // Белый значок всегда виден
-
     m_bleeding_lvl_1 = UIHelper::CreateStatic(xml, "bleeding_lvl_1", this);
-    m_bleeding_lvl_1->Show(false);
-
     m_bleeding_lvl_2 = UIHelper::CreateStatic(xml, "bleeding_lvl_2", this);
-    m_bleeding_lvl_2->Show(false);
-
     m_bleeding_lvl_3 = UIHelper::CreateStatic(xml, "bleeding_lvl_3", this);
-    m_bleeding_lvl_3->Show(false);
 
     m_starvation_lvl_0 = UIHelper::CreateStatic(xml, "satiety_lvl_0", this);
-    m_starvation_lvl_0->Show(true);
-
     m_starvation_lvl_1 = UIHelper::CreateStatic(xml, "satiety_lvl_1", this);
-    m_starvation_lvl_1->Show(false);
-
     m_starvation_lvl_2 = UIHelper::CreateStatic(xml, "satiety_lvl_2", this);
-    m_starvation_lvl_2->Show(false);
-
     m_starvation_lvl_3 = UIHelper::CreateStatic(xml, "satiety_lvl_3", this);
-    m_starvation_lvl_3->Show(false);
 
     m_overweight_lvl_0 = UIHelper::CreateStatic(xml, "overweight_lvl_0", this);
-    m_overweight_lvl_0->Show(true);
-
     m_overweight_lvl_1 = UIHelper::CreateStatic(xml, "overweight_lvl_1", this);
-    m_overweight_lvl_1->Show(false);
-
     m_overweight_lvl_2 = UIHelper::CreateStatic(xml, "overweight_lvl_2", this);
-    m_overweight_lvl_2->Show(false);
-
     m_overweight_lvl_3 = UIHelper::CreateStatic(xml, "overweight_lvl_3", this);
-    m_overweight_lvl_3->Show(false);
 
     m_broken_helmet_lvl_0 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_0", this);
-    m_broken_helmet_lvl_0->Show(true);
-
     m_broken_helmet_lvl_1 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_1", this);
-    m_broken_helmet_lvl_1->Show(false);
-
     m_broken_helmet_lvl_2 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_2", this);
-    m_broken_helmet_lvl_2->Show(false);
-
     m_broken_helmet_lvl_3 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_3", this);
-    m_broken_helmet_lvl_3->Show(false);
 
     m_broken_weapon_lvl_0 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_0", this);
-    m_broken_weapon_lvl_0->Show(true);
-
     m_broken_weapon_lvl_1 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_1", this);
-    m_broken_weapon_lvl_1->Show(false);
-
     m_broken_weapon_lvl_2 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_2", this);
-    m_broken_weapon_lvl_2->Show(false);
-
     m_broken_weapon_lvl_3 = UIHelper::CreateStatic(xml, "broken_weapon_lvl_3", this);
-    m_broken_weapon_lvl_3->Show(false);
 
     m_broken_armor_lvl_0 = UIHelper::CreateStatic(xml, "broken_armor_lvl_0", this);
-    m_broken_armor_lvl_0->Show(true);
-
     m_broken_armor_lvl_1 = UIHelper::CreateStatic(xml, "broken_armor_lvl_1", this);
-    m_broken_armor_lvl_1->Show(false);
-
     m_broken_armor_lvl_2 = UIHelper::CreateStatic(xml, "broken_armor_lvl_2", this);
-    m_broken_armor_lvl_2->Show(false);
-
     m_broken_armor_lvl_3 = UIHelper::CreateStatic(xml, "broken_armor_lvl_3", this);
-    m_broken_armor_lvl_3->Show(false);
 
     m_thirst_lvl_0 = UIHelper::CreateStatic(xml, "thirst_lvl_0", this);
-    m_thirst_lvl_0->Show(true);
-
     m_thirst_lvl_1 = UIHelper::CreateStatic(xml, "thirst_lvl_1", this);
-    m_thirst_lvl_1->Show(false);
-
     m_thirst_lvl_2 = UIHelper::CreateStatic(xml, "thirst_lvl_2", this);
-    m_thirst_lvl_2->Show(false);
-
     m_thirst_lvl_3 = UIHelper::CreateStatic(xml, "thirst_lvl_3", this);
-    m_thirst_lvl_3->Show(false);
 
     m_sleep_lvl_0 = UIHelper::CreateStatic(xml, "sleeping_lvl_0", this);
-    m_sleep_lvl_0->Show(true);
-
     m_sleep_lvl_1 = UIHelper::CreateStatic(xml, "sleeping_lvl_1", this);
-    m_sleep_lvl_1->Show(false);
-
     m_sleep_lvl_2 = UIHelper::CreateStatic(xml, "sleeping_lvl_2", this);
-    m_sleep_lvl_2->Show(false);
-
     m_sleep_lvl_3 = UIHelper::CreateStatic(xml, "sleeping_lvl_3", this);
-    m_sleep_lvl_3->Show(false);
-
 #endif
 #ifdef NEWIND
     m_ui_psy_health = UIHelper::CreateProgressBar(xml, "progress_bar_PsyHealth", this);
@@ -289,271 +235,6 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     {
         m_ui_stamina_bar->m_UIProgressItem.ResetColorAnimation();
     }
-// Код в UIMainIngameWnd очень старый, не совместим с новыми функциями. Пришлось переносить сюда
-// Потому что эти статики накладываются ПОВЕРХ статика _back
-#ifdef LOST_ALPHA_HUD_IND
-    float bleeding_float = actor->conditions().BleedingSpeed();
-    if (fis_zero(bleeding_float, EPS))
-    {
-        m_bleeding_lvl_0->Show(true);
-        m_bleeding_lvl_1->Show(false);
-        m_bleeding_lvl_2->Show(false);
-        m_bleeding_lvl_3->Show(false);
-    }
-    else if (bleeding_float < 0.35f)
-    {
-        m_bleeding_lvl_0->Show(false);
-        m_bleeding_lvl_1->Show(true);
-        m_bleeding_lvl_2->Show(false);
-        m_bleeding_lvl_3->Show(false);
-    }
-    else if (bleeding_float < 0.7f)
-    {
-        m_bleeding_lvl_0->Show(false);
-        m_bleeding_lvl_1->Show(false);
-        m_bleeding_lvl_2->Show(true);
-        m_bleeding_lvl_3->Show(false);
-    }
-    else // Показать красный значок кровотечения
-    {
-        m_bleeding_lvl_0->Show(false);
-        m_bleeding_lvl_1->Show(false);
-        m_bleeding_lvl_2->Show(false);
-        m_bleeding_lvl_3->Show(true);
-    }
-
-    float satiety = actor->conditions().GetSatiety();
-    float satiety_critical = actor->conditions().SatietyCritical();
-    float satiety_koef =
-        (satiety - satiety_critical) / (satiety >= satiety_critical ? 1 - satiety_critical : satiety_critical);
-
-    if (satiety_koef > 0.5)
-    {
-        m_starvation_lvl_0->Show(true);
-        m_starvation_lvl_1->Show(false);
-        m_starvation_lvl_2->Show(false);
-        m_starvation_lvl_3->Show(false);
-    }
-    else
-    {
-        if (satiety_koef > 0.0f)
-        {
-            m_starvation_lvl_0->Show(false);
-            m_starvation_lvl_1->Show(true);
-            m_starvation_lvl_2->Show(false);
-            m_starvation_lvl_3->Show(false);
-        }
-        else if (satiety_koef > -0.5f)
-        {
-            m_starvation_lvl_0->Show(false);
-            m_starvation_lvl_1->Show(false);
-            m_starvation_lvl_2->Show(true);
-            m_starvation_lvl_3->Show(false);
-        }
-        else
-            m_starvation_lvl_0->Show(false);
-        m_starvation_lvl_1->Show(false);
-        m_starvation_lvl_2->Show(false);
-        m_starvation_lvl_3->Show(true);
-    }
-
-    float cur_weight = actor->inventory().TotalWeight();
-    float max_weight = actor->MaxWalkWeight();
-    float max_carry_weight = actor->MaxCarryWeight();
-
-    m_overweight_lvl_0->Show(true);
-    if (cur_weight >= max_carry_weight)
-    {
-        if (cur_weight >= max_weight)
-        {
-            m_overweight_lvl_0->Show(false);
-            m_overweight_lvl_1->Show(false);
-            m_overweight_lvl_2->Show(false);
-            m_overweight_lvl_3->Show(true);
-        }
-        else
-        {
-            if (max_carry_weight / max_weight >= 0.5f)
-            {
-                m_overweight_lvl_0->Show(false);
-                m_overweight_lvl_1->Show(false);
-                m_overweight_lvl_2->Show(true);
-                m_overweight_lvl_3->Show(false);
-            }
-            else
-                m_overweight_lvl_0->Show(false);
-            m_overweight_lvl_1->Show(true);
-            m_overweight_lvl_2->Show(false);
-            m_overweight_lvl_3->Show(false);
-        }
-    }
-
-    u16 slot = actor->inventory().GetActiveSlot();
-    if (slot == INV_SLOT_2 || slot == INV_SLOT_3)
-    {
-        CWeapon* weapon = smart_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
-        if (weapon)
-        {
-            float condition = weapon->GetCondition();
-            float start_misf_cond = weapon->GetMisfireStartCondition();
-            float end_misf_cond = weapon->GetMisfireEndCondition();
-            if (condition < start_misf_cond)
-            {
-                m_broken_weapon_lvl_0->Show(true);
-                if (condition > (start_misf_cond + end_misf_cond) / 2)
-                { //зеленый
-                    m_broken_weapon_lvl_0->Show(false);
-                    m_broken_weapon_lvl_1->Show(true);
-                    m_broken_weapon_lvl_2->Show(false);
-                    m_broken_weapon_lvl_3->Show(false);
-                }
-
-                else if (condition > end_misf_cond)
-                { //желтый
-                    m_broken_weapon_lvl_0->Show(false);
-                    m_broken_weapon_lvl_1->Show(false);
-                    m_broken_weapon_lvl_2->Show(true);
-                    m_broken_weapon_lvl_3->Show(false);
-                }
-                else //красный
-                    m_broken_weapon_lvl_0->Show(false);
-                m_broken_weapon_lvl_1->Show(false);
-                m_broken_weapon_lvl_2->Show(false);
-                m_broken_weapon_lvl_3->Show(true);
-            }
-        }
-    }
-
-    CHelmet* helmet = smart_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
-    if (helmet)
-    {
-        float condition = helmet->GetCondition();
-        m_broken_helmet_lvl_0->Show(true);
-        if (condition < 0.75f)
-        {
-            if (condition > 0.5f)
-            { //зеленый
-                m_broken_helmet_lvl_0->Show(false);
-                m_broken_helmet_lvl_1->Show(true);
-                m_broken_helmet_lvl_2->Show(false);
-                m_broken_helmet_lvl_3->Show(false);
-            }
-            else if (condition > 0.25f)
-            { //желтый
-                m_broken_helmet_lvl_0->Show(false);
-                m_broken_helmet_lvl_1->Show(false);
-                m_broken_helmet_lvl_2->Show(true);
-                m_broken_helmet_lvl_3->Show(false);
-            }
-            else // красный
-                m_broken_helmet_lvl_0->Show(false);
-            m_broken_helmet_lvl_1->Show(false);
-            m_broken_helmet_lvl_2->Show(false);
-            m_broken_helmet_lvl_3->Show(true);
-        }
-    }
-
-    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(actor->inventory().ItemFromSlot(OUTFIT_SLOT));
-    if (outfit)
-    {
-        float condition = outfit->GetCondition();
-        if (condition < 0.75f)
-        {
-            m_broken_armor_lvl_0->Show(true);
-            if (condition > 0.5f) // зеленый
-            {
-                m_broken_armor_lvl_0->Show(false);
-                m_broken_armor_lvl_1->Show(true);
-                m_broken_armor_lvl_2->Show(false);
-                m_broken_armor_lvl_3->Show(false);
-            }
-            else if (condition > 0.25f)
-            { // желтый
-                m_broken_armor_lvl_0->Show(false);
-                m_broken_armor_lvl_1->Show(false);
-                m_broken_armor_lvl_2->Show(true);
-                m_broken_armor_lvl_3->Show(false);
-            }
-            else
-            m_broken_armor_lvl_0->Show(false);
-            m_broken_armor_lvl_1->Show(false);
-            m_broken_armor_lvl_2->Show(false);
-            m_broken_armor_lvl_3->Show(true);
-        }
-    }
-
-    float thirst = actor->conditions().GetThirst();
-    float thirst_critical = actor->conditions().ThirstCritical();
-    float thirst_koef =
-        (thirst - thirst_critical) / (thirst >= thirst_critical ? 1 - thirst_critical : thirst_critical);
-
-    if (thirst_koef > 0.5)
-    {
-        m_thirst_lvl_0->Show(true);
-        m_thirst_lvl_1->Show(false);
-        m_thirst_lvl_2->Show(false);
-        m_thirst_lvl_3->Show(false);
-    }
-    else
-    {
-        if (thirst_koef > 0.0f)
-        {
-            m_thirst_lvl_0->Show(false);
-            m_thirst_lvl_1->Show(true);
-            m_thirst_lvl_2->Show(false);
-            m_thirst_lvl_3->Show(false);
-        }
-        else if (thirst_koef > -0.5f)
-        {
-            m_thirst_lvl_0->Show(false);
-            m_thirst_lvl_1->Show(false);
-            m_thirst_lvl_2->Show(true);
-            m_thirst_lvl_3->Show(false);
-        }
-        else
-            m_thirst_lvl_0->Show(false);
-        m_thirst_lvl_1->Show(false);
-        m_thirst_lvl_2->Show(false);
-        m_thirst_lvl_3->Show(true);
-    }
-
-    float sleep = actor->conditions().GetSleep();
-    float sleep_critical = actor->conditions().SleepCritical();
-    float sleep_koef =
-        (sleep - sleep_critical) / (sleep >= sleep_critical ? 1 - sleep_critical : sleep_critical);
-
-    if (sleep_koef > 0.5)
-    {
-        m_sleep_lvl_0->Show(true);
-        m_sleep_lvl_1->Show(false);
-        m_sleep_lvl_2->Show(false);
-        m_sleep_lvl_3->Show(false);
-    }
-    else
-    {
-        if (sleep_koef > 0.0f)
-        {
-            m_sleep_lvl_0->Show(false);
-            m_sleep_lvl_1->Show(true);
-            m_sleep_lvl_2->Show(false);
-            m_sleep_lvl_3->Show(false);
-        }
-        else if (sleep_koef > -0.5f)
-        {
-            m_sleep_lvl_0->Show(false);
-            m_sleep_lvl_1->Show(false);
-            m_sleep_lvl_2->Show(true);
-            m_sleep_lvl_3->Show(false);
-        }
-        else
-            m_sleep_lvl_0->Show(false);
-        m_sleep_lvl_1->Show(false);
-        m_sleep_lvl_2->Show(false);
-        m_sleep_lvl_3->Show(true);
-    }
-
-/////////////////////////////////////////////////////////////
-#endif
 
 #ifdef NEWIND
     float cur_psy_health = actor->conditions().GetPsyHealth(); // actor->GetPsyHealth();
@@ -564,12 +245,12 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
         m_ui_psy_health->m_UIProgressItem.ResetColorAnimation();
     }
 
-    CCustomOutfit* outfit = actor->GetOutfit();
-    if (outfit)
+    CCustomOutfit* outfit_ = actor->GetOutfit(); //переопределение _
+    if (outfit_)
     {
         m_static_armor->Show(true);
         m_ui_armor_bar->Show(true);
-        m_ui_armor_bar->SetProgressPos(outfit->GetCondition() * 100.0f);
+        m_ui_armor_bar->SetProgressPos(outfit_->GetCondition() * 100.0f);
     }
     else
     {
@@ -585,7 +266,8 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     {
         m_bleeding->Show(false);
     }
-    //Эффект кровотечения на экране из Мизери, чтобы не заменять значок кровотечения
+    //Эффект кровотечения на экране из Мизери, чтобы не заменять значок кровотечения, нормально работает только при
+    //откл. худе, Онли реализм, но убирать не буду ради опциональности худов
     if (actor->conditions().BleedingSpeed() > 0.01f)
     {
         m_eff_bleeding->Show(true);
@@ -738,9 +420,6 @@ void CUIHudStatesWnd::SetAmmoIcon(const shared_str& sect_name)
 // ------------------------------------------------------------------------------------------------
 void CUIHudStatesWnd::UpdateZones()
 {
-    // float actor_radia = m_actor->conditions().GetRadiation() * m_actor_radia_factor;
-    // m_radia_hit = _max( m_zone_cur_power[it_rad], actor_radia );
-
     CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!actor)
     {
@@ -772,21 +451,6 @@ void CUIHudStatesWnd::UpdateZones()
     }
     m_radia_hit = m_zone_cur_power[ALife::infl_rad];
 
-    /*	if ( Device.dwFrame % 20 == 0 )
-        {
-            Msg(" self = %.2f   hit = %.2f", m_radia_self, m_radia_hit );
-        }*/
-
-    //	m_arrow->SetNewValue( m_radia_hit );
-    //	m_arrow_shadow->SetPos( m_arrow->GetPos() );
-    /*
-        power = actor->conditions().GetPsy();
-        clamp( power, 0.0f, 1.1f );
-        if ( m_zone_cur_power[ALife::infl_psi] < power )
-        {
-            m_zone_cur_power[ALife::infl_psi] = power;
-        }
-    */
     if (!Level().hud_zones_list)
     {
         return;
@@ -864,9 +528,6 @@ void CUIHudStatesWnd::UpdateZones()
         //определить текущую частоту срабатывания сигнала
         zone_info.cur_period = zone_type->freq.x + (zone_type->freq.y - zone_type->freq.x) * (fRelPow * fRelPow);
 
-        // string256	buff_z;
-        // xr_sprintf( buff_z, "zone %2.2f\n", zone_info.cur_period );
-        // xr_strcat( buff, buff_z );
         if (zone_info.snd_time > zone_info.cur_period)
         {
             zone_info.snd_time = 0.0f;
@@ -888,6 +549,246 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
     {
         UpdateIndicatorType(actor, (ALife::EInfluenceType)i);
     }
+#ifdef LOST_ALPHA_HUD_IND
+    // Код в UIMainIngameWnd очень старый, не совместим с новыми функциями. Пришлось переносить сюда
+    // Потому что эти статики накладываются ПОВЕРХ статика _back
+    float satiety = actor->conditions().GetSatiety();
+    float satiety_critical = actor->conditions().SatietyCritical();
+    float satiety_koef =
+        (satiety - satiety_critical) / (satiety >= satiety_critical ? 1 - satiety_critical : satiety_critical);
+
+    m_starvation_lvl_1->Show(false);
+    m_starvation_lvl_2->Show(false);
+    m_starvation_lvl_3->Show(false);
+
+    if (satiety_koef > 0.5)
+    {
+        m_starvation_lvl_0->Show(true);
+    }
+    else
+    {
+        if (satiety_koef > 0.0f)
+        {
+            m_starvation_lvl_0->Show(false);
+            m_starvation_lvl_1->Show(true);
+        }
+        else if (satiety_koef > -0.5f)
+        {
+            m_starvation_lvl_0->Show(false);
+            m_starvation_lvl_2->Show(true);
+        }
+        else if (satiety_koef < 0.0f)
+        {
+            m_starvation_lvl_0->Show(false);
+            m_starvation_lvl_3->Show(true);
+        }
+    }
+
+    float bleeding_float = actor->conditions().BleedingSpeed();
+    m_bleeding_lvl_1->Show(false);
+    m_bleeding_lvl_2->Show(false);
+    m_bleeding_lvl_3->Show(false);
+    if (fis_zero(bleeding_float, EPS))
+    {
+        m_bleeding_lvl_0->Show(true); // проверка для else if
+    }
+    else
+    {
+        if (bleeding_float < 0.35f)
+        {
+            m_bleeding_lvl_0->Show(false);
+            m_bleeding_lvl_1->Show(true);
+        }
+        else if (bleeding_float < 0.7f)
+        {
+            m_bleeding_lvl_0->Show(false);
+            m_bleeding_lvl_2->Show(true);
+        }
+        else if (bleeding_float > 0.35f)
+        {
+            m_bleeding_lvl_0->Show(false);
+            m_bleeding_lvl_3->Show(true);
+        }
+    }
+
+    float cur_weight = actor->inventory().TotalWeight();
+    float max_weight = actor->MaxWalkWeight();
+    float max_carry_weight = actor->MaxCarryWeight();
+    m_overweight_lvl_0->Show(true);
+    m_overweight_lvl_1->Show(false);
+    m_overweight_lvl_2->Show(false);
+    m_overweight_lvl_3->Show(false);
+    if (cur_weight >= max_carry_weight)
+    {
+        if (cur_weight >= max_weight)
+        {
+            m_overweight_lvl_0->Show(false);
+            m_overweight_lvl_3->Show(true);
+        }
+        else if (max_carry_weight / max_weight >= 0.5f)
+        {
+            m_overweight_lvl_0->Show(false);
+            m_overweight_lvl_2->Show(true);
+        }
+        else if (max_carry_weight / max_weight <= 0.5f)
+        {
+            m_overweight_lvl_0->Show(false);
+            m_overweight_lvl_1->Show(true);
+        }
+    }
+
+    u16 slot = actor->inventory().GetActiveSlot();
+    m_broken_weapon_lvl_0->Show(true);
+    m_broken_weapon_lvl_1->Show(false);
+    m_broken_weapon_lvl_2->Show(false);
+    m_broken_weapon_lvl_3->Show(false);
+    if (slot == INV_SLOT_2 || slot == INV_SLOT_3)
+    {
+        CWeapon* weapon = smart_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
+        if (weapon)
+        {
+            float condition = weapon->GetCondition();
+            float start_misf_cond = weapon->GetMisfireStartCondition();
+            float end_misf_cond = weapon->GetMisfireEndCondition();
+            if (condition < start_misf_cond)
+            {
+                if (condition > (start_misf_cond + end_misf_cond) / 2)
+                { //зеленый
+                    m_broken_weapon_lvl_0->Show(false);
+                    m_broken_weapon_lvl_1->Show(true);
+                }
+
+                else if (condition > end_misf_cond)
+                { //желтый
+                    m_broken_weapon_lvl_0->Show(false);
+                    m_broken_weapon_lvl_2->Show(true);
+                }
+                else if (condition < (start_misf_cond + end_misf_cond) / 2) //красный
+                {
+                    m_broken_weapon_lvl_0->Show(false);
+                    m_broken_weapon_lvl_3->Show(true);
+                }
+            }
+        }
+    }
+
+    CHelmet* helmet = smart_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
+    m_broken_helmet_lvl_0->Show(true);
+    m_broken_helmet_lvl_1->Show(false);
+    m_broken_helmet_lvl_2->Show(false);
+    m_broken_helmet_lvl_3->Show(false);
+    if (helmet)
+    {
+        float condition = helmet->GetCondition();
+        if (condition < 0.75f)
+        {
+            if (condition > 0.5f)
+            { //зеленый
+                m_broken_helmet_lvl_0->Show(false);
+                m_broken_helmet_lvl_1->Show(true);
+            }
+            else if (condition > 0.25f)
+            { //желтый
+                m_broken_helmet_lvl_0->Show(false);
+                m_broken_helmet_lvl_2->Show(true);
+            }
+            else if (condition < 0.5f) // красный
+            {
+                m_broken_helmet_lvl_0->Show(false);
+                m_broken_helmet_lvl_3->Show(true);
+            }
+        }
+    }
+
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(actor->inventory().ItemFromSlot(OUTFIT_SLOT));
+    m_broken_armor_lvl_0->Show(true);
+    m_broken_armor_lvl_1->Show(false);
+    m_broken_armor_lvl_2->Show(false);
+    m_broken_armor_lvl_3->Show(false);
+    if (outfit)
+    {
+        float condition = outfit->GetCondition();
+        if (condition < 0.75f)
+        {
+            if (condition > 0.5f) // зеленый
+            {
+                m_broken_armor_lvl_0->Show(false);
+                m_broken_armor_lvl_1->Show(true);
+            }
+            else if (condition > 0.25f)
+            { // желтый
+                m_broken_armor_lvl_0->Show(false);
+                m_broken_armor_lvl_2->Show(true);
+            }
+            else if (condition < 0.5f)
+            {
+                m_broken_armor_lvl_0->Show(false);
+                m_broken_armor_lvl_3->Show(true);
+            }
+        }
+    }
+
+    float thirst = actor->conditions().GetThirst();
+    float thirst_critical = actor->conditions().ThirstCritical();
+    float thirst_koef =
+        (thirst - thirst_critical) / (thirst >= thirst_critical ? 1 - thirst_critical : thirst_critical);
+    m_thirst_lvl_0->Show(true);
+    m_thirst_lvl_1->Show(false);
+    m_thirst_lvl_2->Show(false);
+    m_thirst_lvl_3->Show(false);
+    if (thirst_koef > 0.5)
+    {
+        m_thirst_lvl_0->Show(true);
+    }
+    else
+    {
+        if (thirst_koef > 0.0f)
+        {
+            m_thirst_lvl_0->Show(false);
+            m_thirst_lvl_1->Show(true);
+        }
+        else if (thirst_koef > -0.5f)
+        {
+            m_thirst_lvl_0->Show(false);
+            m_thirst_lvl_2->Show(true);
+        }
+        else if (thirst_koef < 0.0f)
+        {
+            m_thirst_lvl_0->Show(false);
+            m_thirst_lvl_3->Show(true);
+        }
+    }
+
+    float sleep = actor->conditions().GetSleep();
+    float sleep_critical = actor->conditions().SleepCritical();
+    float sleep_koef = (sleep - sleep_critical) / (sleep >= sleep_critical ? 1 - sleep_critical : sleep_critical);
+    m_sleep_lvl_0->Show(true);
+    m_sleep_lvl_1->Show(false);
+    m_sleep_lvl_2->Show(false);
+    m_sleep_lvl_3->Show(false);
+    if (sleep_koef > 0.5)
+    {
+        m_sleep_lvl_0->Show(true);
+    }
+    else
+    {
+        if (sleep_koef > 0.0f)
+        {
+            m_sleep_lvl_0->Show(false);
+            m_sleep_lvl_1->Show(true);
+        }
+        else if (sleep_koef > -0.5f)
+        {
+            m_sleep_lvl_0->Show(false);
+            m_sleep_lvl_2->Show(true);
+        }
+        else if (sleep_koef < 0.0f)
+        {
+            m_sleep_lvl_0->Show(false);
+            m_sleep_lvl_3->Show(true);
+        }
+    }
+#endif
 }
 
 void CUIHudStatesWnd::UpdateIndicatorType(CActor* actor, ALife::EInfluenceType type)

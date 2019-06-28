@@ -124,7 +124,7 @@ void CUIZoneMap::UpdateRadar		(Fvector pos)
 	m_clipFrame.Update();
 	m_background.Update();
 	m_activeMap->SetActivePoint( pos );
-#ifdef DIST_TO_POINT_CS
+#ifdef DIST_TO_POINT_CS 
     if (m_pointerDistanceText)
     {
         if (m_activeMap->GetPointerDistance() > 0.5f)
