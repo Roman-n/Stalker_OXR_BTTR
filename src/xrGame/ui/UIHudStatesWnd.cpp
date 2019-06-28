@@ -140,11 +140,8 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
     m_eff_bleeding = UIHelper::CreateStatic(xml, "eff_bleeding_screen", this);
     m_eff_bleeding->Show(false);
     m_psy_grenn = UIHelper::CreateStatic(xml, "GetPsy_grenn", this);
-    m_psy_grenn->Show(false);
     m_psy_yellow = UIHelper::CreateStatic(xml, "GetPsy_yellow", this);
-    m_psy_yellow->Show(false);
     m_psy_red = UIHelper::CreateStatic(xml, "GetPsy_red", this);
-    m_psy_red->Show(false);
     m_weapon_ammo = UIHelper::CreateTextWnd(xml, "ammo_name", this);
 #endif
     m_indik[ALife::infl_rad] = UIHelper::CreateStatic(xml, "indik_rad", this);
@@ -277,37 +274,33 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
         m_eff_bleeding->Show(false);
     }
 
-    if (actor->conditions().GetPsyHealth() > 0.70f)
+    float psy_koef = actor->conditions().GetPsyHealth();
+    //2 проверки чтобы отключались при else if
+    m_psy_grenn->Show(false);
+    m_psy_yellow->Show(false);
+    m_psy_red->Show(false);
+    if (psy_koef > 0.70f)
     {
         m_psy_grenn->Show(false);
         m_psy_yellow->Show(false);
         m_psy_red->Show(false);
     }
-    if (actor->conditions().GetPsyHealth() < 0.70f)
+    else
     {
-        m_psy_grenn->Show(true);
-    }
-    else if (actor->conditions().GetPsyHealth() < 0.50f)
-    {
-        m_psy_grenn->Show(false);
-    }
-
-    if (actor->conditions().GetPsyHealth() < 0.50f)
-    {
-        m_psy_yellow->Show(true);
-    }
-    else if (actor->conditions().GetPsyHealth() < 0.30f)
-    {
-        m_psy_yellow->Show(false);
-    }
-
-    if (actor->conditions().GetPsyHealth() < 0.30f)
-    {
-        m_psy_red->Show(true);
-    }
-    else if (actor->conditions().GetPsyHealth() < 0.01f)
-    {
-        m_psy_red->Show(false);
+        if (psy_koef < 0.70f)
+        {
+            m_psy_grenn->Show(true);
+        }
+        else if (psy_koef < 0.50f)
+        {
+            m_psy_grenn->Show(false);
+            m_psy_yellow->Show(true);
+        }
+        else if (psy_koef < 0.30f)
+        {
+            m_psy_red->Show(true);
+            m_psy_yellow->Show(false);
+        }
     }
 #endif
 }
