@@ -7,8 +7,8 @@
 #define NEWIND 								        // Новые индикаторы, восстановление старых
 #define SCREENSPACE_OFF 					        // Лучи проходят через холм, если на них смотреть в сторону солнца
 #define RAINDROPS 							        // Капли на экран из XRay Oxygen, общие функции + R2
-#define RAINDROPS_R3 						        // Капли на экран R3
-#define RAINDROPS_R4 						        // Капли на экран R4
+#define RAINDROPS_R3 						        // Капли на экран R3, зависимость от дефайна RAINDROPS
+#define RAINDROPS_R4 						        // Капли на экран R4, зависимость от дефайна RAINDROPS
 #define FIX_FLASHING_POINTS_LAMPS			        // Исправление мигания света ламп, XRay Oxygen
 #define _STD_EXTENSIONS_SATURATE__LERP 		        // XRay Oxygen, Адаптация новых функций для _std_extensions.h OpenXRay
 //#define AMMO_FROM_BELT					        // Патроны берем только с пояса
@@ -50,7 +50,9 @@
 #define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
 #define __ERROR_PURE_								// НЕ ВЫКЛЮЧАТЬ!!!; Требует фикса, иногда вылетает при запуске движка, потому что одновременно два потока вторгаются в pure.h
 #define CROW_FIX_POSITION							// Вороны не разлетаются с одной точки при старте игры
-
+//#define __DISCORD_API								// Адаптация движка к дискорду
+#define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
+	
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
 #define CALLOFCHERNOBYL_RANKING 			        // Система рангов
