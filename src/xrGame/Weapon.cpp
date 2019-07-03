@@ -1210,7 +1210,7 @@ int CWeapon::GetAmmoCount_forType(shared_str const& ammo_type) const
             res += pAmmo->m_boxCurr;
         }
     }
-		auto parent			= const_cast<CObject*>(H_Parent());
+        auto parent = const_cast<IGameObject*>(H_Parent()); //Патроны на пояс
 		auto entity_alive	= smart_cast<CEntityAlive*>(parent);
 
 if (entity_alive == NULL || !entity_alive->cast_actor())	

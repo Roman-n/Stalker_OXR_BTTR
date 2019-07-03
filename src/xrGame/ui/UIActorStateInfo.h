@@ -29,12 +29,18 @@ private:
 
     enum EStateType
     {
-        //		stt_stamina = 0,
-        stt_health = 0,
-        stt_bleeding,
-        stt_radiation,
-        //		stt_armor,
-        //		stt_main,
+#ifdef LOST_ALPHA_INV_IND
+        stt_sleep,
+        stt_psy_health,
+        stt_bleding,
+        stt_radiat,
+        stt_stamina,
+        stt_satiety,
+        stt_thirst,
+        stt_healh,
+        stt_armor,
+        stt_armor1,
+#endif
         stt_fire,
         stt_radia,
         stt_acid,

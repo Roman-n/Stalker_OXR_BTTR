@@ -7,7 +7,6 @@
 #pragma once
 
 #include "xrCDB/xr_collide_defs.h"
-
 // refs
 
 class ENGINE_API IRender_DetailModel;

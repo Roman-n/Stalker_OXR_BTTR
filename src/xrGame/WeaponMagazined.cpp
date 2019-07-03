@@ -212,7 +212,7 @@ void CWeaponMagazined::FireEnd() { inherited::FireEnd(); }
 void CWeaponMagazined::Reload() { inherited::Reload(); TryReload(); }
 
 #ifdef AMMO_FROM_BELT
-bool CWeaponMagazined::TryToGetAmmo(u32 id)
+bool CWeaponMagazined::TryToGetAmmo(u32_ id)
 {
 
 	if (smart_cast<CActor*>(H_Parent()) != NULL)
@@ -235,7 +235,7 @@ bool CWeaponMagazined::TryReload()
 
 	if (m_pInventory)
 	{
-		if (TryToGetAmmo(m_ammoType) || unlimited_ammo() || (IsMisfire() && iAmmoElapsed))
+        if (TryToGetAmmo(m_ammoType.type1) || unlimited_ammo() || (IsMisfire() && m_ammoElapsed.type1))
 		{
             SetPending(TRUE);
 			SwitchState(eReload);
@@ -246,7 +246,7 @@ bool CWeaponMagazined::TryReload()
 		{
 			if (TryToGetAmmo(i))
 			{
-				m_ammoType	= i;
+                m_ammoType.type1 = i;
             SetPending(TRUE);				
 				SwitchState(eReload);
 				return true;
@@ -265,9 +265,10 @@ bool CWeaponMagazined::IsAmmoAvailable()
 
        if (ParentIsActor())
         {	
-		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[m_ammoType].c_str()));
+		m_pCurrentAmmo =
+                smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[m_ammoType.type1].c_str()));
 		}else{
-		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType].c_str()));		
+            m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType.type1].c_str()));		
         }	
 		
 		
@@ -443,7 +444,7 @@ void CWeaponMagazined::ReloadMagazine()
 
     if (m_set_next_ammoType_on_reload != undefined_ammo_type)
     {
-        m_ammoType = m_set_next_ammoType_on_reload;
+        m_ammoType.type1 = m_set_next_ammoType_on_reload;
         m_set_next_ammoType_on_reload = undefined_ammo_type;
     }
 
@@ -453,22 +454,23 @@ void CWeaponMagazined::ReloadMagazine()
 
 		if (ParentIsActor())
 		{
-		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[m_ammoType].c_str()));
+            m_pCurrentAmmo =
+                smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[m_ammoType.type1].c_str()));
 		} else {
-		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType].c_str()));
-}
+            m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType.type1].c_str()));
+        }
 		
 		
-        if (m_ammoTypes.size() <= m_ammoType)
+        if (m_ammoTypes.size() <= m_ammoType.type1)
             return;
 
-        LPCSTR tmp_sect_name = m_ammoTypes[m_ammoType].c_str();
+        LPCSTR tmp_sect_name = m_ammoTypes[m_ammoType.type1].c_str();
 
         if (!tmp_sect_name)
             return;
 		
 
-        LPCSTR tmp_sect_name_belt = m_ammoTypes[m_ammoType].c_str();
+        LPCSTR tmp_sect_name_belt = m_ammoTypes[m_ammoType.type1].c_str();
 
         if (!tmp_sect_name_belt)
             return;		
@@ -495,12 +497,12 @@ void CWeaponMagazined::ReloadMagazine()
 		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[i].c_str()));
 	  }
 	  else{
-		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[i].c_str()));
+          m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[i].c_str()));
      }		//		
 					
                 if (m_pCurrentAmmo)
                 {
-                    m_ammoType = i;
+                    m_ammoType.type1 = i;
                     break;
                 }
             }
@@ -518,17 +520,17 @@ void CWeaponMagazined::ReloadMagazine()
 
     VERIFY((u32) iAmmoElapsed == m_magazine.size());
 
-    if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType)
-        m_DefaultCartridge.Load(m_ammoTypes[m_ammoType].c_str(), m_ammoType);
+    if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType.type1)
+        m_DefaultCartridge.Load(m_ammoTypes[m_ammoType.type1].c_str(), m_ammoType.type1);
     CCartridge l_cartridge = m_DefaultCartridge;
-    while (iAmmoElapsed < iMagazineSize)
+    while (m_ammoElapsed.type1 < iMagazineSize)
     {
         if (!unlimited_ammo())
         {
             if (!m_pCurrentAmmo->Get(l_cartridge)) break;
         }
-        ++iAmmoElapsed;
-        l_cartridge.m_LocalAmmoType = m_ammoType;
+        ++m_ammoElapsed.type1;
+        l_cartridge.m_LocalAmmoType = m_ammoType.type1;
         m_magazine.push_back(l_cartridge);
     }
 
@@ -538,7 +540,7 @@ void CWeaponMagazined::ReloadMagazine()
     if (m_pCurrentAmmo && !m_pCurrentAmmo->m_boxCurr && OnServer())
         m_pCurrentAmmo->SetDropManual(TRUE);
 
-    if (iMagazineSize > iAmmoElapsed)
+    if (iMagazineSize > m_ammoElapsed.type1)
     {
         m_bLockType = true;
         ReloadMagazine();

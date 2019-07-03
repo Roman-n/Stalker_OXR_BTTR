@@ -1811,10 +1811,10 @@ void CActor::UpdateArtefactsOnBeltAndOutfit()
         conditions().ChangePower(((outfit ? outfit->m_fPowerRestoreSpeed : 0.f) + (pHelmet ? pHelmet->m_fPowerRestoreSpeed : 0.f))     * f_update_time);
         conditions().ChangeSatiety(((outfit ? outfit->m_fSatietyRestoreSpeed : 0.f) + (pHelmet ? pHelmet->m_fSatietyRestoreSpeed : 0.f))   * f_update_time);
 #ifdef ENGINE_SLEEP
-        conditions().ChangeSleep(outfit->m_fSleepRestoreSpeed   * f_update_time);
+        conditions().ChangeSleep(((outfit ? outfit->m_fSleepRestoreSpeed : 0.f) + (pHelmet ? pHelmet->m_fSleepRestoreSpeed : 0.f)) * f_update_time);
 #endif
 #ifdef ENGINE_THIRST		
-        conditions().ChangeThirst(outfit->m_fThirstRestoreSpeed   * f_update_time);				
+        conditions().ChangeThirst(((outfit ? outfit->m_fThirstRestoreSpeed : 0.f) + (pHelmet ? pHelmet->m_fThirstRestoreSpeed : 0.f)) *f_update_time);
 #endif		
         conditions().ChangeRadiation(((outfit ? outfit->m_fRadiationRestoreSpeed : 0.f) + (pHelmet ? pHelmet->m_fRadiationRestoreSpeed : 0.f)) * f_update_time);
     }

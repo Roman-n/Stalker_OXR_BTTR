@@ -2,16 +2,11 @@
 #include "xrCommon/xr_vector.h"
 
 // messages
-constexpr int REG_PRIORITY_LOW = 0x11111111;
-constexpr int REG_PRIORITY_NORMAL = 0x22222222;
-constexpr int REG_PRIORITY_HIGH = 0x33333333;
-constexpr int REG_PRIORITY_CAPTURE = 0x7fffffff;
-constexpr int REG_PRIORITY_INVALID = std::numeric_limits<int>::lowest();
-//#define REG_PRIORITY_LOW 0x11111111ul
-//#define REG_PRIORITY_NORMAL 0x22222222ul
-//#define REG_PRIORITY_HIGH 0x33333333ul
-//#define REG_PRIORITY_CAPTURE 0x7ffffffful
-//#define REG_PRIORITY_INVALID 0xfffffffful
+#define REG_PRIORITY_LOW 0x11111111ul
+#define REG_PRIORITY_NORMAL 0x22222222ul
+#define REG_PRIORITY_HIGH 0x33333333ul
+#define REG_PRIORITY_CAPTURE 0x7ffffffful
+#define REG_PRIORITY_INVALID 0xfffffffful
 
 struct IPure
 {
@@ -20,10 +15,11 @@ struct IPure
 };
 
 #define DECLARE_MESSAGE(name)\
-struct pure##name\
+struct pure##name : IPure\
 {\
     virtual void On##name() = 0;\
-	static ICF void __fastcall OnPure(pure##name* self) { self->On##name(); }\
+private:\
+    void OnPure() override { On##name(); }\
 };
 
 DECLARE_MESSAGE(Frame); // XXX: rename to FrameStart
@@ -36,15 +32,15 @@ DECLARE_MESSAGE(AppEnd);
 DECLARE_MESSAGE(DeviceReset);
 DECLARE_MESSAGE(ScreenResolutionChanged);
 
+struct MessageObject
+{
+    IPure* Object;
+    int Prio;
+};
+
 template<class T>
 class MessageRegistry
 {
-	struct MessageObject
-    {
-        T* Object;
-        int Prio;
-    };
-	
     bool changed, inProcess;
     xr_vector<MessageObject> messages;
 
@@ -72,11 +68,8 @@ public:
         VERIFY(newMessage.Prio != REG_PRIORITY_INVALID);
 
         // Verify that we don't already have the same object with valid priority
-        for (size_t i = 0; i < messages.size(); ++i)
-        {
-            auto& message = messages[i];
+        for (auto& message : messages)
             VERIFY(!(message.Prio != REG_PRIORITY_INVALID && message.Object == newMessage.Object));
-		}
 #endif
         messages.emplace_back(newMessage);
 
@@ -88,11 +81,10 @@ public:
 
     void Remove(T* object)
     {
-        for (size_t i = 0; i < messages.size(); ++i)
+        for (auto& it : messages)
         {
-            auto& message = messages[i];
-            if (message.Object == object)
-                message.Prio = REG_PRIORITY_INVALID;
+            if (it.Object == object)
+                it.Prio = REG_PRIORITY_INVALID;
         }
 
         if (inProcess)
@@ -109,18 +101,14 @@ public:
         inProcess = true;
 
         if (messages[0].Prio == REG_PRIORITY_CAPTURE)
-            messages[0].Object->OnPure(messages[0].Object);
+            messages[0].Object->OnPure();
         else
         {
-            for (size_t i = 0; i < messages.size(); ++i)
-			{
-				const auto& message = messages[i];
+            for (const auto& message : messages)
                 if (message.Prio != REG_PRIORITY_INVALID)
+                    message.Object->OnPure();
+        }
 
-                    message.Object->OnPure(message.Object);
-
-			}
-		}
         if (changed)
             Resort();
 

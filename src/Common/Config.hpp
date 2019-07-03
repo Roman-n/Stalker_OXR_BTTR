@@ -11,7 +11,7 @@
 #define RAINDROPS_R4 						        // Капли на экран R4, зависимость от дефайна RAINDROPS
 #define FIX_FLASHING_POINTS_LAMPS			        // Исправление мигания света ламп, XRay Oxygen
 #define _STD_EXTENSIONS_SATURATE__LERP 		        // XRay Oxygen, Адаптация новых функций для _std_extensions.h OpenXRay
-//#define AMMO_FROM_BELT					        // Патроны берем только с пояса
+#define AMMO_FROM_BELT					            // Патроны берем только с пояса
 #define POLTER_DEATH_SOC					        // Смерть полтера как в ТЧ
 #define POLTER_FIX_DEATH					        // Полтер не кидается предметами после смерти
 #define POLTER_POLZUN						        // Потеря энергии у полтергейста
@@ -51,6 +51,7 @@
 #define CROW_FIX_POSITION							// Вороны не разлетаются с одной точки при старте игры
 //#define __DISCORD_API								// Адаптация движка к дискорду
 #define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
+#define LOST_ALPHA_INV_IND							// Движковые колбы в инвентаре из Лост Альфы
 	
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -74,5 +75,4 @@
 #endif
 
 // Планы: 
-//#define AURA_CONTROLLER_FIX				        // Фикс звука ауры контролера при смерти гг, при перезагрузки звук продолжал играть
 //#define VOLUMETRIK_TORCH					        // Объемный свет фонаря
