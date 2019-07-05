@@ -39,6 +39,10 @@ void CUIActorMenu::InitTradeMode()
     m_LeftDelimiter->Show(true);
     m_LeftBackground->Show(true);
 
+#ifdef NEWIND	
+    m_clock_value->Show(true); //Показать время при открытом инвентаре
+#endif	
+	
     m_PartnerBottomInfo->Show(true);
     m_PartnerWeight->Show(true);
     m_trade_buy_button->Show(true);
@@ -129,6 +133,9 @@ void CUIActorMenu::DeInitTradeMode()
     m_PartnerMoney->Show(false);
 
     m_pTradeActorBagList->Show(false);
+#ifdef NEWIND	
+    m_clock_value->Show(false); //Показать время при открытом инвентаре
+#endif		
     m_pTradeActorList->Show(false);
     m_pTradePartnerBagList->Show(false);
     m_pTradePartnerList->Show(false);

@@ -55,6 +55,9 @@ void CUIActorMenu::InitDeadBodySearchMode()
     m_PartnerBottomInfo->Show(true);
     m_PartnerWeight->Show(true);
     m_takeall_button->Show(true);
+#ifdef NEWIND	
+    m_clock_value->Show(true); //Показать время при открытом инвентаре
+#endif	
 
     if (m_pPartnerInvOwner)
     {
@@ -122,6 +125,9 @@ void CUIActorMenu::DeInitDeadBodySearchMode() const
     m_PartnerBottomInfo->Show(false);
     m_PartnerWeight->Show(false);
     m_takeall_button->Show(false);
+#ifdef NEWIND	
+    m_clock_value->Show(false); //Показать время при открытом инвентаре
+#endif	
 
     if (m_pInvBox)
     {

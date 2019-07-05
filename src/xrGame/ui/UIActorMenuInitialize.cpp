@@ -150,7 +150,7 @@ void CUIActorMenu::Construct()
     m_ActorMoney = UIHelper::CreateTextWnd(uiXml, "actor_money_static", this);
     m_PartnerMoney = UIHelper::CreateTextWnd(uiXml, "partner_money_static", this);
 #ifdef NEWIND	
-	m_clock_value	= UIHelper::CreateStatic(uiXml, "clock_value", this); //Показать время при открытом инвентаре
+	m_clock_value = UIHelper::CreateStatic(uiXml, "clock_value", this); //Показать время при открытом инвентаре
 #endif	
     m_QuickSlot1 = UIHelper::CreateTextWnd(uiXml, "quick_slot1_text", this);
     m_QuickSlot2 = UIHelper::CreateTextWnd(uiXml, "quick_slot2_text", this);

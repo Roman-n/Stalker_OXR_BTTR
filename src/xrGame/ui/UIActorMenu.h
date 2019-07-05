@@ -110,7 +110,7 @@ protected:
 
     enum
     {
-        e_af_count = 20
+        e_af_count = 16
     };
     CUIStatic* m_belt_list_over[e_af_count];
     CUIStatic* m_HelmetOver;
@@ -171,7 +171,7 @@ protected:
     CUI3tButton* m_takeall_button;
     CUI3tButton* m_exit_button;
 #ifdef NEWIND		
-    CUIStatic*	 m_clock_value; //Показать время при открытом инвентаре
+    CUIStatic* m_clock_value; //Показать время при открытом инвентаре
 #endif
 
     u32 m_last_time;

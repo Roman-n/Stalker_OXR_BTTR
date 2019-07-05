@@ -22,6 +22,10 @@ void CUIActorMenu::InitUpgradeMode()
     m_pUpgradeWnd->Show(true);
     m_pQuickSlot->Show(true);
 
+#ifdef NEWIND	
+    m_clock_value->Show(true); //Показать время при открытом инвентаре
+#endif		
+	
     InitInventoryContents(m_pInventoryBagList);
     VERIFY(m_pPartnerInvOwner);
     m_pPartnerInvOwner->StartTrading();
@@ -35,6 +39,10 @@ void CUIActorMenu::DeInitUpgradeMode()
     m_pUpgradeWnd->set_info_cur_upgrade(NULL);
     m_pUpgradeWnd->m_btn_repair->Enable(false);
 
+#ifdef NEWIND	
+    m_clock_value->Show(false); //Показать время при открытом инвентаре
+#endif		
+	
     if (m_upgrade_selected)
     {
         m_upgrade_selected->Mark(false);

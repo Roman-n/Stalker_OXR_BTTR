@@ -1487,7 +1487,7 @@ void CUIActorMenu::UpdateOutfit()
     }
 
     u32 af_count = m_pActorInvOwner->inventory().BeltWidth();
-    VERIFY(0 <= af_count && af_count <= 15);
+    VERIFY(0 <= af_count && af_count <= 16);
 
     VERIFY(m_pInventoryBeltList);
     CCustomOutfit* outfit = m_pActorInvOwner->GetOutfit();
@@ -1505,7 +1505,7 @@ void CUIActorMenu::UpdateOutfit()
     Ivector2 afc;
     afc.x = af_count; // 1;
 	//Динамический слот из ТЧ в две линии
-    afc.y = af_count;//Всегда в линию по Y 1; // af_count;
+    afc.y = 1;//af_count;//Всегда в линию по Y 1; // af_count;
 
     m_pInventoryBeltList->SetCellsCapacity(afc);
 
