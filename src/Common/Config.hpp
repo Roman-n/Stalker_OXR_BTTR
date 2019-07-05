@@ -1,4 +1,6 @@
 #pragma once
+
+
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl Back to the roots
 #define UPDATEINVHANDS 						        // Убрать руки при открытом инвентаре
 #define SHOWMAPINVCOP 						        // Убрать мини карту при открытом инвентаре
@@ -52,6 +54,8 @@
 //#define __DISCORD_API								// Адаптация движка к дискорду
 #define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
 #define LOST_ALPHA_INV_IND							// Движковые колбы в инвентаре из Лост Альфы
+#define FIX_COUNT_ART								// Исправлена ошибка с нулевым m_artefact_spawn_count
+
 	
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -70,9 +74,19 @@
 #define R2_SHADERS_BACKWARDS_COMPATIBILITY          // Что-то по графике
 #endif
 
+
 #ifdef Call_of_Chernobyl
 //#define NON_FATAL_VERIFY                          // Для откладки
 #endif
 
-// Планы: 
-//#define VOLUMETRIK_TORCH					        // Объемный свет фонаря
+
+//Планы;
+//#define BLOODSUCKER_CS							// Сосыч из Чистого неба
+//#define BLOODSUCKER_SOC							// Сосыч из Теней Чернобыля
+//#define BOAR_CS									// Кабан из Чистого неба
+//#define BURER_CS									// Бюрер из ЧН/ТЧ
+//#define CHIMERA_CS								// Химера из ЧН/ТЧ
+//#define DOG_SOC									// Собака из ЧН/ТЧ
+//#define POLTERGEIST_CS							// Полтергейсты из ЧН/ТЧ
+//#define SNORK_CS									// Снорк из ЧН/ТЧ
+//#define PSEUDO_GIANT_JUMPER						// Прыгающий псевдогигант из ЧН/ТЧ
