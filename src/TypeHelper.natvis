@@ -65,7 +65,7 @@
     <DisplayString>{cName.p_->value, s}, $(Type)</DisplayString>
   </Type>
 
-  <Type Name="MessageObject">
-    <DisplayString>{Object}</DisplayString>
+ <Type Name="MessageRegistry&lt;*&gt;::MessageObject">
+    <DisplayString>{*Object}</DisplayString>
   </Type>
 </AutoVisualizer>
