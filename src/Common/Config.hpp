@@ -55,7 +55,8 @@
 #define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
 #define LOST_ALPHA_INV_IND							// Движковые колбы в инвентаре из Лост Альфы
 #define FIX_COUNT_ART								// Исправлена ошибка с нулевым m_artefact_spawn_count
-
+#define EXPORT_OLD_MUTANTS							// Обязательное условие для подключения старых классов мутантов
+#define CHIMERA_CS									// Химера из ЧН/ТЧ
 	
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -85,7 +86,6 @@
 //#define BLOODSUCKER_SOC							// Сосыч из Теней Чернобыля
 //#define BOAR_CS									// Кабан из Чистого неба
 //#define BURER_CS									// Бюрер из ЧН/ТЧ
-//#define CHIMERA_CS								// Химера из ЧН/ТЧ
 //#define DOG_SOC									// Собака из ЧН/ТЧ
 //#define POLTERGEIST_CS							// Полтергейсты из ЧН/ТЧ
 //#define SNORK_CS									// Снорк из ЧН/ТЧ

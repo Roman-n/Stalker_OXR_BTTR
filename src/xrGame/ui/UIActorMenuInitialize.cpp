@@ -73,16 +73,12 @@ void CUIActorMenu::Construct()
     m_PartnerCharacterInfo->InitCharacterInfo(&uiXml, "partner_ch_info");
 
     m_RightDelimiter = UIHelper::CreateStatic(uiXml, "right_delimiter", this);
-    //	m_ActorTradeCaption			= UIHelper::CreateTextWnd(uiXml, "right_delimiter:trade_caption", m_RightDelimiter);
     m_ActorTradePrice = UIHelper::CreateTextWnd(uiXml, "right_delimiter:trade_price", m_RightDelimiter);
     m_ActorTradeWeightMax = UIHelper::CreateTextWnd(uiXml, "right_delimiter:trade_weight_max", m_RightDelimiter);
-    //	m_ActorTradeCaption->AdjustWidthToText();
 
     m_LeftDelimiter = UIHelper::CreateStatic(uiXml, "left_delimiter", this);
-    //	m_PartnerTradeCaption		= UIHelper::CreateTextWnd(uiXml, "left_delimiter:trade_caption", m_LeftDelimiter);
     m_PartnerTradePrice = UIHelper::CreateTextWnd(uiXml, "left_delimiter:trade_price", m_LeftDelimiter);
     m_PartnerTradeWeightMax = UIHelper::CreateTextWnd(uiXml, "left_delimiter:trade_weight_max", m_LeftDelimiter);
-    //	m_PartnerTradeCaption->AdjustWidthToText();
 
     m_ActorBottomInfo = UIHelper::CreateStatic(uiXml, "actor_weight_caption", this);
     m_ActorWeight = UIHelper::CreateTextWnd(uiXml, "actor_weight", this);

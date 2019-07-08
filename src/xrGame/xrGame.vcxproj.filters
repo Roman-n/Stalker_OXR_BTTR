@@ -826,6 +826,23 @@
     <Filter Include="AI\AMonsters\monsters\Chimera\states">
       <UniqueIdentifier>{8d6475ec-c185-4ebb-9ba6-e7dc1644c4c1}</UniqueIdentifier>
     </Filter>
+	
+    <Filter Include="AI\AMonsters\monsters\Chimera_cs">
+      <UniqueIdentifier>{f9fd2d0f-ce89-4e64-aece-aa59b8e72b11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Chimera_cs\state threaten">
+      <UniqueIdentifier>{c027367f-d461-4d2e-894e-0f37610af622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Chimera_cs\state hunting">
+      <UniqueIdentifier>{b09f7bd7-7bf3-4cc0-9a9a-9bbe02d7b133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Chimera_cs\Script">
+      <UniqueIdentifier>{7ce139e5-922b-4707-a14e-2ad0f6111034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Chimera_cs\states">
+      <UniqueIdentifier>{8d6475ec-c185-4ebb-9ba6-e7dc1644c435}</UniqueIdentifier>
+    </Filter>
+	
     <Filter Include="AI\AMonsters\monsters\PseudoGigant">
       <UniqueIdentifier>{b63ebd95-6d63-4b98-b8a8-3587f5b69dbb}</UniqueIdentifier>
     </Filter>
@@ -3861,6 +3878,56 @@
     <ClInclude Include="ai\Monsters\Chimera\chimera_state_hunting_move_to_cover_inline.h">
       <Filter>AI\AMonsters\monsters\Chimera\state hunting</Filter>
     </ClInclude>
+	
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_manager.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_roar.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_roar_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_steal.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_steal_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_walk.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_threaten_walk_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state threaten</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state hunting</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_come_out.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state hunting</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_come_out_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state hunting</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state hunting</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_move_to_cover.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state hunting</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_move_to_cover_inline.h">
+      <Filter>AI\AMonsters\monsters\Chimera_cs\state hunting</Filter>
+    </ClInclude>	
+	
     <ClInclude Include="ai\Monsters\PseudoGigant\pseudo_gigant.h">
       <Filter>AI\AMonsters\monsters\PseudoGigant</Filter>
     </ClInclude>
