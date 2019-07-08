@@ -424,8 +424,8 @@
     <ClInclude Include="ai\Monsters\Cat\cat_state_manager.h" />
 	
 	<ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs.h" />
-    <ClInclude Include="ai\monsters\chimera_cs\chimera_cs_attack_state.h" />
-    <ClInclude Include="ai\monsters\chimera_cs\chimera_cs_attack_state_inline.h" />
+    <CustomBuild Include="ai\monsters\chimera_cs\chimera_cs_attack_state.h" />
+    <CustomBuild Include="ai\monsters\chimera_cs\chimera_cs_attack_state_inline.h" />
     <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting.h" />
     <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_come_out.h" />
     <ClInclude Include="ai\Monsters\Chimera_cs\chimera_cs_state_hunting_come_out_inline.h" />

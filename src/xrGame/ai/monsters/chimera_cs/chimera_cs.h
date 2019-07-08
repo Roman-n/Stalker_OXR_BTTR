@@ -1,7 +1,6 @@
 #pragma once
 #ifdef CHIMERA_CS
 #include "../BaseMonster/base_monster.h"
-#include "../../../../xrServerEntities/script_export_space.h"
 
 class CChimera_cs : public CBaseMonster {
 	typedef		CBaseMonster	inherited;
@@ -27,15 +26,11 @@ public:
 	virtual	void	TranslateActionToPathParams ();
 	virtual void	HitEntityInJump				(const CEntity *pEntity);
 #ifdef EXPORT_OLD_MUTANTS	
-	virtual	char*	get_monster_class_name		() { return "Chimera_cs"; }	
+	pcstr get_monster_class_name() override { return "Chimera_cs"; }
 #endif	
 	IC		void	SetUpperState				(bool state = true) {b_upper_state = state;}
 	
-	DECLARE_SCRIPT_REGISTER_FUNCTION
-
+	
 };
 
-add_to_type_list(CChimera_cs)
-#undef script_type_list
-#define script_type_list save_type_list(CChimera_cs)
 #endif

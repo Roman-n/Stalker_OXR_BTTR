@@ -10,8 +10,8 @@ TEMPLATE_SPECIALIZATION
 CStateChimera_csAttackRunAbstract::CStateChimera_csAttackRun(_Object *obj) : inherited(obj)
 {
 //	add_state(eStateAttack_MoveToHomePoint,	xr_new<CStateMonsterAttackMoveToHomePoint<CChimera_cs> >(obj));	
- 	add_state(eStateAttack_Run_chimera,				xr_new<CStateMonsterAttackRun<CChimera_cs> >			(obj));
- 	add_state(eStateAttack_Melee_chimera,			xr_new<CStateMonsterAttackMelee<CChimera_cs> >			(obj));	
+ 	add_state(eStateAttack_Run_chimera,				new CStateMonsterAttackRun<CChimera_cs> 			(obj));
+ 	add_state(eStateAttack_Melee_chimera,			new CStateMonsterAttackMelee<CChimera_cs> 			(obj));	
 }
 
 TEMPLATE_SPECIALIZATION

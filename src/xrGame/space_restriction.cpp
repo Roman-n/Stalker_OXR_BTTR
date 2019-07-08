@@ -284,7 +284,8 @@ u32 CSpaceRestriction::accessible_nearest(const Fvector& position, Fvector& resu
 {
     if (m_out_space_restriction)
     {
-#pragma TODO("Xottab_DUTY: investigate temporary fix!")
+//Потом исправлю
+//#pragma TODO("Xottab_DUTY: investigate temporary fix!")
         CSpaceRestriction* mutable_this = const_cast<CSpaceRestriction*> (this); // Xottab_DUTY: temporary fix to allow compilation. Thanks to Giperion
         return (m_out_space_restriction->accessible_nearest(mutable_this, position, result, true));
     }

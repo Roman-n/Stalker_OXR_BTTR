@@ -14,9 +14,9 @@
 TEMPLATE_SPECIALIZATION
 CStateChimera_csThreatenAbstract::CStateChimera_csThreaten(_Object *obj) : inherited(obj)
 {
-	add_state(eStateWalk,		xr_new<CStateChimera_csThreatenWalk<_Object> >	(obj));
-	add_state(eStateThreaten,	xr_new<CStateChimera_csThreatenRoar<_Object> >	(obj));
-	add_state(eStateSteal,		xr_new<CStateChimera_csThreatenSteal<_Object> >(obj));
+	add_state(eStateWalk,		new CStateChimera_csThreatenWalk<_Object> 	(obj));
+	add_state(eStateThreaten,	new CStateChimera_csThreatenRoar<_Object> 	(obj));
+	add_state(eStateSteal,		new CStateChimera_csThreatenSteal<_Object> (obj));
 }
 
 TEMPLATE_SPECIALIZATION

@@ -65,4 +65,11 @@ enum EMovementParametersGiant
     eGiantVelocityParameterJumpPrepare = eVelocityParameterCustom << 1,
     eGiantVelocityParameterJumpGround = eVelocityParameterCustom << 2,
 };
+
+enum EMovementParametersChimera_cs {
+	eChimera_csVelocityParameterUpperWalkFwd		= eVelocityParameterCustom << 1,
+	eChimera_csVelocityParameterJumpGround			= eVelocityParameterCustom << 2,
+	eChimera_csVelocityParamsUpperWalkFwd			= eVelocityParameterStand | eChimera_csVelocityParameterUpperWalkFwd,
+	};		
+
 };

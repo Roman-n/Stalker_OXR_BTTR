@@ -63,6 +63,9 @@ enum EMonsterState
     eStateAttack_HomePoint_LookOpenPlace = eStateAttack | 24,
     eStateAttack_Attack_On_Run = eStateAttack | 25,
 
+    eStateAttack_Run_chimera = eStateAttack | 26,
+    eStateAttack_Melee_chimera = eStateAttack | 27,
+
     // -------------------------------------------------------------
 
     eStatePanic = eGlobalState << 4,

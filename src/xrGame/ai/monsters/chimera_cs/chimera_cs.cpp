@@ -6,7 +6,7 @@
 #include "../../../detail_path_manager.h"
 #include "../monster_velocity_space.h"
 #include "../../../level.h"
-#include "../../../PhysicsShell.h"
+#include "xrPhysics/PhysicsShell.h"
 #include "../../../sound_player.h"
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
@@ -15,7 +15,7 @@
 
 CChimera_cs::CChimera_cs()
 {
-	StateMan = xr_new<CStateManagerChimera_cs>	(this);
+	StateMan = new CStateManagerChimera_cs(this);
 	com_man().add_ability(ControlCom::eControlJump);
 }
 
@@ -70,30 +70,9 @@ void CChimera_cs::Load(LPCSTR section)
 	anim().AddAnim(eAnimDie,				"stand_idle_",			-1, &velocity_none,				PS_STAND);
 	anim().AddAnim(eAnimThreaten,		"stand_threaten_",		-1, &velocity_none,				PS_STAND);
 
-//	anim().AddAnim(eAnimRunTurnLeft,	"stand_run_turn_left_",	-1, &velocity_run,		PS_STAND);
-//	anim().AddAnim(eAnimRunTurnRight,	"stand_run_turn_right_",-1, &velocity_run,		PS_STAND);
-	
-//	anim().AddAnim(eAnimAttackRun,		"stand_run_attack_",	-1, &velocity_run,		PS_STAND);
-
-	//////////////////////////////////////////////////////////////////////////
-
-//	anim().AddAnim(eAnimUpperStandIdle,		"stand_up_idle_",		-1, &velocity_none,			PS_STAND_UPPER);
-//	anim().AddAnim(eAnimUpperStandTurnLeft,	"stand_up_turn_ls_",	-1, &velocity_turn,	PS_STAND_UPPER);
-//	anim().AddAnim(eAnimUpperStandTurnRight,	"stand_up_turn_rs_",	-1, &velocity_turn,	PS_STAND_UPPER);
-
-//	anim().AddAnim(eAnimStandToUpperStand,	"stand_upper_",			-1, &velocity_none,			PS_STAND);
-//	anim().AddAnim(eAnimUppperStandToStand,	"stand_up_to_down_",	-1, &velocity_none,			PS_STAND_UPPER);
-
-//	anim().AddAnim(eAnimUpperWalkFwd,		"stand_up_walk_fwd_",	-1, &m_fsVelocityWalkUpper,							PS_STAND_UPPER);
-//	anim().AddAnim(eAnimUpperThreaten,		"stand_up_threaten_",	-1, &velocity_none,			PS_STAND_UPPER);
-//	anim().AddAnim(eAnimUpperAttack,			"stand_up_attack_",		-1, &velocity_turn,	PS_STAND_UPPER);
-
-	//////////////////////////////////////////////////////////////////////////
-	// define transitions
 	anim().AddTransition(PS_STAND,			PS_STAND_UPPER,		eAnimStandToUpperStand,		false);
 	anim().AddTransition(PS_STAND_UPPER,		PS_STAND,			eAnimUppperStandToStand,	false);
 
-	// link action
 	anim().LinkAction(ACT_STAND_IDLE,	eAnimStandIdle);
 	anim().LinkAction(ACT_SIT_IDLE,		eAnimLieIdle);
 	anim().LinkAction(ACT_LIE_IDLE,		eAnimLieIdle);
@@ -107,12 +86,6 @@ void CChimera_cs::Load(LPCSTR section)
 	anim().LinkAction(ACT_ATTACK,		eAnimAttack);
 	anim().LinkAction(ACT_STEAL,			eAnimSteal);
 	anim().LinkAction(ACT_LOOK_AROUND,	eAnimLookAround);
-
-#ifdef DEBUG	
-	anim().accel_chain_test		();
-#endif
-
-	//*****************************************************************************
 
 	m_fsVelocityWalkUpper.Load	(section, "Velocity_Walk_Upper");
 }
