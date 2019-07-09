@@ -3,7 +3,7 @@
 #include "../state.h"
 
 template<typename _Object>
-class	CStateChimera_csHunting : public CState<_Object> {
+class	CStateChimecsHunting : public CState<_Object> {
 protected:
 	typedef CState<_Object> inherited;
 	typedef CState<_Object>* state_ptr;
@@ -14,7 +14,7 @@ protected:
 	};
 
 public:
-						CStateChimera_csHunting	(_Object *obj);
+						CStateChimecsHunting	(_Object *obj);
 
 	virtual	void		reselect_state			();
 	virtual bool 		check_start_conditions	();	
@@ -22,5 +22,5 @@ public:
 
 };
 
-#include "Chimera_cs_state_hunting_inline.h"
+#include "Chimecs_state_hunting_inline.h"
 #endif

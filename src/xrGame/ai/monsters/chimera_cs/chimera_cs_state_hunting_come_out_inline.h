@@ -4,28 +4,28 @@
 	typename _Object\
 >
 
-#define CStateChimera_csHuntingMoveToCoverAbstract CStateChimera_csHuntingMoveToCover<_Object>
+#define CStateChimecsHuntingMoveToCoverAbstract CStateChimecsHuntingMoveToCover<_Object>
 
 TEMPLATE_SPECIALIZATION
-CStateChimera_csHuntingMoveToCoverAbstract::CStateChimera_csHuntingMoveToCover(_Object *obj) : inherited(obj)
+CStateChimecsHuntingMoveToCoverAbstract::CStateChimecsHuntingMoveToCover(_Object *obj) : inherited(obj)
 {
 }
 
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csHuntingMoveToCoverAbstract::check_start_conditions()
+bool CStateChimecsHuntingMoveToCoverAbstract::check_start_conditions()
 {
 	return true;
 }
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csHuntingMoveToCoverAbstract::check_completion()
+bool CStateChimecsHuntingMoveToCoverAbstract::check_completion()
 {
 	return false;
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csHuntingMoveToCoverAbstract::reselect_state()
+void CStateChimecsHuntingMoveToCoverAbstract::reselect_state()
 {
 	if (prev_substate == u32(-1))					select_state(eStateMoveToCover);
 	else if (prev_substate == eStateMoveToCover)	select_state(eStateComeOut);
@@ -34,5 +34,5 @@ void CStateChimera_csHuntingMoveToCoverAbstract::reselect_state()
 
 
 #undef TEMPLATE_SPECIALIZATION
-#undef CStateChimera_csHuntingMoveToCoverAbstract
+#undef CStateChimecsHuntingMoveToCoverAbstract
 #endif

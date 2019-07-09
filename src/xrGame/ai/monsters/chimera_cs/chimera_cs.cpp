@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #ifdef CHIMERA_CS
-#include "Chimera_cs.h"
-#include "Chimera_cs_state_manager.h"
+#include "chimera_cs.h"
+#include "chimera_cs_state_manager.h"
 #include "../../../../Include/xrRender/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 #include "../monster_velocity_space.h"
@@ -13,18 +13,18 @@
 #include "../control_path_builder_base.h"
 
 
-CChimera_cs::CChimera_cs()
+CChimecs::CChimecs()
 {
-	StateMan = new CStateManagerChimera_cs(this);
+	StateMan = new CStateManagerChimecs(this);
 	com_man().add_ability(ControlCom::eControlJump);
 }
 
-CChimera_cs::~CChimera_cs()
+CChimecs::~CChimecs()
 {
 	xr_delete		(StateMan);
 }
 
-void CChimera_cs::Load(LPCSTR section)
+void CChimecs::Load(LPCSTR section)
 {
 	inherited::Load			(section);
 
@@ -90,18 +90,18 @@ void CChimera_cs::Load(LPCSTR section)
 	m_fsVelocityWalkUpper.Load	(section, "Velocity_Walk_Upper");
 }
 
-void CChimera_cs::reinit()
+void CChimecs::reinit()
 {
 	inherited::reinit();
 	b_upper_state					= false;
 
-	movement().detail().add_velocity(MonsterMovement::eChimera_csVelocityParameterUpperWalkFwd,	CDetailPathManager::STravelParams(m_fsVelocityWalkUpper.velocity.linear,	m_fsVelocityWalkUpper.velocity.angular_path, m_fsVelocityWalkUpper.velocity.angular_real));
-	move().load_velocity(*cNameSect(), "Velocity_JumpGround",MonsterMovement::eChimera_csVelocityParameterJumpGround);
+	movement().detail().add_velocity(MonsterMovement::eChimecsVelocityParameterUpperWalkFwd,	CDetailPathManager::STravelParams(m_fsVelocityWalkUpper.velocity.linear,	m_fsVelocityWalkUpper.velocity.angular_path, m_fsVelocityWalkUpper.velocity.angular_real));
+	move().load_velocity(*cNameSect(), "Velocity_JumpGround",MonsterMovement::eChimecsVelocityParameterJumpGround);
 
-	com_man().load_jump_data("jump_attack_0",0, "jump_attack_1", "jump_attack_2", u32(-1), MonsterMovement::eChimera_csVelocityParameterJumpGround,0);
+	com_man().load_jump_data("jump_attack_0",0, "jump_attack_1", "jump_attack_2", u32(-1), MonsterMovement::eChimecsVelocityParameterJumpGround,0);
 }
 
-void CChimera_cs::SetTurnAnimation(bool turn_left)
+void CChimecs::SetTurnAnimation(bool turn_left)
 {
 	if (b_upper_state) 
 		(turn_left) ? anim().SetCurAnim(eAnimUpperStandTurnLeft) : anim().SetCurAnim(eAnimUpperStandTurnRight);
@@ -109,7 +109,7 @@ void CChimera_cs::SetTurnAnimation(bool turn_left)
 		(turn_left) ? anim().SetCurAnim(eAnimStandTurnLeft)		: anim().SetCurAnim(eAnimStandTurnRight);
 }
 
-void CChimera_cs::CheckSpecParams(u32 spec_params)
+void CChimecs::CheckSpecParams(u32 spec_params)
 {
 	if ((spec_params & ASP_THREATEN) == ASP_THREATEN) {
 		if (b_upper_state)
@@ -131,16 +131,16 @@ void CChimera_cs::CheckSpecParams(u32 spec_params)
 	}
 }
 
-EAction CChimera_cs::CustomVelocityIndex2Action(u32 velocity_index) 
+EAction CChimecs::CustomVelocityIndex2Action(u32 velocity_index) 
 {
 	switch (velocity_index) {
-		case MonsterMovement::eChimera_csVelocityParameterUpperWalkFwd: return ACT_WALK_FWD;
+		case MonsterMovement::eChimecsVelocityParameterUpperWalkFwd: return ACT_WALK_FWD;
 	}
 	
 	return ACT_STAND_IDLE;
 }
 
-void CChimera_cs::TranslateActionToPathParams()
+void CChimecs::TranslateActionToPathParams()
 {
 	bool bEnablePath = true;
 	u32 vel_mask = 0;
@@ -159,8 +159,8 @@ void CChimera_cs::TranslateActionToPathParams()
 		break;
 	case ACT_WALK_FWD:
 		if (b_upper_state) {
-			vel_mask = MonsterMovement::eChimera_csVelocityParamsUpperWalkFwd;
-			des_mask = MonsterMovement::eChimera_csVelocityParameterUpperWalkFwd;
+			vel_mask = MonsterMovement::eChimecsVelocityParamsUpperWalkFwd;
+			des_mask = MonsterMovement::eChimecsVelocityParameterUpperWalkFwd;
 		} else {
 			if (m_bDamaged) {
 				vel_mask = MonsterMovement::eVelocityParamsWalkDamaged;
@@ -175,8 +175,8 @@ void CChimera_cs::TranslateActionToPathParams()
 		break;
 	case ACT_RUN:
 		if (b_upper_state) {
-			vel_mask = MonsterMovement::eChimera_csVelocityParamsUpperWalkFwd;
-			des_mask = MonsterMovement::eChimera_csVelocityParameterUpperWalkFwd;
+			vel_mask = MonsterMovement::eChimecsVelocityParamsUpperWalkFwd;
+			des_mask = MonsterMovement::eChimecsVelocityParameterUpperWalkFwd;
 		} else {
 			if (m_bDamaged) {
 				vel_mask = MonsterMovement::eVelocityParamsRunDamaged;
@@ -211,13 +211,13 @@ void CChimera_cs::TranslateActionToPathParams()
 	}
 }
 
-void CChimera_cs::HitEntityInJump(const CEntity *pEntity)
+void CChimecs::HitEntityInJump(const CEntity *pEntity)
 {
 	SAAParam &params	= anim().AA_GetParams("jump_attack_1");
 	HitEntity			(pEntity, params.hit_power, params.impulse, params.impulse_dir);
 }
 
-void CChimera_cs::UpdateCL()
+void CChimecs::UpdateCL()
 {
 	inherited::UpdateCL				();
 }

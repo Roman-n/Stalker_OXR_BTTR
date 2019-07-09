@@ -2,7 +2,7 @@
 #ifdef CHIMERA_CS
 #include "../BaseMonster/base_monster.h"
 
-class CChimera_cs : public CBaseMonster {
+class CChimecs : public CBaseMonster {
 	typedef		CBaseMonster	inherited;
 
 	bool		b_upper_state;
@@ -13,8 +13,8 @@ class CChimera_cs : public CBaseMonster {
 	SVelocityParam		m_fsVelocityRunAttack;
 
 public:
-					CChimera_cs			();
-	virtual			~CChimera_cs			();	
+					CChimecs			();
+	virtual			~CChimecs			();	
 
 	virtual void	Load				(LPCSTR section);
 	virtual void	reinit				();
@@ -26,7 +26,7 @@ public:
 	virtual	void	TranslateActionToPathParams ();
 	virtual void	HitEntityInJump				(const CEntity *pEntity);
 #ifdef EXPORT_OLD_MUTANTS	
-	pcstr get_monster_class_name() override { return "Chimera_cs"; }
+	pcstr get_monster_class_name() override { return "Chimecs"; }
 #endif	
 	IC		void	SetUpperState				(bool state = true) {b_upper_state = state;}
 	

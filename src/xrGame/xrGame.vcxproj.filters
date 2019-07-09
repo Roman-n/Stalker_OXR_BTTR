@@ -3841,6 +3841,12 @@
     <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_threaten.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
     </ClInclude>
+	<ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_attack_run_inline.h">
+      <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
+    </ClInclude>
+	<ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_attack_run.h">
+      <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
+    </ClInclude>
     <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_threaten_inline.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
     </ClInclude>
@@ -9130,15 +9136,12 @@
   </ItemGroup>
   
    <ItemGroup>
-    <CustomBuild Include="ai\monsters\chimera_cs\chimera_cs_attack_state.h">
+    <ClCompile Include="ai\monsters\chimera_cs\chimera_cs_state_attack_run.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\states</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ai\monsters\chimera_cs\chimera_cs_attack_state_inline.h">
+    </ClCompile>
+    <ClCompile Include="ai\monsters\chimera_cs\chimera_cs_state_attack_run_inline.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\states</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Explosive.h">
-      <Filter>Core\Client\Objects\items &amp; weapons\Explosives</Filter>
-    </CustomBuild>
+    </ClCompile>
   </ItemGroup> 
   
   <ItemGroup>

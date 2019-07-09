@@ -3,12 +3,12 @@
 #include "../state.h"
 
 template<typename _Object>
-class	CStateChimera_csHuntingMoveToCover : public CState<_Object> {
+class	CStateChimecsHuntingMoveToCover : public CState<_Object> {
 protected:
 	typedef CState<_Object> inherited;
 
 public:
-						CStateChimera_csHuntingMoveToCover	(_Object *obj);
+						CStateChimecsHuntingMoveToCover	(_Object *obj);
 
 	virtual void		initialize						();
 	virtual	void		execute							();
@@ -16,5 +16,5 @@ public:
 	virtual bool 		check_completion				();
 };
 
-#include "Chimera_cs_state_hunting_move_to_cover_inline.h"
+#include "Chimecs_state_hunting_move_to_cover_inline.h"
 #endif

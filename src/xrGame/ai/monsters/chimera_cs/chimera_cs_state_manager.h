@@ -2,15 +2,15 @@
 #ifdef CHIMERA_CS
 #include "../monster_state_manager.h"
 
-class CChimera_cs;
+class CChimecs;
 
-class CStateManagerChimera_cs : public CMonsterStateManager<CChimera_cs> {
+class CStateManagerChimecs : public CMonsterStateManager<CChimecs> {
 	
-	typedef CMonsterStateManager<CChimera_cs> inherited;
+	typedef CMonsterStateManager<CChimecs> inherited;
 
 public:
-						CStateManagerChimera_cs	(CChimera_cs *obj);
-	virtual				~CStateManagerChimera_cs	();
+						CStateManagerChimecs	(CChimecs *obj);
+	virtual				~CStateManagerChimecs	();
 
 	virtual	void		execute					();
     virtual void remove_links(IGameObject* object) { inherited::remove_links(object); }

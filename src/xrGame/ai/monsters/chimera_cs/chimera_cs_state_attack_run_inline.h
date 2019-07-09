@@ -4,52 +4,52 @@
 	typename _Object\
 >
 
-#define CStateChimera_csAttackRunAbstract CStateChimera_csAttackRun<_Object>
+#define CStateChimecsAttackRunAbstract CStateChimecsAttackRun<_Object>
 
 TEMPLATE_SPECIALIZATION
-CStateChimera_csAttackRunAbstract::CStateChimera_csAttackRun(_Object *obj) : inherited(obj)
+CStateChimecsAttackRunAbstract::CStateChimecsAttackRun(_Object *obj) : inherited(obj)
 {
-//	add_state(eStateAttack_MoveToHomePoint,	xr_new<CStateMonsterAttackMoveToHomePoint<CChimera_cs> >(obj));	
- 	add_state(eStateAttack_Run_chimera,				new CStateMonsterAttackRun<CChimera_cs> 			(obj));
- 	add_state(eStateAttack_Melee_chimera,			new CStateMonsterAttackMelee<CChimera_cs> 			(obj));	
+	add_state(eStateAttack_MoveToHomePoint,	new CStateMonsterAttackMoveToHomePoint<CChimecs> (obj));	
+ 	add_state(eStateAttack_Run_chimera,				new CStateMonsterAttackRun<CChimecs> 			(obj));
+ 	add_state(eStateAttack_Melee_chimera,			new CStateMonsterAttackMelee<CChimecs> 			(obj));	
 }
 
 TEMPLATE_SPECIALIZATION
-CStateChimera_csAttackRunAbstract::~CStateChimera_csAttackRun()
+CStateChimecsAttackRunAbstract::~CStateChimecsAttackRun()
 {
 }
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csAttackRunAbstract::check_home_point_cs()
+bool CStateChimecsAttackRunAbstract::check_home_point_cs()
 {
-//	if (prev_substate != eStateAttack_MoveToHomePoint) {
-//		if (get_state(eStateAttack_MoveToHomePoint)->check_start_conditions())	return true;
-//	} else {
-//		if (!get_state(eStateAttack_MoveToHomePoint)->check_completion())		return true;
-//	}
-//
-//	return false;
+	if (prev_substate != eStateAttack_MoveToHomePoint) {
+		if (get_state(eStateAttack_MoveToHomePoint)->check_start_conditions())	return true;
+	} else {
+		if (!get_state(eStateAttack_MoveToHomePoint)->check_completion())		return true;
+	}
+
+	return false;
 }
 
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csAttackRunAbstract::initialize()
+void CStateChimecsAttackRunAbstract::initialize()
 {
 	inherited::initialize			();
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csAttackRunAbstract::execute()
+void CStateChimecsAttackRunAbstract::execute()
 {
 	object->anim().clear_override_animation	();
 	
-//	if	( check_home_point_cs() )
-//	{
-//		select_state					(eStateAttack_MoveToHomePoint);
-//		get_state_current()->execute	();
-//		prev_substate				=	current_substate;
-//		return;
-//	}	
+	if	( check_home_point_cs() )
+	{
+		select_state					(eStateAttack_MoveToHomePoint);
+		get_state_current()->execute	();
+		prev_substate				=	current_substate;
+		return;
+	}	
 	
 	EMonsterState		state_id	=	eStateUnknown;
 	const CEntityAlive* enemy		=	object->EnemyMan.get_enemy();
@@ -76,23 +76,23 @@ void CStateChimera_csAttackRunAbstract::execute()
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csAttackRunAbstract::choose_action()
+void CStateChimecsAttackRunAbstract::choose_action()
 {
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csAttackRunAbstract::finalize_cs()
+void CStateChimecsAttackRunAbstract::finalize_cs()
 {
 	inherited::finalize();
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csAttackRunAbstract::critical_finalize_cs()
+void CStateChimecsAttackRunAbstract::critical_finalize_cs()
 {
 	inherited::critical_finalize();
 }
 
 #undef TEMPLATE_SPECIALIZATION
-#undef CStateChimera_csAttackRunAbstract
+#undef CStateChimecsAttackRunAbstract
 
 #endif

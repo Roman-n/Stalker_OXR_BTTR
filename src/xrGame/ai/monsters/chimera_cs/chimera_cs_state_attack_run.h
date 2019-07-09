@@ -2,7 +2,7 @@
 #ifdef CHIMERA_CS
 #include "../state.h"
 template<typename _Object>
-class CStateChimera_csAttackRun : public CState<_Object> {
+class CStateChimecsAttackRun : public CState<_Object> {
 	typedef CState<_Object> inherited;
 	typedef CState<_Object>*	state_ptr;
 	
@@ -10,8 +10,8 @@ class CStateChimera_csAttackRun : public CState<_Object> {
 	EAction				action;
 
 public:
-						CStateChimera_csAttackRun	(_Object *obj);
-	virtual				~CStateChimera_csAttackRun	();
+						CStateChimecsAttackRun	(_Object *obj);
+	virtual				~CStateChimecsAttackRun	();
 
 	virtual void		initialize				();
 	virtual	void		execute					();
@@ -25,5 +25,5 @@ private:
 
 };
 
-#include "Chimera_cs_state_attack_run_inline.h"
+#include "chimera_cs_state_attack_run_inline.h"
 #endif

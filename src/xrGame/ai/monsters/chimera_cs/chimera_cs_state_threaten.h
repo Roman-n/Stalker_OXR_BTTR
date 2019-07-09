@@ -3,7 +3,7 @@
 #include "../state.h"
 
 template<typename _Object>
-class	CStateChimera_csThreaten : public CState<_Object> {
+class	CStateChimecsThreaten : public CState<_Object> {
 protected:
 	typedef CState<_Object> inherited;
 	typedef CState<_Object>* state_ptr;
@@ -18,8 +18,8 @@ protected:
 	u32					m_last_time_threaten;
 
 public:
-						CStateChimera_csThreaten	(_Object *obj);
-	virtual				~CStateChimera_csThreaten	();
+						CStateChimecsThreaten	(_Object *obj);
+	virtual				~CStateChimecsThreaten	();
 
 	virtual void		reinit					();
 
@@ -33,5 +33,5 @@ public:
 	virtual void        remove_links(IGameObject* object) { inherited::remove_links(object); }
 };
 
-#include "Chimera_cs_state_threaten_inline.h"
+#include "chimera_cs_state_threaten_inline.h"
 #endif

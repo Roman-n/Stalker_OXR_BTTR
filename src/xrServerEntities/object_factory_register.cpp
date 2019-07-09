@@ -205,7 +205,7 @@ void CObjectFactory::register_classes()
     ADD(CAI_Flesh, CSE_ALifeMonsterBase, CLSID_AI_FLESH, "flesh");
     ADD(CChimera, CSE_ALifeMonsterBase, CLSID_AI_CHIMERA, "chimera");
 #ifdef CHIMERA_CS	
-	ADD(CChimera_cs, CSE_ALifeMonsterBase, CLSID_AI_CHIMERA_CS, "chimera_cs");
+	ADD(CChimecs, CSE_ALifeMonsterBase, CLSID_AI_CHIMECS, "chimecs");
 #endif	
     ADD(CAI_Dog, CSE_ALifeMonsterBase, CLSID_AI_DOG_RED, "dog_red");
     ADD(CAI_Stalker, CSE_ALifeHumanStalker, CLSID_AI_STALKER, "stalker");

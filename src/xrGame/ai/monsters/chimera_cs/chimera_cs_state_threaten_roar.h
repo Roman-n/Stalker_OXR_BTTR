@@ -3,11 +3,11 @@
 #include "../state.h"
 
 template<typename _Object>
-class CStateChimera_csThreatenRoar : public CState<_Object> {
+class CStateChimecsThreatenRoar : public CState<_Object> {
 	typedef CState<_Object>		inherited;
 
 public:
-	IC					CStateChimera_csThreatenRoar	(_Object *obj) : inherited(obj){}
+	IC					CStateChimecsThreatenRoar	(_Object *obj) : inherited(obj){}
 	
 	virtual	void		initialize					();	
 	virtual	void		execute						();
@@ -15,5 +15,5 @@ public:
 	virtual void		remove_links				(IGameObject* object) { inherited::remove_links(object);}
 };
 
-#include "Chimera_cs_state_threaten_roar_inline.h"
+#include "chimera_cs_state_threaten_roar_inline.h"
 #endif

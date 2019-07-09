@@ -4,15 +4,15 @@
 	typename _Object\
 >
 
-#define CStateChimera_csHuntingMoveToCoverAbstract CStateChimera_csHuntingMoveToCover<_Object>
+#define CStateChimecsHuntingMoveToCoverAbstract CStateChimecsHuntingMoveToCover<_Object>
 
 TEMPLATE_SPECIALIZATION
-CStateChimera_csHuntingMoveToCoverAbstract::CStateChimera_csHuntingMoveToCover(_Object *obj) : inherited(obj)
+CStateChimecsHuntingMoveToCoverAbstract::CStateChimecsHuntingMoveToCover(_Object *obj) : inherited(obj)
 {
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csHuntingMoveToCoverAbstract::initialize()
+void CStateChimecsHuntingMoveToCoverAbstract::initialize()
 {
 	inherited::initialize();
 	
@@ -20,18 +20,18 @@ void CStateChimera_csHuntingMoveToCoverAbstract::initialize()
 }
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csHuntingMoveToCoverAbstract::check_completion()
+bool CStateChimecsHuntingMoveToCoverAbstract::check_completion()
 {
 	return false;
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csHuntingMoveToCoverAbstract::execute()
+void CStateChimecsHuntingMoveToCoverAbstract::execute()
 {
 	
 }
 
 
 #undef TEMPLATE_SPECIALIZATION
-#undef CStateChimera_csHuntingMoveToCoverAbstract
+#undef CStateChimecsHuntingMoveToCoverAbstract
 #endif

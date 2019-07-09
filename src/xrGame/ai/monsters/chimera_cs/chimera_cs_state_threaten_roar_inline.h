@@ -3,17 +3,17 @@
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\
 >
-#define CStateChimera_csThreatenRoarAbstract CStateChimera_csThreatenRoar<_Object>
+#define CStateChimecsThreatenRoarAbstract CStateChimecsThreatenRoar<_Object>
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csThreatenRoarAbstract::initialize()
+void CStateChimecsThreatenRoarAbstract::initialize()
 {
 	inherited::initialize	();
 
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csThreatenRoarAbstract::execute()
+void CStateChimecsThreatenRoarAbstract::execute()
 {
 
 	object->set_action				(ACT_STAND_IDLE);
@@ -25,13 +25,13 @@ void CStateChimera_csThreatenRoarAbstract::execute()
 #define STATE_TIME_OUT	4000
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csThreatenRoarAbstract::check_completion()
+bool CStateChimecsThreatenRoarAbstract::check_completion()
 {	
 	if (time_state_started + STATE_TIME_OUT < Device.dwTimeGlobal) return true;
 	return false;
 }
 
 #undef TEMPLATE_SPECIALIZATION
-#undef CStateChimera_csThreatenRoarAbstract
+#undef CStateChimecsThreatenRoarAbstract
 
 #endif

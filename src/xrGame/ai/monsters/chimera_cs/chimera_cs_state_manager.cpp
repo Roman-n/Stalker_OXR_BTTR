@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #ifdef CHIMERA_CS
-#include "Chimera_cs.h"
-#include "Chimera_cs_state_manager.h"
+#include "chimera_cs.h"
+#include "chimera_cs_state_manager.h"
 
 #include "../control_animation_base.h"
 #include "../control_direction_base.h"
@@ -19,38 +19,35 @@
 #include "../states/monster_state_attack_run.h"
 
 
-#include "Chimera_cs_state_threaten.h"
+#include "chimera_cs_state_threaten.h"
 #include "../states/state_test_state.h"
 //#include "../group_states/group_state_home_point_attack.h"
-#include "Chimera_cs_state_attack_run.h"
+#include "chimera_cs_state_attack_run.h"
 
-CStateManagerChimera_cs::CStateManagerChimera_cs(CChimera_cs *obj) : inherited(obj)
+CStateManagerChimecs::CStateManagerChimecs(CChimecs *obj) : inherited(obj)
 {
-//	CStateMonsterAttackMoveToHomePoint<CChimera_cs>* move2home = 
-// 	xr_new<CStateMonsterAttackMoveToHomePoint<CChimera_cs> >(obj, true);
+	//CStateMonsterAttackMoveToHomePoint<CChimecs>* move2home = 
+ 	//new CStateMonsterAttackMoveToHomePoint<CChimecs> (obj, true);
 	
-	add_state(eStateRest,					new CStateMonsterRest<CChimera_cs> 					(obj));
-	add_state(eStatePanic,					new CStateMonsterPanic<CChimera_cs> 					(obj));
+	add_state(eStateRest,					new CStateMonsterRest<CChimecs> 					(obj));
+	add_state(eStatePanic,					new CStateMonsterPanic<CChimecs> 					(obj));
 	
-    add_state(eStateAttack,					new CStateChimera_csAttackRun<CChimera_cs> 			    (obj));
+    add_state(eStateAttack,					new CStateChimecsAttackRun<CChimecs> 			    (obj));
 
-// 	add_state(eStateAttack,					xr_new<CStateMonsterAttack<CChimera_cs> >				(obj, move2home));
-	add_state(eStateEat,					new CStateMonsterEat<CChimera_cs> 						(obj));
-	add_state(eStateHearInterestingSound,	new CStateMonsterHearInterestingSound<CChimera_cs> 	(obj));
-	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CChimera_cs> 		(obj));
-	add_state(eStateHitted,					 new CStateMonsterHitted<CChimera_cs> 					(obj));
-	add_state(eStateThreaten,				new CStateChimera_csThreaten<CChimera_cs> 				(obj));
-	add_state(eStateCustom,					new CStateMonsterTestState<CChimera_cs> 				(obj));
+ 	//add_state(eStateAttack, new CStateChimecsAttackRun<CChimecs>(obj, move2home));
+	add_state(eStateEat,					new CStateMonsterEat<CChimecs> 						(obj));
+	add_state(eStateHearInterestingSound,	new CStateMonsterHearInterestingSound<CChimecs> 	(obj));
+	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CChimecs> 		(obj));
+	add_state(eStateHitted,					 new CStateMonsterHitted<CChimecs> 					(obj));
+	add_state(eStateThreaten,				new CStateChimecsThreaten<CChimecs> 				(obj));
+	add_state(eStateCustom,					new CStateMonsterTestState<CChimecs> 				(obj));
 }
 
-//	add_state(eStateAttack,					xr_new<CStateMonsterAttack<CChimera_cs> >					(obj));
-//  add_state(eStateAttack,					xr_new<CStateChimera_csAttackRun<CChimera_cs> >			    (obj));
-
-CStateManagerChimera_cs::~CStateManagerChimera_cs()
+CStateManagerChimecs::~CStateManagerChimecs()
 {
 }
 
-void CStateManagerChimera_cs::execute()
+void CStateManagerChimecs::execute()
 {
 	u32 state_id = u32(-1);
 

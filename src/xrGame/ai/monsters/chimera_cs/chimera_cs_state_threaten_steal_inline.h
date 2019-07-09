@@ -3,10 +3,10 @@
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\
 >
-#define CStateChimera_csThreatenStealAbstract CStateChimera_csThreatenSteal<_Object>
+#define CStateChimecsThreatenStealAbstract CStateChimecsThreatenSteal<_Object>
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csThreatenStealAbstract::initialize()
+void CStateChimecsThreatenStealAbstract::initialize()
 {
 	inherited::initialize();
 	
@@ -24,7 +24,7 @@ void CStateChimera_csThreatenStealAbstract::initialize()
 }
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csThreatenStealAbstract::finalize()
+void CStateChimecsThreatenStealAbstract::finalize()
 {
 	inherited::finalize();
 	object->SetUpperState	();
@@ -32,7 +32,7 @@ void CStateChimera_csThreatenStealAbstract::finalize()
 
 
 TEMPLATE_SPECIALIZATION
-void CStateChimera_csThreatenStealAbstract::execute()
+void CStateChimecsThreatenStealAbstract::execute()
 {
 	data.point				= object->EnemyMan.get_enemy_position	();
 	data.vertex				= object->EnemyMan.get_enemy_vertex		();
@@ -44,7 +44,7 @@ void CStateChimera_csThreatenStealAbstract::execute()
 #define MIN_DISTANCE_TO_ENEMY	8.f
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csThreatenStealAbstract::check_completion()
+bool CStateChimecsThreatenStealAbstract::check_completion()
 {	
 	if (inherited::check_completion()) return true;
 	
@@ -55,7 +55,7 @@ bool CStateChimera_csThreatenStealAbstract::check_completion()
 }
 
 TEMPLATE_SPECIALIZATION
-bool CStateChimera_csThreatenStealAbstract::check_start_conditions()
+bool CStateChimecsThreatenStealAbstract::check_start_conditions()
 {
 	float dist_to_enemy = object->EnemyMan.get_enemy_position().distance_to(object->Position());
 	if (dist_to_enemy > MIN_DISTANCE_TO_ENEMY) return true;
@@ -63,6 +63,6 @@ bool CStateChimera_csThreatenStealAbstract::check_start_conditions()
 }
 
 #undef TEMPLATE_SPECIALIZATION
-#undef CStateChimera_csThreatenStealAbstract
+#undef CStateChimecsThreatenStealAbstract
 #undef MIN_DISTANCE_TO_ENEMY
 #endif

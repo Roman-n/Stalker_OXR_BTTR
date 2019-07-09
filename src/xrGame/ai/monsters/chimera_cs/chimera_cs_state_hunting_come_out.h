@@ -3,12 +3,12 @@
 #include "../state.h"
 
 template<typename _Object>
-class	CStateChimera_csHuntingComeOut : public CState<_Object> {
+class	CStateChimecsHuntingComeOut : public CState<_Object> {
 protected:
 	typedef CState<_Object> inherited;
 
 public:
-						CStateChimera_csHuntingComeOut	(_Object *obj);
+						CStateChimecsHuntingComeOut	(_Object *obj);
 
 	virtual	void		reselect_state				();
 	virtual bool 		check_start_conditions		();	
@@ -16,5 +16,5 @@ public:
 
 };
 
-#include "Chimera_cs_state_hunting_come_out_inline.h"
+#include "Chimecs_state_hunting_come_out_inline.h"
 #endif
