@@ -107,6 +107,12 @@ extern BOOL g_invert_zoom;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
+int __type_hud_los_alpha = 0;
+int __type_hud_veter_vremeni = 0;
+int __type_hud_soc  = 0;
+int __type_hud_coc  = 1;
+int __type_hud_cop  = 0;
+
 #ifdef Call_of_Chernobyl_OXR
 extern u32 gLanguage;
 extern xr_vector<xr_token> gLanguagesToken;
@@ -1899,17 +1905,6 @@ void CCC_RegisterCommands()
     CMD1(CCC_PHFps, "ph_frequency");
     CMD1(CCC_PHIterations, "ph_iterations");
 
-//Отключил, эти команды не нужны в релизе
-//    CMD1(CCC_PHGravity, "ph_gravity");
-//    CMD4(CCC_FloatBlock, "ph_timefactor", &phTimefactor, 0.000001f, 1000.f);
-//    CMD4(CCC_FloatBlock, "ph_break_common_factor", &ph_console::phBreakCommonFactor, 0.f, 1000000000.f);
-//    CMD4(CCC_FloatBlock, "ph_rigid_break_weapon_factor", &ph_console::phRigidBreakWeaponFactor, 0.f, 1000000000.f);
-//    CMD4(CCC_Integer, "ph_tri_clear_disable_count", &ph_console::ph_tri_clear_disable_count, 0, 255);
-//    CMD4(CCC_FloatBlock, "ph_tri_query_ex_aabb_rate", &ph_console::ph_tri_query_ex_aabb_rate, 1.01f, 3.f);
-
-
-//    if (Core.ParamFlags.test(Core.dev))
-//    {
     CMD1(CCC_JumpToLevel, "jump_to_level");
     CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
     CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
@@ -1919,7 +1914,14 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "g_no_clip", &psActorFlags, AF_NO_CLIP);
     CMD1(CCC_SetWeather, "set_weather");
     CMD1(CCC_GiveMoney, "give_money");
-//    }
+
+
+    CMD4(CCC_Integer, "__type_hud_lost_alpha", &__type_hud_los_alpha, 0, 1); // Лост Альфа
+    CMD4(CCC_Integer, "__type_hud_veter_vremeni", &__type_hud_veter_vremeni, 0, 1); // Ветер Времени 1.3
+    CMD4(CCC_Integer, "__type_hud_shadow_of_chernobyl", &__type_hud_soc, 0, 1); // Тень Чернобыля
+    CMD4(CCC_Integer, "__type_hud_call_of_chernobyl", &__type_hud_coc, 0, 1); // Зов Чернобыля 1.4.22
+    CMD4(CCC_Integer, "__type_hud_call_of_pripyat", &__type_hud_cop, 0, 1); // Зов Припяти
+
 
     CMD3(CCC_Mask, "g_use_tracers", &psActorFlags, AF_USE_TRACERS);
     CMD3(CCC_Mask, "g_autopickup", &psActorFlags, AF_AUTOPICKUP);

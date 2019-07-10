@@ -62,9 +62,21 @@ const u32 g_clWhite = 0xffffffff;
 #define C_ON_ENEMY color_xrgb(0xff, 0, 0)
 #define C_DEFAULT color_xrgb(0xff, 0xff, 0xff)
 
-#define MAININGAME_XML "maingame.xml"
+#define MAININGAME_XML_LOST_ALPHA "maingame_la.xml"
+#define MAININGAME_XML_VETER_VREMENI "maingame_vv.xml"
+#define MAININGAME_XML_SOC "maingame_soc.xml"
+#define MAININGAME_XML_COC "maingame_coc.xml"
+#define MAININGAME_XML_COP "maingame_cop.xml"
 
-CUIMainIngameWnd::CUIMainIngameWnd(): /*m_pGrenade(NULL),m_pItem(NULL),*/ m_pPickUpItem(NULL), m_pMPChatWnd(NULL), UIArtefactIcon(NULL), m_pMPLogWnd(NULL)
+extern int __type_hud_los_alpha;
+extern int __type_hud_veter_vremeni;
+extern int __type_hud_soc;
+extern int __type_hud_coc;
+extern int __type_hud_cop;
+
+CUIMainIngameWnd::CUIMainIngameWnd()
+    : /*m_pGrenade(NULL),m_pItem(NULL),*/ m_pPickUpItem(NULL), m_pMPChatWnd(NULL), UIArtefactIcon(NULL),
+      m_pMPLogWnd(NULL)
 {
     UIZoneMap = new CUIZoneMap();
 }
@@ -86,8 +98,27 @@ CUIMainIngameWnd::~CUIMainIngameWnd()
 void CUIMainIngameWnd::Init()
 {
     CUIXml uiXml;
-    uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML);
-
+    // Для правильного переключения требуется скрипт
+    if (__type_hud_los_alpha)
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_LOST_ALPHA);
+    }
+    if (__type_hud_veter_vremeni)
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_VETER_VREMENI);
+    }
+    if (__type_hud_soc) 
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_SOC);
+    }
+    if (__type_hud_coc)
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_COC);
+    }
+    if (__type_hud_cop)
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_COP);
+    }
     CUIXmlInit xml_init;
     xml_init.InitWindow(uiXml, "main", 0, this);
 
@@ -122,16 +153,16 @@ void CUIMainIngameWnd::Init()
     m_ind_helmet_broken = UIHelper::CreateStatic(uiXml, "indicator_helmet_broken", this);
     m_ind_outfit_broken = UIHelper::CreateStatic(uiXml, "indicator_outfit_broken", this);
     m_ind_overweight = UIHelper::CreateStatic(uiXml, "indicator_overweight", this);
-#ifdef ENGINE_THIRST	
-	m_ind_thirst		    = UIHelper::CreateStatic(uiXml, "indicator_thirst", this);
+#ifdef ENGINE_THIRST
+    m_ind_thirst = UIHelper::CreateStatic(uiXml, "indicator_thirst", this);
 #endif
-#ifdef ENGINE_SLEEP	
-	m_ind_slepping		    = UIHelper::CreateStatic(uiXml, "indicator_sleep", this);		
-#endif	
+#ifdef ENGINE_SLEEP
+    m_ind_slepping = UIHelper::CreateStatic(uiXml, "indicator_sleep", this);
+#endif
 #ifdef NEWIND
-	m_ind_power             = UIHelper::CreateStatic(uiXml, "indicator_stamina", this);
-#endif	
-	
+    m_ind_power = UIHelper::CreateStatic(uiXml, "indicator_stamina", this);
+#endif
+
     m_ind_boost_psy = UIHelper::CreateStatic(uiXml, "indicator_booster_psy", this);
     m_ind_boost_radia = UIHelper::CreateStatic(uiXml, "indicator_booster_radia", this);
     m_ind_boost_chem = UIHelper::CreateStatic(uiXml, "indicator_booster_chem", this);
@@ -193,10 +224,10 @@ void CUIMainIngameWnd::Init()
 
     uiXml.SetLocalRoot(uiXml.GetRoot());
 
- 	UIMotionIcon = new CUIMotionIcon();
+    UIMotionIcon = new CUIMotionIcon();
     UIMotionIcon->SetAutoDelete(true);
     AttachChild(UIMotionIcon);
-    UIMotionIcon->Init();	
+    UIMotionIcon->Init();
 
     UIStaticDiskIO = UIHelper::CreateStatic(uiXml, "disk_io", this);
 
@@ -329,7 +360,6 @@ void CUIMainIngameWnd::Update()
     }
     else if (GameID() == eGameIDCaptureTheArtefact)
     {
-        
     }
 } // update
 
@@ -415,7 +445,7 @@ void CUIMainIngameWnd::TurnOffWarningIcon(EWarningIcons icon) { SetWarningIconCo
 void CUIMainIngameWnd::SetFlashIconState_(EFlashingIcons type, bool enable)
 {
     // Включаем анимацию требуемой иконки
-    auto  icon = m_FlashingIcons.find(type);
+    auto icon = m_FlashingIcons.find(type);
     R_ASSERT2(icon != m_FlashingIcons.end(), "Flashing icon with this type not existed");
     icon->second->Show(enable);
 }
@@ -456,7 +486,7 @@ void CUIMainIngameWnd::InitFlashingIcons(CUIXml* node)
 
 void CUIMainIngameWnd::DestroyFlashingIcons()
 {
-    for (auto  it = m_FlashingIcons.begin(); it != m_FlashingIcons.end(); ++it)
+    for (auto it = m_FlashingIcons.begin(); it != m_FlashingIcons.end(); ++it)
     {
         DetachChild(it->second);
         xr_delete(it->second);
@@ -467,7 +497,7 @@ void CUIMainIngameWnd::DestroyFlashingIcons()
 
 void CUIMainIngameWnd::UpdateFlashingIcons()
 {
-    for (auto  it = m_FlashingIcons.begin(); it != m_FlashingIcons.end(); ++it)
+    for (auto it = m_FlashingIcons.begin(); it != m_FlashingIcons.end(); ++it)
         it->second->Update();
 }
 
@@ -614,26 +644,26 @@ void CUIMainIngameWnd::UpdateMainIndicators()
         }
     }
 #ifdef NEWIND
-	// Значок усталости 
-	float power = pActor->conditions().GetPower();
-		m_ind_power->Show(false);
-	if (power<0.75f)
-	{
-		m_ind_power->Show(true);
-		m_ind_power->InitTexture("ui_inGame2_circle_stamina_green");
-	}
-	if (power<0.50f)
-	{
-		m_ind_power->Show(true);
-		m_ind_power->InitTexture("ui_inGame2_circle_stamina_yellow");
-	}
-	if (power<0.35f)
-	{
-		m_ind_power->Show(true);
-		m_ind_power->InitTexture("ui_inGame2_circle_stamina_red");
-	}	
-#endif	
-	
+    // Значок усталости
+    float power = pActor->conditions().GetPower();
+    m_ind_power->Show(false);
+    if (power < 0.75f)
+    {
+        m_ind_power->Show(true);
+        m_ind_power->InitTexture("ui_inGame2_circle_stamina_green");
+    }
+    if (power < 0.50f)
+    {
+        m_ind_power->Show(true);
+        m_ind_power->InitTexture("ui_inGame2_circle_stamina_yellow");
+    }
+    if (power < 0.35f)
+    {
+        m_ind_power->Show(true);
+        m_ind_power->InitTexture("ui_inGame2_circle_stamina_red");
+    }
+#endif
+
     // Satiety icon
     float satiety = pActor->conditions().GetSatiety();
     float satiety_critical = pActor->conditions().SatietyCritical();
@@ -651,41 +681,42 @@ void CUIMainIngameWnd::UpdateMainIndicators()
         else
             m_ind_starvation->InitTexture("ui_inGame2_circle_hunger_red");
     }
-#ifdef ENGINE_SLEEP	
-	float sleep = pActor->conditions().GetSleep();
-	float sleep_critical = pActor->conditions().SleepCritical();
-	float sleep_koef = (sleep-sleep_critical)/(sleep>=sleep_critical?1-sleep_critical:sleep_critical);
-	if(sleep_koef>0.5)
-		m_ind_slepping->Show(false);
-	else
-	{
-		m_ind_slepping->Show(true);
-		if(sleep_koef>0.0f)
-			m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_green");
-		else if(sleep_koef>-0.5f)
-			m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_yellow");
-		else
-			m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_red");
-	}	
-#endif	
+#ifdef ENGINE_SLEEP
+    float sleep = pActor->conditions().GetSleep();
+    float sleep_critical = pActor->conditions().SleepCritical();
+    float sleep_koef = (sleep - sleep_critical) / (sleep >= sleep_critical ? 1 - sleep_critical : sleep_critical);
+    if (sleep_koef > 0.5)
+        m_ind_slepping->Show(false);
+    else
+    {
+        m_ind_slepping->Show(true);
+        if (sleep_koef > 0.0f)
+            m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_green");
+        else if (sleep_koef > -0.5f)
+            m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_yellow");
+        else
+            m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_red");
+    }
+#endif
 #ifdef ENGINE_THIRST
-	// Thirst
-	float thirst = pActor->conditions().GetThirst();
-	float thirst_critical = pActor->conditions().ThirstCritical();
-	float thirst_koef = (thirst-thirst_critical)/(thirst>=thirst_critical?1-thirst_critical:thirst_critical);
-	if(thirst_koef>0.5)
-		m_ind_thirst->Show(false);
-	else
-	{
-		m_ind_thirst->Show(true);
-		if(thirst_koef>0.0f)
-			m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_green");
-		else if(thirst_koef>-0.5f)
-			m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_yellow");
-		else
-			m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_red");
-	}		
-#endif	
+    // Thirst
+    float thirst = pActor->conditions().GetThirst();
+    float thirst_critical = pActor->conditions().ThirstCritical();
+    float thirst_koef =
+        (thirst - thirst_critical) / (thirst >= thirst_critical ? 1 - thirst_critical : thirst_critical);
+    if (thirst_koef > 0.5)
+        m_ind_thirst->Show(false);
+    else
+    {
+        m_ind_thirst->Show(true);
+        if (thirst_koef > 0.0f)
+            m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_green");
+        else if (thirst_koef > -0.5f)
+            m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_yellow");
+        else
+            m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_red");
+    }
+#endif
     // Armor broken icon
     CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(pActor->inventory().ItemFromSlot(OUTFIT_SLOT));
     m_ind_outfit_broken->Show(false);
@@ -746,23 +777,23 @@ void CUIMainIngameWnd::UpdateMainIndicators()
     // Overweight icon
     float cur_weight = pActor->inventory().TotalWeight();
     float max_weight = pActor->MaxWalkWeight();
-	float max_carry_weight = pActor->MaxCarryWeight();
+    float max_carry_weight = pActor->MaxCarryWeight();
 
     m_ind_overweight->Show(false);
-	if (cur_weight >= max_carry_weight)
+    if (cur_weight >= max_carry_weight)
     {
         m_ind_overweight->Show(true);
-		if (cur_weight >= max_weight)
+        if (cur_weight >= max_weight)
             m_ind_overweight->InitTexture("ui_inGame2_circle_Overweight_red");
         // else if(cur_weight>max_weight-10.0f)
         //	m_ind_overweight->InitTexture("ui_inGame2_circle_Overweight_yellow");
         else
-		{
-			if (max_carry_weight / max_weight >= 0.5f)
-				m_ind_overweight->InitTexture("ui_inGame2_circle_Overweight_yellow");
-			else
-				m_ind_overweight->InitTexture("ui_inGame2_circle_Overweight_green");
-		}
+        {
+            if (max_carry_weight / max_weight >= 0.5f)
+                m_ind_overweight->InitTexture("ui_inGame2_circle_Overweight_yellow");
+            else
+                m_ind_overweight->InitTexture("ui_inGame2_circle_Overweight_green");
+        }
     }
 }
 
