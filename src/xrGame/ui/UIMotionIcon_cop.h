@@ -30,7 +30,7 @@ public:
     virtual void Draw();
     void Init(Frect const& rect);
     void SetNoise(float Pos);
-    void SetLuminosity(float Pos);
-    void SetActorVisibility(u16 who_id, float value);
+    void SetLuminosity_(float Pos);
+    void SetActorVisibility_(u16 who_id, float value);
     void ResetVisibility();
 };

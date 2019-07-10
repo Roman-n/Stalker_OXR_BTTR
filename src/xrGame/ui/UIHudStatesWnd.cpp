@@ -76,6 +76,12 @@ ALife::EInfluenceType CUIHudStatesWnd::get_indik_type(ALife::EHitType hit_type)
     return iz_type;
 }
 
+extern int __type_hud_lost_alpha;
+extern int __type_hud_veter_vremeni;
+extern int __type_hud_soc;
+extern int __type_hud_coc;
+extern int __type_hud_cop;
+
 void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 {
     CUIXmlInit::InitWindow(xml, path, 0, this);
@@ -91,6 +97,8 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 // Прописывать их сюда не имеет значения т.к false перекрывает true в функции UpdateIndicators, приводит к багам, когда
 // красный значок горит за желтым и т.д -> путаница
 #ifdef LOST_ALPHA_HUD_IND
+	if (__type_hud_lost_alpha)
+	{
     m_bleeding_lvl_0 = UIHelper::CreateStatic(xml, "bleeding_lvl_0", this);
     m_bleeding_lvl_1 = UIHelper::CreateStatic(xml, "bleeding_lvl_1", this);
     m_bleeding_lvl_2 = UIHelper::CreateStatic(xml, "bleeding_lvl_2", this);
@@ -130,19 +138,32 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
     m_sleep_lvl_1 = UIHelper::CreateStatic(xml, "sleeping_lvl_1", this);
     m_sleep_lvl_2 = UIHelper::CreateStatic(xml, "sleeping_lvl_2", this);
     m_sleep_lvl_3 = UIHelper::CreateStatic(xml, "sleeping_lvl_3", this);
+	}
 #endif
 #ifdef NEWIND
+	if (__type_veter_vremeni || __type_hud_lost_alpha)
+	{
     m_ui_psy_health = UIHelper::CreateProgressBar(xml, "progress_bar_PsyHealth", this);
+	}
+	if (__type_hud_veter_vremeni || __type_hud_soc)
+	{
     m_ui_armor_bar = UIHelper::CreateProgressBar(xml, "progress_bar_armor", this);
-    m_static_armor = UIHelper::CreateStatic(xml, "static_armor", this);
-    m_bleeding = UIHelper::CreateStatic(xml, "bleeding", this);
+	m_static_armor = UIHelper::CreateStatic(xml, "static_armor", this);
+	m_bleeding = UIHelper::CreateStatic(xml, "bleeding", this);
     m_bleeding->Show(false);
+	}
     m_eff_bleeding = UIHelper::CreateStatic(xml, "eff_bleeding_screen", this);
     m_eff_bleeding->Show(false);
+	if (__type_hud_soc || __type_hud_cop || __type_hud_veter_vremeni || __type_hud_coc)
+	{
     m_psy_grenn = UIHelper::CreateStatic(xml, "GetPsy_grenn", this);
     m_psy_yellow = UIHelper::CreateStatic(xml, "GetPsy_yellow", this);
     m_psy_red = UIHelper::CreateStatic(xml, "GetPsy_red", this);
+	}
+	if (__type_hud_soc || __type_hud_lost_alpha)
+	{
     m_weapon_ammo = UIHelper::CreateTextWnd(xml, "ammo_name", this);
+	}
 #endif
     m_indik[ALife::infl_rad] = UIHelper::CreateStatic(xml, "indik_rad", this);
     m_indik[ALife::infl_fire] = UIHelper::CreateStatic(xml, "indik_fire", this);
@@ -234,6 +255,8 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     }
 
 #ifdef NEWIND
+	if (__type_veter_vremeni || __type_hud_lost_alpha)
+	{
     float cur_psy_health = actor->conditions().GetPsyHealth(); // actor->GetPsyHealth();
     m_ui_psy_health->SetProgressPos(iCeil(cur_psy_health * 100.0f * 35.f) / 35.f);
     if (_abs(cur_psy_health - m_last_psyhealth) > m_psy_health_blink)
@@ -241,7 +264,9 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
         m_last_psyhealth = cur_psy_health;
         m_ui_psy_health->m_UIProgressItem.ResetColorAnimation();
     }
-
+	}
+	if (__type_hud_veter_vremeni || __type_hud_soc)
+	{
     CCustomOutfit* outfit_ = actor->GetOutfit(); //переопределение _
     if (outfit_)
     {
@@ -254,7 +279,9 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
         m_static_armor->Show(false);
         m_ui_armor_bar->Show(false);
     }
-
+	}
+	if (__type_veter_vremeni)
+	{
     if (actor->conditions().BleedingSpeed() > 0.01f)
     {
         m_bleeding->Show(true);
@@ -263,6 +290,7 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     {
         m_bleeding->Show(false);
     }
+	}
     //Эффект кровотечения на экране из Мизери, чтобы не заменять значок кровотечения, нормально работает только при
     //откл. худе, Онли реализм, но убирать не буду ради опциональности худов
     if (actor->conditions().BleedingSpeed() > 0.01f)
@@ -273,7 +301,8 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     {
         m_eff_bleeding->Show(false);
     }
-
+	if (__type_hud_soc || __type_hud_cop || __type_hud_veter_vremeni || __type_hud_coc)
+	{
     float psy_koef = actor->conditions().GetPsyHealth();
     //2 проверки чтобы отключались при else if
     m_psy_grenn->Show(false);
@@ -302,6 +331,7 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
             m_psy_yellow->Show(false);
         }
     }
+	}
 #endif
 }
 
@@ -322,7 +352,10 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_fire_mode->SetText(m_item_info.fire_mode.c_str());
         SetAmmoIcon(m_item_info.icon.c_str());
 #ifdef NEWIND
+	if (__type_hud_soc || __type_hud_lost_alpha)
+	{
         m_weapon_ammo->SetText(m_item_info.name.c_str());
+	}
 #endif
         m_ui_weapon_cur_ammo->Show(true);
         m_ui_weapon_fmj_ammo->Show(true);
@@ -332,7 +365,10 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_fire_mode->Show(true);
         m_ui_grenade->Show(true);
 #ifdef NEWIND
+	if (__type_hud_soc || __type_hud_lost_alpha)
+	{
         m_weapon_ammo->Show(true);
+	}
 #endif
         m_ui_weapon_cur_ammo->SetText(m_item_info.cur_ammo.c_str());
         m_ui_weapon_fmj_ammo->SetText(m_item_info.fmj_ammo.c_str());
@@ -377,7 +413,10 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
         m_fire_mode->Show(false);
         m_ui_grenade->Show(false);
 #ifdef NEWIND
+	if (__type_hud_soc || __type_hud_lost_alpha)
+	{
         m_weapon_ammo->Show(false);
+	}
 #endif
     }
 }
@@ -543,6 +582,8 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
         UpdateIndicatorType(actor, (ALife::EInfluenceType)i);
     }
 #ifdef LOST_ALPHA_HUD_IND
+	if (__type_hud_lost_alpha)
+{
     // Код в UIMainIngameWnd очень старый, не совместим с новыми функциями. Пришлось переносить сюда
     // Потому что эти статики накладываются ПОВЕРХ статика _back
     float satiety = actor->conditions().GetSatiety();
@@ -781,6 +822,7 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
             m_sleep_lvl_3->Show(true);
         }
     }
+}
 #endif
 }
 

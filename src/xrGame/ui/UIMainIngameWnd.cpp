@@ -163,7 +163,10 @@ void CUIMainIngameWnd::Init()
     m_ind_slepping = UIHelper::CreateStatic(uiXml, "indicator_sleep", this);
 #endif
 #ifdef NEWIND
+	if (__type_hud_soc)
+	{
     m_ind_power = UIHelper::CreateStatic(uiXml, "indicator_stamina", this);
+	}
 #endif
 
     m_ind_boost_psy = UIHelper::CreateStatic(uiXml, "indicator_booster_psy", this);
@@ -292,7 +295,7 @@ void CUIMainIngameWnd::Draw()
         static float cur_lum = luminocity;
         cur_lum = luminocity * 0.01f + cur_lum * 0.99f;
         UIMotionIcon->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
-		UIMotionIcon_cop->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
+		UIMotionIcon_cop->SetLuminosity_((s16)iFloor(cur_lum * 100.0f));
     }
     if (!pActor || !pActor->g_Alive())
         return;
@@ -662,6 +665,8 @@ void CUIMainIngameWnd::UpdateMainIndicators()
         }
     }
 #ifdef NEWIND
+if(__type_hud_soc)
+{
     // Значок усталости
     float power = pActor->conditions().GetPower();
     m_ind_power->Show(false);
@@ -680,6 +685,7 @@ void CUIMainIngameWnd::UpdateMainIndicators()
         m_ind_power->Show(true);
         m_ind_power->InitTexture("ui_inGame2_circle_stamina_red");
     }
+}
 #endif
 
     // Satiety icon

@@ -74,7 +74,7 @@ void CUIMotionIcon_cop::SetNoise(float Pos)
     m_noise_progress.SetPos(Pos / 100.f);
 }
 
-void CUIMotionIcon_cop::SetLuminosity(float Pos)
+void CUIMotionIcon_cop::SetLuminosity_(float Pos)
 {
     if (!IsGameTypeSingle())
         return;
@@ -104,10 +104,10 @@ void CUIMotionIcon_cop::Update()
         if (m_npc_visibility.size())
         {
             std::sort(m_npc_visibility.begin(), m_npc_visibility.end());
-            SetLuminosity(m_npc_visibility.back().value);
+            SetLuminosity_(m_npc_visibility.back().value);
         }
         else
-            SetLuminosity(0.f);
+            SetLuminosity_(0.f);
     }
     inherited::Update();
 
@@ -128,16 +128,16 @@ void CUIMotionIcon_cop::Update()
     }
 }
 
-void SetActorVisibility(u16 who_id, float value)
+void SetActorVisibility_(u16 who_id, float value)
 {
     if (!IsGameTypeSingle())
         return;
 
     if (g_pMotionIcon_cop && g_pMotionIcon_cop->IsShown())
-        g_pMotionIcon_cop->SetActorVisibility(who_id, value);
+        g_pMotionIcon_cop->SetActorVisibility_(who_id, value);
 }
 
-void CUIMotionIcon_cop::SetActorVisibility(u16 who_id, float value)
+void CUIMotionIcon_cop::SetActorVisibility_(u16 who_id, float value)
 {
     if (!IsShown())
         return;
