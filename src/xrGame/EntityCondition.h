@@ -206,7 +206,7 @@ protected:
 	float m_fRadiation;				//доза радиактивного облучения
 	float m_fPsyHealth;				//здоровье
 	float m_fEntityMorale;			//мораль
-	float m_fBleedSpeedK;
+//	float m_fBleedSpeedK;
 
     //максимальные величины
     //	float m_fSatietyMax;
