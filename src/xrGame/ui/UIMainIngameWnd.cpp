@@ -43,6 +43,9 @@
 #include "UIHudStatesWnd.h"
 #include "UIActorMenu.h"
 #include "xrGame/ActorCondition.h"
+
+#include "UIMotionIcon_cop.h"
+
 void test_draw();
 void test_key(int dik);
 
@@ -68,7 +71,7 @@ const u32 g_clWhite = 0xffffffff;
 #define MAININGAME_XML_COC "maingame_coc.xml"
 #define MAININGAME_XML_COP "maingame_cop.xml"
 
-extern int __type_hud_los_alpha;
+extern int __type_hud_lost_alpha;
 extern int __type_hud_veter_vremeni;
 extern int __type_hud_soc;
 extern int __type_hud_coc;
@@ -99,7 +102,7 @@ void CUIMainIngameWnd::Init()
 {
     CUIXml uiXml;
     // Для правильного переключения требуется скрипт
-    if (__type_hud_los_alpha)
+    if (__type_hud_lost_alpha)
     {
         uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_LOST_ALPHA);
     }
@@ -224,6 +227,11 @@ void CUIMainIngameWnd::Init()
 
     uiXml.SetLocalRoot(uiXml.GetRoot());
 
+	UIMotionIcon_cop = new CUIMotionIcon_cop();
+    UIMotionIcon_cop->SetAutoDelete(true);
+    UIZoneMap->MapFrame().AttachChild(UIMotionIcon_cop);
+    UIMotionIcon_cop->Init(UIZoneMap->MapFrame().GetWndRect());
+
     UIMotionIcon = new CUIMotionIcon();
     UIMotionIcon->SetAutoDelete(true);
     AttachChild(UIMotionIcon);
@@ -284,6 +292,7 @@ void CUIMainIngameWnd::Draw()
         static float cur_lum = luminocity;
         cur_lum = luminocity * 0.01f + cur_lum * 0.99f;
         UIMotionIcon->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
+		UIMotionIcon_cop->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
     }
     if (!pActor || !pActor->g_Alive())
         return;
@@ -292,6 +301,10 @@ void CUIMainIngameWnd::Draw()
 
     UIMotionIcon->Draw();
 
+	UIMotionIcon_cop->SetNoise((s16)(0xffff & iFloor(pActor->m_snd_noise * 100)));
+
+    UIMotionIcon_cop->Draw();
+
     UIZoneMap->visible = true;
     UIZoneMap->Render();
 
@@ -299,6 +312,10 @@ void CUIMainIngameWnd::Draw()
     UIMotionIcon->Show(false);
     CUIWindow::Draw();
     UIMotionIcon->Show(tmp);
+
+	bool tmp_ = UIMotionIcon_cop->IsShown();
+    UIMotionIcon_cop->Show(false);
+    UIMotionIcon_cop->Show(tmp_);
 
     RenderQuickInfos();
 }
@@ -568,6 +585,7 @@ void CUIMainIngameWnd::reset_ui()
 {
     m_pPickUpItem = NULL;
     UIMotionIcon->ResetVisibility();
+    UIMotionIcon_cop->ResetVisibility();
     if (m_ui_hud_states)
     {
         m_ui_hud_states->reset_ui();

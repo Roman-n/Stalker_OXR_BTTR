@@ -107,7 +107,7 @@ extern BOOL g_invert_zoom;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
-int __type_hud_los_alpha = 0;
+int __type_hud_lost_alpha = 0;
 int __type_hud_veter_vremeni = 0;
 int __type_hud_soc  = 0;
 int __type_hud_coc  = 1;
@@ -1916,7 +1916,7 @@ void CCC_RegisterCommands()
     CMD1(CCC_GiveMoney, "give_money");
 
 
-    CMD4(CCC_Integer, "__type_hud_lost_alpha", &__type_hud_los_alpha, 0, 1); // Лост Альфа
+    CMD4(CCC_Integer, "__type_hud_lost_alpha", &__type_hud_lost_alpha, 0, 1); // Лост Альфа
     CMD4(CCC_Integer, "__type_hud_veter_vremeni", &__type_hud_veter_vremeni, 0, 1); // Ветер Времени 1.3
     CMD4(CCC_Integer, "__type_hud_shadow_of_chernobyl", &__type_hud_soc, 0, 1); // Тень Чернобыля
     CMD4(CCC_Integer, "__type_hud_call_of_chernobyl", &__type_hud_coc, 0, 1); // Зов Чернобыля 1.4.22

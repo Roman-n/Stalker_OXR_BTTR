@@ -811,7 +811,6 @@
     <Filter Include="AI\AMonsters\monsters\Burer\Fast Gravi">
       <UniqueIdentifier>{e89d6463-92a7-462e-b7f7-5b486742861e}</UniqueIdentifier>
     </Filter>
-	
     <Filter Include="AI\AMonsters\monsters\chimera_cs">
       <UniqueIdentifier>{f9fd2d0f-ce89-4e64-aece-bb59b8e72bb1}</UniqueIdentifier>
     </Filter>
@@ -826,8 +825,7 @@
     </Filter>
     <Filter Include="AI\AMonsters\monsters\chimera_cs\states">
       <UniqueIdentifier>{8d6475ec-c185-4ebb-9ba6-bbdc1644c4c1}</UniqueIdentifier>
-    </Filter>	
-	
+    </Filter>
     <Filter Include="AI\AMonsters\monsters\Chimera">
       <UniqueIdentifier>{f9fd2d0f-ce89-4e64-aece-aa59b8e72bb1}</UniqueIdentifier>
     </Filter>
@@ -843,7 +841,6 @@
     <Filter Include="AI\AMonsters\monsters\Chimera\states">
       <UniqueIdentifier>{8d6475ec-c185-4ebb-9ba6-e7dc1644c4c1}</UniqueIdentifier>
     </Filter>
-	
     <Filter Include="AI\AMonsters\monsters\PseudoGigant">
       <UniqueIdentifier>{b63ebd95-6d63-4b98-b8a8-3587f5b69dbb}</UniqueIdentifier>
     </Filter>
@@ -3831,7 +3828,6 @@
     <ClInclude Include="ai\Monsters\Burer\burer_fast_gravi.h">
       <Filter>AI\AMonsters\monsters\Burer\Fast Gravi</Filter>
     </ClInclude>
-	
     <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs.h">
       <Filter>AI\AMonsters\monsters\chimera_cs</Filter>
     </ClInclude>
@@ -3841,10 +3837,10 @@
     <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_threaten.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
     </ClInclude>
-	<ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_attack_run_inline.h">
+    <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_attack_run_inline.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
     </ClInclude>
-	<ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_attack_run.h">
+    <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_attack_run.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\state threaten</Filter>
     </ClInclude>
     <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_threaten_inline.h">
@@ -3885,8 +3881,7 @@
     </ClInclude>
     <ClInclude Include="ai\Monsters\chimera_cs\chimera_cs_state_hunting_move_to_cover_inline.h">
       <Filter>AI\AMonsters\monsters\chimera_cs\state hunting</Filter>
-    </ClInclude>	
-	
+    </ClInclude>
     <ClInclude Include="ai\Monsters\Chimera\chimera.h">
       <Filter>AI\AMonsters\monsters\Chimera</Filter>
     </ClInclude>
@@ -3935,7 +3930,6 @@
     <ClInclude Include="ai\Monsters\Chimera\chimera_state_hunting_move_to_cover_inline.h">
       <Filter>AI\AMonsters\monsters\Chimera\state hunting</Filter>
     </ClInclude>
-	
     <ClInclude Include="ai\Monsters\PseudoGigant\pseudo_gigant.h">
       <Filter>AI\AMonsters\monsters\PseudoGigant</Filter>
     </ClInclude>
@@ -5673,6 +5667,9 @@
     <ClInclude Include="ui\UIMotionIcon.h">
       <Filter>UI\Common\MainIngame</Filter>
     </ClInclude>
+    <ClInclude Include="ui\UIMotionIcon_cop.h">
+      <Filter>UI\Common\MainIngame</Filter>
+    </ClInclude>
     <ClInclude Include="ui\UIPdaMsgListItem.h">
       <Filter>UI\Common\MainIngame</Filter>
     </ClInclude>
@@ -6880,7 +6877,6 @@
     <ClCompile Include="ai\Monsters\Chimera\chimera_script.cpp">
       <Filter>AI\AMonsters\monsters\Chimera\Script</Filter>
     </ClCompile>
-	
     <ClCompile Include="ai\Monsters\chimera_cs\chimera_cs.cpp">
       <Filter>AI\AMonsters\monsters\chimera_cs</Filter>
     </ClCompile>
@@ -6889,8 +6885,7 @@
     </ClCompile>
     <ClCompile Include="ai\Monsters\chimera_cs\chimera_cs_script.cpp">
       <Filter>AI\AMonsters\monsters\chimera_cs\Script</Filter>
-    </ClCompile>	
-	
+    </ClCompile>
     <ClCompile Include="ai\Monsters\PseudoGigant\pseudo_gigant.cpp">
       <Filter>AI\AMonsters\monsters\PseudoGigant</Filter>
     </ClCompile>
@@ -8619,6 +8614,9 @@
     <ClCompile Include="ui\UIMotionIcon.cpp">
       <Filter>UI\Common\MainIngame</Filter>
     </ClCompile>
+    <ClCompile Include="ui\UIMotionIcon_cop.cpp">
+      <Filter>UI\Common\MainIngame</Filter>
+    </ClCompile>
     <ClCompile Include="ui\UIPdaMsgListItem.cpp">
       <Filter>UI\Common\MainIngame</Filter>
     </ClCompile>
@@ -9134,18 +9132,7 @@
       <Filter>Core\Client\Objects\items &amp; weapons\Explosives</Filter>
     </CustomBuild>
   </ItemGroup>
-  
-   <ItemGroup>
-    <ClCompile Include="ai\monsters\chimera_cs\chimera_cs_state_attack_run.h">
-      <Filter>AI\AMonsters\monsters\chimera_cs\states</Filter>
-    </ClCompile>
-    <ClCompile Include="ai\monsters\chimera_cs\chimera_cs_state_attack_run_inline.h">
-      <Filter>AI\AMonsters\monsters\chimera_cs\states</Filter>
-    </ClCompile>
-  </ItemGroup> 
-  
   <ItemGroup>
     <Natvis Include="..\TypeHelper.natvis" />
   </ItemGroup>
 </Project>
-

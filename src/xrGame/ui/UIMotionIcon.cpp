@@ -2,7 +2,12 @@
 #include "UIMainIngameWnd.h"
 #include "UIMotionIcon.h"
 #include "UIXmlInit.h"
+
 const LPCSTR MOTION_ICON_XML = "motion_icon.xml";
+
+const LPCSTR MOTION_ICON_XML_NULL = "motion_icon_null.xml";
+
+extern int __type_hud_soc;
 
 CUIMotionIcon* g_pMotionIcon = NULL;
 
@@ -29,7 +34,15 @@ void CUIMotionIcon::ResetVisibility()
 void CUIMotionIcon::Init()
 {
 	CUIXml						uiXml;
-	uiXml.Load					(CONFIG_PATH, UI_PATH, MOTION_ICON_XML);
+	
+	if (__type_hud_soc)
+	{
+		uiXml.Load				(CONFIG_PATH, UI_PATH, MOTION_ICON_XML);
+	} 
+	else
+	{
+		uiXml.Load				(CONFIG_PATH, UI_PATH, MOTION_ICON_XML_NULL);
+	}
 
 	CUIXmlInit					xml_init;
 	
@@ -42,7 +55,6 @@ void CUIMotionIcon::Init()
 	AttachChild					(&m_noise_progress);
 	xml_init.InitProgressBar	(uiXml, "noise_progress", 0, &m_noise_progress);
 	
-	//ТЧ
 	AttachChild					(&m_states[stNormal]);
 	xml_init.InitStatic			(uiXml, "state_normal", 0, &m_states[stNormal]);
 	m_states[stNormal].Show		(false);

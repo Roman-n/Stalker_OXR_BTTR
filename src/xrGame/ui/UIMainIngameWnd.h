@@ -13,6 +13,7 @@ class CMissile;
 class CInventoryItem;
 class CUIHudStatesWnd;
 class CUIMotionIcon;
+class CUIMotionIcon_cop;
 
 class CUIMainIngameWnd : public CUIWindow
 {
@@ -29,6 +30,7 @@ public:
     CUITextWnd* UIStaticQuickHelp;
     CUIMotionIcon* UIMotionIcon;
     CUIZoneMap* UIZoneMap;
+	CUIMotionIcon_cop* UIMotionIcon_cop;
 
     CUIHudStatesWnd* m_ui_hud_states;
 
@@ -146,6 +148,7 @@ protected:
 
 public:
     CUIMotionIcon* MotionIcon() { return UIMotionIcon; }
+	CUIMotionIcon_cop* MotionIcon_cop() { return UIMotionIcon_cop; }
     void OnConnected();
     void reset_ui();
 

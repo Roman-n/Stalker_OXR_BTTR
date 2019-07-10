@@ -31,6 +31,8 @@
 #include "UIHudStatesWnd.h"
 #include "InventoryBox.h"
 
+#include "UIMotionIcon_cop.h"
+
 using namespace luabind;
 
 CUIActorMenu* GetActorMenu()
@@ -353,6 +355,7 @@ SCRIPT_EXPORT(CUIActorMenu, (),
 			.def_readonly("UIStaticDiskIO", &CUIMainIngameWnd::UIStaticDiskIO)
 			.def_readonly("UIStaticQuickHelp", &CUIMainIngameWnd::UIStaticQuickHelp)
 			.def_readonly("UIMotionIcon", &CUIMainIngameWnd::UIMotionIcon)
+			.def_readonly("UIMotionIcon_cop", &CUIMainIngameWnd::UIMotionIcon_cop)
 			.def_readonly("UIZoneMap", &CUIMainIngameWnd::UIZoneMap)
 			.def_readonly("m_ui_hud_states", &CUIMainIngameWnd::m_ui_hud_states)
 			.def_readonly("m_ind_bleeding", &CUIMainIngameWnd::m_ind_bleeding)
@@ -372,12 +375,14 @@ SCRIPT_EXPORT(CUIActorMenu, (),
 			.def_readonly("m_ind_boost_rad", &CUIMainIngameWnd::m_ind_boost_rad),
  		class_< CUIZoneMap >("CUIZoneMap")
 			.def(constructor<>())
-//			.def_readwrite("disabled", &CUIZoneMap::disabled)
-//			.def_readonly("visible", &CUIZoneMap::visible)
+			.def_readwrite("disabled", &CUIZoneMap::disabled)
+			.def_readonly("visible", &CUIZoneMap::visible)
 			.def("MapFrame", &CUIZoneMap::MapFrame)
 			.def("Background", &CUIZoneMap::Background),
  		class_< CUIMotionIcon, CUIWindow>("CUIMotionIcon")
 			.def(constructor<>()),
+		class_< CUIMotionIcon_cop, CUIWindow>("CUIMotionIcon_cop")
+			.def(constructor<>()),	
  		class_< CUIHudStatesWnd, CUIWindow>("CUIHudStatesWnd")
 			.def(constructor<>())
 			.def_readonly("m_back", &CUIHudStatesWnd::m_back)
