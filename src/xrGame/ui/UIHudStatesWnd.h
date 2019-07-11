@@ -65,6 +65,11 @@ public:
     CUIStatic* m_sleep_lvl_2;
     CUIStatic* m_sleep_lvl_3;
 #endif	
+
+    CUIStatic* m_power_lvl_1;
+    CUIStatic* m_power_lvl_2;
+    CUIStatic* m_power_lvl_3;
+	
 	CUIStatic* m_eff_bleeding;
 	CUIStatic* m_psy_grenn;
 	CUIStatic* m_psy_yellow;

@@ -97,8 +97,9 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 // Прописывать их сюда не имеет значения т.к false перекрывает true в функции UpdateIndicators, приводит к багам, когда
 // красный значок горит за желтым и т.д -> путаница
 #ifdef LOST_ALPHA_HUD_IND
-	if (__type_hud_lost_alpha)
+	if (__type_hud_lost_alpha || __type_hud_soc)
 	{
+
     m_bleeding_lvl_0 = UIHelper::CreateStatic(xml, "bleeding_lvl_0", this);
     m_bleeding_lvl_1 = UIHelper::CreateStatic(xml, "bleeding_lvl_1", this);
     m_bleeding_lvl_2 = UIHelper::CreateStatic(xml, "bleeding_lvl_2", this);
@@ -141,7 +142,15 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 	}
 #endif
 #ifdef NEWIND
-	if (__type_veter_vremeni || __type_hud_lost_alpha)
+	if (__type_hud_soc)
+	{
+	m_static_health  = UIHelper::CreateStatic( xml, "static_health", this );	
+    m_power_lvl_1 = UIHelper::CreateStatic(xml, "power_lvl_1", this);
+    m_power_lvl_2 = UIHelper::CreateStatic(xml, "power_lvl_2", this);
+    m_power_lvl_3 = UIHelper::CreateStatic(xml, "power_lvl_3", this);
+	}
+
+	if (__type_hud_veter_vremeni || __type_hud_lost_alpha)
 	{
     m_ui_psy_health = UIHelper::CreateProgressBar(xml, "progress_bar_PsyHealth", this);
 	}
@@ -149,6 +158,9 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 	{
     m_ui_armor_bar = UIHelper::CreateProgressBar(xml, "progress_bar_armor", this);
 	m_static_armor = UIHelper::CreateStatic(xml, "static_armor", this);
+	}
+	if(__type_hud_veter_vremeni)
+	{
 	m_bleeding = UIHelper::CreateStatic(xml, "bleeding", this);
     m_bleeding->Show(false);
 	}
@@ -255,7 +267,7 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
     }
 
 #ifdef NEWIND
-	if (__type_veter_vremeni || __type_hud_lost_alpha)
+    if (__type_hud_veter_vremeni || __type_hud_lost_alpha)
 	{
     float cur_psy_health = actor->conditions().GetPsyHealth(); // actor->GetPsyHealth();
     m_ui_psy_health->SetProgressPos(iCeil(cur_psy_health * 100.0f * 35.f) / 35.f);
@@ -280,7 +292,7 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
         m_ui_armor_bar->Show(false);
     }
 	}
-	if (__type_veter_vremeni)
+    if (__type_hud_veter_vremeni)
 	{
     if (actor->conditions().BleedingSpeed() > 0.01f)
     {
@@ -581,6 +593,35 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
     {
         UpdateIndicatorType(actor, (ALife::EInfluenceType)i);
     }
+	if(__type_hud_soc)
+	{
+	float power = actor->conditions().GetPower();
+	m_power_lvl_1->Show(false);
+    m_power_lvl_2->Show(false);
+    m_power_lvl_3->Show(false);
+	
+	if (power > 0.75f)
+    {
+    m_power_lvl_1->Show(false);
+    m_power_lvl_2->Show(false);
+    m_power_lvl_3->Show(false);
+    }
+	else
+	{
+    if (power < 0.75f)
+    {
+       m_power_lvl_1->Show(true);
+    }
+    else if (power < 0.50f)
+    {
+       m_power_lvl_2->Show(true);
+    }
+    else if (power < 0.35f)
+    {
+       m_power_lvl_3->Show(true);
+    }	
+	}
+	}
 #ifdef LOST_ALPHA_HUD_IND
 	if (__type_hud_lost_alpha)
 {
