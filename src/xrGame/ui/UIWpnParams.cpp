@@ -87,45 +87,36 @@ CUIWpnParams::CUIWpnParams()
 CUIWpnParams::~CUIWpnParams() {}
 void CUIWpnParams::InitFromXml(CUIXml& xml_doc)
 {
-    if (!xml_doc.NavigateToNode("wpn_params", 0))
-        return;
-    CUIXmlInit::InitWindow(xml_doc, "wpn_params", 0, this);
-    CUIXmlInit::InitStatic(xml_doc, "wpn_params:prop_line", 0, &m_Prop_line);
+	if (!xml_doc.NavigateToNode("wpn_params", 0))	return;
+	CUIXmlInit::InitWindow			(xml_doc, "wpn_params", 0, this);
+	CUIXmlInit::InitStatic			(xml_doc, "wpn_params:prop_line",			0, &m_Prop_line);
 
-    CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_accuracy", 0, &m_icon_acc);
-    CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_damage", 0, &m_icon_dam);
-    CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_handling", 0, &m_icon_han);
-    CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_rpm", 0, &m_icon_rpm);
+	CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_accuracy",		0, &m_icon_acc);
+	CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_damage",		0, &m_icon_dam);
+	CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_handling",		0, &m_icon_han);
+	CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_rpm",			0, &m_icon_rpm);
 
-    CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_accuracy", 0, &m_textAccuracy);
-    CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_damage", 0, &m_textDamage);
-    CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_handling", 0, &m_textHandling);
-    CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_rpm", 0, &m_textRPM);
+	CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_accuracy",		0, &m_textAccuracy);
+	CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_damage",			0, &m_textDamage);
+	CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_handling",		0, &m_textHandling);
+	CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_rpm",				0, &m_textRPM);
 
-    m_progressAccuracy.InitFromXml(xml_doc, "wpn_params:progress_accuracy");
-    m_progressDamage.InitFromXml(xml_doc, "wpn_params:progress_damage");
-    m_progressHandling.InitFromXml(xml_doc, "wpn_params:progress_handling");
-    m_progressRPM.InitFromXml(xml_doc, "wpn_params:progress_rpm");
+	m_progressAccuracy.InitFromXml	( xml_doc, "wpn_params:progress_accuracy" );
+	m_progressDamage.InitFromXml	( xml_doc, "wpn_params:progress_damage" );
+	m_progressHandling.InitFromXml	( xml_doc, "wpn_params:progress_handling" );
+	m_progressRPM.InitFromXml		( xml_doc, "wpn_params:progress_rpm" );
 
-    if (IsGameTypeSingle())
-    {
-        CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_ammo", 0, &m_stAmmo);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_ammo_count", 0, &m_textAmmoCount);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_ammo_count2", 0, &m_textAmmoCount2);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_ammo_types", 0, &m_textAmmoTypes);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_ammo_used_type", 0, &m_textAmmoUsedType);
-        CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_ammo_type1", 0, &m_stAmmoType1);
-        CUIXmlInit::InitStatic(xml_doc, "wpn_params:static_ammo_type2", 0, &m_stAmmoType2);
+	if(IsGameTypeSingle())
+	{
+		CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_ammo",			0, &m_stAmmo);
+		CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_ammo_count",		0, &m_textAmmoCount);
+		CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_ammo_count2",		0, &m_textAmmoCount2);
+		CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_ammo_types",		0, &m_textAmmoTypes);
+		CUIXmlInit::InitTextWnd			(xml_doc, "wpn_params:cap_ammo_used_type",	0, &m_textAmmoUsedType);
+		CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_ammo_type1",	0, &m_stAmmoType1);
+		CUIXmlInit::InitStatic			(xml_doc, "wpn_params:static_ammo_type2",	0, &m_stAmmoType2);
+	}
 
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_accuracy_inc", 0, &m_textAccuracy_inc);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_damage_inc", 0, &m_textDamage_inc);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_handling_inc", 0, &m_textHandling_inc);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_rpm_inc", 0, &m_textRPM_inc);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_accuracy_inc_shadow", 0, &m_textAccuracy_inc_shadow);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_damage_inc_shadow", 0, &m_textDamage_inc_shadow);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_handling_inc_shadow", 0, &m_textHandling_inc_shadow);
-        CUIXmlInit::InitTextWnd(xml_doc, "wpn_params:cap_rpm_inc_shadow", 0, &m_textRPM_inc_shadow);
-    }
 }
 
 void CUIWpnParams::SetInfo(CInventoryItem* slot_wpn, CInventoryItem& cur_wpn)

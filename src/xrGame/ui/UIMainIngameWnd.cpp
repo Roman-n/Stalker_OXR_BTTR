@@ -662,7 +662,7 @@ void CUIMainIngameWnd::UpdateMainIndicators()
 			}
             m_ind_bleeding->SetColorAnimation("ui_medium_blinking_alpha", flags);
         }
-        else
+        else if (bleeding > 0.35f)
         {
 			if(__type_hud_coc)
 			{
@@ -710,7 +710,7 @@ void CUIMainIngameWnd::UpdateMainIndicators()
 			}
             m_ind_radiation->SetColorAnimation("ui_medium_blinking_alpha", flags);
         }
-        else
+        else if (radiation > 0.35f)
         {
 			if(__type_hud_coc)
 			{
@@ -825,7 +825,7 @@ if(__type_hud_soc)
 			{
             m_ind_starvation->InitTexture("ui_inGame2_circle_hunger_yellow_cop");
 			}	
-        else
+        else if (satiety_koef < 0.0f)
 			if(__type_hud_coc)
 			{
 				 m_ind_starvation->InitTexture("ui_inGame2_circle_hunger_red_coc");
@@ -862,7 +862,7 @@ if(__type_hud_soc)
 			{
 			m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_yellow_cop");
 			}
-        else
+        else if (sleep_koef < 0.0f)
 			if(__type_hud_coc)
 			{
 			m_ind_slepping->InitTexture("ui_inGame2_circle_sleep_red_coc");
@@ -902,7 +902,7 @@ if(__type_hud_soc)
 			{
 			m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_yellow_cop");
 			}
-        else
+        else if (thirst_koef < 0.0f)
 			if(__type_hud_coc)
 			{
             m_ind_thirst->InitTexture("ui_inGame2_circle_thirst_red_coc");
@@ -940,7 +940,7 @@ if(__type_hud_soc)
 				{
 				m_ind_outfit_broken->InitTexture("ui_inGame2_circle_Armorbroken_yellow_cop");
 				}
-            else
+            else if (condition < 0.5f)
 				if(__type_hud_coc)
 				{
                 m_ind_outfit_broken->InitTexture("ui_inGame2_circle_Armorbroken_red_coc");
@@ -978,7 +978,7 @@ if(__type_hud_soc)
 				{
                 m_ind_helmet_broken->InitTexture("ui_inGame2_circle_Helmetbroken_yellow_cop");
 				}
-            else
+            else if (condition < 0.5f)
 				if(__type_hud_coc)
 				{
                 m_ind_helmet_broken->InitTexture("ui_inGame2_circle_Helmetbroken_red_coc");
@@ -1021,7 +1021,7 @@ if(__type_hud_soc)
 				{
                     m_ind_weapon_broken->InitTexture("ui_inGame2_circle_Gunbroken_yellow_cop");
 				}
-                else
+                else if (condition < (start_misf_cond + end_misf_cond) / 2)
 					if(__type_hud_coc)
 				{
                     m_ind_weapon_broken->InitTexture("ui_inGame2_circle_Gunbroken_red_coc");
