@@ -37,6 +37,7 @@ public:
     CUIStatic* m_ind_bleeding;
     CUIStatic* m_ind_radiation;
     CUIStatic* m_ind_starvation;
+	CUIStatic* m_ind_psyhealth;
 #ifdef ENGINE_THIRST
 	CUIStatic*			m_ind_thirst;
 #endif	
@@ -50,6 +51,8 @@ public:
     CUIStatic* m_ind_helmet_broken;
     CUIStatic* m_ind_outfit_broken;
     CUIStatic* m_ind_overweight;
+
+    CUIStatic* m_ind_psyhealth;
 
     CUIStatic* m_ind_boost_psy;
     CUIStatic* m_ind_boost_radia;

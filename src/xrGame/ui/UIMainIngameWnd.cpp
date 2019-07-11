@@ -151,13 +151,17 @@ void CUIMainIngameWnd::Init()
 	
 	if (__type_hud_veter_vremeni || __type_hud_cop || __type_hud_coc)
 	{
+	if(!__type_hud_veter_vremeni)
+		{
     m_ind_bleeding = UIHelper::CreateStatic(uiXml, "indicator_bleeding", this);
+		}
     m_ind_radiation = UIHelper::CreateStatic(uiXml, "indicator_radiation", this);
     m_ind_starvation = UIHelper::CreateStatic(uiXml, "indicator_starvation", this);
     m_ind_weapon_broken = UIHelper::CreateStatic(uiXml, "indicator_weapon_broken", this);
     m_ind_helmet_broken = UIHelper::CreateStatic(uiXml, "indicator_helmet_broken", this);
     m_ind_outfit_broken = UIHelper::CreateStatic(uiXml, "indicator_outfit_broken", this);
     m_ind_overweight = UIHelper::CreateStatic(uiXml, "indicator_overweight", this);
+	m_ind_psyhealth = UIHelper::CreateStatic(uiXml, "indicator_psyhealth", this);
 	}
 #ifdef ENGINE_THIRST
 	if (__type_hud_veter_vremeni || __type_hud_cop || __type_hud_coc)
@@ -622,7 +626,8 @@ void CUIMainIngameWnd::UpdateMainIndicators()
     flags |= LA_CYCLIC;
     flags |= LA_ONLYALPHA;
     flags |= LA_TEXTURECOLOR;
-
+	if (!__type_hud_veter_vremeni)
+	{
     // Bleeding icon
     float bleeding = pActor->conditions().BleedingSpeed();
     if (fis_zero(bleeding, EPS))
@@ -639,7 +644,7 @@ void CUIMainIngameWnd::UpdateMainIndicators()
 			{
             m_ind_bleeding->InitTexture("ui_inGame2_circle_bloodloose_green_coc");
 			}
-			if(__type_hud_cop || __type_hud_veter_vremeni)
+			if(__type_hud_cop)
 			{
 			m_ind_bleeding->InitTexture("ui_inGame2_circle_bloodloose_green_cop");
 			}
@@ -651,7 +656,7 @@ void CUIMainIngameWnd::UpdateMainIndicators()
 			{
             m_ind_bleeding->InitTexture("ui_inGame2_circle_bloodloose_yellow_coc");
 			}
-			if(__type_hud_cop || __type_hud_veter_vremeni)
+			if(__type_hud_cop)
 			{
             m_ind_bleeding->InitTexture("ui_inGame2_circle_bloodloose_yellow_cop");
 			}
@@ -663,13 +668,14 @@ void CUIMainIngameWnd::UpdateMainIndicators()
 			{
             m_ind_bleeding->InitTexture("ui_inGame2_circle_bloodloose_red_coc");
 			}
-			if(__type_hud_cop || __type_hud_veter_vremeni)
+			if(__type_hud_cop)
 			{
 			m_ind_bleeding->InitTexture("ui_inGame2_circle_bloodloose_red_cop");	
 			}
             m_ind_bleeding->SetColorAnimation("ui_fast_blinking_alpha", flags);
         }
     }
+	}
     // Radiation icon
     float radiation = pActor->conditions().GetRadiation();
     if (fis_zero(radiation, EPS))
@@ -742,6 +748,55 @@ if(__type_hud_soc)
 }
 #endif
 */
+
+	if (__type_hud_cop || __type_hud_veter_vremeni || __type_hud_coc)
+	{
+		
+    float psy_koef = pActor->conditions().GetPsyHealth();
+    
+    if (psy_koef > 0.70f)
+    {
+        m_ind_psyhealth->Show(false);
+    }
+    else
+    {
+		m_ind_psyhealth->Show(true);
+        if (psy_koef < 0.70f)
+			
+        if(__type_hud_coc)
+		{
+			m_ind_psyhealth->InitTexture("ui_inGame2_circle_psy_green_coc");
+		}
+		if(__type_hud_cop || __type_hud_veter_vremeni)
+		{
+            m_ind_psyhealth->InitTexture("ui_inGame2_circle_psy_green_cop");
+		}
+		
+        else if (psy_koef < 0.50f)
+			
+        if(__type_hud_coc)
+		{
+            m_ind_psyhealth->InitTexture("ui_inGame2_circle_psy_yellow_coc");
+		}
+		if(__type_hud_cop|| __type_hud_veter_vremeni )
+		{
+            m_ind_psyhealth->InitTexture("ui_inGame2_circle_psy_yellow_cop");
+		}	
+			
+        else if (psy_koef < 0.30f)
+			
+        if(__type_hud_coc)
+		{
+			m_ind_psyhealth->InitTexture("ui_inGame2_circle_psy_red_coc");
+		}
+		if(__type_hud_cop || __type_hud_veter_vremeni)
+		{
+		    m_ind_psyhealth->InitTexture("ui_inGame2_circle_psy_red_cop");
+		}
+    }
+			
+	}
+
     // Satiety icon
     float satiety = pActor->conditions().GetSatiety();
     float satiety_critical = pActor->conditions().SatietyCritical();

@@ -2,10 +2,16 @@
 #include "UIMainIngameWnd.h"
 #include "UIMotionIcon_cop.h"
 #include "UIXmlInit.h"
-const LPCSTR MOTION_ICON_XML = "motion_icon_cop.xml";
+const LPCSTR MOTION_ICON_COP_XML = "motion_icon_cop.xml";
 
-const LPCSTR MOTION_ICON_XML_NULL = "motion_icon_cop_null.xml";
+const LPCSTR MOTION_ICON_COC_XML = "motion_icon_coc.xml";
 
+const LPCSTR MOTION_ICON_XML_NULL = "motion_icon_coc_cop_null.xml";
+
+extern int __type_hud_lost_alpha;
+extern int __type_hud_veter_vremeni;
+extern int __type_hud_soc;
+extern int __type_hud_coc;
 extern int __type_hud_cop;
 
 CUIMotionIcon_cop* g_pMotionIcon_cop = NULL;
@@ -30,12 +36,17 @@ void CUIMotionIcon_cop::Init(Frect const& zonemap_rect)
     CUIXml uiXml;
 	if (__type_hud_cop)
 	{
-		uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML);
+		uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_COP_XML);
 	}
-	else
+    if (__type_hud_coc)
 	{
-		uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_NULL);
+		uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_COC_XML);
 	}	
+    if (__type_hud_lost_alpha || __type_hud_veter_vremeni || __type_hud_soc)
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_NULL);
+    }	
+
     CUIXmlInit xml_init;
 
     xml_init.InitWindow(uiXml, "window", 0, this);

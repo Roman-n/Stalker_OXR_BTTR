@@ -164,14 +164,6 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 	m_bleeding = UIHelper::CreateStatic(xml, "bleeding", this);
     m_bleeding->Show(false);
 	}
-    m_eff_bleeding = UIHelper::CreateStatic(xml, "eff_bleeding_screen", this);
-    m_eff_bleeding->Show(false);
-	if (__type_hud_soc || __type_hud_cop || __type_hud_veter_vremeni || __type_hud_coc)
-	{
-    m_psy_grenn = UIHelper::CreateStatic(xml, "GetPsy_grenn", this);
-    m_psy_yellow = UIHelper::CreateStatic(xml, "GetPsy_yellow", this);
-    m_psy_red = UIHelper::CreateStatic(xml, "GetPsy_red", this);
-	}
 	if (__type_hud_soc || __type_hud_lost_alpha)
 	{
     m_weapon_ammo = UIHelper::CreateTextWnd(xml, "ammo_name", this);
@@ -303,47 +295,7 @@ void CUIHudStatesWnd::UpdateHealth(CActor* actor)
         m_bleeding->Show(false);
     }
 	}
-    //Эффект кровотечения на экране из Мизери, чтобы не заменять значок кровотечения, нормально работает только при
-    //откл. худе, Онли реализм, но убирать не буду ради опциональности худов
-    if (actor->conditions().BleedingSpeed() > 0.01f)
-    {
-        m_eff_bleeding->Show(true);
-    }
-    else
-    {
-        m_eff_bleeding->Show(false);
-    }
-	if (__type_hud_soc || __type_hud_cop || __type_hud_veter_vremeni || __type_hud_coc)
-	{
-    float psy_koef = actor->conditions().GetPsyHealth();
-    //2 проверки чтобы отключались при else if
-    m_psy_grenn->Show(false);
-    m_psy_yellow->Show(false);
-    m_psy_red->Show(false);
-    if (psy_koef > 0.70f)
-    {
-        m_psy_grenn->Show(false);
-        m_psy_yellow->Show(false);
-        m_psy_red->Show(false);
-    }
-    else
-    {
-        if (psy_koef < 0.70f)
-        {
-            m_psy_grenn->Show(true);
-        }
-        else if (psy_koef < 0.50f)
-        {
-            m_psy_grenn->Show(false);
-            m_psy_yellow->Show(true);
-        }
-        else if (psy_koef < 0.30f)
-        {
-            m_psy_red->Show(true);
-            m_psy_yellow->Show(false);
-        }
-    }
-	}
+	
 #endif
 }
 

@@ -69,11 +69,6 @@ public:
     CUIStatic* m_power_lvl_1;
     CUIStatic* m_power_lvl_2;
     CUIStatic* m_power_lvl_3;
-	
-	CUIStatic* m_eff_bleeding;
-	CUIStatic* m_psy_grenn;
-	CUIStatic* m_psy_yellow;
-	CUIStatic* m_psy_red;
 	CUIProgressBar*	m_ui_armor_bar;	
 	CUIProgressBar*	m_ui_psy_health;
     CUIStatic* m_indik[it_max];
