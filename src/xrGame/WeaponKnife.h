@@ -59,6 +59,8 @@ public:
 
     virtual bool Action(u16 cmd, u32 flags);
 
+    virtual void GetBriefInfo_ammo(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count, string16& fire_mode);
+
     virtual bool GetBriefInfo(II_BriefInfo& info);
 
 #ifdef DEBUG

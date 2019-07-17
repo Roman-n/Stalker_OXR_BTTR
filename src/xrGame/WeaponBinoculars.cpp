@@ -147,3 +147,11 @@ void CWeaponBinoculars::net_Relcase(IGameObject* object)
 }
 
 bool CWeaponBinoculars::can_kill() const { return (false); }
+
+
+void CWeaponBinoculars::GetBriefInfo_ammo(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count, string16& fire_mode)
+{
+    str_name = NameShort();
+    str_count = "";
+    icon_sect_name = *cNameSect();
+}

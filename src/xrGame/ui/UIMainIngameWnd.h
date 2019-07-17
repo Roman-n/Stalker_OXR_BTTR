@@ -13,7 +13,8 @@ class CMissile;
 class CInventoryItem;
 class CUIHudStatesWnd;
 class CUIMotionIcon;
-class CUIMotionIcon_cop;
+
+class CUIMotionIcon_soc;
 
 class CUIMainIngameWnd : public CUIWindow
 {
@@ -29,29 +30,49 @@ public:
     CUIStatic* UIStaticDiskIO;
     CUITextWnd* UIStaticQuickHelp;
     CUIMotionIcon* UIMotionIcon;
+	
+	CUIMotionIcon_soc*		UIMotionIcon_soc;
+	
     CUIZoneMap* UIZoneMap;
-	CUIMotionIcon_cop* UIMotionIcon_cop;
 
     CUIHudStatesWnd* m_ui_hud_states;
+	
+////////////////////////////////////////////////////////////////////////////////////////////////	
+//*Индикаторы худа Зов Чернобыля
+	CUIStatic* m_ind_bleeding_coc;
+    CUIStatic* m_ind_radiation_coc;
+    CUIStatic* m_ind_starvation_coc;
+	CUIStatic* m_ind_thirst_coc;
+	CUIStatic* m_ind_slepping_coc;
+	CUIStatic* m_ind_weapon_broken_coc;
+    CUIStatic* m_ind_helmet_broken_coc;
+    CUIStatic* m_ind_outfit_broken_coc;
+    CUIStatic* m_ind_overweight_coc;
+////////////////////////////////////////////////////////////////////////////////////////////////	
 
-    CUIStatic* m_ind_bleeding;
-    CUIStatic* m_ind_radiation;
-    CUIStatic* m_ind_starvation;
-#ifdef ENGINE_THIRST
-	CUIStatic*			m_ind_thirst;
-#endif	
-#ifdef ENGINE_SLEEP
-	CUIStatic*			m_ind_slepping;	
-#endif	
-#ifdef NEWIND	
-	CUIStatic* m_ind_power;
-#endif	
-    CUIStatic* m_ind_weapon_broken;
-    CUIStatic* m_ind_helmet_broken;
-    CUIStatic* m_ind_outfit_broken;
-    CUIStatic* m_ind_overweight;
+////////////////////////////////////////////////////////////////////////////////////////////////	
+//*Индикаторы худа Зов Припяти
+	CUIStatic* m_ind_bleeding_cop;
+    CUIStatic* m_ind_radiation_cop;
+    CUIStatic* m_ind_starvation_cop;
+	CUIStatic* m_ind_thirst_cop;
+	CUIStatic* m_ind_slepping_cop;
+	CUIStatic* m_ind_weapon_broken_cop;
+    CUIStatic* m_ind_helmet_broken_cop;
+    CUIStatic* m_ind_outfit_broken_cop;
+    CUIStatic* m_ind_overweight_cop;
+////////////////////////////////////////////////////////////////////////////////////////////////	
 
-    CUIStatic* m_ind_psyhealth;
+////////////////////////////////////////////////////////////////////////////////////////////////
+    //*Индикаторы худа Ветер Времени
+    CUIStatic* m_ind_radiation_vv;
+    CUIStatic* m_ind_starvation_vv;
+    CUIStatic* m_ind_thirst_vv;
+    CUIStatic* m_ind_slepping_vv;
+    CUIStatic* m_ind_weapon_broken_vv;
+    CUIStatic* m_ind_helmet_broken_vv;
+    CUIStatic* m_ind_overweight_vv;
+////////////////////////////////////////////////////////////////////////////////////////////////	
 
     CUIStatic* m_ind_boost_psy;
     CUIStatic* m_ind_boost_radia;
@@ -85,8 +106,14 @@ protected:
     // - голода
     // - усталости
     CUIStatic* UIWeaponJammedIcon;
+    //	CUIStatic			UIRadiaitionIcon;
+    //	CUIStatic			UIWoundIcon;
+    //	CUIStatic			UIStarvationIcon;
+    //	CUIStatic			UIPsyHealthIcon;
     CUIStatic* UIInvincibleIcon;
+    //	CUIStatic			UISleepIcon;
     CUIStatic* UIArtefactIcon;
+
     CUIScrollView* m_UIIcons;
     CUIWindow* m_pMPChatWnd;
     CUIWindow* m_pMPLogWnd;
@@ -97,6 +124,11 @@ public:
     {
         ewiAll = 0,
         ewiWeaponJammed,
+        //		ewiRadiation,
+        //		ewiWound,
+        //		ewiStarvation,
+        //		ewiPsyHealth,
+        //		ewiSleep,
         ewiInvincible,
         ewiArtefact,
     };
@@ -150,9 +182,10 @@ protected:
 
 public:
     CUIMotionIcon* MotionIcon() { return UIMotionIcon; }
-	CUIMotionIcon_cop* MotionIcon_cop() { return UIMotionIcon_cop; }
     void OnConnected();
     void reset_ui();
+	
+	CUIMotionIcon_soc* MotionIcon_soc (){return UIMotionIcon_soc;}
 
 protected:
     CInventoryItem* m_pPickUpItem;
@@ -172,4 +205,3 @@ public:
     void draw_adjust_mode();
 #endif
 };
-

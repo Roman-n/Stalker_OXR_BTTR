@@ -34,6 +34,9 @@ public:
     virtual Fvector2 ConvertRealToLocal(
         const Fvector2& src, bool for_drawing); // meters->pixels (relatively own left-top pos)
     Fvector2 ConvertLocalToReal(const Fvector2& src, Frect const& bound_rect);
+
+    Fvector2 ConvertLocalToReal_cs(const Fvector2& src);
+
     Fvector2 ConvertRealToLocalNoTransform(
         const Fvector2& src, Frect const& bound_rect); // meters->pixels (relatively own left-top pos)
 

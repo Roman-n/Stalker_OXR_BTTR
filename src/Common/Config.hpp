@@ -57,7 +57,9 @@
 #define FIX_COUNT_ART								// Исправлена ошибка с нулевым m_artefact_spawn_count
 #define EXPORT_OLD_MUTANTS							// Обязательное условие для подключения старых классов мутантов
 #define CHIMERA_CS									// Химера из ЧН/ТЧ
-	
+#define MOTIONICON_SOC								// Текущее положение ГГ на худ из ТЧ
+#define VOLUMETRIK_TORCH							// Объемный свет фонаря
+
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
 #define CALLOFCHERNOBYL_RANKING 			        // Система рангов

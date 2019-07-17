@@ -73,15 +73,6 @@ CUIWpnParams::CUIWpnParams()
     AttachChild(&m_textAmmoUsedType);
     AttachChild(&m_stAmmoType1);
     AttachChild(&m_stAmmoType2);
-
-    AttachChild(&m_textAccuracy_inc_shadow);
-    AttachChild(&m_textDamage_inc_shadow);
-    AttachChild(&m_textHandling_inc_shadow);
-    AttachChild(&m_textRPM_inc_shadow);
-    AttachChild(&m_textAccuracy_inc);
-    AttachChild(&m_textDamage_inc);
-    AttachChild(&m_textHandling_inc);
-    AttachChild(&m_textRPM_inc);
 }
 
 CUIWpnParams::~CUIWpnParams() {}
@@ -131,12 +122,12 @@ void CUIWpnParams::SetInfo(CInventoryItem* slot_wpn, CInventoryItem& cur_wpn)
     str_upgrades[0] = 0;
     cur_wpn.get_upgrades_str(str_upgrades);
 
-    float cur_rpm = iFloor(g_lua_wpn_params->m_functorRPM(cur_section, str_upgrades) * 34.0f) / 34.0f;
-    float cur_accur = iFloor(g_lua_wpn_params->m_functorAccuracy(cur_section, str_upgrades) * 34.0f) / 34.0f;
-    float cur_hand = iFloor(g_lua_wpn_params->m_functorHandling(cur_section, str_upgrades) * 34.0f) / 34.0f;
+    float cur_rpm = iFloor(g_lua_wpn_params->m_functorRPM(cur_section, str_upgrades) * 53.0f) / 53.0f;
+    float cur_accur = iFloor(g_lua_wpn_params->m_functorAccuracy(cur_section, str_upgrades) * 53.0f) / 53.0f;
+    float cur_hand = iFloor(g_lua_wpn_params->m_functorHandling(cur_section, str_upgrades) * 53.0f) / 53.0f;
     float cur_damage = (GameID() == eGameIDSingle) ?
-        iFloor(g_lua_wpn_params->m_functorDamage(cur_section, str_upgrades) * 34.0f) / 34.0f :
-        iFloor(g_lua_wpn_params->m_functorDamageMP(cur_section, str_upgrades) * 34.0f) / 34.0f;
+        iFloor(g_lua_wpn_params->m_functorDamage(cur_section, str_upgrades) * 53.0f) / 53.0f :
+        iFloor(g_lua_wpn_params->m_functorDamageMP(cur_section, str_upgrades) * 53.0f) / 53.0f;
 
     float slot_rpm = cur_rpm;
     float slot_accur = cur_accur;
@@ -149,41 +140,12 @@ void CUIWpnParams::SetInfo(CInventoryItem* slot_wpn, CInventoryItem& cur_wpn)
         str_upgrades[0] = 0;
         slot_wpn->get_upgrades_str(str_upgrades);
 
-        slot_rpm = iFloor(g_lua_wpn_params->m_functorRPM(slot_section, str_upgrades) * 34.0f) / 34.0f;
-        slot_accur = iFloor(g_lua_wpn_params->m_functorAccuracy(slot_section, str_upgrades) * 34.0f) / 34.0f;
-        slot_hand = iFloor(g_lua_wpn_params->m_functorHandling(slot_section, str_upgrades) * 34.0f) / 34.0f;
+        slot_rpm = iFloor(g_lua_wpn_params->m_functorRPM(slot_section, str_upgrades) * 53.0f) / 53.0f;
+        slot_accur = iFloor(g_lua_wpn_params->m_functorAccuracy(slot_section, str_upgrades) * 53.0f) / 53.0f;
+        slot_hand = iFloor(g_lua_wpn_params->m_functorHandling(slot_section, str_upgrades) * 53.0f) / 53.0f;
         slot_damage = (GameID() == eGameIDSingle) ?
-            iFloor(g_lua_wpn_params->m_functorDamage(slot_section, str_upgrades) * 34.0f) / 34.0f :
-            iFloor(g_lua_wpn_params->m_functorDamageMP(slot_section, str_upgrades) * 34.0f) / 34.0f;
-
-        string128 str_value;
-        float adj_value = cur_accur - slot_accur;
-        xr_sprintf(str_value, sizeof(str_value), adj_value>0 ? "+%.1f%%" : "%.1f%%", adj_value);
-        m_textAccuracy_inc.SetText(str_value);
-        m_textAccuracy_inc_shadow.SetText(str_value);
-        adj_value = cur_damage - slot_damage;
-        xr_sprintf(str_value, sizeof(str_value), adj_value>0 ? "+%.1f%%" : "%.1f%%", adj_value);
-        m_textDamage_inc.SetText(str_value);
-        m_textDamage_inc_shadow.SetText(str_value);
-        adj_value = cur_hand - slot_hand;
-        xr_sprintf(str_value, sizeof(str_value), adj_value>0 ? "+%.1f%%" : "%.1f%%", adj_value);
-        m_textHandling_inc.SetText(str_value);
-        m_textHandling_inc_shadow.SetText(str_value);
-        adj_value = cur_rpm - slot_rpm;
-        xr_sprintf(str_value, sizeof(str_value), adj_value>0 ? "+%.1f%%" : "%.1f%%", adj_value);
-        m_textRPM_inc.SetText(str_value);
-        m_textRPM_inc_shadow.SetText(str_value);
-    }
-    else
-    {
-        m_textAccuracy_inc.SetText("");
-        m_textDamage_inc.SetText("");
-        m_textHandling_inc.SetText("");
-        m_textRPM_inc.SetText("");
-        m_textAccuracy_inc_shadow.SetText("");
-        m_textDamage_inc_shadow.SetText("");
-        m_textHandling_inc_shadow.SetText("");
-        m_textRPM_inc_shadow.SetText("");
+            iFloor(g_lua_wpn_params->m_functorDamage(slot_section, str_upgrades) * 53.0f) / 53.0f :
+            iFloor(g_lua_wpn_params->m_functorDamageMP(slot_section, str_upgrades) * 53.0f) / 53.0f;
     }
 
     m_progressAccuracy.SetTwoPos(cur_accur, slot_accur);

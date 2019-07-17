@@ -68,8 +68,9 @@
 #include "Include/xrRender/UIRender.h"
 
 #include "xrAICore/Navigation/ai_object_location.h"
-
-#include "ui/uiMotionIcon.h"
+#ifdef MOTIONICON_SOC
+#include "ui/uiMotionIcon_soc.h"
+#endif
 #include "ui/UIActorMenu.h"
 #include "ActorHelmet.h"
 #include "UI/UIDragDropReferenceList.h"
@@ -1264,13 +1265,13 @@ void CActor::shedule_Update(u32 DT)
         }
         mstate_old = mstate_real;
     }
-
+#ifdef MOTIONICON_SOC
 	//fixed
     if (this == Level().CurrentViewEntity())
     {
         UpdateMotionIcon		(mstate_real);
     };	
-
+#endif
     NET_Jump = 0;
 
     inherited::shedule_Update(DT);
@@ -1882,35 +1883,35 @@ void CActor::AnimTorsoPlayCallBack(CBlend* B)
     CActor* actor = (CActor*)B->CallbackParam;
     actor->m_bAnimTorsoPlayed = FALSE;
 }
-
+#ifdef MOTIONICON_SOC
 // Показать текущее положение гг
 void CActor::UpdateMotionIcon(u32 mstate_rl)
 {
-	CUIMotionIcon*		motion_icon=HUD().GetGameUI()->UIMainIngameWnd->MotionIcon();
+	CUIMotionIcon_soc*		motion_icon=HUD().GetGameUI()->UIMainIngameWnd->MotionIcon_soc();
 	if(mstate_rl&mcClimb)
 	{
-		(*motion_icon).ShowState(CUIMotionIcon::stClimb);
+		(*motion_icon).ShowState(CUIMotionIcon_soc::stClimb);
 	}
 	else
 	{
 		if(mstate_rl&mcCrouch)
 		{
 			if (!isActorAccelerated(mstate_rl, IsZoomAimingMode()))
-				(*motion_icon).ShowState(CUIMotionIcon::stCreep);
+				(*motion_icon).ShowState(CUIMotionIcon_soc::stCreep);
 			else
-				(*motion_icon).ShowState(CUIMotionIcon::stCrouch);
+				(*motion_icon).ShowState(CUIMotionIcon_soc::stCrouch);
 		}
 		else
 		if(mstate_rl&mcSprint)
-			(*motion_icon).ShowState(CUIMotionIcon::stSprint);
+			(*motion_icon).ShowState(CUIMotionIcon_soc::stSprint);
 		else
 		if(mstate_rl&mcAnyMove && isActorAccelerated(mstate_rl, IsZoomAimingMode()))
-			(*motion_icon).ShowState(CUIMotionIcon::stRun);
+			(*motion_icon).ShowState(CUIMotionIcon_soc::stRun);
 		else
-			(*motion_icon).ShowState(CUIMotionIcon::stNormal);
+			(*motion_icon).ShowState(CUIMotionIcon_soc::stNormal);
 	}
 }
-
+#endif
 
 CPHDestroyable* CActor::ph_destroyable() { return smart_cast<CPHDestroyable*>(character_physics_support()); }
 CEntityConditionSimple* CActor::create_entity_condition(CEntityConditionSimple* ec)

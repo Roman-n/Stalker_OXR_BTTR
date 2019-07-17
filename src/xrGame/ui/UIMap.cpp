@@ -12,6 +12,12 @@ const u32 activeLocalMapColor = 0xffffffff; // 0xffc80000;
 const u32 inactiveLocalMapColor = 0xffffffff; // 0xff438cd1;
 const u32 ourLevelMapColor = 0xffffffff;
 
+extern int __type_hud_lost_alpha;
+extern int __type_hud_veter_vremeni;
+extern int __type_hud_soc;
+extern int __type_hud_coc;
+extern int __type_hud_cop;
+
 CUICustomMap::CUICustomMap()
 {
     m_BoundRect_.set(0, 0, 0, 0);
@@ -105,6 +111,15 @@ Fvector2 CUICustomMap::ConvertLocalToReal(const Fvector2& src, Frect const& boun
     Fvector2 res;
     res.x = bound_rect.lt.x + src.x / GetCurrentZoom().x;
     res.y = bound_rect.height() + bound_rect.lt.y - src.y / GetCurrentZoom().x;
+
+    return res;
+}
+
+Fvector2 CUICustomMap::ConvertLocalToReal_cs(const Fvector2& src)
+{
+    Fvector2 res;
+    res.x = m_BoundRect_.lt.x + src.x / GetCurrentZoom().x;
+    res.y = m_BoundRect_.height() + m_BoundRect_.lt.y - src.y / GetCurrentZoom().x;
 
     return res;
 }
@@ -420,18 +435,6 @@ void CUILevelMap::Init_internal(const shared_str& name, CInifile& pLtx, const sh
     tmp.x *= UI().get_current_kx();
     tmp.z *= UI().get_current_kx();
     m_GlobalRect.set(tmp.x, tmp.y, tmp.z, tmp.w);
-
-#ifdef DEBUG
-    float kw = m_GlobalRect.width() / BoundRect().width();
-    float kh = m_GlobalRect.height() / BoundRect().height();
-
-    if (FALSE == fsimilar(kw, kh, EPS_L))
-    {
-        Msg(" --incorrect global rect definition for map [%s]  kw=%f kh=%f", *MapName(), kw, kh);
-        Msg(" --try x2=%f or  y2=%f", m_GlobalRect.x1 + kh * BoundRect().width(),
-            m_GlobalRect.y1 + kw * BoundRect().height());
-    }
-#endif
 }
 
 void CUILevelMap::UpdateSpots()
@@ -556,14 +559,15 @@ void CUILevelMap::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 #endif
 }
 
-void CUILevelMap::OnFocusLost()
-{
-    inherited::OnFocusLost();
+void CUILevelMap::OnFocusLost() 
+{ 
+    inherited::OnFocusLost(); 
     MapWnd()->HideHint(this);
 }
 
 CUIMiniMap::CUIMiniMap() {}
 CUIMiniMap::~CUIMiniMap() {}
+
 void CUIMiniMap::Init_internal(const shared_str& name, CInifile& pLtx, const shared_str& sect_name, LPCSTR sh_name)
 {
     inherited::Init_internal(name, pLtx, sect_name, sh_name);
@@ -578,21 +582,18 @@ void CUIMiniMap::UpdateSpots()
         (*it).location->UpdateMiniMap(this);
 }
 
-extern int __type_hud_lost_alpha;
-extern int __type_hud_veter_vremeni;
-extern int __type_hud_soc;
-
 void CUIMiniMap::Draw()
 {
-	// Правка - Xottab-DUTY 
-	// Ссылка - https://github.com/OpenXRay/xray-16/commit/a0666cbde471babc05b76e3d94096d43d251ee5e#diff-c80be3609cd564831c94832629cdd3c4
-	// Rectangular mini map for SOC and CS (#382 and #392)
-	if (__type_hud_lost_alpha || __type_hud_veter_vremeni || __type_hud_soc)
+    // Правка - Xottab-DUTY
+    // Ссылка -
+    // https://github.com/OpenXRay/xray-16/commit/a0666cbde471babc05b76e3d94096d43d251ee5e#diff-c80be3609cd564831c94832629cdd3c4
+    // Rectangular mini map for SOC and CS (#382 and #392)
+    if (__type_hud_lost_alpha || __type_hud_veter_vremeni || __type_hud_soc)
     {
         inherited::Draw();
         return;
     }
-	
+
     u32 segments_count = 20;
 
     GEnv.UIRender->SetShader(*m_UIStaticItem.GetShader());
@@ -654,40 +655,102 @@ void CUIMiniMap::Draw()
 
 bool CUIMiniMap::GetPointerTo(const Fvector2& src, float item_radius, Fvector2& pos, float& heading)
 {
-    Fvector2 clip_center = GetStaticItem()->GetHeadingPivot();
-    float map_radius = WorkingArea().width() / 2.0f;
-    Fvector2 direction;
+    if (__type_hud_veter_vremeni || __type_hud_soc || __type_hud_lost_alpha)
+	{
+		Frect		clip_rect_abs			= WorkingArea(); //absolute rect coords
+		Frect		map_rect_abs;
+		GetAbsoluteRect(map_rect_abs);
 
-    direction.sub(clip_center, src);
-    heading = -direction.getH();
+		Frect		rect;
+		BOOL res = rect.intersection(clip_rect_abs, map_rect_abs);
+		if(!res) return false;
+	
+		rect = clip_rect_abs;
+		rect.sub(map_rect_abs.lt.x,map_rect_abs.lt.y);
 
-    float kx = UI().get_current_kx();
-    float cosPT = _cos(heading);
-    float sinPT = _sin(heading);
-    pos.set(-map_radius * sinPT * kx, -map_radius * cosPT);
-    pos.add(clip_center);
+		Fbox2 f_clip_rect_local;
+		f_clip_rect_local.set(rect.x1, rect.y1, rect.x2, rect.y2 );
 
-    return true;
+		Fvector2 f_center;
+		f_clip_rect_local.getcenter(f_center);
+
+		Fvector2 f_dir, f_src;
+
+		f_src.set(src.x, src.y );
+		f_dir.sub(f_center, f_src );
+		f_dir.normalize_safe();
+		Fvector2 f_intersect_point;
+		res = f_clip_rect_local.Pick2(f_src,f_dir,f_intersect_point);
+		if(!res)
+			return false;
+
+
+		heading = -f_dir.getH();
+
+		f_intersect_point.mad(f_intersect_point,f_dir,item_radius );
+
+		pos.set( iFloor(f_intersect_point.x), iFloor(f_intersect_point.y) );
+		return true;
+	}
+	else
+	{
+		Fvector2 clip_center = GetStaticItem()->GetHeadingPivot();
+		float map_radius = WorkingArea().width() / 2.0f;
+		Fvector2 direction;
+
+		direction.sub(clip_center, src);
+		heading = -direction.getH();
+
+		float kx = UI().get_current_kx();
+		float cosPT = _cos(heading);
+		float sinPT = _sin(heading);
+		pos.set(-map_radius * sinPT * kx, -map_radius * cosPT);
+		pos.add(clip_center);
+
+		return true;
+	}
 }
 
 bool CUIMiniMap::NeedShowPointer(Frect r)
 {
-    Fvector2 clip_center = GetStaticItem()->GetHeadingPivot();
-
-    Fvector2 spot_pos;
-    r.getcenter(spot_pos);
-    float dist = clip_center.distance_to(spot_pos);
-    float spot_radius = r.width() / 2.0f;
-    return (dist + spot_radius > WorkingArea().width() / 2.0f);
+    if (__type_hud_veter_vremeni || __type_hud_soc || __type_hud_lost_alpha)
+    {
+        Frect map_visible_rect = WorkingArea();
+        map_visible_rect.shrink(5, 5);
+        Fvector2 pos;
+        GetAbsolutePos(pos);
+        r.add(pos.x, pos.y);
+        return !map_visible_rect.intersected(r);
+    }
+    else
+    {
+        Fvector2 clip_center = GetStaticItem()->GetHeadingPivot();
+        Fvector2 spot_pos;
+        r.getcenter(spot_pos);
+        float dist = clip_center.distance_to(spot_pos);
+        float spot_radius = r.width() / 2.0f;
+        return (dist + spot_radius > WorkingArea().width() / 2.0f);
+    }
 }
 
 bool CUIMiniMap::IsRectVisible(Frect r)
 {
-    Fvector2 clip_center = GetStaticItem()->GetHeadingPivot();
-    float vis_radius = WorkingArea().width() / 2.0f;
-    Fvector2 rect_center;
-    r.getcenter(rect_center);
-    float spot_radius = r.width() / 2.0f;
-    return clip_center.distance_to(rect_center) + spot_radius < vis_radius; // assume that all minimap spots are
-    // circular
+    if (__type_hud_veter_vremeni || __type_hud_soc || __type_hud_lost_alpha)
+    {
+        Fvector2 pos;
+        GetAbsolutePos(pos);
+        r.add(pos.x, pos.y);
+
+        return !!WorkingArea().intersected(r);
+    }
+    else
+    {
+        Fvector2 clip_center = GetStaticItem()->GetHeadingPivot();
+        float vis_radius = WorkingArea().width() / 2.0f;
+        Fvector2 rect_center;
+        r.getcenter(rect_center);
+        float spot_radius = r.width() / 2.0f;
+        return clip_center.distance_to(rect_center) + spot_radius < vis_radius; // assume that all minimap spots are
+        // circular
+    }
 }

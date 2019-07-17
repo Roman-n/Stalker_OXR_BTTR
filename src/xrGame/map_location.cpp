@@ -597,15 +597,15 @@ void CMapLocation::UpdateSpotPointer(CUICustomMap* map, CMapSpotPointer* sp)
 
         map->AttachChild(sp);
 
-        Fvector2 tt = map->ConvertLocalToReal(m_position_on_map, map->BoundRect());
+        Fvector2 tt = map->ConvertLocalToReal_cs(m_position_on_map);
         Fvector ttt;
         ttt.set(tt.x, 0.0f, tt.y);
 
         if (IsGameTypeSingle())
         {
             float dist_to_target = Level().CurrentEntity()->Position().distance_to(ttt);
-            CGameTask* task = Level().GameTaskManager().HasGameTask(this, true);
-            if (task)
+            CGameTask* T = Level().GameTaskManager().HasGameTask(this, true);
+            if (T && T->GetTaskType() == eTaskTypeStoryline || T && T->GetTaskType() == eTaskTypeAdditional)
             {
                 map->SetPointerDistance(dist_to_target);
             }

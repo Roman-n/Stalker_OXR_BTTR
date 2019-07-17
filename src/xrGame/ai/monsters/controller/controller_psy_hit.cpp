@@ -295,13 +295,6 @@ void CControllerPsyHit::death_glide_end()
 
 void CControllerPsyHit::update_frame()
 {
-    // if (m_sound_state == eStart) {
-    //	CController *monster = smart_cast<CController *>(m_object);
-    //	if (!monster->m_sound_tube_start._feedback()) {
-    //		m_sound_state = ePull;
-    //		monster->m_sound_tube_pull.play_at_pos(Actor(), Fvector().set(0.f, 0.f, 0.f), sm_2D);
-    //	}
-    //}
 }
 
 void CControllerPsyHit::set_sound_state(ESoundState state)

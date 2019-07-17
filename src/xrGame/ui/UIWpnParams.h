@@ -19,37 +19,28 @@ public:
     bool Check(const shared_str& wpn_section);
 
 protected:
-    CUIDoubleProgressBar m_progressAccuracy; // red or green
-    CUIDoubleProgressBar m_progressHandling;
-    CUIDoubleProgressBar m_progressDamage;
-    CUIDoubleProgressBar m_progressRPM;
+	CUIDoubleProgressBar	m_progressAccuracy; // red or green
+	CUIDoubleProgressBar	m_progressHandling;
+	CUIDoubleProgressBar	m_progressDamage;
+	CUIDoubleProgressBar	m_progressRPM;
 
-    CUIStatic m_icon_acc;
-    CUIStatic m_icon_dam;
-    CUIStatic m_icon_han;
-    CUIStatic m_icon_rpm;
+	CUIStatic				m_icon_acc;
+	CUIStatic				m_icon_dam;
+	CUIStatic				m_icon_han;
+	CUIStatic				m_icon_rpm;
 
-    CUIStatic m_stAmmo;
-    CUITextWnd m_textAccuracy;
-    CUITextWnd m_textHandling;
-    CUITextWnd m_textDamage;
-    CUITextWnd m_textRPM;
-    CUITextWnd m_textAmmoTypes;
-    CUITextWnd m_textAmmoUsedType;
-    CUITextWnd m_textAmmoCount;
-    CUITextWnd m_textAmmoCount2;
-    CUIStatic m_stAmmoType1;
-    CUIStatic m_stAmmoType2;
-    CUIStatic m_Prop_line;
-
-    CUITextWnd m_textAccuracy_inc;
-    CUITextWnd m_textHandling_inc;
-    CUITextWnd m_textDamage_inc;
-    CUITextWnd m_textRPM_inc;
-    CUITextWnd m_textAccuracy_inc_shadow;
-    CUITextWnd m_textHandling_inc_shadow;
-    CUITextWnd m_textDamage_inc_shadow;
-    CUITextWnd m_textRPM_inc_shadow;
+	CUIStatic				m_stAmmo;
+	CUITextWnd				m_textAccuracy;
+	CUITextWnd				m_textHandling;
+	CUITextWnd				m_textDamage;
+	CUITextWnd				m_textRPM;
+	CUITextWnd				m_textAmmoTypes;
+	CUITextWnd				m_textAmmoUsedType;
+	CUITextWnd				m_textAmmoCount;
+	CUITextWnd				m_textAmmoCount2;
+	CUIStatic				m_stAmmoType1;
+	CUIStatic				m_stAmmoType2;
+	CUIStatic				m_Prop_line;
 };
 
 // -------------------------------------------------------------------------------------------------

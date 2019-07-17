@@ -484,49 +484,7 @@ static bool intersect(Fcylinder const& bone, Fsphere const& query)
     return distance2center_sqr <= _sqr(bone.m_radius + circle_radius);
 }
 
-void CWeaponKnife::GetVictimPos(CEntityAlive* victim, Fvector& pos_dest)
-{
-    /*VERIFY(victim);
-    IKinematics*	tmp_kinem	= smart_cast<IKinematics*>(victim->Visual());
-    u16 hit_bone_id				= tmp_kinem->LL_BoneID(m_SplashHitBone);
-    if (hit_bone_id != BI_NONE)
-    {
-        Fmatrix			tmp_matrix;
-        tmp_kinem->Bone_GetAnimPos	(tmp_matrix, hit_bone_id, u8(-1), true);
-        pos_dest.set(tmp_matrix.c);
-        Fmatrix	& tmp_xform			= victim->XFORM();
-        tmp_xform.transform_tiny	(pos_dest);
-    } else
-    {
-        Fbox const & tmp_box = tmp_kinem->GetBox();
-        Fvector tmp_fake_vec;
-        tmp_box.get_CD(pos_dest, tmp_fake_vec);
-        pos_dest.add(victim->Position());
-    }
-
-    CBoneData& tmp_bone_data	= tmp_kinem->LL_GetData(hit_bone_id);
-    Fmatrix	& tmp_xform			= victim->XFORM();
-    CBoneInstance &bi			= tmp_kinem->LL_GetBoneInstance();
-
-    switch (tmp_bone_data.shape.type)
-    {
-    case SBoneShape::stBox:
-        {
-            pos_dest = tmp_bone_data.shape.box.m_translate;
-            break;
-        };
-    case SBoneShape::stSphere:
-        {
-            pos_dest = tmp_bone_data.shape.sphere.P;
-        }break;
-    case SBoneShape::stCylinder:
-        {
-            pos_dest = tmp_bone_data.shape.cylinder.m_center;
-        }break;
-    };//switch (tmp_bone_data.shape.type)
-    tmp_xform.transform_tiny(pos_dest);
-    bi.mTransform.transform_tiny(pos_dest);*/
-}
+void CWeaponKnife::GetVictimPos(CEntityAlive* victim, Fvector& pos_dest){}
 
 u32 CWeaponKnife::get_entity_bones_count(CEntityAlive const* entity)
 {
@@ -880,4 +838,12 @@ void CWeaponKnife::best_victim_selector::operator()(spartial_base_t::value_type 
         m_min_dist = tmp_dist;
         return;
     }
+}
+
+
+void CWeaponKnife::GetBriefInfo_ammo(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count, string16& fire_mode)
+{
+    str_name = NameShort();
+    str_count = "";
+    icon_sect_name = *cNameSect();
 }

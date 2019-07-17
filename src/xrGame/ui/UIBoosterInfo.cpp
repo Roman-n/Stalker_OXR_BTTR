@@ -43,21 +43,21 @@ CUIBoosterInfo::~CUIBoosterInfo()
 
 LPCSTR boost_influence_caption[] = 
 {
-	"UIBoosterInfo_1",
-	"UIBoosterInfo_2",
-	"UIBoosterInfo_3",
-	"UIBoosterInfo_4",
-	"UIBoosterInfo_5",
-	"UIBoosterInfo_6",
-	"UIBoosterInfo_7",
-	"UIBoosterInfo_8",
-	"UIBoosterInfo_9",
-	"UIBoosterInfo_10",
-	"UIBoosterInfo_11",
-	"UIBoosterInfo_12",
-	"UIBoosterInfo_13",
-	"UIBoosterInfo_14",
-	"UIBoosterInfo_15"
+	"st_ui_boosterlnfo_1",
+	"st_ui_boosterlnfo_2",
+	"st_ui_boosterlnfo_3",
+	"st_ui_boosterlnfo_4",
+	"st_ui_boosterlnfo_5",
+	"st_ui_boosterlnfo_6",
+	"st_ui_boosterlnfo_7",
+	"st_ui_boosterlnfo_8",
+	"st_ui_boosterlnfo_9",
+	"st_ui_boosterlnfo_10",
+	"st_ui_boosterlnfo_11",
+	"st_ui_boosterlnfo_12",
+	"st_ui_boosterlnfo_13",
+	"st_ui_boosterlnfo_14",
+	"st_ui_boosterlnfo_15"
 };
 
 void CUIBoosterInfo::InitFromXml(CUIXml& xml)

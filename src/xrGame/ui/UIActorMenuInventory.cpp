@@ -34,6 +34,12 @@
 #include "actor_defs.h"
 #include "ActorBackpack.h"
 
+extern int __type_hud_lost_alpha;
+extern int __type_hud_veter_vremeni;
+extern int __type_hud_soc;
+extern int __type_hud_coc;
+extern int __type_hud_cop;
+
 void move_item_from_to(u16 from_id, u16 to_id, u16 what_id);
 
 void CUIActorMenu::InitInventoryMode()
@@ -54,6 +60,11 @@ void CUIActorMenu::InitInventoryMode()
     InitInventoryContents(m_pInventoryBagList);
 
     VERIFY(CurrentGameUI());
+	if(__type_hud_coc || __type_hud_cop || __type_hud_veter_vremeni)
+	{
+		CurrentGameUI()->UIMainIngameWnd->ShowZoneMap(true);	
+	}
+	
 #ifndef SHOWMAPINVCOP
     CurrentGameUI()->UIMainIngameWnd->ShowZoneMap(true);
 #endif

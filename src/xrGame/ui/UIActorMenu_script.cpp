@@ -31,8 +31,6 @@
 #include "UIHudStatesWnd.h"
 #include "InventoryBox.h"
 
-#include "UIMotionIcon_cop.h"
-
 using namespace luabind;
 
 CUIActorMenu* GetActorMenu()
@@ -355,16 +353,37 @@ SCRIPT_EXPORT(CUIActorMenu, (),
 			.def_readonly("UIStaticDiskIO", &CUIMainIngameWnd::UIStaticDiskIO)
 			.def_readonly("UIStaticQuickHelp", &CUIMainIngameWnd::UIStaticQuickHelp)
 			.def_readonly("UIMotionIcon", &CUIMainIngameWnd::UIMotionIcon)
-			.def_readonly("UIMotionIcon_cop", &CUIMainIngameWnd::UIMotionIcon_cop)
 			.def_readonly("UIZoneMap", &CUIMainIngameWnd::UIZoneMap)
 			.def_readonly("m_ui_hud_states", &CUIMainIngameWnd::m_ui_hud_states)
-			.def_readonly("m_ind_bleeding", &CUIMainIngameWnd::m_ind_bleeding)
-			.def_readonly("m_ind_radiation", &CUIMainIngameWnd::m_ind_radiation)
-			.def_readonly("m_ind_starvation", &CUIMainIngameWnd::m_ind_starvation)
-			.def_readonly("m_ind_weapon_broken", &CUIMainIngameWnd::m_ind_weapon_broken)
-			.def_readonly("m_ind_helmet_broken", &CUIMainIngameWnd::m_ind_helmet_broken)
-			.def_readonly("m_ind_outfit_broken", &CUIMainIngameWnd::m_ind_outfit_broken)
-			.def_readonly("m_ind_overweight", &CUIMainIngameWnd::m_ind_overweight)
+
+            .def_readonly("m_ind_radiation_vv", &CUIMainIngameWnd::m_ind_radiation_vv)
+            .def_readonly("m_ind_starvation_vv", &CUIMainIngameWnd::m_ind_starvation_vv)
+            .def_readonly("m_ind_weapon_broken_vv", &CUIMainIngameWnd::m_ind_weapon_broken_vv)
+            .def_readonly("m_ind_helmet_broken_vv", &CUIMainIngameWnd::m_ind_helmet_broken_vv)
+            .def_readonly("m_ind_overweight_vv", &CUIMainIngameWnd::m_ind_overweight_vv)
+            .def_readonly("m_ind_thirst_vv", &CUIMainIngameWnd::m_ind_thirst_vv)
+            .def_readonly("m_ind_slepping_vv", &CUIMainIngameWnd::m_ind_slepping_vv)
+
+			.def_readonly("m_ind_bleeding_coc", &CUIMainIngameWnd::m_ind_bleeding_coc)
+			.def_readonly("m_ind_radiation_coc", &CUIMainIngameWnd::m_ind_radiation_coc)
+			.def_readonly("m_ind_starvation_coc", &CUIMainIngameWnd::m_ind_starvation_coc)
+			.def_readonly("m_ind_weapon_broken_coc", &CUIMainIngameWnd::m_ind_weapon_broken_coc)
+			.def_readonly("m_ind_helmet_broken_coc", &CUIMainIngameWnd::m_ind_helmet_broken_coc)
+			.def_readonly("m_ind_outfit_broken_coc", &CUIMainIngameWnd::m_ind_outfit_broken_coc)
+			.def_readonly("m_ind_overweight_coc", &CUIMainIngameWnd::m_ind_overweight_coc)
+			.def_readonly("m_ind_thirst_coc", &CUIMainIngameWnd::m_ind_thirst_coc)
+			.def_readonly("m_ind_slepping_coc", &CUIMainIngameWnd::m_ind_slepping_coc)
+
+            .def_readonly("m_ind_bleeding_cop", &CUIMainIngameWnd::m_ind_bleeding_cop)
+            .def_readonly("m_ind_radiation_cop", &CUIMainIngameWnd::m_ind_radiation_cop)
+            .def_readonly("m_ind_starvation_cop", &CUIMainIngameWnd::m_ind_starvation_cop)
+            .def_readonly("m_ind_weapon_broken_cop", &CUIMainIngameWnd::m_ind_weapon_broken_cop)
+            .def_readonly("m_ind_helmet_broken_cop", &CUIMainIngameWnd::m_ind_helmet_broken_cop)
+            .def_readonly("m_ind_outfit_broken_cop", &CUIMainIngameWnd::m_ind_outfit_broken_cop)
+            .def_readonly("m_ind_overweight_cop", &CUIMainIngameWnd::m_ind_overweight_cop)
+            .def_readonly("m_ind_thirst_cop", &CUIMainIngameWnd::m_ind_thirst_cop)
+            .def_readonly("m_ind_slepping_cop", &CUIMainIngameWnd::m_ind_slepping_cop)
+			
 			.def_readonly("m_ind_boost_psy", &CUIMainIngameWnd::m_ind_boost_psy)
 			.def_readonly("m_ind_boost_radia", &CUIMainIngameWnd::m_ind_boost_radia)
 			.def_readonly("m_ind_boost_chem", &CUIMainIngameWnd::m_ind_boost_chem)
@@ -381,8 +400,6 @@ SCRIPT_EXPORT(CUIActorMenu, (),
 			.def("Background", &CUIZoneMap::Background),
  		class_< CUIMotionIcon, CUIWindow>("CUIMotionIcon")
 			.def(constructor<>()),
-		class_< CUIMotionIcon_cop, CUIWindow>("CUIMotionIcon_cop")
-			.def(constructor<>()),	
  		class_< CUIHudStatesWnd, CUIWindow>("CUIHudStatesWnd")
 			.def(constructor<>())
 			.def_readonly("m_back", &CUIHudStatesWnd::m_back)
