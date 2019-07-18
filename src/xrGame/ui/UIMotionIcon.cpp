@@ -12,9 +12,6 @@ extern int __type_hud_cop;
 const LPCSTR MOTION_ICON_XML_COC = "maingame_motion_icon_coc.xml";
 const LPCSTR MOTION_ICON_XML_COP = "maingame_motion_icon_cop.xml";
 const LPCSTR MOTION_ICON_XML_NULL = "maingame_motion_icon_cop_coc_null.xml";
-const LPCSTR MOTION_ICON_XML = "maingame_motion_icon_soc.xml";
-const LPCSTR MOTION_ICON_NULL = "maingame_motion_icon_soc_null.xml";
-
 
 CUIMotionIcon* g_pMotionIcon = NULL;
 
@@ -65,81 +62,17 @@ void CUIMotionIcon::Init(Frect const& zonemap_rect)
     float k = UI().get_current_kx();
     sz.mul(rel_sz * k);
 
-    AttachChild(&m_luminosity_progress_shape);
-    xml_init.InitProgressShape(uiXml, "luminosity_progress", 0, &m_luminosity_progress_shape);
-    m_luminosity_progress_shape.SetWndSize(sz);
-    m_luminosity_progress_shape.SetWndPos(pos);
-
-    AttachChild(&m_noise_progress_shape);
-    xml_init.InitProgressShape(uiXml, "noise_progress", 0, &m_noise_progress_shape);
-    m_noise_progress_shape.SetWndSize(sz);
-    m_noise_progress_shape.SetWndPos(pos);
-}
-
-void CUIMotionIcon::Init_soc()
-{
-    CUIXml uiXml;
-    if (__type_hud_soc)
-    {
-        uiXml.Load(CONFIG_PATH, UI_PATH, MOTION_ICON_XML);
-    }
-    else
-    {
-        uiXml.Load(CONFIG_PATH, UI_PATH, MOTION_ICON_NULL);
-    }
-
-    CUIXmlInit xml_init;
-
-    AttachChild(&background_shoc);
-    xml_init.InitStatic(uiXml, "background", 0, &background_shoc);
-
+    // float h = Device.dwHeight;
+    // float w = Device.dwWidth;
     AttachChild(&m_luminosity_progress);
-    xml_init.InitProgressBar(uiXml, "luminosity_progress", 0, &m_luminosity_progress);
+    xml_init.InitProgressShape(uiXml, "luminosity_progress", 0, &m_luminosity_progress);
+    m_luminosity_progress.SetWndSize(sz);
+    m_luminosity_progress.SetWndPos(pos);
 
     AttachChild(&m_noise_progress);
-    xml_init.InitProgressBar(uiXml, "noise_progress", 0, &m_noise_progress);
-
-    //рв
-    AttachChild(&m_states[stNormal]);
-    xml_init.InitStatic(uiXml, "state_normal", 0, &m_states[stNormal]);
-    m_states[stNormal].Show(false);
-
-    AttachChild(&m_states[stCrouch]);
-    xml_init.InitStatic(uiXml, "state_crouch", 0, &m_states[stCrouch]);
-    m_states[stCrouch].Show(false);
-
-    AttachChild(&m_states[stCreep]);
-    xml_init.InitStatic(uiXml, "state_creep", 0, &m_states[stCreep]);
-    m_states[stCreep].Show(false);
-
-    AttachChild(&m_states[stClimb]);
-    xml_init.InitStatic(uiXml, "state_climb", 0, &m_states[stClimb]);
-    m_states[stClimb].Show(false);
-
-    AttachChild(&m_states[stRun]);
-    xml_init.InitStatic(uiXml, "state_run", 0, &m_states[stRun]);
-    m_states[stRun].Show(false);
-
-    AttachChild(&m_states[stSprint]);
-    xml_init.InitStatic(uiXml, "state_sprint", 0, &m_states[stSprint]);
-    m_states[stSprint].Show(false);
-
-    ShowState(stNormal);
-}
-
-void CUIMotionIcon::ShowState(EState state)
-{
-    if (m_curren_state == state)
-        return;
-    if (m_curren_state != stLast)
-    {
-        m_states[m_curren_state].Show(false);
-        m_states[m_curren_state].Enable(false);
-    }
-    m_states[state].Show(true);
-    m_states[state].Enable(true);
-
-    m_curren_state = state;
+    xml_init.InitProgressShape(uiXml, "noise_progress", 0, &m_noise_progress);
+    m_noise_progress.SetWndSize(sz);
+    m_noise_progress.SetWndPos(pos);
 }
 
 void CUIMotionIcon::SetNoise(float Pos)
@@ -148,16 +81,8 @@ void CUIMotionIcon::SetNoise(float Pos)
         return;
     if (!IsShown())
         return;
-    if (__type_hud_soc)
-    {
-        Pos = clampr(Pos, m_noise_progress.GetRange_min(), m_noise_progress.GetRange_max());
-        m_noise_progress.SetProgressPos(Pos);
-    }
-    else
-    {
-        Pos = clampr(Pos, 0.f, 100.f);
-        m_noise_progress_shape.SetPos(Pos / 100.f);
-    }
+    Pos = clampr(Pos, 0.f, 100.f);
+    m_noise_progress.SetPos(Pos / 100.f);
 }
 
 void CUIMotionIcon::SetLuminosity(float Pos)
@@ -166,15 +91,7 @@ void CUIMotionIcon::SetLuminosity(float Pos)
         return;
     if (!IsShown())
         return;
-    if (__type_hud_soc)
-    {
-        Pos = clampr(Pos, m_luminosity_progress.GetRange_min(), m_luminosity_progress.GetRange_max());
-        m_luminosity = Pos;
-    }
-    else
-    {
-        m_luminosity = Pos;
-    }
+    m_luminosity = Pos;
 }
 
 void CUIMotionIcon::Draw()
@@ -185,78 +102,40 @@ void CUIMotionIcon::Draw()
 }
 void CUIMotionIcon::Update()
 {
-    if (__type_hud_soc)
+    if (!IsGameTypeSingle())
     {
-        if (m_bchanged)
-        {
-            m_bchanged = false;
-            if (m_npc_visibility.size())
-            {
-                std::sort(m_npc_visibility.begin(), m_npc_visibility.end());
-                SetLuminosity(m_npc_visibility.back().value);
-            }
-            else
-                SetLuminosity(m_luminosity_progress.GetRange_min());
-        }
         inherited::Update();
-
-        // m_luminosity_progress
-        {
-            float len = m_noise_progress.GetRange_max() - m_noise_progress.GetRange_min();
-            float cur_pos = m_luminosity_progress.GetProgressPos();
-            if (cur_pos != m_luminosity)
-            {
-                float _diff = _abs(m_luminosity - cur_pos);
-                if (m_luminosity > cur_pos)
-                {
-                    cur_pos += _min(len * Device.fTimeDelta, _diff);
-                }
-                else
-                {
-                    cur_pos -= _min(len * Device.fTimeDelta, _diff);
-                }
-                clamp(cur_pos, m_noise_progress.GetRange_min(), m_noise_progress.GetRange_max());
-                m_luminosity_progress.SetProgressPos(cur_pos);
-            }
-        }
+        return;
     }
-    else
+    if (!IsShown())
+        return;
+    if (m_bchanged)
     {
-        if (!IsGameTypeSingle())
+        m_bchanged = false;
+        if (m_npc_visibility.size())
         {
-            inherited::Update();
-            return;
+            std::sort(m_npc_visibility.begin(), m_npc_visibility.end());
+            SetLuminosity(m_npc_visibility.back().value);
         }
-        if (!IsShown())
-            return;
-        if (m_bchanged)
-        {
-            m_bchanged = false;
-            if (m_npc_visibility.size())
-            {
-                std::sort(m_npc_visibility.begin(), m_npc_visibility.end());
-                SetLuminosity(m_npc_visibility.back().value);
-            }
-            else
-                SetLuminosity(0.f);
-        }
-        inherited::Update();
+        else
+            SetLuminosity(0.f);
+    }
+    inherited::Update();
 
-        // m_luminosity_progress
-        if (cur_pos != m_luminosity)
+    // m_luminosity_progress
+    if (cur_pos != m_luminosity)
+    {
+        float _diff = _abs(m_luminosity - cur_pos);
+        if (m_luminosity > cur_pos)
         {
-            float _diff = _abs(m_luminosity - cur_pos);
-            if (m_luminosity > cur_pos)
-            {
-                cur_pos += _diff * Device.fTimeDelta;
-            }
-            else
-            {
-                cur_pos -= _diff * Device.fTimeDelta;
-            }
-            clamp(cur_pos, 0.f, 100.f);
-            m_luminosity_progress_shape.SetPos(cur_pos / 100.f);
+            cur_pos += _diff * Device.fTimeDelta;
         }
+        else
+        {
+            cur_pos -= _diff * Device.fTimeDelta;
+        }
+        clamp(cur_pos, 0.f, 100.f);
+        m_luminosity_progress.SetPos(cur_pos / 100.f);
     }
 }
 
@@ -271,60 +150,31 @@ void SetActorVisibility(u16 who_id, float value)
 
 void CUIMotionIcon::SetActorVisibility(u16 who_id, float value)
 {
-    if (__type_hud_soc)
+    if (!IsShown())
+        return;
+
+    clamp(value, 0.f, 1.f);
+    value *= 100.f;
+
+    xr_vector<_npc_visibility>::iterator it = std::find(m_npc_visibility.begin(), m_npc_visibility.end(), who_id);
+
+    if (it == m_npc_visibility.end() && value != 0)
     {
-        float v = float(m_luminosity_progress.GetRange_max() - m_luminosity_progress.GetRange_min());
-        value *= v;
-        value += m_luminosity_progress.GetRange_min();
-
-        xr_vector<_npc_visibility>::iterator it = std::find(m_npc_visibility.begin(), m_npc_visibility.end(), who_id);
-
-        if (it == m_npc_visibility.end() && value != 0)
-        {
-            m_npc_visibility.resize(m_npc_visibility.size() + 1);
-            _npc_visibility& v = m_npc_visibility.back();
-            v.id = who_id;
-            v.value = value;
-        }
-        else if (fis_zero(value))
-        {
-            if (it != m_npc_visibility.end())
-                m_npc_visibility.erase(it);
-        }
-        else
-        {
-            (*it).value = value;
-        }
-
-        m_bchanged = true;
+        m_npc_visibility.resize(m_npc_visibility.size() + 1);
+        _npc_visibility& v = m_npc_visibility.back();
+        v.id = who_id;
+        v.value = value;
+    }
+    else if (fis_zero(value))
+    {
+        if (it != m_npc_visibility.end())
+            m_npc_visibility.erase(it);
     }
     else
     {
-        if (!IsShown())
-            return;
-
-        clamp(value, 0.f, 1.f);
-        value *= 100.f;
-
-        xr_vector<_npc_visibility>::iterator it = std::find(m_npc_visibility.begin(), m_npc_visibility.end(), who_id);
-
-        if (it == m_npc_visibility.end() && value != 0)
-        {
-            m_npc_visibility.resize(m_npc_visibility.size() + 1);
-            _npc_visibility& v = m_npc_visibility.back();
-            v.id = who_id;
-            v.value = value;
-        }
-        else if (fis_zero(value))
-        {
-            if (it != m_npc_visibility.end())
-                m_npc_visibility.erase(it);
-        }
-        else
-        {
-            (*it).value = value;
-        }
-
-        m_bchanged = true;
+        (*it).value = value;
     }
+
+    m_bchanged = true;
 }
+

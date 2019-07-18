@@ -69,7 +69,7 @@
 
 #include "xrAICore/Navigation/ai_object_location.h"
 #ifdef MOTIONICON_SOC
-#include "ui/uiMotionIcon.h"
+#include "ui/uiMotionIcon_soc.h"
 #endif
 #include "ui/UIActorMenu.h"
 #include "ActorHelmet.h"
@@ -1464,12 +1464,6 @@ void CActor::renderable_Render()
     )
         CInventoryOwner::renderable_Render();
 
-
-    //if (1 /*!HUDview()*/)
-    //{
-    //    CInventoryOwner::renderable_Render();
-    //}
-    //VERIFY(_valid(XFORM()));
 }
 
 BOOL CActor::renderable_ShadowGenerate()
@@ -1553,20 +1547,10 @@ void CActor::RenderIndicator(Fvector dpos, float r1, float r2, const ui_shader& 
     GEnv.UIRender->PushPoint(a.x + pos.x, a.y + pos.y, a.z + pos.z, 0xffffffff, 0.f, 0.f);
     GEnv.UIRender->PushPoint(c.x + pos.x, c.y + pos.y, c.z + pos.z, 0xffffffff, 1.f, 1.f);
     GEnv.UIRender->PushPoint(b.x + pos.x, b.y + pos.y, b.z + pos.z, 0xffffffff, 1.f, 0.f);
-    // pv->set         (d.x+pos.x,d.y+pos.y,d.z+pos.z, 0xffffffff, 0.f,1.f);        pv++;
-    // pv->set         (a.x+pos.x,a.y+pos.y,a.z+pos.z, 0xffffffff, 0.f,0.f);        pv++;
-    // pv->set         (c.x+pos.x,c.y+pos.y,c.z+pos.z, 0xffffffff, 1.f,1.f);        pv++;
-    // pv->set         (b.x+pos.x,b.y+pos.y,b.z+pos.z, 0xffffffff, 1.f,0.f);        pv++;
-    // render
-    // dwCount 				= u32(pv-pv_start);
-    // RCache.Vertex.Unlock	(dwCount,hFriendlyIndicator->vb_stride);
-
+   
     GEnv.UIRender->CacheSetXformWorld(Fidentity);
-    // RCache.set_xform_world		(Fidentity);
+  
     GEnv.UIRender->SetShader(*IndShader);
-    // RCache.set_Shader			(IndShader);
-    // RCache.set_Geometry			(hFriendlyIndicator);
-    // RCache.Render	   			(D3DPT_TRIANGLESTRIP,dwOffset,0, dwCount, 0, 2);
     GEnv.UIRender->FlushPrimitive();
 };
 
@@ -1895,28 +1879,28 @@ void CActor::UpdateMotionIcon(u32 mstate_rl)
 {
 	if(__type_hud_soc)
 	{
-	CUIMotionIcon*		motion_icon=HUD().GetGameUI()->UIMainIngameWnd->MotionIcon();
+        CUIMotionIcon_soc* motion_icon = HUD().GetGameUI()->UIMainIngameWnd->MotionIcon_soc();
 	if(mstate_rl&mcClimb)
 	{
-		(*motion_icon).ShowState(CUIMotionIcon::stClimb);
+		(*motion_icon).ShowState(CUIMotionIcon_soc::stClimb);
 	}
 	else
 	{
 		if(mstate_rl&mcCrouch)
 		{
 			if (!isActorAccelerated(mstate_rl, IsZoomAimingMode()))
-				(*motion_icon).ShowState(CUIMotionIcon::stCreep);
+                (*motion_icon).ShowState(CUIMotionIcon_soc::stCreep);
 			else
-				(*motion_icon).ShowState(CUIMotionIcon::stCrouch);
+                (*motion_icon).ShowState(CUIMotionIcon_soc::stCrouch);
 		}
 		else
 		if(mstate_rl&mcSprint)
-			(*motion_icon).ShowState(CUIMotionIcon::stSprint);
+            (*motion_icon).ShowState(CUIMotionIcon_soc::stSprint);
 		else
 		if(mstate_rl&mcAnyMove && isActorAccelerated(mstate_rl, IsZoomAimingMode()))
-			(*motion_icon).ShowState(CUIMotionIcon::stRun);
+            (*motion_icon).ShowState(CUIMotionIcon_soc::stRun);
 		else
-			(*motion_icon).ShowState(CUIMotionIcon::stNormal);
+            (*motion_icon).ShowState(CUIMotionIcon_soc::stNormal);
 	}
 	}
 }

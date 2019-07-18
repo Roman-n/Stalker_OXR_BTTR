@@ -1484,6 +1484,7 @@
     <ClInclude Include="ui\UIMMShniaga.h" />
     <ClInclude Include="ui\UIMoneyIndicator.h" />
     <ClInclude Include="ui\UIMotionIcon.h" />
+	<ClInclude Include="ui\UIMotionIcon_soc.h" />
     <ClInclude Include="ui\UINewsItemWnd.h" />
     <ClInclude Include="ui\UIOptionsItem.h" />
     <ClInclude Include="ui\UIOptionsManager.h" />
@@ -3339,6 +3340,7 @@
     <ClCompile Include="ui\UIMessagesWindow.cpp" />
     <ClCompile Include="ui\UIMMShniaga.cpp" />
     <ClCompile Include="ui\UIMotionIcon.cpp" />
+	<ClCompile Include="ui\UIMotionIcon_soc.cpp" />
     <ClCompile Include="ui\UINewsItemWnd.cpp" />
     <ClCompile Include="ui\UIOptionsItem.cpp" />
     <ClCompile Include="ui\UIOptionsManager.cpp" />

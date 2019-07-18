@@ -36,6 +36,8 @@
 
 void SetActorVisibility(u16 who, float value);
 
+void SetActorVisibility_soc(u16 who, float value);
+
 struct SRemoveOfflinePredicate
 {
     bool operator()(const CVisibleObject& object) const
@@ -771,12 +773,15 @@ void CVisualMemoryManager::update(float time_delta)
             if (I != m_not_yet_visible_objects.end())
             {
                 SetActorVisibility(m_object->ID(), clampr((*I).m_value / visibility_threshold(), 0.f, 1.f));
+				SetActorVisibility_soc(m_object->ID(), clampr((*I).m_value / visibility_threshold(), 0.f, 1.f));
             }
             else
                 SetActorVisibility(m_object->ID(), 0.f);
+				SetActorVisibility_soc(m_object->ID(), 0.f);
         }
         else
             SetActorVisibility(m_object->ID(), 0.f);
+		SetActorVisibility_soc(m_object->ID(), 0.f);
     }
 
     STOP_PROFILE
