@@ -69,12 +69,18 @@
 
 #include "xrAICore/Navigation/ai_object_location.h"
 #ifdef MOTIONICON_SOC
-#include "ui/uiMotionIcon_soc.h"
+#include "ui/uiMotionIcon.h"
 #endif
 #include "ui/UIActorMenu.h"
 #include "ActorHelmet.h"
 #include "UI/UIDragDropReferenceList.h"
 #include "xrCore/xr_token.h"
+
+extern int __type_hud_lost_alpha;
+extern int __type_hud_veter_vremeni;
+extern int __type_hud_soc;
+extern int __type_hud_coc;
+extern int __type_hud_cop;
 
 const u32 patch_frames = 50;
 const float respawn_delay = 1.f;
@@ -1887,28 +1893,31 @@ void CActor::AnimTorsoPlayCallBack(CBlend* B)
 // Показать текущее положение гг
 void CActor::UpdateMotionIcon(u32 mstate_rl)
 {
-	CUIMotionIcon_soc*		motion_icon=HUD().GetGameUI()->UIMainIngameWnd->MotionIcon_soc();
+	if(__type_hud_soc)
+	{
+	CUIMotionIcon*		motion_icon=HUD().GetGameUI()->UIMainIngameWnd->MotionIcon();
 	if(mstate_rl&mcClimb)
 	{
-		(*motion_icon).ShowState(CUIMotionIcon_soc::stClimb);
+		(*motion_icon).ShowState(CUIMotionIcon::stClimb);
 	}
 	else
 	{
 		if(mstate_rl&mcCrouch)
 		{
 			if (!isActorAccelerated(mstate_rl, IsZoomAimingMode()))
-				(*motion_icon).ShowState(CUIMotionIcon_soc::stCreep);
+				(*motion_icon).ShowState(CUIMotionIcon::stCreep);
 			else
-				(*motion_icon).ShowState(CUIMotionIcon_soc::stCrouch);
+				(*motion_icon).ShowState(CUIMotionIcon::stCrouch);
 		}
 		else
 		if(mstate_rl&mcSprint)
-			(*motion_icon).ShowState(CUIMotionIcon_soc::stSprint);
+			(*motion_icon).ShowState(CUIMotionIcon::stSprint);
 		else
 		if(mstate_rl&mcAnyMove && isActorAccelerated(mstate_rl, IsZoomAimingMode()))
-			(*motion_icon).ShowState(CUIMotionIcon_soc::stRun);
+			(*motion_icon).ShowState(CUIMotionIcon::stRun);
 		else
-			(*motion_icon).ShowState(CUIMotionIcon_soc::stNormal);
+			(*motion_icon).ShowState(CUIMotionIcon::stNormal);
+	}
 	}
 }
 #endif

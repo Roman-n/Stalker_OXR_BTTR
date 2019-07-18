@@ -7,9 +7,27 @@ class CUIMotionIcon : public CUIWindow
     typedef CUIWindow inherited;
 
 public:
+
+    enum EState
+    {
+        stNormal,
+        stCrouch,
+        stCreep,
+        stClimb,
+        stRun,
+        stSprint,
+        stLast
+    };
+
 private:
-    CUIProgressShape m_luminosity_progress;
-    CUIProgressShape m_noise_progress;
+    CUIProgressShape m_luminosity_progress_shape;
+    CUIProgressShape m_noise_progress_shape;
+
+    CUIStatic background_shoc;
+    EState m_curren_state;
+    CUIStatic m_states[stLast];
+    CUIProgressBar m_luminosity_progress;
+    CUIProgressBar m_noise_progress;
 
     struct _npc_visibility
     {
@@ -28,6 +46,10 @@ public:
     CUIMotionIcon();
     virtual void Update();
     virtual void Draw();
+
+    void Init_soc();
+    void ShowState(EState state);
+
     void Init(Frect const& rect);
     void SetNoise(float Pos);
     void SetLuminosity(float Pos);

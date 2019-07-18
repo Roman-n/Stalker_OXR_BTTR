@@ -43,9 +43,6 @@
 #include "UIHudStatesWnd.h"
 #include "UIActorMenu.h"
 
-#include "UIMotionIcon_soc.h"
-
-
 void test_draw();
 void test_key(int dik);
 
@@ -74,7 +71,7 @@ extern int __type_hud_cop;
 
 #define MAININGAME_XML_COP "maingame_cop.xml"
 
-#define MAININGAME_XML_VV  "maingame_vv.xml"
+#define MAININGAME_XML_VV "maingame_vv.xml"
 
 #define MAININGAME_XML_SOC "maingame_soc.xml"
 
@@ -245,23 +242,27 @@ void CUIMainIngameWnd::Init()
         j = static_cast<EWarningIcons>(j + 1);
     }
 
-	UIMotionIcon_soc							= new CUIMotionIcon_soc(); 
-    UIMotionIcon_soc->SetAutoDelete(true);
-	AttachChild								(UIMotionIcon_soc);
-	UIMotionIcon_soc->Init						();	
-
-
     // Flashing icons initialize
     uiXml.SetLocalRoot(uiXml.NavigateToNode("flashing_icons"));
     InitFlashingIcons(&uiXml);
 
     uiXml.SetLocalRoot(uiXml.GetRoot());
 
+	if(__type_hud_cop || __type_hud_coc)
+	{
     UIMotionIcon = new CUIMotionIcon();
     UIMotionIcon->SetAutoDelete(true);
     UIZoneMap->MapFrame().AttachChild(UIMotionIcon);
     UIMotionIcon->Init(UIZoneMap->MapFrame().GetWndRect());
-
+	}
+    else
+	{
+	UIMotionIcon = new CUIMotionIcon();
+    UIMotionIcon->SetAutoDelete(true);
+    AttachChild(UIMotionIcon);
+    UIMotionIcon->Init_soc();
+	}
+	
     UIStaticDiskIO = UIHelper::CreateStatic(uiXml, "disk_io", this);
 
     m_ui_hud_states = new CUIHudStatesWnd();
@@ -317,27 +318,12 @@ void CUIMainIngameWnd::Draw()
 
         static float cur_lum = luminocity;
         cur_lum = luminocity * 0.01f + cur_lum * 0.99f;
+
         UIMotionIcon->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
     }
-	
-	if(!IsGameTypeSingle())
-	{
-		float		luminocity = smart_cast<CGameObject*>(Level().CurrentEntity())->ROS()->get_luminocity();
-		float		power = log(luminocity > .001f ? luminocity : .001f)*(1.f/*luminocity_factor*/);
-		luminocity	= exp(power);
 
-		static float cur_lum = luminocity;
-		cur_lum = luminocity*0.01f + cur_lum*0.99f;
-		UIMotionIcon_soc->SetLuminosity_((s16)iFloor(cur_lum*100.0f));
-	}
-	
     if (!pActor || !pActor->g_Alive())
         return;
-	
-	UIMotionIcon_soc->SetNoise((s16)(0xffff&iFloor(pActor->m_snd_noise*100)));
-
-	UIMotionIcon_soc->Draw();
-
 
     UIMotionIcon->SetNoise((s16)(0xffff & iFloor(pActor->m_snd_noise * 100)));
 
@@ -345,15 +331,11 @@ void CUIMainIngameWnd::Draw()
 
     UIZoneMap->visible = true;
     UIZoneMap->Render();
-	CUIWindow::Draw();
+    CUIWindow::Draw();
 
     bool tmp = UIMotionIcon->IsShown();
     UIMotionIcon->Show(false);
     UIMotionIcon->Show(tmp);
-	
-	bool tmp_ = UIMotionIcon_soc->IsShown();
-	UIMotionIcon_soc->Show(false);
-	UIMotionIcon_soc->Show(tmp_);
 
     RenderQuickInfos();
 }
@@ -624,8 +606,6 @@ void CUIMainIngameWnd::reset_ui()
 {
     m_pPickUpItem = NULL;
     UIMotionIcon->ResetVisibility();
-	
-	UIMotionIcon_soc->ResetVisibility	();
 	
     if (m_ui_hud_states)
     {
@@ -1077,7 +1057,6 @@ void CUIMainIngameWnd::UpdateMainIndicators()
                 m_ind_thirst_vv->InitTexture("ui_inGame2_circle_thirst_red_cop");
         }
 
-
         // Helmet broken icon
         m_ind_helmet_broken_vv->Show(false);
         if (helmet)
@@ -1127,7 +1106,6 @@ void CUIMainIngameWnd::UpdateMainIndicators()
                 m_ind_overweight_vv->InitTexture("ui_inGame2_circle_Overweight_yellow_cop");
         }
     }
-
 }
 
 void CUIMainIngameWnd::UpdateQuickSlots()

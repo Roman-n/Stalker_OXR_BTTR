@@ -5667,9 +5667,6 @@
     <ClInclude Include="ui\UIMotionIcon.h">
       <Filter>UI\Common\MainIngame</Filter>
     </ClInclude>
-	<ClInclude Include="ui\UIMotionIcon_soc.h">
-      <Filter>UI\Common\MainIngame</Filter>
-    </ClInclude>
     <ClInclude Include="ui\UIPdaMsgListItem.h">
       <Filter>UI\Common\MainIngame</Filter>
     </ClInclude>
@@ -8612,9 +8609,6 @@
       <Filter>UI\Common\MainIngame</Filter>
     </ClCompile>
     <ClCompile Include="ui\UIMotionIcon.cpp">
-      <Filter>UI\Common\MainIngame</Filter>
-    </ClCompile>
-	<ClCompile Include="ui\UIMotionIcon_soc.cpp">
       <Filter>UI\Common\MainIngame</Filter>
     </ClCompile>
     <ClCompile Include="ui\UIPdaMsgListItem.cpp">

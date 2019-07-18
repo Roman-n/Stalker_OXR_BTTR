@@ -14,8 +14,6 @@ class CInventoryItem;
 class CUIHudStatesWnd;
 class CUIMotionIcon;
 
-class CUIMotionIcon_soc;
-
 class CUIMainIngameWnd : public CUIWindow
 {
 public:
@@ -30,8 +28,6 @@ public:
     CUIStatic* UIStaticDiskIO;
     CUITextWnd* UIStaticQuickHelp;
     CUIMotionIcon* UIMotionIcon;
-	
-	CUIMotionIcon_soc*		UIMotionIcon_soc;
 	
     CUIZoneMap* UIZoneMap;
 
@@ -184,8 +180,6 @@ public:
     CUIMotionIcon* MotionIcon() { return UIMotionIcon; }
     void OnConnected();
     void reset_ui();
-	
-	CUIMotionIcon_soc* MotionIcon_soc (){return UIMotionIcon_soc;}
 
 protected:
     CInventoryItem* m_pPickUpItem;
