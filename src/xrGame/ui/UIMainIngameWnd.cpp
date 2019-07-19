@@ -71,6 +71,8 @@ extern int __type_hud_cop;
 
 #define MAININGAME_XML_SOC "maingame_soc.xml"
 
+#define MAININGAME_XML_LA "maingame_la.xml"
+
 CUIMainIngameWnd::CUIMainIngameWnd() : m_pPickUpItem(NULL), m_pMPChatWnd(NULL), UIArtefactIcon(NULL), m_pMPLogWnd(NULL)
 {
     UIZoneMap = new CUIZoneMap();
@@ -111,6 +113,11 @@ void CUIMainIngameWnd::Init()
     if (__type_hud_soc)
     {
         uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_SOC);
+    }
+	
+	if (__type_hud_lost_alpha)
+    {
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MAININGAME_XML_LA);
     }
 
     CUIXmlInit xml_init;

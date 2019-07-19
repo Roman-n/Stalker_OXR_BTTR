@@ -34,6 +34,8 @@ public:
     CUITextWnd* m_weapon_ammo;
     II_BriefInfo m_item_info;
 
+	CUIProgressBar*	m_ui_psy_health;
+
     CUIStatic* m_psy_grenn;
     CUIStatic* m_psy_yellow;
     CUIStatic* m_psy_red;
@@ -71,6 +73,48 @@ public:
     CUIStatic* m_radiation_soc_lvl_2;
     CUIStatic* m_radiation_soc_lvl_3;
 	
+#ifdef LOST_ALPHA_HUD_IND
+	CUIStatic* m_bleeding_lvl_0;
+	CUIStatic* m_bleeding_lvl_1;
+	CUIStatic* m_bleeding_lvl_2;
+	CUIStatic* m_bleeding_lvl_3;
+
+    CUIStatic* m_starvation_lvl_0;
+    CUIStatic* m_starvation_lvl_1;
+    CUIStatic* m_starvation_lvl_2;
+    CUIStatic* m_starvation_lvl_3;
+
+    CUIStatic* m_overweight_lvl_0;
+    CUIStatic* m_overweight_lvl_1;
+    CUIStatic* m_overweight_lvl_2;
+    CUIStatic* m_overweight_lvl_3;
+
+    CUIStatic* m_broken_helmet_lvl_0;
+    CUIStatic* m_broken_helmet_lvl_1;
+    CUIStatic* m_broken_helmet_lvl_2;
+    CUIStatic* m_broken_helmet_lvl_3;
+
+    CUIStatic* m_broken_weapon_lvl_0;
+    CUIStatic* m_broken_weapon_lvl_1;
+    CUIStatic* m_broken_weapon_lvl_2;
+    CUIStatic* m_broken_weapon_lvl_3;
+
+    CUIStatic* m_broken_armor_lvl_0;
+    CUIStatic* m_broken_armor_lvl_1;
+    CUIStatic* m_broken_armor_lvl_2;
+    CUIStatic* m_broken_armor_lvl_3;
+
+    CUIStatic* m_thirst_lvl_0;
+    CUIStatic* m_thirst_lvl_1;
+    CUIStatic* m_thirst_lvl_2;
+    CUIStatic* m_thirst_lvl_3;
+
+    CUIStatic* m_sleep_lvl_0;
+    CUIStatic* m_sleep_lvl_1;
+    CUIStatic* m_sleep_lvl_2;
+    CUIStatic* m_sleep_lvl_3;
+#endif
+
 	CUIStatic* m_static_health;	
     CUIStatic* m_static_armor;
     CUIStatic* m_bleeding;
@@ -86,7 +130,8 @@ public:
 private:
     float m_last_health;
     float m_health_blink;
-
+    float m_psy_health_blink;
+    float m_last_psyhealth;
     float m_radia_self;
 
     float m_radia_hit;

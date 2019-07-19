@@ -21,6 +21,7 @@
 #define ZONE_MAP_XML_COC "maingame_zone_map_coc.xml"
 #define ZONE_MAP_XML_VV "maingame_zone_map_vv.xml"
 #define ZONE_MAP_XML_SOC "maingame_zone_map_soc.xml"
+#define ZONE_MAP_XML_LA  "maingame_zone_map_la.xml"
 
 extern int __type_hud_lost_alpha;
 extern int __type_hud_veter_vremeni;
@@ -56,6 +57,11 @@ void CUIZoneMap::Init()
         if (__type_hud_soc)
         {
             uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, ZONE_MAP_XML_SOC);
+        }
+
+		if (__type_hud_lost_alpha)
+        {
+            uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, ZONE_MAP_XML_LA);
         }
 
         CUIXmlInit xml_init;
