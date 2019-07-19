@@ -214,7 +214,7 @@ void CPoltergeist::update_detection()
         m_last_actor_pos = actor_pos;
 
     SetActorVisibility(ID(), get_post_process_factor());
-
+	
     if (m_current_detection_level > 0.01f && m_detection_pp_effector_name && m_detection_pp_effector_name[0])
     {
         if (!m_detection_pp_type_index)

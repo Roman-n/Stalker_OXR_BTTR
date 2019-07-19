@@ -60,6 +60,9 @@
 #endif // DEBUG
 
 void SetActorVisibility(u16 who, float value);
+
+
+
 extern int g_AI_inactive_time;
 
 #ifndef MASTER_GOLD
@@ -695,7 +698,6 @@ void CCustomMonster::HitSignal(float /**perc/**/, Fvector& /**vLocalDir/**/, IGa
 void CCustomMonster::Die(IGameObject* who)
 {
     inherited::Die(who);
-    // Level().RemoveMapLocationByID(this->ID());
     SetActorVisibility(ID(), 0.f);
 }
 

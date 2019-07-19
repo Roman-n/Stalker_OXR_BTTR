@@ -42,10 +42,6 @@
 #include "static_cast_checked.hpp"
 #include "UIHudStatesWnd.h"
 #include "UIActorMenu.h"
-
-// void test_draw();
-// void test_key(int dik);
-#include "UIMotionIcon_soc.h"
 #include "Include/xrRender/Kinematics.h"
 
 using namespace InventoryUtilities;
@@ -248,15 +244,20 @@ void CUIMainIngameWnd::Init()
 
     uiXml.SetLocalRoot(uiXml.GetRoot());
 
-    UIMotionIcon = new CUIMotionIcon();
-    UIMotionIcon->SetAutoDelete(true);
-    UIZoneMap->MapFrame().AttachChild(UIMotionIcon);
-    UIMotionIcon->Init(UIZoneMap->MapFrame().GetWndRect());
-
-        UIMotionIcon_soc = new CUIMotionIcon_soc();
-        UIMotionIcon_soc->SetAutoDelete(true);
-        AttachChild(UIMotionIcon_soc);
-        UIMotionIcon_soc->Init();
+    if (__type_hud_soc)
+    {
+        UIMotionIcon = new CUIMotionIcon();
+        UIMotionIcon->SetAutoDelete(true);
+        AttachChild(UIMotionIcon);
+        UIMotionIcon->Init_frame();	
+    }
+    else
+    {
+        UIMotionIcon = new CUIMotionIcon();
+        UIMotionIcon->SetAutoDelete(true);
+        UIZoneMap->MapFrame().AttachChild(UIMotionIcon);
+        UIMotionIcon->Init(UIZoneMap->MapFrame().GetWndRect());
+    }
 
     UIStaticDiskIO = UIHelper::CreateStatic(uiXml, "disk_io", this);
 
@@ -316,24 +317,9 @@ void CUIMainIngameWnd::Draw()
 
         UIMotionIcon->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
     }
-    
-    if (!IsGameTypeSingle())
-    {
-        float luminocity = smart_cast<CGameObject*>(Level().CurrentEntity())->ROS()->get_luminocity();
-        float power = log(luminocity > .001f ? luminocity : .001f) * (1.f);
-        luminocity = exp(power);
-
-        static float cur_lum = luminocity;
-        cur_lum = luminocity * 0.01f + cur_lum * 0.99f;
-        UIMotionIcon_soc->SetLuminosity((s16)iFloor(cur_lum * 100.0f));
-    }
 
     if (!pActor || !pActor->g_Alive())
         return;
-
-    UIMotionIcon_soc->SetNoise((s16)(0xffff & iFloor(pActor->m_snd_noise * 100)));
-
-    UIMotionIcon_soc->Draw();
 
     UIMotionIcon->SetNoise((s16)(0xffff & iFloor(pActor->m_snd_noise * 100)));
 
@@ -346,10 +332,6 @@ void CUIMainIngameWnd::Draw()
     bool tmp = UIMotionIcon->IsShown();
     UIMotionIcon->Show(false);
     UIMotionIcon->Show(tmp);
-
-    bool tmp_soc = UIMotionIcon_soc->IsShown();
-    UIMotionIcon_soc->Show(false);
-    UIMotionIcon_soc->Show(tmp_soc);
 
     RenderQuickInfos();
 }
@@ -620,8 +602,6 @@ void CUIMainIngameWnd::reset_ui()
 {
     m_pPickUpItem = NULL;
     UIMotionIcon->ResetVisibility();
-
-    UIMotionIcon_soc->ResetVisibility();
 
     if (m_ui_hud_states)
     {
