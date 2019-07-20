@@ -51,7 +51,7 @@
 #define LOST_ALPHA_HUD_IND				        	// Движковые индикаторы на худ как в Лост Альфе
 #define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
 #define CROW_FIX_POSITION							// Вороны не разлетаются с одной точки при старте игры
-//#define __DISCORD_API								// Адаптация движка к дискорду
+#define __DISCORD_API								// Адаптация движка к дискорду
 #define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
 #define LOST_ALPHA_INV_IND							// Движковые колбы в инвентаре из Лост Альфы
 #define FIX_COUNT_ART								// Исправлена ошибка с нулевым m_artefact_spawn_count

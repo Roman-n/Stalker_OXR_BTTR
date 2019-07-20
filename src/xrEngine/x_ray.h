@@ -8,13 +8,6 @@ class ILoadingScreen;
 // definition
 class ENGINE_API CApplication : public pureFrame, public IEventReceiver
 {
-    // levels
-    struct sLevelInfo
-    {
-        char* folder;
-        char* name;
-    };
-
 private:
     ILoadingScreen* loadingScreen;
 
@@ -35,6 +28,14 @@ private:
     void Level_Append(LPCSTR lname);
 
 public:
+
+    // levels
+    struct sLevelInfo
+    {
+        char* folder;
+        char* name;
+    };
+
     CGameFont* pFontSystem;
 
     bool IsLoaded() { return loaded; }

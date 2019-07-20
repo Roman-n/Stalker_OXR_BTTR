@@ -94,6 +94,7 @@ public:
     IGame_Level();
     virtual ~IGame_Level();
 
+    virtual shared_str name_translated() const = 0;
     virtual shared_str name() const = 0;
     virtual void GetLevelInfo(CServerInfo* si) = 0;
 

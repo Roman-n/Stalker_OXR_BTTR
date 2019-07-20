@@ -9,6 +9,9 @@
 #pragma once
 
 #include "UISubLine.h"
+#ifdef __DISCORD_API
+using ETextAlignment = CGameFont::EAligment;
+#endif
 
 class Word
 {

@@ -9,12 +9,10 @@ extern int __type_hud_soc;
 extern int __type_hud_coc;
 extern int __type_hud_cop;
 
-const LPCSTR MOTION_ICON_XML_COC = "maingame_motion_icon_coc.xml";
-const LPCSTR MOTION_ICON_XML_COP = "maingame_motion_icon_cop.xml";
-const LPCSTR MOTION_ICON_XML_NULL = "maingame_motion_icon_cop_coc_null.xml";
-
-const LPCSTR MOTION_ICON_XML = "maingame_motion_icon_soc.xml";
-const LPCSTR MOTION_ICON_NULL = "maingame_motion_icon_soc_null.xml";
+const LPCSTR MOTION_ICON_XML_COC    = "maingame_motion_icon_coc.xml";
+const LPCSTR MOTION_ICON_XML_COP    = "maingame_motion_icon_cop.xml";
+const LPCSTR MOTION_ICON_XML_NULL   = "maingame_motion_icon_cop_coc_null.xml";
+const LPCSTR MOTION_ICON_XML_SOC    = "maingame_motion_icon_soc.xml";
 
 CUIMotionIcon* g_pMotionIcon = NULL;
 
@@ -42,48 +40,89 @@ void CUIMotionIcon::Init(Frect const& zonemap_rect)
     CUIXml uiXml;
     CUIXmlInit xml_init;
 
-    if (__type_hud_coc)
+    if (__type_hud_soc)
     {
-        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_COC);
+
+        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_SOC);
+
+        AttachChild(&background_shoc);
+        xml_init.InitStatic(uiXml, "background", 0, &background_shoc);
+
+        AttachChild(&m_luminosity_progress);
+        xml_init.InitProgressBar(uiXml, "luminosity_progress", 0, &m_luminosity_progress);
+
+        AttachChild(&m_noise_progress);
+        xml_init.InitProgressBar(uiXml, "noise_progress", 0, &m_noise_progress);
+
+        AttachChild(&m_states[stNormal]);
+        xml_init.InitStatic(uiXml, "state_normal", 0, &m_states[stNormal]);
+        m_states[stNormal].Show(false);
+
+        AttachChild(&m_states[stCrouch]);
+        xml_init.InitStatic(uiXml, "state_crouch", 0, &m_states[stCrouch]);
+        m_states[stCrouch].Show(false);
+
+        AttachChild(&m_states[stCreep]);
+        xml_init.InitStatic(uiXml, "state_creep", 0, &m_states[stCreep]);
+        m_states[stCreep].Show(false);
+
+        AttachChild(&m_states[stClimb]);
+        xml_init.InitStatic(uiXml, "state_climb", 0, &m_states[stClimb]);
+        m_states[stClimb].Show(false);
+
+        AttachChild(&m_states[stRun]);
+        xml_init.InitStatic(uiXml, "state_run", 0, &m_states[stRun]);
+        m_states[stRun].Show(false);
+
+        AttachChild(&m_states[stSprint]);
+        xml_init.InitStatic(uiXml, "state_sprint", 0, &m_states[stSprint]);
+        m_states[stSprint].Show(false);
+
+        ShowState(stNormal);
     }
     else
     {
-        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_NULL);
+    
+        if (__type_hud_coc)
+        {
+            uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_COC);
+        }
+
+        if (__type_hud_cop)
+        {
+            uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_COP);
+        }
+
+        if (__type_hud_lost_alpha || __type_hud_soc || __type_hud_veter_vremeni)
+        {
+            uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_NULL);
+        }
+
+        xml_init.InitWindow(uiXml, "window", 0, this);
+        float rel_sz = uiXml.ReadAttribFlt("window", 0, "rel_size", 1.0f);
+        Fvector2 sz;
+        Fvector2 pos;
+        zonemap_rect.getsize(sz);
+
+        pos.set(sz.x / 2.0f, sz.y / 2.0f);
+        SetWndSize(sz);
+        SetWndPos(pos);
+
+        float k = UI().get_current_kx();
+        sz.mul(rel_sz * k);
+
+        AttachChild(&m_luminosity_progress_shape);
+        xml_init.InitProgressShape(uiXml, "luminosity_progress", 0, &m_luminosity_progress_shape);
+        m_luminosity_progress_shape.SetWndSize(sz);
+        m_luminosity_progress_shape.SetWndPos(pos);
+
+        AttachChild(&m_noise_progress_shape);
+        xml_init.InitProgressShape(uiXml, "noise_progress", 0, &m_noise_progress_shape);
+        m_noise_progress_shape.SetWndSize(sz);
+        m_noise_progress_shape.SetWndPos(pos);
     }
-
-    if (__type_hud_cop)
-    {
-        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_COP);
-    }
-    else
-    {
-        uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, MOTION_ICON_XML_NULL);
-    }
-
-    xml_init.InitWindow(uiXml, "window", 0, this);
-    float rel_sz = uiXml.ReadAttribFlt("window", 0, "rel_size", 1.0f);
-    Fvector2 sz;
-    Fvector2 pos;
-    zonemap_rect.getsize(sz);
-
-    pos.set(sz.x / 2.0f, sz.y / 2.0f);
-    SetWndSize(sz);
-    SetWndPos(pos);
-
-    float k = UI().get_current_kx();
-    sz.mul(rel_sz * k);
-
-    AttachChild(&m_luminosity_progress_shape);
-    xml_init.InitProgressShape(uiXml, "luminosity_progress", 0, &m_luminosity_progress_shape);
-    m_luminosity_progress_shape.SetWndSize(sz);
-    m_luminosity_progress_shape.SetWndPos(pos);
-
-    AttachChild(&m_noise_progress_shape);
-    xml_init.InitProgressShape(uiXml, "noise_progress", 0, &m_noise_progress_shape);
-    m_noise_progress_shape.SetWndSize(sz);
-    m_noise_progress_shape.SetWndPos(pos);
 }
-
+/*
 void CUIMotionIcon::Init_frame()
 {
     CUIXml uiXml;
@@ -133,7 +172,7 @@ void CUIMotionIcon::Init_frame()
 
     ShowState(stNormal);
 }
-
+*/
 void CUIMotionIcon::ShowState(EState state)
 {
     if (__type_hud_soc)
@@ -161,6 +200,8 @@ void CUIMotionIcon::SetNoise(float Pos)
     }
     else
     {
+        if (!IsGameTypeSingle())
+            return;
         Pos = clampr(Pos, 0.f, 100.f);
         m_noise_progress_shape.SetPos(Pos / 100.f);
     }
@@ -175,6 +216,8 @@ void CUIMotionIcon::SetLuminosity(float Pos)
     }
     else
     {
+        if (!IsGameTypeSingle())
+            return;
         m_luminosity = Pos;
     }
 }

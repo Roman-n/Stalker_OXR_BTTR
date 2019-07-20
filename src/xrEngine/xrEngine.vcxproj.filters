@@ -16,6 +16,9 @@
     <Filter Include="Interfaces\Sheduler">
       <UniqueIdentifier>{7575db1c-2ef0-4085-9d91-235e61991209}</UniqueIdentifier>
     </Filter>
+	<Filter Include="Interfaces\Discord">
+      <UniqueIdentifier>{f1004f51-b80f-4c12-a930-80f1ea7e1f0d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Interfaces\Render">
       <UniqueIdentifier>{b512001a-02d0-4c4d-819e-a54399380b8b}</UniqueIdentifier>
     </Filter>
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="x_ray.h">
       <Filter>General</Filter>
+    </ClInclude>
+	<ClInclude Include="DiscordRichPresense.h">
+      <Filter>Interfaces\Discord</Filter>
     </ClInclude>
     <ClInclude Include="IInputReceiver.h">
       <Filter>Interfaces\Input</Filter>
@@ -589,6 +595,9 @@
     </ClCompile>
     <ClCompile Include="IInputReceiver.cpp">
       <Filter>Interfaces\Input</Filter>
+    </ClCompile>
+	<ClCompile Include="DiscordRichPresense.cpp">
+      <Filter>Interfaces\Discord</Filter>
     </ClCompile>
     <ClCompile Include="Xr_input.cpp">
       <Filter>Interfaces\Input</Filter>

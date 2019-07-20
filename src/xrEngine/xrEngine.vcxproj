@@ -45,7 +45,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2578C6D8-660D-48AE-9322-7422F8664F06}</ProjectGuid>
     <RootNamespace>xrEngine</RootNamespace>
-	<WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -119,7 +119,7 @@
       <PreprocessorDefinitions>ENGINE_BUILD;INGAME_EDITOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>vfw32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DiscordRichPresense.lib;vfw32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(OutDir)amd_ags_$(PlatformShortName).dll" copy /y "$(xrExternals)AGS_SDK\ags_lib\lib\amd_ags_$(PlatformShortName).dll" "$(OutDir)amd_ags_$(PlatformShortName).dll"</Command>
@@ -134,7 +134,7 @@
       <PreprocessorDefinitions>ENGINE_BUILD;INGAME_EDITOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>vfw32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DiscordRichPresense.lib;vfw32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(OutDir)amd_ags_$(PlatformShortName).dll" copy /y "$(xrExternals)AGS_SDK\ags_lib\lib\amd_ags_$(PlatformShortName).dll" "$(OutDir)amd_ags_$(PlatformShortName).dll"</Command>
@@ -241,7 +241,7 @@
       <PreprocessorDefinitions>ENGINE_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>vfw32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vfw32.lib;DiscordRichPresense.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(OutDir)amd_ags_$(PlatformShortName).dll" copy /y "$(xrExternals)AGS_SDK\ags_lib\lib\amd_ags_$(PlatformShortName).dll" "$(OutDir)amd_ags_$(PlatformShortName).dll"</Command>
@@ -323,6 +323,7 @@
     <ClInclude Include="IGame_Persistent.h" />
     <ClInclude Include="IInputReceiver.h" />
     <ClInclude Include="ILoadingScreen.h" />
+    <ClInclude Include="DiscordRichPresense.h" />
     <ClInclude Include="IObjectPhysicsCollision.h" />
     <ClInclude Include="IPerformanceAlert.hpp" />
     <ClInclude Include="IPHdebug.h" />
@@ -384,6 +385,7 @@
     <ClCompile Include="cf_dynamic_mesh.cpp" />
     <ClCompile Include="CustomHUD.cpp" />
     <ClCompile Include="defines.cpp" />
+    <ClCompile Include="DiscordRichPresense.cpp" />
     <ClCompile Include="device.cpp" />
     <ClCompile Include="Device_create.cpp" />
     <ClCompile Include="Device_destroy.cpp" />

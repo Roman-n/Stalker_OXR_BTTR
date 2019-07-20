@@ -46,7 +46,7 @@ public:
     CUIMotionIcon();
     virtual void Update();
     virtual void Draw();
-    void Init_frame();
+    //void Init_frame();
     void ShowState(EState state);
     void Init(Frect const& rect);
     void SetNoise(float Pos);

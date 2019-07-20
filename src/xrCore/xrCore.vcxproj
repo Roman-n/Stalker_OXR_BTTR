@@ -396,6 +396,7 @@
     <ClCompile Include="ModuleLookup.cpp" />
     <ClCompile Include="xrDebug.cpp" />
     <ClCompile Include="xrMemory.cpp" />
+	<ClCompile Include="thread_utils.cpp" />
     <ClCompile Include="xrsharedmem.cpp" />
     <ClCompile Include="xrstring.cpp" />
     <ClCompile Include="xr_ini.cpp" />
@@ -453,6 +454,7 @@
     <ClInclude Include="FileCRC32.h" />
     <ClInclude Include="file_stream_reader.h" />
     <ClInclude Include="FixedVector.h" />
+	<ClInclude Include="thread_utils.h" />
     <ClInclude Include="FMesh.hpp" />
     <ClInclude Include="FS.h" />
     <ClInclude Include="FS_impl.h" />

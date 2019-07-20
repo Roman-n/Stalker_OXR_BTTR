@@ -22,8 +22,9 @@
 #include <tbb/parallel_for_each.h>
 
 #include "Common/object_broker.h"
-
-
+#ifdef __DISCORD_API
+#include "../xrEngine/DiscordRichPresense.h"
+#endif
 
 // fwd. decl.
 extern ENGINE_API BOOL bShowPauseString;
@@ -78,6 +79,9 @@ CMainMenu::~CMainMenu()
 	xr_delete						(m_startDialog);
 	g_pGamePersistent->m_pMainMenu	= NULL;
 	delete_data						(m_pMB_ErrDlgs);	
+	#ifdef __DISCORD_API
+	g_discord.SetStatus(xrDiscordPresense::StatusId::In_Game);
+	#endif
 }
 
 void CMainMenu::ReadTextureInfo()
@@ -173,7 +177,12 @@ void CMainMenu::Activate(bool bActivate)
             CCameraManager::ResetPP();
         };
         Device.seqRender.Add(this, 4); // 1-console 2-cursor 3-tutorial
-
+#ifdef __DISCORD_API
+		if (g_pGameLevel == nullptr)
+		{
+			g_discord.SetStatus(xrDiscordPresense::StatusId::Menu);
+		}
+#endif
         Console->Execute("stat_memory");
     }
     else
