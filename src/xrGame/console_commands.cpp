@@ -38,7 +38,7 @@
 #include "saved_game_wrapper.h"
 #include "xrAICore/Navigation/level_graph.h"
 #include "xrNetServer/NET_Messages.h"
-
+#include "uizonemap.h"
 #include "cameralook.h"
 #include "character_hit_animations_params.h"
 #include "inventory_upgrade_manager.h"
@@ -69,9 +69,9 @@ extern	int		psLUA_GCSTEP;
 extern Fvector	m_hud_offset_pos;
 extern Fvector	m_hand_offset_pos;
 extern BOOL		g_use_aim_inertion;
-
-
-
+#ifdef ZOOM_MINIMAP
+float minimap_zoom_factor =1.0f;
+#endif
 extern int x_m_x;
 extern int x_m_z;
 extern BOOL net_cl_inputguaranteed;
@@ -1928,7 +1928,9 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "g_dynamic_music", &psActorFlags, AF_DYNAMIC_MUSIC);
     CMD3(CCC_Mask, "g_important_save", &psActorFlags, AF_IMPORTANT_SAVE);
     CMD4(CCC_Integer, "g_inv_highlight_equipped", &g_inv_highlight_equipped, 0, 1);
-
+#ifdef ZOOM_MINIMAP	
+	CMD4(CCC_Float, "rs_minimap_zoom_factor", &minimap_zoom_factor, 0.01, 5.0);
+#endif
 #ifdef DEBUG
     CMD3(CCC_Mask, "dbg_draw_actor_alive", &dbg_net_Draw_Flags, dbg_draw_actor_alive);
     CMD3(CCC_Mask, "dbg_draw_actor_dead", &dbg_net_Draw_Flags, dbg_draw_actor_dead);
