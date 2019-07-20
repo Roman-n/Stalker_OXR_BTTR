@@ -1414,7 +1414,6 @@
     <ClInclude Include="UIStaticItem.h" />
     <ClInclude Include="UIZoneMap.h" />
     <ClInclude Include="ui\ArtefactDetectorUI.h" />
-	<ClInclude Include="ui\xrManagedUILib\Window.h" />
     <ClInclude Include="ui\FactionState.h" />
     <ClInclude Include="ui\FractionState.h" />
     <ClInclude Include="ui\map_hint.h" />
@@ -3203,7 +3202,6 @@
     <ClCompile Include="UIStaticItem.cpp" />
     <ClCompile Include="UIZoneMap.cpp" />
     <ClCompile Include="ui\ArtefactDetectorUI.cpp" />
-	<ClInclude Include="ui\xrManagedUILib\Window.cpp" />
     <ClCompile Include="ui\map_hint.cpp" />
     <ClCompile Include="ui\MMSound.cpp" />
     <ClCompile Include="ui\UI3tButton.cpp" />

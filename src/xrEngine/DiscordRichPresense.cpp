@@ -14,7 +14,7 @@ void xrDiscordPresense::Initialize()
 	// We don't have multiplayer mode, so no need to invite system to support
 	DiscordEventHandlers nullHandlers;
 	ZeroMemory(&nullHandlers, sizeof(nullHandlers));
-	Discord_Initialize("503315994324762625", &nullHandlers, TRUE, nullptr);
+	Discord_Initialize("602204664448155649", &nullHandlers, TRUE, nullptr);
 	bInitialize = true;
 }
 
@@ -75,10 +75,10 @@ void xrDiscordPresense::SetStatus(StatusId status)
 		break;
 	}
 	// Add levelname to details
-	if (bOnLevel && g_pGameLevel && g_pGameLevel->name_translated().c_str())
+	if (bOnLevel && g_pGameLevel && g_pGameLevel->name().c_str())
 	{
 		string64 LevelName;
-		strconcat(sizeof(LevelName), LevelName, "Level: ", ConvertToUTF8(g_pGameLevel->name_translated().c_str()));
+		strconcat(sizeof(LevelName), LevelName, "Level: ", ConvertToUTF8(g_pGameLevel->name().c_str()));
 		presenseInfo.details = std::move(LevelName);
 	}
 	else if (!g_pGameLevel)
