@@ -1289,6 +1289,38 @@ public:
     }
 };
 
+class CCC_Spawn : public IConsole_Command {
+public:
+	CCC_Spawn(LPCSTR N) : IConsole_Command(N) { };
+	virtual void Execute(LPCSTR args) {
+		if (!g_pGameLevel) return;
+
+		//#ifndef	DEBUG
+		if (GameID() != eGameIDSingle)
+		{
+			Msg("For this game type entity-spawning is disabled.");
+			return;
+		};
+		//#endif
+
+		if (!pSettings->section_exist(args))
+		{
+			Msg("! Section [%s] isn`t exist...", args);
+			return;
+		}
+
+		char	Name[128];	Name[0] = 0;
+		sscanf(args, "%s", Name);
+		Fvector pos = Actor()->Position();
+		pos.y += 3.0f;
+		Level().g_cl_Spawn(Name, 0xff, M_SPAWN_OBJECT_LOCAL, pos);
+	}
+	virtual void	Info(TInfo& I)
+	{
+		strcpy(I, "name,team,squad,group");
+	}
+};
+
 class CCC_TimeFactor : public IConsole_Command
 {
 public:
@@ -1298,6 +1330,8 @@ public:
         float time_factor = (float)atof(args);
         clamp(time_factor, EPS, 1000.f);
         Device.time_factor(time_factor);
+		if(strstr(Core.Params,"-snd_speed_ctrl") )
+		psSpeedOfSound	= time_factor;
     }
     virtual void Status(TStatus& S) { xr_sprintf(S, sizeof(S), "%f", Device.time_factor()); }
     virtual void Info(TInfo& I) { xr_strcpy(I, "[0.001 - 1000.0]"); }
@@ -1744,6 +1778,8 @@ void CCC_RegisterCommands()
     CMD1(CCC_MemStats, "stat_memory");
     // game
     CMD3(CCC_Mask, "g_crouch_toggle", &psActorFlags, AF_CROUCH_TOGGLE);
+	CMD3(CCC_Mask, "hud_crosshair_collide", &psActorFlags, AF_CROSSHAIR_COLLIDE);
+	CMD3(CCC_Mask, "hud_crosshair_inert", &psActorFlags, AF_CROSSHAIR_INERT);
     CMD1(CCC_GameDifficulty, "g_game_difficulty");
 #ifdef Call_of_Chernobyl_OXR
     CMD1(CCC_GameLanguage, "g_language");
@@ -1909,6 +1945,7 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
     CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
     CMD1(CCC_TimeFactor, "time_factor");
+	CMD1(CCC_Spawn,         "g_spawn");
     CMD1(CCC_Script, "run_script");
     CMD1(CCC_ScriptCommand, "run_string");
     CMD3(CCC_Mask, "g_no_clip", &psActorFlags, AF_NO_CLIP);

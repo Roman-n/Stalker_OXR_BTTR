@@ -8,6 +8,10 @@
 //.#include "UIStaticItem.h"
 #include "ui_base.h"
 
+#include "HudManager.h"
+#include "inventory.h"
+#include "weapon.h"
+
 CHUDCrosshair::CHUDCrosshair()
 {
     hShader->create("hud\\crosshair");
@@ -55,10 +59,39 @@ BOOL g_bDrawFirstBulletCrosshair = FALSE;
 void CHUDCrosshair::OnRenderFirstBulletDispertion()
 {
     VERIFY(g_bRendering);
-    Fvector2 center;
-    Fvector2 scr_size;
+	
+    Fvector2		center, scr_size;
+	Fvector			result;
+	Fvector4		v_res;
+	float			x, y;
+	
     scr_size.set(float(GEnv.Render->getTarget()->get_width()), float(GEnv.Render->getTarget()->get_height()));
-    center.set(scr_size.x / 2.0f, scr_size.y / 2.0f);
+    
+	CWeapon				*weapon = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+	CCameraBase			*pCam = Actor()->cam_Active();
+	float dist			= HUD().GetCurrentRayQuery().range*1.2f;
+
+	if (weapon && psActorFlags.test(AF_CROSSHAIR_COLLIDE) && !psActorFlags.test(AF_CROSSHAIR_INERT))
+	{
+		result = weapon->get_LastFP();
+		result.add(Fvector(Device.vCameraDirection).mul(dist));
+	}
+
+	if (psActorFlags.test(AF_CROSSHAIR_INERT) && !psActorFlags.test(AF_CROSSHAIR_COLLIDE))
+	{
+		result = pCam->vPosition;
+		result.add(Fvector(pCam->vDirection).mul(dist));
+	}
+
+	Device.mFullTransform.transform(v_res, result);
+
+	x = (1.f + v_res.x) / 2.f * (Device.dwWidth);
+	y = (1.f - v_res.y) / 2.f * (Device.dwHeight);
+
+	if ((psActorFlags.test(AF_CROSSHAIR_INERT) || psActorFlags.test(AF_CROSSHAIR_COLLIDE)) && !(psActorFlags.test(AF_CROSSHAIR_INERT) && psActorFlags.test(AF_CROSSHAIR_COLLIDE)))
+		center.set		(x, y);
+	else
+		center.set(scr_size.x / 2.0f, scr_size.y / 2.0f);
 
     GEnv.UIRender->StartPrimitive(10, IUIRender::ptLineList, UI().m_currentPointType);
 

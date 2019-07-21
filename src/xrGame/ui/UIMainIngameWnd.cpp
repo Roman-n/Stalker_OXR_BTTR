@@ -597,9 +597,7 @@ void CUIMainIngameWnd::UpdatePickUpItem()
 
 void CUIMainIngameWnd::OnConnected()
 {
-#ifndef ZOOM_MINIMAP
     UIZoneMap->SetupCurrentMap();
-#endif	
     if (m_ui_hud_states)
     {
         m_ui_hud_states->on_connected();

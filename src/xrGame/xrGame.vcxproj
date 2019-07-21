@@ -227,7 +227,7 @@
     </ClCompile>
     <Link>
       <LinkTimeCodeGeneration />
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_COC|x64'">
