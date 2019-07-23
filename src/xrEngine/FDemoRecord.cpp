@@ -400,6 +400,8 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
     return TRUE;
 }
 
+extern int ps_demo_record_teleport;
+
 void CDemoRecord::IR_OnKeyboardPress(int dik)
 {
     if (dik == DIK_MULTIPLY)
@@ -425,17 +427,17 @@ void CDemoRecord::IR_OnKeyboardPress(int dik)
 
  //Alundaio: Teleport to demo cam
 //#ifdef DEBUG // ndef MASTER_GOLD // Xottab_DUTY: Teleport to demo cam in Debug configuration
+	if(ps_demo_record_teleport)
+	{
     if (dik == DIK_RETURN)
     {
-        if (Core.ParamFlags.test(Core.dev))
-        {
             if (g_pGameLevel->CurrentEntity())
             {
                 g_pGameLevel->CurrentEntity()->ForceTransform(m_Camera);
                 fLifeTime = -1;
             }
-        }
     }
+	}
 //#endif // Romann: сделал так, а то телепорт в демо_рекорд совсем не работал.
  //-Alundaio
 

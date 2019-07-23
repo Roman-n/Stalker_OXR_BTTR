@@ -1053,6 +1053,8 @@ void CWeaponMagazined::switch2_Showing()
     PlayAnimShow();
 }
 
+extern int g_reload_on_sprint;
+
 bool CWeaponMagazined::Action(u16 cmd, u32 flags)
 {
     if (inherited::Action(cmd, flags)) return true;
@@ -1064,9 +1066,18 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
     {
     case kWPN_RELOAD:
     {
-        if (flags & CMD_START)
-            if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
-                Reload();
+        if (g_reload_on_sprint && !ACTOR_DEFS::mcAnyMove)
+	    {
+            if (flags & CMD_START)
+                if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
+                    Reload();
+	    }
+        else
+        {
+            if (flags & CMD_START)
+                if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
+                    Reload();
+        }
     }
         return true;
     case kWPN_FIREMODE_PREV:

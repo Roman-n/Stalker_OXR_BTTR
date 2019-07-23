@@ -397,11 +397,8 @@ void CSoundRender_Core::_create_data(ref_sound_data& S, pcstr fName, esound_type
     S.feedback = nullptr;
     S.g_object = nullptr;
     S.g_userdata = nullptr;
-    S.dwBytesTotal = S.handle->bytes_total();
-    if (strstr(Core.Params,"-snd_speed_ctrl"))
-		S.fTimeTotal		= S.handle->length_sec()/psSpeedOfSound*3.2f;
-	else 
-		S.fTimeTotal		= S.handle->length_sec();
+    S.dwBytesTotal = S.handle->bytes_total();	
+	S.fTimeTotal		= S.handle->length_sec()/psSpeedOfSound*3.2f;
 }
 
 void CSoundRender_Core::_destroy_data(ref_sound_data& S)

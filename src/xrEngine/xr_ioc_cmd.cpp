@@ -646,6 +646,8 @@ extern int ps_rs_loading_stages;
 
 ENGINE_API int ps_always_active = 0;
 
+ENGINE_API int ps_demo_record_teleport = 0;
+
 ENGINE_API int ps_r__Supersample = 1;
 void CCC_Register()
 {
@@ -727,10 +729,7 @@ void CCC_Register()
     CMD2(CCC_Float, "snd_volume_eff", &psSoundVEffects);
     CMD2(CCC_Float, "snd_volume_music", &psSoundVMusic);
 	
-	if(strstr(Core.Params,"-snd_speed_ctrl") )
-	{
-	CMD4(CCC_Float,		"snd_speed_of_sound",	&psSpeedOfSound,0.2f,2.0f	);
-	}
+	CMD4(CCC_Float,	"snd_speed_of_sound",	&psSpeedOfSound,0.2f,2.0f	);
 	
     CMD1(CCC_SND_Restart, "snd_restart");
     CMD3(CCC_Mask, "snd_acceleration", &psSoundFlags, ss_Hardware);
@@ -760,6 +759,8 @@ void CCC_Register()
     CMD2(CCC_Float, "cam_slide_inert", &psCamSlideInert);
 
     CMD4(CCC_Integer, "always_active", &ps_always_active, 0, 1);
+	
+	CMD4(CCC_Integer, "demo_record_teleport", &ps_demo_record_teleport, 0, 1);
 
     CMD1(CCC_r2, "renderer");
 

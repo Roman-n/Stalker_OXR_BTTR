@@ -107,6 +107,8 @@ extern BOOL g_invert_zoom;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
+int g_reload_on_sprint = 1;
+
 int __type_hud_lost_alpha = 0;
 int __type_hud_veter_vremeni = 0;
 int __type_hud_soc  = 0;
@@ -1330,7 +1332,6 @@ public:
         float time_factor = (float)atof(args);
         clamp(time_factor, EPS, 1000.f);
         Device.time_factor(time_factor);
-		if(strstr(Core.Params,"-snd_speed_ctrl") )
 		psSpeedOfSound	= time_factor;
     }
     virtual void Status(TStatus& S) { xr_sprintf(S, sizeof(S), "%f", Device.time_factor()); }
@@ -1944,6 +1945,9 @@ void CCC_RegisterCommands()
     CMD1(CCC_JumpToLevel, "jump_to_level");
     CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
     CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
+	
+	CMD4(CCC_Integer, "g_reload_on_sprint", &g_reload_on_sprint, 0, 1);
+	
     CMD1(CCC_TimeFactor, "time_factor");
 	CMD1(CCC_Spawn,         "g_spawn");
     CMD1(CCC_Script, "run_script");
