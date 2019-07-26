@@ -695,8 +695,9 @@ bool CUIActorMenu::ToSlot(CUICellItem* itm, bool force_place, u16 slot_id)
 
 bool CUIActorMenu::ToBag(CUICellItem* itm, bool b_use_cursor_pos)
 {
+#ifdef __FIX 
     PIItem iitem = (PIItem)itm->m_pData;
-
+#endif
     bool b_own_item = (iitem->parent_id() == m_pActorInvOwner->object_id());
 
     bool b_already = m_pActorInvOwner->inventory().InRuck(iitem);

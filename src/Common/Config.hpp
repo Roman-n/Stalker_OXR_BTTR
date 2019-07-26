@@ -60,6 +60,7 @@
 #define MOTIONICON_SOC								// Текущее положение ГГ на худ из ТЧ
 #define VOLUMETRIK_TORCH							// Объемный свет фонаря
 #define ZOOM_MINIMAP								// Консольная команда зума для мини карты из XRay Oxygen
+#define __FIX										// Вылет по поясу, если переместить итем размера 2 на 1 ячейку
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay

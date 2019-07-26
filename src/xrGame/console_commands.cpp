@@ -107,7 +107,7 @@ extern BOOL g_invert_zoom;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
-int g_reload_on_sprint = 1;
+//int g_reload_on_sprint = 1;
 
 int __type_hud_lost_alpha = 0;
 int __type_hud_veter_vremeni = 0;
@@ -1946,7 +1946,7 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
     CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
 	
-	CMD4(CCC_Integer, "g_reload_on_sprint", &g_reload_on_sprint, 0, 1);
+//	CMD4(CCC_Integer, "g_reload_on_sprint", &g_reload_on_sprint, 0, 1);
 	
     CMD1(CCC_TimeFactor, "time_factor");
 	CMD1(CCC_Spawn,         "g_spawn");
@@ -1970,7 +1970,7 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "g_important_save", &psActorFlags, AF_IMPORTANT_SAVE);
     CMD4(CCC_Integer, "g_inv_highlight_equipped", &g_inv_highlight_equipped, 0, 1);
 #ifdef ZOOM_MINIMAP	
-	CMD4(CCC_Float, "rs_minimap_zoom_factor", &minimap_zoom_factor, 0.01, 5.0);
+	CMD4(CCC_Float, "rs_minimap_zoom_factor", &minimap_zoom_factor, 0.5, 3.5);
 #endif
 #ifdef DEBUG
     CMD3(CCC_Mask, "dbg_draw_actor_alive", &dbg_net_Draw_Flags, dbg_draw_actor_alive);

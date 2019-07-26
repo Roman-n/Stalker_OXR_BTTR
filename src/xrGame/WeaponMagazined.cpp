@@ -217,11 +217,13 @@ bool CWeaponMagazined::TryToGetAmmo(u32_ id)
 
 	if (smart_cast<CActor*>(H_Parent()) != NULL)
 	{
-		m_pCurrentAmmo		= smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[id].c_str()));
-		Msg("Try reload for actor");
+        if (!mstate_real & mcAnyMove || !mstate_real & mcSprint)
+        {
+            m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[id].c_str()));
+            Msg("Try reload for actor");
+        }
 	}
 	else
-
 	{
 		Msg("Try reload for npc");
 		m_pCurrentAmmo		= smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[id].c_str()));
@@ -853,14 +855,6 @@ void CWeaponMagazined::OnShot()
     //Alundaio: Actor sounds
     if (ParentIsActor())
     {
-        /*
-        if (strcmp(m_sSndShotCurrent.c_str(), "sndShot") == 0 && pSettings->line_exist(m_section_id, "snd_shoot_actor") && m_layered_sounds.FindSoundItem("sndShotActor", false))
-            m_layered_sounds.PlaySound("sndShotActor", get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
-        else if (strcmp(m_sSndShotCurrent.c_str(), "sndSilencerShot") == 0 && pSettings->line_exist(m_section_id, "snd_silncer_shot_actor")
-            && m_layered_sounds.FindSoundItem("sndSilencerShotActor", false))
-            m_layered_sounds.PlaySound("sndSilencerShotActor", get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
-        else
-        */
             m_layered_sounds.PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
     }
     else
@@ -869,13 +863,6 @@ void CWeaponMagazined::OnShot()
     //Alundaio: Actor sounds
     if (ParentIsActor())
     {
-        /*
-        if (strcmp(m_sSndShotCurrent.c_str(), "sndShot") == 0 && pSettings->line_exist(m_section_id, "snd_shoot_actor")&& m_sounds.FindSoundItem("sndShotActor", false))
-            PlaySound("sndShotActor", get_LastFP(), (u8)(m_iShotNum - 1));
-        else if (strcmp(m_sSndShotCurrent.c_str(), "sndSilencerShot") == 0 && pSettings->line_exist(m_section_id, "snd_silncer_shot_actor") && m_sounds.FindSoundItem("sndSilencerShotActor", false))
-            PlaySound("sndSilencerShotActor", get_LastFP(), (u8)(m_iShotNum - 1));
-		else
-        */
         PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), (u8)-1);
     }
     else
@@ -1053,7 +1040,7 @@ void CWeaponMagazined::switch2_Showing()
     PlayAnimShow();
 }
 
-extern int g_reload_on_sprint;
+//extern int g_reload_on_sprint;
 
 bool CWeaponMagazined::Action(u16 cmd, u32 flags)
 {
@@ -1066,18 +1053,18 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
     {
     case kWPN_RELOAD:
     {
-        if (g_reload_on_sprint && !ACTOR_DEFS::mcAnyMove)
-	    {
+//        if (g_reload_on_sprint && !ACTOR_DEFS::mcAnyMove)
+//	    {
+//            if (flags & CMD_START)
+//                if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
+//                    Reload();
+//	    }
+//        else
+       // {
             if (flags & CMD_START)
                 if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
                     Reload();
-	    }
-        else
-        {
-            if (flags & CMD_START)
-                if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
-                    Reload();
-        }
+       // }
     }
         return true;
     case kWPN_FIREMODE_PREV:
