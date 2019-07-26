@@ -53,7 +53,7 @@ CScriptIniFile* reload_system_ini()
 {
     pSettings->Destroy(const_cast<CInifile*>(pSettings));
     string_path fname;
-    FS.update_path(fname, "$game_config$", "system.ltx");
+    FS.update_path(fname, "$game_config$", "__engine_export.open_xray");
     pSettings = new CInifile(fname);
     return (CScriptIniFile*)pSettings;
 }

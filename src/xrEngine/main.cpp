@@ -48,7 +48,7 @@ ENGINE_API void InitEngine()
 ENGINE_API void InitSettings()
 {
     string_path fname;
-    FS.update_path(fname, "$game_config$", "system.ltx");
+    FS.update_path(fname, "$game_config$", "__engine_export.open_xray");
 #ifdef DEBUG
     Msg("Updated path to system.ltx is %s", fname);
 #endif
