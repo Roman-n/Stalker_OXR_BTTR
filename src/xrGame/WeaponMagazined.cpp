@@ -1056,7 +1056,10 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
     switch (cmd)
     {
     case kWPN_RELOAD:
-    {
+    {                                                                               //Like Lost Alpha
+        if (Actor()->mstate_real & (mcSprint) || Actor()->mstate_real & (mcAnyMove))
+            break;
+        else
         if (flags & CMD_START)
             if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
             {
@@ -1071,7 +1074,6 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
                     if (!pDet->IsWorking())
                         Reload();
                 }
-            //    Reload();
             }
     }
         return true;

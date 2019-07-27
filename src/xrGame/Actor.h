@@ -411,7 +411,7 @@ public:
     bool AnyMove() { return (mstate_real & mcAnyMove) != 0; };
     bool is_jump();
     u32 MovingState() const { return mstate_real; }
-protected:
+//protected:
     u32 mstate_wishful;
     u32 mstate_old;
     u32 mstate_real;
