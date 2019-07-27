@@ -8,6 +8,7 @@
 #include "actor.h"
 #include "script_callback_ex.h"
 #include "script_game_object.h"
+#include "actor.h"
 
 CWeaponAutomaticShotgun::CWeaponAutomaticShotgun()
 {
@@ -44,6 +45,7 @@ bool CWeaponAutomaticShotgun::Action(u16 cmd, u32 flags)
     {
         AddCartridge(1);
         m_sub_state = eSubstateReloadEnd;
+		Actor()->SetCantRunState(false);
         return true;
     }
     return false;
@@ -80,6 +82,7 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
     {
         m_sub_state = eSubstateReloadBegin;
         SwitchState(eIdle);
+		Actor()->SetCantRunState(false);
     }
     break;
     };
@@ -90,6 +93,7 @@ void CWeaponAutomaticShotgun::Reload()
     if (m_bTriStateReload)
     {
         TriStateReload();
+		Actor()->SetCantRunState(true);
     }
     else
         inherited::Reload();

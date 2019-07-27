@@ -348,7 +348,7 @@ void CRenderDevice::message_loop()
 void CRenderDevice::Run()
 {
     g_bLoaded = FALSE;
-    Log("Starting engine...");
+    Log("~ Starting engine...");
     thread_name("X-RAY Primary thread");
     // Startup timers and calculate timer delta
     dwTimeGlobal = 0;
