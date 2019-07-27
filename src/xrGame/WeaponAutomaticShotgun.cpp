@@ -45,7 +45,7 @@ bool CWeaponAutomaticShotgun::Action(u16 cmd, u32 flags)
     {
         AddCartridge(1);
         m_sub_state = eSubstateReloadEnd;
-		Actor()->SetCantRunState(false);
+		//Log("- cmd 0");
         return true;
     }
     return false;
@@ -65,6 +65,7 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
     {
         m_sub_state = eSubstateReloadInProcess;
         SwitchState(eReload);
+		//Log("- cmd 1");
     }
     break;
 
@@ -73,8 +74,10 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
         if (0 != AddCartridge(1))
         {
             m_sub_state = eSubstateReloadEnd;
+			//Log("- cmd 2");
         }
         SwitchState(eReload);
+		//Log("- cmd 3");
     }
     break;
 
@@ -83,6 +86,7 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
         m_sub_state = eSubstateReloadBegin;
         SwitchState(eIdle);
 		Actor()->SetCantRunState(false);
+		//Log("- cmd 4");
     }
     break;
     };
@@ -93,6 +97,7 @@ void CWeaponAutomaticShotgun::Reload()
     if (m_bTriStateReload)
     {
         TriStateReload();
+		//Log("- cmd 5");
 		Actor()->SetCantRunState(true);
     }
     else
@@ -106,6 +111,7 @@ void CWeaponAutomaticShotgun::TriStateReload()
     CWeapon::Reload();
     m_sub_state = eSubstateReloadBegin;
     SwitchState(eReload);
+	//Log("- cmd 6");
 }
 
 void CWeaponAutomaticShotgun::OnStateSwitch(u32 S, u32 oldState)
@@ -130,10 +136,12 @@ void CWeaponAutomaticShotgun::OnStateSwitch(u32 S, u32 oldState)
     case eSubstateReloadBegin:
         if (HaveCartridgeInInventory(1))
             switch2_StartReload();
+		//Log("- cmd 7");
         break;
     case eSubstateReloadInProcess:
         if (HaveCartridgeInInventory(1))
             switch2_AddCartgidge();
+		//Log("- cmd 8");
         break;
     case eSubstateReloadEnd: switch2_EndReload(); break;
     };
@@ -144,6 +152,7 @@ void CWeaponAutomaticShotgun::switch2_StartReload()
     PlaySound("sndOpen", get_LastFP());
     PlayAnimOpenWeapon();
     SetPending(TRUE);
+	//Log("- cmd 8.1");
 }
 
 void CWeaponAutomaticShotgun::switch2_AddCartgidge()
@@ -151,6 +160,7 @@ void CWeaponAutomaticShotgun::switch2_AddCartgidge()
     PlaySound("sndAddCartridge", get_LastFP());
     PlayAnimAddOneCartridgeWeapon();
     SetPending(TRUE);
+	//Log("- cmd 9");
 }
 
 void CWeaponAutomaticShotgun::switch2_EndReload()
@@ -158,6 +168,7 @@ void CWeaponAutomaticShotgun::switch2_EndReload()
     SetPending(FALSE);
     PlaySound("sndClose", get_LastFP());
     PlayAnimCloseWeapon();
+	//Log("- cmd 10");
 }
 
 void CWeaponAutomaticShotgun::PlayAnimOpenWeapon()
@@ -175,6 +186,8 @@ void CWeaponAutomaticShotgun::PlayAnimCloseWeapon()
     VERIFY(GetState() == eReload);
 
     PlayHUDMotion("anm_close", FALSE, this, GetState());
+	
+	Actor()->SetCantRunState(false);
 }
 
 bool CWeaponAutomaticShotgun::HaveCartridgeInInventory(u8 cnt)

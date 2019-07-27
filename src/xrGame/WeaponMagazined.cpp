@@ -1470,12 +1470,14 @@ void CWeaponMagazined::PlayAnimShow()
 {
     VERIFY(GetState() == eShowing);
     PlayHUDMotion("anm_show", false, this, GetState());
+//	Actor()->SetCantRunState(false);
 }
 
 void CWeaponMagazined::PlayAnimHide()
 {
     VERIFY(GetState() == eHiding);
     PlayHUDMotion("anm_hide", true, this, GetState());
+	Actor()->SetCantRunState(false);
 }
 
 void CWeaponMagazined::PlayAnimReload()

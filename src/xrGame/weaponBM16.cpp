@@ -43,6 +43,7 @@ void CWeaponBM16::PlayAnimHide()
     case 1: PlayHUDMotion("anm_hide_1", TRUE, this, GetState()); break;
     case 2: PlayHUDMotion("anm_hide_2", TRUE, this, GetState()); break;
     }
+	Actor()->SetCantRunState(false);
 }
 
 void CWeaponBM16::PlayAnimBore()

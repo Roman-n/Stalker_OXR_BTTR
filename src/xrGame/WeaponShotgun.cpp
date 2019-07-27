@@ -186,6 +186,7 @@ void CWeaponShotgun::PlayAnimCloseWeapon()
     VERIFY(GetState() == eReload);
 
     PlayHUDMotion("anm_close", FALSE, this, GetState());
+	
 }
 
 bool CWeaponShotgun::HaveCartridgeInInventory(u8 cnt)

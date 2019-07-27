@@ -325,5 +325,5 @@ void game_sv_Single::restart_simulator(LPCSTR saved_game_name)
     Device.PreCache(60, true, true);
     pApp->LoadEnd();
 	switch_Phase(GAME_PHASE_INPROGRESS);
-	Msg("alife simulator restarted");
+	Msg("- alife simulator restarted");
 }
