@@ -184,7 +184,7 @@ static void full_memory_stats()
         memCounters.PagefileUsage / (1024 * 1024), memCounters.PeakPagefileUsage / (1024 * 1024));
 
     Log("--------------------------------------------------------------------------------");
-	Log("# Build engine for <OpenXRay Call of Chernobyl x64>");
+	Log("# Build engine for <OpenXRay Call of Chernobyl x64>, build 7476");
     Log("--------------------------------------------------------------------------------");
 }
 

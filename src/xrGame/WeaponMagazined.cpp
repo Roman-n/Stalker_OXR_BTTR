@@ -21,6 +21,7 @@
 #include "script_callback_ex.h"
 #include "script_game_object.h"
 #include "HudSound.h"
+#include "CustomDetector.h"
 
 CUIXml* pWpnScopeXml = nullptr;
 
@@ -226,11 +227,11 @@ bool CWeaponMagazined::TryToGetAmmo(u32_ id)
     if (smart_cast<CActor*>(H_Parent()) != NULL)
     {
         m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[id].c_str()));
-        Msg("[C++ Log]: Try reload for actor");
+        Msg("~[C++] Try reload for actor");
     }
     else
     {
-        Msg("[C++ Log]: Try reload for npc");
+        Msg("~[C++] Try reload for npc");
         m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[id].c_str()));
     }
 
@@ -243,6 +244,7 @@ bool CWeaponMagazined::TryReload()
     {
         if (TryToGetAmmo(m_ammoType.type1) || unlimited_ammo() || (IsMisfire() && m_ammoElapsed.type1))
         {
+            Actor()->SetCantRunState(true);
             SetPending(TRUE);
             SwitchState(eReload);
             return true;
@@ -901,6 +903,7 @@ void CWeaponMagazined::OnAnimationEnd(u32 state)
     case eReload:
         ReloadMagazine();
         SwitchState(eIdle);
+		Actor()->SetCantRunState(false);
         break; // End of reload animation
     case eHiding: SwitchState(eHidden); break; // End of Hide
     case eShowing: SwitchState(eIdle); break; // End of Show
@@ -1042,8 +1045,6 @@ void CWeaponMagazined::switch2_Showing()
     PlayAnimShow();
 }
 
-#include "CustomDetector.h"
-
 bool CWeaponMagazined::Action(u16 cmd, u32 flags)
 {
     if (inherited::Action(cmd, flags))
@@ -1056,8 +1057,8 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
     switch (cmd)
     {
     case kWPN_RELOAD:
-    {                                                                               //Like Lost Alpha
-        if (Actor()->mstate_real & (mcSprint) || Actor()->mstate_real & (mcAnyMove))
+    {                                         //Like Lost Alpha
+        if (Actor()->mstate_real & (mcSprint))
             break;
         else
         if (flags & CMD_START)
