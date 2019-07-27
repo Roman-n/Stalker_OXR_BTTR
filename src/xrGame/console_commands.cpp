@@ -210,11 +210,11 @@ public:
         if (g_pGameLevel && Level().game)
         {
             //#ifndef	DEBUG
-            if (GameID() != eGameIDSingle)
-            {
-                Msg("For this game type difficulty level is disabled.");
-                return;
-            };
+//            if (GameID() != eGameIDSingle)
+//            {
+//                Msg("For this game type difficulty level is disabled.");
+//                return;
+//            };
             //#endif
 
             game_cl_Single* game = smart_cast<game_cl_Single*>(Level().game);
@@ -777,6 +777,33 @@ public:
         FlushLog();
         Msg("* Log file has been cleaned successfully!");
     }
+};
+
+class CCC_Spawn_to_inventory : public IConsole_Command {
+public:
+	CCC_Spawn_to_inventory(LPCSTR N) : IConsole_Command(N) { };
+	virtual void Execute(LPCSTR args) {
+		if (!g_pGameLevel)
+		{
+			Log("Error: No game level!");
+			return;
+		}
+
+		if (!pSettings->section_exist(args))
+		{
+			Msg("! Section [%s] isn`t exist...", args);
+			return;
+		}
+
+		char	Name[128];	Name[0] = 0;
+		sscanf(args, "%s", Name);
+
+		Level().spawn_item(Name, Actor()->Position(), false, Actor()->ID());
+	}
+	virtual void	Info(TInfo& I)
+	{
+		strcpy(I, "name,team,squad,group");
+	}
 };
 
 class CCC_FloatBlock : public CCC_Float
@@ -1950,6 +1977,7 @@ void CCC_RegisterCommands()
 	
     CMD1(CCC_TimeFactor, "time_factor");
 	CMD1(CCC_Spawn,         "g_spawn");
+	CMD1(CCC_Spawn_to_inventory, "g_spawn_to_inventory");
     CMD1(CCC_Script, "run_script");
     CMD1(CCC_ScriptCommand, "run_string");
     CMD3(CCC_Mask, "g_no_clip", &psActorFlags, AF_NO_CLIP);
