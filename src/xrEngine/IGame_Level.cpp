@@ -50,7 +50,7 @@ IGame_Level::~IGame_Level()
     if (GEnv.Render)
         GEnv.Render->ResourcesGetMemoryUsage(m_base, c_base, m_lmaps, c_lmaps);
 
-    Msg("* [ D3D ]: textures[%d K]", (m_base + m_lmaps) / 1024);
+    Msg("~ [ D3D ]: textures[%d K]", (m_base + m_lmaps) / 1024);
 }
 
 void IGame_Level::net_Stop()

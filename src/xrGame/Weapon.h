@@ -134,7 +134,7 @@ protected:
 
     // a misfire happens, you'll need to rearm weapon
     bool bMisfire;
-
+	
     BOOL m_bAutoSpawnAmmo;
     virtual bool AllowBore();
 

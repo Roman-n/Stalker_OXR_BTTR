@@ -209,7 +209,6 @@ protected:
 #ifdef HIT_SLOWMO
 	bool  m_hit_slowmo_jump;
 #endif	
-    s8 m_block_sprint_counter;
 
     // media
     SndShockEffector* m_sndShockEffector;
@@ -246,9 +245,11 @@ public:
     s32 GetShotRndSeed() { return m_ShotRndSeed; };
 
 public:
-    void detach_Vehicle();
+
+    s8 m_block_sprint_counter;
+
     void steer_Vehicle(float angle);
-    void attach_Vehicle(CHolderCustom* vehicle);
+
     bool use_HolderEx(CHolderCustom* object, bool bForce);
     virtual bool can_attach(const CInventoryItem* inventory_item) const;
 

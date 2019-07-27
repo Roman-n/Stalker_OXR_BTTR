@@ -114,6 +114,7 @@ void CActor::SetWeaponHideState(u16 State, bool bSet)
         u_EventSend(P);
     };
 }
+
 static u16 BestWeaponSlots[] = {
     INV_SLOT_3, // 2
     INV_SLOT_2, // 1

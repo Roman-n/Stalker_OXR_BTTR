@@ -86,8 +86,8 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
     case eSubstateReloadEnd:
     {
         m_sub_state = eSubstateReloadBegin;
-		Actor()->SetCantRunState(false);
         SwitchState(eIdle);
+        Actor()->SetCantRunState(false); // oldSerpskiStalker
     }
     break;
     };
@@ -95,6 +95,8 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
 
 void CWeaponShotgun::Reload()
 {
+    Actor()->SetCantRunState(true); // oldSerpskiStalker
+
 	if(m_bTriStateReload){
 		if (m_pInventory)
 		{
@@ -175,6 +177,21 @@ void CWeaponShotgun::PlayAnimOpenWeapon()
 {
     VERIFY(GetState() == eReload);
     PlayHUDMotion("anm_open", FALSE, this, GetState());
+
+    if (Actor()->m_block_sprint_counter > 0)
+    {
+        Actor()->m_block_sprint_counter = 0;
+        Log("- Class A-Shotgun");
+    //    Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
+    }
+
+    if (Actor()->m_block_sprint_counter <= 0)
+    {
+        Actor()->m_block_sprint_counter = 0;
+        Log("- Class A-Shotgun");
+    //    Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
+    }
+
 }
 void CWeaponShotgun::PlayAnimAddOneCartridgeWeapon()
 {

@@ -275,7 +275,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
     {
         s8 cmd = P.r_s8();
         m_block_sprint_counter = m_block_sprint_counter + cmd;
-        Msg("# m_block_sprint_counter=%d", m_block_sprint_counter);
+        Msg("# m_block_sprint_counter = %d", m_block_sprint_counter);
         if (m_block_sprint_counter > 0)
         {
             mstate_wishful &= ~mcSprint;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "weaponBM16.h"
+#include "actor.h"
 
 CWeaponBM16::~CWeaponBM16() {}
 void CWeaponBM16::Load(LPCSTR section)
@@ -43,7 +44,20 @@ void CWeaponBM16::PlayAnimHide()
     case 1: PlayHUDMotion("anm_hide_1", TRUE, this, GetState()); break;
     case 2: PlayHUDMotion("anm_hide_2", TRUE, this, GetState()); break;
     }
-	Actor()->SetCantRunState(false);
+    // oldSerpskiStalker 
+//    if (Actor()->m_block_sprint_counter > 0)
+//    {
+//        Actor()->m_block_sprint_counter = 0;
+//        Log("- Class BM16");
+//        Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
+//    }
+
+//    if (Actor()->m_block_sprint_counter <= 0)
+//    {
+//        Actor()->m_block_sprint_counter = 0;
+//        Log("- Class BM16");
+//        Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
+//    }
 }
 
 void CWeaponBM16::PlayAnimBore()
@@ -59,6 +73,8 @@ void CWeaponBM16::PlayAnimBore()
 void CWeaponBM16::PlayAnimReload()
 {
     bool b_both = HaveCartridgeInInventory(2);
+
+//    Actor()->SetCantRunState(true); // oldSerpskiStalker 
 
     VERIFY(GetState() == eReload);
 
