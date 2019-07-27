@@ -86,6 +86,7 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
     case eSubstateReloadEnd:
     {
         m_sub_state = eSubstateReloadBegin;
+		Actor()->SetCantRunState(false);
         SwitchState(eIdle);
     }
     break;

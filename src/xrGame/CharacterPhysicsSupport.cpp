@@ -742,7 +742,7 @@ bool CCharacterPhysicsSupport::has_shell_collision_place(const CPhysicsShellHold
 }
 void CCharacterPhysicsSupport::on_child_shell_activate(CPhysicsShellHolder* obj)
 {
-	Msg("CCharacterPhysicsSupport::on_child_shell_activate");
+	Msg("~ CCharacterPhysicsSupport::on_child_shell_activate");
     if (!has_shell_collision_place(obj))
         return;
 

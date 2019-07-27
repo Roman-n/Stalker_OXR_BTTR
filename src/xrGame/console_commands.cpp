@@ -165,11 +165,11 @@ static void full_memory_stats()
     size_t _process_heap = ::Memory.mem_usage();
     int _eco_strings = (int)g_pStringContainer->stat_economy();
     int _eco_smem = (int)g_pSharedMemoryContainer->stat_economy();
-    Msg("* [ D3D ]: textures[%d K]", (m_base + m_lmaps) / 1024);
-    Msg("* [x-ray]: process heap[%u K]", _process_heap / 1024);
-    Msg("* [x-ray]: economy: strings[%d K], smem[%d K]", _eco_strings / 1024, _eco_smem);
+    Msg("! [ D3D ]: textures[%d K]", (m_base + m_lmaps) / 1024);
+    Msg("! [x-ray]: process heap[%u K]", _process_heap / 1024);
+    Msg("! [x-ray]: economy: strings[%d K], smem[%d K]", _eco_strings / 1024, _eco_smem);
 #ifdef FS_DEBUG
-    Msg("* [x-ray]: file mapping: memory[%d K], count[%d]", g_file_mapped_memory / 1024, g_file_mapped_count);
+    Msg("! [x-ray]: file mapping: memory[%d K], count[%d]", g_file_mapped_memory / 1024, g_file_mapped_count);
     dump_file_mappings();
 #endif
 
@@ -209,14 +209,6 @@ public:
         CCC_Token::Execute(args);
         if (g_pGameLevel && Level().game)
         {
-            //#ifndef	DEBUG
-//            if (GameID() != eGameIDSingle)
-//            {
-//                Msg("For this game type difficulty level is disabled.");
-//                return;
-//            };
-            //#endif
-
             game_cl_Single* game = smart_cast<game_cl_Single*>(Level().game);
             VERIFY(game);
             game->OnDifficultyChanged();
