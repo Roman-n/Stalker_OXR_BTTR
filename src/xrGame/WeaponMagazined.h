@@ -164,7 +164,6 @@ protected:
     virtual bool install_upgrade_impl(LPCSTR section, bool test);
 #ifdef AMMO_FROM_BELT
 	IC			bool TryToGetAmmo(u32_);
-    u32         mstate_real;
 #endif	
 	
     virtual bool AllowFireWhileWorking() { return false; }

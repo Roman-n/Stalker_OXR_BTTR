@@ -217,15 +217,12 @@ bool CWeaponMagazined::TryToGetAmmo(u32_ id)
 
 	if (smart_cast<CActor*>(H_Parent()) != NULL)
 	{
-        if (!mstate_real & mcAnyMove || !mstate_real & mcSprint)
-        {
-            m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[id].c_str()));
-            Msg("Try reload for actor");
-        }
+        m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[id].c_str()));
+        Msg("[C++ Log]: Try reload for actor");
 	}
 	else
 	{
-		Msg("Try reload for npc");
+		Msg("[C++ Log]: Try reload for npc");
 		m_pCurrentAmmo		= smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[id].c_str()));
 	}
 
