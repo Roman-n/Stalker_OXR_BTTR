@@ -61,6 +61,8 @@
 #define VOLUMETRIK_TORCH							// Объемный свет фонаря
 #define ZOOM_MINIMAP								// Консольная команда зума для мини карты из XRay Oxygen
 #define __FIX										// Вылет по поясу, если переместить итем размера 2 на 1 ячейку
+//#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
+
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
