@@ -95,7 +95,6 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
 
 void CWeaponShotgun::Reload()
 {
-    Actor()->SetCantRunState(true); // oldSerpskiStalker
 
 	if(m_bTriStateReload){
 		if (m_pInventory)

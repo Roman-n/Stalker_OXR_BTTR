@@ -179,14 +179,14 @@ void CWeaponAutomaticShotgun::PlayAnimOpenWeapon()
     if (Actor()->m_block_sprint_counter > 0)
     {
         Actor()->m_block_sprint_counter = 0;
-        Log("- Class A-Shotgun");
+    //    Log("- Class A-Shotgun");
     //    Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
     }
 
     if (Actor()->m_block_sprint_counter <= 0)
     {
         Actor()->m_block_sprint_counter = 0;
-        Log("- Class A-Shotgun");
+    //    Log("- Class A-Shotgun");
     //    Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
     }
 

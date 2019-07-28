@@ -5,6 +5,8 @@
 #include "Level.h"
 #include "xrPhysics/MathUtils.h"
 #include "actor.h"
+#include "inventory.h"
+#include "inventoryOwner.h"
 
 #ifdef DEBUG
 #include "phdebug.h"
@@ -31,7 +33,6 @@ BOOL CWeaponRG6::net_Spawn(CSE_Abstract* DC)
                 inheritedRL::SpawnRocket(*fake_grenade_name, this);
             }
         }
-        //			inheritedRL::SpawnRocket(*fake_grenade_name, this);
     }
 
     return l_res;
@@ -42,8 +43,7 @@ void CWeaponRG6::Load(LPCSTR section)
     inheritedRL::Load(section);
     inheritedSG::Load(section);
 }
-#include "inventory.h"
-#include "inventoryOwner.h"
+
 void CWeaponRG6::FireStart()
 {
     if (GetState() == eIdle && getRocketCount() && m_ammoElapsed.type1)
@@ -87,26 +87,16 @@ void CWeaponRG6::FireStart()
 
             if (HasPick)
             {
-                //			collide::rq_result& RQ = HUD().GetCurrentRayQuery();
+               
                 Fvector Transference;
-                // Transference.add(p1, Fvector().mul(d, RQ.range));
                 Transference.mul(d, RQ.range);
                 Fvector res[2];
-                /*#ifdef		DEBUG
-                                DBG_OpenCashedDraw();
-                                DBG_DrawLine(p1,Fvector().add(p1,d),color_xrgb(255,0,0));
-                #endif*/
+              
                 u8 canfire0 = TransferenceAndThrowVelToThrowDir(
                     Transference, CRocketLauncher::m_fLaunchSpeed, EffectiveGravity(), res);
-                /*#ifdef DEBUG
-                                if(canfire0>0)DBG_DrawLine(p1,Fvector().add(p1,res[0]),color_xrgb(0,255,0));
-                                if(canfire0>1)DBG_DrawLine(p1,Fvector().add(p1,res[1]),color_xrgb(0,0,255));
-                                DBG_ClosedCashedDraw(30000);
-                #endif*/
+               
                 if (canfire0 != 0)
                 {
-                    //					Msg ("d[%f,%f,%f] - res [%f,%f,%f]", d.x, d.y, d.z, res[0].x, res[0].y,
-                    // res[0].z);
                     d = res[0];
                 };
             }

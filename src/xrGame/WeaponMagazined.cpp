@@ -236,14 +236,14 @@ void CWeaponMagazined::OnAnimationEnd(u32 state)
         if (Actor()->m_block_sprint_counter > 0)
         {
             Actor()->m_block_sprint_counter = 0;
-            Log("- s8 cmd = P.r_s8();"); 
+        //    Log("- s8 cmd = P.r_s8();"); 
         //    Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
         }
 
         if (Actor()->m_block_sprint_counter <= 0)
         {
             Actor()->m_block_sprint_counter = 0;
-            Log("- s8 cmd = P.r_s8();");
+        //    Log("- s8 cmd = P.r_s8();");
         //    Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
         }
         break; // End of Hide
@@ -276,7 +276,6 @@ bool CWeaponMagazined::TryReload()
     {
         if (TryToGetAmmo(m_ammoType.type1) || unlimited_ammo() || (IsMisfire() && m_ammoElapsed.type1))
         {
-            Actor()->SetCantRunState(true);         // oldSerpskiStalker 
             SetPending(TRUE);
             SwitchState(eReload);
             return true;
@@ -1064,12 +1063,14 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
                 PIItem Det = Actor()->inventory().ItemFromSlot(DETECTOR_SLOT);
                 if (!Det)
                     Reload(); // Rietmon: Если в слоте нету детектора, то он не может быть активен
+				Actor()->SetCantRunState(true);         // oldSerpskiStalker 
 
                 if (Det)
                 {
                     CCustomDetector* pDet = smart_cast<CCustomDetector*>(Det);
                     if (!pDet->IsWorking())
                         Reload();
+					Actor()->SetCantRunState(true);         // oldSerpskiStalker 
                 }
             }
     }

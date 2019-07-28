@@ -12,11 +12,16 @@ void CWeaponBM16::Load(LPCSTR section)
 void CWeaponBM16::PlayReloadSound()
 {
     if (m_magazine.size() == 1)
+    {
         PlaySound("sndReload1", get_LastFP());
+        //        Actor()->SetCantRunState(false); // oldSerpskiStalker
+    }
     else
+    {
         PlaySound("sndReload", get_LastFP());
+        //        Actor()->SetCantRunState(false); // oldSerpskiStalker
+    }
 }
-
 void CWeaponBM16::PlayAnimShoot()
 {
     switch (m_magazine.size())
@@ -44,20 +49,22 @@ void CWeaponBM16::PlayAnimHide()
     case 1: PlayHUDMotion("anm_hide_1", TRUE, this, GetState()); break;
     case 2: PlayHUDMotion("anm_hide_2", TRUE, this, GetState()); break;
     }
-    // oldSerpskiStalker 
-//    if (Actor()->m_block_sprint_counter > 0)
-//    {
-//        Actor()->m_block_sprint_counter = 0;
-//        Log("- Class BM16");
-//        Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
-//    }
+    // oldSerpskiStalker
+    
+       if (Actor()->m_block_sprint_counter > 0)
+        {
+            Actor()->m_block_sprint_counter = 0;
+    //        Log("- Class BM16");
+    //        Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
+        }
 
-//    if (Actor()->m_block_sprint_counter <= 0)
-//    {
-//        Actor()->m_block_sprint_counter = 0;
-//        Log("- Class BM16");
-//        Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
-//    }
+        if (Actor()->m_block_sprint_counter <= 0)
+        {
+            Actor()->m_block_sprint_counter = 0;
+    //        Log("- Class BM16");
+    //        Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
+        }
+    
 }
 
 void CWeaponBM16::PlayAnimBore()
@@ -74,15 +81,21 @@ void CWeaponBM16::PlayAnimReload()
 {
     bool b_both = HaveCartridgeInInventory(2);
 
-//    Actor()->SetCantRunState(true); // oldSerpskiStalker 
+    Actor()->SetCantRunState(false);                            // oldSerpskiStalker
 
     VERIFY(GetState() == eReload);
 
     if ((m_magazine.size() == 1 || !b_both) &&
         (m_set_next_ammoType_on_reload == undefined_ammo_type || m_ammoType.type1 == m_set_next_ammoType_on_reload))
+    {
         PlayHUDMotion("anm_reload_1", TRUE, this, GetState());
+        Actor()->SetCantRunState(true);                         // oldSerpskiStalker
+    }
     else
+    {
         PlayHUDMotion("anm_reload_2", TRUE, this, GetState());
+        Actor()->SetCantRunState(true);                        // oldSerpskiStalker
+    }
 }
 
 void CWeaponBM16::PlayAnimIdleMoving()
@@ -114,13 +127,19 @@ void CWeaponBM16::PlayAnimIdle()
     {
         switch (m_magazine.size())
         {
-        case 0: { PlayHUDMotion("anm_idle_aim_0", TRUE, NULL, GetState());
+        case 0:
+        {
+            PlayHUDMotion("anm_idle_aim_0", TRUE, NULL, GetState());
         }
         break;
-        case 1: { PlayHUDMotion("anm_idle_aim_1", TRUE, NULL, GetState());
+        case 1:
+        {
+            PlayHUDMotion("anm_idle_aim_1", TRUE, NULL, GetState());
         }
         break;
-        case 2: { PlayHUDMotion("anm_idle_aim_2", TRUE, NULL, GetState());
+        case 2:
+        {
+            PlayHUDMotion("anm_idle_aim_2", TRUE, NULL, GetState());
         }
         break;
         };
@@ -129,13 +148,19 @@ void CWeaponBM16::PlayAnimIdle()
     {
         switch (m_magazine.size())
         {
-        case 0: { PlayHUDMotion("anm_idle_0", TRUE, NULL, GetState());
+        case 0:
+        {
+            PlayHUDMotion("anm_idle_0", TRUE, NULL, GetState());
         }
         break;
-        case 1: { PlayHUDMotion("anm_idle_1", TRUE, NULL, GetState());
+        case 1:
+        {
+            PlayHUDMotion("anm_idle_1", TRUE, NULL, GetState());
         }
         break;
-        case 2: { PlayHUDMotion("anm_idle_2", TRUE, NULL, GetState());
+        case 2:
+        {
+            PlayHUDMotion("anm_idle_2", TRUE, NULL, GetState());
         }
         break;
         };
