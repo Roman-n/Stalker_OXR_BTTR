@@ -1,0 +1,408 @@
+
+--' START +\
+--..#+#--\\ Другое из LUA....
+
+		local values = {1,
+						2,
+						3,
+						4,
+						5
+						n...,}
+
+--' 									1. Метод таблицы
+function tabl_getn()
+		local values = {1,2}
+	info = values[math.random(table.getn(values))] -- Локальная переменная таблицы
+		if info == 1 then 
+	news_manager.send_tip(db.actor, "%c[255,255,128,128]{debug}:\n%c[default]Получено первое значение", nil, nil, 30000) 
+		end
+		if info == 2 then 
+	news_manager.send_tip(db.actor, "%c[255,255,128,128]{debug}:\n%c[default]Получено второе значение", nil, nil, 30000) 
+		end
+end	
+--'										2. Функция рандом спавн из таблицы
+function tabl_getnSpawnRandom()
+		local type = {	"bread", 	-- Любой предмет из игры
+						"kolbasa", 
+						"conserva", 
+						"vodka"} 
+		--' local type Вынести в function()
+	alife():create(type[math.random(4--[[Кол-во предметов из таблицы]])],vector():set(-0.112,0.477,-215.563),174943,265)
+end
+--'										3. Удалить предмет, если выкинули на землю
+		--' Применяется для функции --//...#+#	actor_on_item_drop
+function _other_drop_item(item) --' Получить активный аргумент
+		local _section = item:section()
+		local _c = 75			--' Шанс что бутылка разобьется
+	if section=="vodka" and ... or ... then
+		if math.random(1, 100) < _c then
+			vodka = item:id()   --' При равнял водку к активному:id
+		alife():release(alife():object(vodka), true)	
+		end
+	end	
+end	
+--..#-#--\\ Конец функций LUA....	
+--' END /-
+
+
+--<:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::>--
+--<:::::::::::::::::::::::::::::::::DEBUG and MUSOR:::::::::::::::::::::::::::::::::::::::::>--
+--<:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::>--
+
+--	if ( id == cl_20 and self.object:alive() and posit:distance_to(db.actor:position()) < 100 ) then -- Пси-собака(фантом)
+--   
+--	end
+
+--function timer_()
+--_t = time_global() + 100
+--end
+
+--function timer_()
+--_t = time_global() + 100
+--end
+-- Эффект при приближении к пси-собакам, если в инвентаре артефакт - Дух
+--if db.actor and db.actor:object("u_af_spirit") ~= nil then
+--obj  = self.object
+--local id = get_clsid(obj)
+--local posit = self.object:position()
+--	if ( id == clsid.pseudodog_s and self.object:alive() and posit:distance_to(db.actor:position()) < 10 ) then
+--        level.remove_cam_effector(12500)
+--        level.remove_pp_effector(12500)
+--	end
+--end
+
+
+--if (db.actor:item_in_slot(9) ~= nil) then 
+--if (db.actor:item_in_slot(9):section()  == "device_flashlight") then 
+--if db.actor and active_item:section() == "device_flashlight" then
+--local torch = db.actor:object( "device_torch" )
+--	if torch:torch_enabled() == true and flag_flashlight_off == true then
+--		flag_flashlight_off = false
+--		flag_flashlight_on = true
+--obj  = self.object
+--ocal id = get_clsid(obj)
+--local posit = self.object:position()
+--local active_item = db.actor:item_in_slot(db.actor:active_slot(9))
+--	if ( id == clsid.fracture_s and self.object:alive() and posit:distance_to(db.actor:position()) < 10 ) then
+--		obj:set_custom_panic_threshold(1)
+--				else
+--		obj:set_custom_panic_threshold(0)
+--	end
+--end	
+--end
+--end
+--end
+
+--if db.actor and db.actor:object("u_af_cherep") ~= nil then
+--level.set_monster_relation( "zombied", "actor", 5000 )
+--end
+
+--local polter_hit_time           = 400
+--local hit_time_polter_enemy     = 600
+
+--local attack_nil              = 0
+--local poltergeist_attack_time = 3000
+--local poltergeist_attack_next = 3500
+
+--local bloodsucker1 = particles_object("anomaly2\\body_tear_02")
+--local bloodsucker2 = particles_object("anomaly2\\bold_idle")
+--local bloodsucker3 = particles_object("anomaly2\\electra2_blast")
+--local bloodsucker4 = particles_object("artefact\\af_electra_show")
+--local bloodsucker5 = particles_object("static\\zharka_static")
+
+--local zombie_particle1 = particles_object("explosions\\explosion_04")
+--local zombie_particle2 = particles_object("anomaly2\\body_tear_00")
+--local zombie_sound1 = sound_object([[anomaly\anomaly_body_tear_1]])
+--local zombie_sound2 = sound_object([[weapons\f1_explode_]])
+
+--DETECTOR_SCAN SOUND ON-------------------------------------------------
+--		if self.object:clsid() == clsid.controller_s and self.object:alive() == true then
+--		    if has_alife_info("detektor_scan") then
+--		       if self.object:position():distance_to(db.actor:position()) < 50 then 
+--		          timer_znach_poisk_zwuka()
+--		     end
+--		end
+--    end
+--DETECTOR_SCAN SOUND OFF------------------------------------------------		
+
+--		if has_alife_info("panic_spider_add") then
+--	return false
+--		else
+--has_alife_info("panic_spider_add")
+--		local npc=sfobj:get_enemy()
+--			if npc:see(sfobj) and npc:position():distance_to(sfobj:position())<10 then
+
+--		end
+--	end
+
+--if self.object:section()=="zombie_ghost" or self.object:section()=="new_zombie_r6_plague" or self.object:section()=="new_zombie_r7_plague" then
+
+---		level.set_pp_effector_factor(1001, 0.0005)
+--			play_sound([[monsters\controller\controller_presence_r]])
+--				level.add_cam_effector("camera_effects\\drunk_build.anm", 14000, false, "")
+--				level.add_pp_effector("vibros_p_build.ppe", 14000, false)
+
+--TEST-------------------------------------------------------------------	
+-- local effect_1 = level.add_cam_effector("camera_effects\\drunk_build.anm", 14000, false, "")
+-- local effect_2 = level.add_pp_effector("vibros_p_build.ppe", 14000, false)
+--- if self.object:section()=="new_zombie_r6" or self.object:section()=="new_zombie_r10" and self.object:alive() == true and time_global()>(self.upd_time or 0) then
+---		local dist = self.object:position():distance_to(db.actor:position())
+---		if dist < 20 then
+---		for _,n in pairs(effects[num]) do
+---		level.add_cam_effector("build_1935_pseudodog_effect_"..n..".anm", 12500, false, "")
+---	    end
+--			if math.random()<(dist*0.1) then
+----				if phantom_manager.phantom_count()<5 then
+---		play_sound([[monsters\controller\controller_presence_r]])
+--      effect_1 
+--      effect_2 
+--				end
+--				end
+---		end
+---		self.upd_time = time_global() + eff_build
+--	end
+---if self.object:section()=="new_zombie_r6" or self.object:section()=="new_zombie_r10" and timer < time_global() then---and self.object:alive() then
+--if self.object:alive() and self.object:position():distance_to(db.actor:position()) < 10 then
+--news_manager.send_tip(db.actor, "%c[255,255,128,128]ПРИМЕР:\n%c[default]ВАШ ТЕКСТ", nil, nil, 30000)
+--end
+--timer = time_global() + 30000
+--end
+---if self.object:section()=="new_zombie_r6" or self.object:section()=="new_zombie_r10" then
+--    eff1935_timer < time_global()
+---       
+--	   and time_global()>(eff_timer_build or 0) then
+---		eff_timer_build = time_global() + eff_build
+---		
+---	if self.object:alive() and self.object:position():distance_to(db.actor:position()) < 10 and time_global()>(eff_timer_build or 0) then
+--	   eff_timer_build = time_global()+eff_build
+----      if  eff1935_timer = time_global()+eff_build_1935 then
+---		play_sound([[monsters\controller\controller_presence_r]])
+--       level.add_cam_effector("camera_effects\\drunk_build.anm", 14000, false, "")
+--       level.add_pp_effector("vibros_p_build.ppe", 14000, false)
+--		
+--        end
+---end
+-- end
+--TEST-------------------------------------------------------------------
+
+-- Удар полтергейста руками
+---		if self.object:clsid() == clsid.fracture_s then
+---			local target = self.object:get_enemy()
+---			if target and self.object:see(target) and (IsStalker(target) or IsMonster(target)) then
+---				if not self.get_hit then
+--					self.get_hit = time_global() + 100
+--					self.start_anim_hit_cont = true
+--				elseif self.get_hit <= time_global() then
+---					local dist = self.object:position():distance_to(target:position())
+---					if dist <= 20 then
+---						if self.start_anim_hit_cont then
+---							if self.object:animation_count() > 0 then
+--								self.object:clear_animations()
+--							end
+--							self.object:add_animation("stand_threaten_0", true)
+--							self.object:play_cycle("stand_attack_1", true)							
+--							
+---							local song_start = xr_sound.get_safe_sound_object("monsters\\controller\\controller_hit_2")
+---							song_start:play_at_pos(self.object, self.object:position(), sound_object.s3d)
+---							self.start_anim_hit_cont = false
+---						end
+---						if not self.hit_to_enemy then
+---							self.hit_to_enemy = time_global() + 300
+---						elseif self.hit_to_enemy <= time_global() then
+--							level.add_cam_effector("camera_effects\\hit_back_left.anm", 777, false, "")
+--							
+--							local h = hit()
+--							h.draftsman = self.object
+---							h.direction = vector():set(0,0,0)  
+---							h:bone("bip01_spine")   
+---							h.power     = 0.40     
+------							h.impulse   = 1
+---							h.type      = hit.wound
+---							target:hit(h)
+---							
+---							self.hit_to_enemy = nil
+---							self.get_hit = nil
+---						end
+---					end
+---				end
+---			end
+--			if self.object:animation_count() < 1 then
+---				local i = math.random(0,5)
+--				self.object:add_animation("stand_walk_fwd_", true)
+---			end
+---		end
+--
+
+--poltergeist_xray2 SoC on-----------------------------------------------
+    -- Удар на расстоянии полтергейстов
+--		if self.object:clsid() == clsid.fracture_s then
+--			local target = self.object:get_enemy()
+--			if target and self.object:see(target) and IsStalker(target) then
+--				local dist = self.object:position():distance_to(target:position())
+--				if dist <= 20 then
+--					if not self.get_hit then
+--						self.get_hit = time_global() + polter_hit_time
+--						self.start_anim_hit_cont = true
+--					elseif self.get_hit <= time_global() then
+--						if self.start_anim_hit_cont then
+--							if self.object:animation_count() > 0 then
+--								self.object:clear_animations()
+--							end
+--							self.object:play_cycle("stand_attack_1", true)
+--							
+--							local song_start = xr_sound.get_safe_sound_object("monsters\\controller\\controller_hit_2")
+--							song_start:play_at_pos(self.object, self.object:position(), sound_object.s3d)
+--							self.start_anim_hit_cont = false
+--						end
+--						if not self.hit_to_enemy then
+--							self.hit_to_enemy = time_global() + hit_time_polter_enemy
+--						elseif self.hit_to_enemy <= time_global() then
+--							level.add_cam_effector("camera_effects\\hit_back_left.anm", 777, false, "")
+--							
+--							local h = hit()
+--							h.draftsman = self.object
+--							h.direction = vector():set(0,0,0)  
+--							h:bone("bip01_spine")   
+--							h.power     = 0.40     
+--							h.impulse   = 1
+--							h.type      = hit.wound
+--							target:hit(h)
+--							
+--							self.hit_to_enemy = nil
+--							self.get_hit = nil
+--						end
+--					end
+--				else
+--					self.hit_to_enemy = nil
+--					self.get_hit = nil
+--				end
+--			end
+--			if self.object:animation_count() < 1 then
+--				local i = math.random(0,5)
+--				self.object:add_animation("stand_walk_fwd_", true)
+--			end
+--		end
+
+--poltergeist_xray2 SoC off----------------------------------------------
+
+--Зомби камикадзе--------------------------------------------------------
+--[[
+---Сделано отдельным файлом
+--]]
+--if self.object:clsid()==clsid.zombie_s and db.actor:position():distance_to()<10 then
+--blow_zombie()
+--end
+---amk_particle.amk_particle({
+--particle="monsters\\polter_death_00",
+---pos=obj:bone_position("bip01_head"),
+--sound="anomaly\\anomaly_gravy_hit1"
+---})
+--local dist = db.actor:position():distance_to(obj:position())
+---if dist < 20 and db.actor:see(obj) then
+---local h = hit()
+---h.impulse = 0
+--h.draftsman = db.actor
+---h.direction = vector():set(0,0,0)
+--h:bone("bip01_spine")
+--h.power = 1/dist
+--h.type = hit.burn
+--db.actor:hit(h)
+--h.power = 15/dist
+--h.type = hit.burn
+--db.actor:hit(h)
+--local snd_obj = xr_sound.get_safe_sound_object([[monsters\zombie\zombie_take_damage_]]..tostring(math.random(1,6)))
+--snd_obj:play_no_feedback(db.actor, sound_object.s2d, 0, vector(), 1.0)
+--alife():release(alife():object(obj:id()))
+--end
+--end
+--Зомби камикадзе--------------------------------------------------------
+
+--poltergeist_xray SoC on------------------------------------------------
+
+--if self.object:section()=="poltergeist_xray" and attack_nil < time_global() then
+--local a = db.actor
+--local oTarget = self.object:get_enemy()
+--local v1 = self.object:direction()
+--local v2 = a:direction()
+--local diff = level.get_game_difficulty()
+--
+--if oTarget and (oTarget:id()==0) and (v1.x*v2.x) + (v1.z*v2.z ) < -0.6 and self.object:see(a) and self.object:position():distance_to(a:position())<20 then
+--	num=1
+--	if math.random()<diff/10 then
+--		db.actor.power = -1.0
+--	end	
+--	local aitem=a:active_item()
+---	if aitem and math.random()<diff/20 and (a:active_slot()==1 or a:active_slot()==2) then
+---		a:drop_item(aitem)
+--	end
+--	attack_nil=time_global() + poltergeist_attack_next
+--end
+--elseif num and attack_nil < time_global() + poltergeist_attack_time then
+--	num=nil
+--end
+
+--poltergeist_xray SoC off------------------------------------------------
+
+	
+--	        if self.object:clsid()==clsid.burer_s and self.object:section()=="m_controller_normal2" and controller_timer < time_global() then
+---		    news_manager.send_tip(db.actor, "%c[255,255,128,128]ПРИМЕР:\n%c[default]ВАШ ТЕКСТ", nil, nil, 30000)
+---            if self.object:position():distance_to(db.actor:position()) < 50 then 
+---			    db.actor.psy_health = -0.16
+---				play_sound([[monsters\controller\controller_presence_r]])
+---				level.add_cam_effector("camera_effects\\drunk_build.anm", 14000, false, "")
+---				level.add_pp_effector("vibros_p_build.ppe", 14000, false)
+ ---           end
+---			controller_timer = time_global() + eff_build_1935
+ ---       end
+---	
+---	else
+---	self.object:set_tip_text_default()
+
+
+--	if obj:section()=="pseudodog_strong" and time_global()>(self.charge_time or 0)+3000 then
+--        local actor = db.actor
+--		local dist = db.actor:position():distance_to(obj:bone_position("bip01_spine"))
+--			if dist < 10 then
+--			actor:give_info_portion("power_psy")
+--				if actor:has_info("power_psy") then
+--                                psy_dog_bild.play_cam_effect() 
+--				psy_dog_bild.drop_weapon()
+--				psy_dog_bild.play_zwuk()
+--				else
+--					return			
+--				end
+--			self.charge_time=time_global()
+--		end
+--	end
+
+--	if (victim:clsid() == clsid.bloodsucker_s) then
+--		local obj = alife_object(id)
+--		if (obj) then
+--		bloodsucker1:play_at_pos(obj:position())
+---       bloodsucker2:play_at_pos(obj:position())
+--        bloodsucker3:play_at_pos(obj:position())
+--        bloodsucker4:play_at_pos(obj:position())
+--		bloodsucker5:play_at_pos(obj:position())
+--		
+--			safe_release_manager.release(se_obj)
+--		end
+--               end
+
+
+--	if (victim:clsid() == clsid.zombie_s) then
+--		local se_obj = alife_object(id)
+--		if (se_obj) then
+--               zombie_beee.destroy_object(sobj)
+--		zombie_particle1:play_at_pos(se_obj:position())
+--		zombie_particle2:play_at_pos(se_obj:position())	
+--
+--		zombie_sound1:play_at_pos(se_obj, obj:position(), 0)
+--		zombie_sound2:play_at_pos(se_obj, obj:position(), 0)
+--			safe_release_manager.release(se_obj)
+--		end
+--               end
+--
+
+--<:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::>--
+--<:::::::::::::::::::::::::::::::::DEBUG and MUSOR:::::::::::::::::::::::::::::::::::::::::>--
+--<:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::>--

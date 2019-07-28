@@ -28,6 +28,8 @@ CBurer::CBurer()
 {
     StateMan = new CStateManagerBurer(this);
 
+	TScanner::init_external(this);
+
     m_fast_gravi = new CBurerFastGravi();
 
     control().add(m_fast_gravi, ControlCom::eComCustom1);
@@ -41,6 +43,8 @@ CBurer::~CBurer()
 
 void CBurer::reinit()
 {
+	TScanner::reinit();	
+	
     inherited::reinit();
 
     DeactivateShield();
@@ -48,9 +52,15 @@ void CBurer::reinit()
     time_last_scan = 0;
 }
 
-void CBurer::net_Destroy() { inherited::net_Destroy(); }
+void CBurer::net_Destroy() 
+{ 
+	TScanner::on_destroy();	
+	inherited::net_Destroy(); 
+}
+
 void CBurer::reload(LPCSTR section)
 {
+	TScanner::load(section);
     inherited::reload(section);
 
     // add specific sounds
@@ -65,6 +75,8 @@ void CBurer::ActivateShield() { m_shield_active = true; }
 void CBurer::DeactivateShield() { m_shield_active = false; }
 void CBurer::Load(LPCSTR section)
 {
+	TScanner::load(section);
+	
     inherited::Load(section);
 
     // anim().AddReplacedAnim		(&m_bDamaged, eAnimStandIdle,	eAnimStandDamaged);
@@ -227,6 +239,9 @@ void CBurer::PostLoad(LPCSTR section)
 void CBurer::shedule_Update(u32 dt)
 {
     inherited::shedule_Update(dt);
+
+    TScanner::schedule_update		();
+	(!EnemyMan.get_enemy()) ? TScanner::enable() : TScanner::disable();	
 
     CTelekinesis::schedule_update();
 }
@@ -395,9 +410,9 @@ void CBurer::UpdateCL()
 {
     inherited::UpdateCL();
 
+	TScanner::frame_update(Device.dwTimeDelta);
+
     UpdateGraviObject();
-    // if (m_fast_gravi->check_start_conditions())
-    //	control().activate(ControlCom::eComCustom1);
 }
 
 void CBurer::StartGraviPrepare()
@@ -461,6 +476,8 @@ void CBurer::Hit(SHit* pHDS)
 void CBurer::Die(IGameObject* who)
 {
     inherited::Die(who);
+	
+	TScanner::on_destroy();
 
     if (com_man().ta_is_active())
     {

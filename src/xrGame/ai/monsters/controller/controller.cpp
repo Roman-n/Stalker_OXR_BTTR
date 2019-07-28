@@ -33,7 +33,7 @@
 #include "xrServerEntities/character_info.h"
 #include "ai/Monsters/Controller/controller_psy_hit.h"
 #include "ai/Monsters/monster_cover_manager.h"
-
+#include "controller_psy_aura.h"
 #ifdef _DEBUG
 #include <dinput.h>
 #endif
@@ -63,16 +63,15 @@ CController::CController()
 
     control().add(m_psy_hit, ControlCom::eComCustom1);
 
-#ifdef _DEBUG
-    P1.set(0.f, 0.f, 0.f);
-    P2.set(0.f, 0.f, 0.f);
-#endif
+	m_aura = new CControllerAura(this);
+
 }
 
 CController::~CController()
 {
     xr_delete(StateMan);
     xr_delete(m_psy_hit);
+	xr_delete(m_aura);
 }
 
 void CController::Load(LPCSTR section)
@@ -254,6 +253,7 @@ void CController::Load(LPCSTR section)
     m_stamina_hit = READ_IF_EXISTS(pSettings, r_float, section, "stamina_hit", default_stamina_hit);
 
     PostLoad(section);
+	m_aura->load(section);
 }
 
 void CController::load_friend_community_overrides(LPCSTR section)
@@ -468,6 +468,8 @@ void CController::UpdateCL()
             CurrentGameUI()->RemoveCustomStatic("controller_fx2");
         }
     }
+	
+	m_aura->update_frame();
 }
 
 void CController::shedule_Update(u32 dt)
@@ -483,13 +485,19 @@ void CController::shedule_Update(u32 dt)
 
     // DEBUG
     test_covers();
+	
+	m_aura->update_schedule();
 }
 
 void CController::Die(IGameObject* who)
 {
     inherited::Die(who);
     FreeFromControl();
-
+#ifdef FIX_AURA_CONTROLLER	
+	m_aura->on_destroy	();
+#else
+	m_aura->on_death	();
+#endif
     m_psy_hit->on_death();
 }
 

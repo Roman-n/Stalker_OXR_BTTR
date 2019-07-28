@@ -8,6 +8,7 @@ class CControllerAnimation;
 class CControllerDirection;
 class SndShockEffector;
 class CControllerPsyHit;
+class CControllerAura;
 
 class CController : public CBaseMonster, public CControlledActor
 {
@@ -34,6 +35,13 @@ class CController : public CBaseMonster, public CControlledActor
     u32 m_psy_fire_delay;
 
     bool m_tube_at_once;
+
+	CControllerAura		*m_aura;
+	struct SAuraSound {
+	ref_sound	left;
+	ref_sound	right;
+	} aura_sound;
+	SAuraSound		*current_aura_sound;
 
 public:
     float aura_radius;

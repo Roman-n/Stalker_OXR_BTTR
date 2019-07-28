@@ -7,7 +7,7 @@
 class CCharacterPhysicsSupport;
 class CBurerFastGravi;
 
-class CBurer : public CBaseMonster, public CTelekinesis
+class CBurer : public CBaseMonster, public CTelekinesis, public CScanningAbility<CBurer>
 {
     typedef CBaseMonster inherited;
 
@@ -15,6 +15,7 @@ private:
     xr_vector<IGameObject*> m_nearest;
 
 public:
+	typedef CScanningAbility<CBurer> TScanner;
     static bool can_scan;
 
     u32 last_hit_frame;

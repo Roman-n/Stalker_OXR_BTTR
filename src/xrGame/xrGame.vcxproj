@@ -465,6 +465,7 @@
     <ClInclude Include="ai\Monsters\Controller\controller_animation.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_direction.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_psy_hit.h" />
+	<ClInclude Include="ai\Monsters\Controller\controller_psy_aura.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_psy_hit_effector.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_state_attack.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_state_attack_camp.h" />
@@ -1878,6 +1879,7 @@
     <ClCompile Include="ai\Monsters\Controller\controller_animation.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_direction.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_psy_hit.cpp" />
+	<ClCompile Include="ai\Monsters\Controller\controller_psy_aura.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_psy_hit_effector.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_script.cpp">
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>

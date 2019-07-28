@@ -97,7 +97,7 @@ void CWeaponAutomaticShotgun::Reload()
     if (m_bTriStateReload)
     {
         TriStateReload();
-        Actor()->SetCantRunState(true); // oldSerpskiStalker 
+//        Actor()->SetCantRunState(true); // oldSerpskiStalker 
 		//Log("- cmd 5");
     }
     else
