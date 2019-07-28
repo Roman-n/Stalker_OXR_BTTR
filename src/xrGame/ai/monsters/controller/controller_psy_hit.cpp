@@ -141,7 +141,7 @@ namespace detail
 
 bool check_actor_visibility (const Fvector trace_from, 
 							 const Fvector trace_to,
-							 CObject* object)
+							 IGameObject* object)
 {
 	const float dist = trace_from.distance_to(trace_to);
 	Fvector trace_dir;
@@ -169,22 +169,6 @@ extern CActor* g_actor;
 bool CControllerPsyHit::see_enemy ()
 {
 	return	m_object->EnemyMan.see_enemy_now(Actor());
-// 	using namespace detail;
-// 	Fvector const self_head = get_head_position(m_object);
-// 	Fvector actor_center;
-// 	Actor()->Center(actor_center);
-// 	Fvector self_center;
-// 	m_object->Center(self_center);
-// 
-// 	if ( check_actor_visibility(self_head, get_head_position(Actor()), m_object) &&
-// 		 check_actor_visibility(self_head, actor_center, m_object) &&
-// 		 check_actor_visibility(self_center, get_head_position(Actor()), m_object) &&
-// 		 check_actor_visibility(self_center, actor_center, m_object) )
-// 	{
-// 		return true;
-// 	}
-// 
-// 	return false;
 }
 
 bool CControllerPsyHit::check_conditions_final()
@@ -248,7 +232,7 @@ void CControllerPsyHit::death_glide_start()
 	float const base_fov	=	g_fov;
 	float const dest_fov	=	g_fov - (g_fov-10.f)*actor_psy_immunity;
 	
-	Actor()->Cameras().AddCamEffector(xr_new<CControllerPsyHitCamEffector>(eCEControllerPsyHit, src_pos,target_pos, 
+	Actor()->Cameras().AddCamEffector(new CControllerPsyHitCamEffector(eCEControllerPsyHit, src_pos,target_pos, 
 										m_man->animation().motion_time(m_stage[1], m_object->Visual()),
 										base_fov, dest_fov));
 
