@@ -58,7 +58,7 @@ void CALifeObjectRegistry::save(IWriter& memory_stream, CSE_ALifeDynamicObject* 
 
 void CALifeObjectRegistry::save(IWriter& memory_stream)
 {
-    Msg("# Saving objects...");
+    Msg("- Saving objects...");
     memory_stream.open_chunk(OBJECT_CHUNK_DATA);
 
     u32 position = memory_stream.tell();

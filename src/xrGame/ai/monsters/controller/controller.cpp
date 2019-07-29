@@ -493,18 +493,16 @@ void CController::Die(IGameObject* who)
 {
     inherited::Die(who);
     FreeFromControl();
-#ifdef FIX_AURA_CONTROLLER	
-	m_aura->on_destroy	();
-#else
 	m_aura->on_death	();
-#endif
     m_psy_hit->on_death();
 }
 
 void CController::net_Destroy()
 {
     inherited::net_Destroy();
-
+#ifdef FIX_AURA_CONTROLLER	
+	m_aura->on_destroy();
+#endif	
     FreeFromControl();
 }
 

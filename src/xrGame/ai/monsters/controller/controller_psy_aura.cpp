@@ -178,7 +178,8 @@ void CControllerAura::on_destroy()
 		m_hit_state				= eNone;
 	}
 }
-#else
+#endif
+
 void CControllerAura::on_death()
 {
 	if (active()) {
@@ -187,7 +188,7 @@ void CControllerAura::on_death()
 		m_hit_state				= eNone;
 	}
 }
-#endif
+
 void CControllerAura::load(LPCSTR section)
 {
 	inherited::load				(pSettings->r_string(section,"aura_effector"));
