@@ -19,7 +19,7 @@ void CWeaponBM16::PlayReloadSound()
     else
     {
         PlaySound("sndReload", get_LastFP());
-        //        Actor()->SetCantRunState(false); // oldSerpskiStalker
+        Actor()->SetCantRunState(true); // oldSerpskiStalker
     }
 }
 void CWeaponBM16::PlayAnimShoot()
