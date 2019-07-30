@@ -9,6 +9,8 @@
 #include "script_callback_ex.h"
 #include "script_game_object.h"
 
+extern int g_sprint_reload_wpn;
+
 CWeaponShotgun::CWeaponShotgun()
 {
     m_eSoundClose = ESoundTypes(SOUND_TYPE_WEAPON_SHOOTING);
@@ -60,9 +62,10 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
 {
     if (!m_bTriStateReload || state != eReload)
         return inherited::OnAnimationEnd(state);
-	CActor* A = smart_cast<CActor*>(H_Parent());
-	if (A)
-		A->callback(GameObject::eActorHudAnimationEnd)(smart_cast<CGameObject*>(this)->lua_game_object(), this->hud_sect.c_str(), this->m_current_motion.c_str(), state, this->animation_slot());
+    CActor* A = smart_cast<CActor*>(H_Parent());
+    if (A)
+        A->callback(GameObject::eActorHudAnimationEnd)(smart_cast<CGameObject*>(this)->lua_game_object(),
+            this->hud_sect.c_str(), this->m_current_motion.c_str(), state, this->animation_slot());
 
     switch (m_sub_state)
     {
@@ -87,7 +90,10 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
     {
         m_sub_state = eSubstateReloadBegin;
         SwitchState(eIdle);
-        Actor()->SetCantRunState(false); // oldSerpskiStalker
+        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+        {
+            Actor()->SetCantRunState(false); // oldSerpskiStalker
+        }
     }
     break;
     };
@@ -95,20 +101,21 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
 
 void CWeaponShotgun::Reload()
 {
-
-	if(m_bTriStateReload){
-		if (m_pInventory)
-		{
-			CActor* A = smart_cast<CActor*>(H_Parent());
-			if (A)
-			{
-				int	AC = GetSuitableAmmoTotal();
-				A->callback(GameObject::eWeaponNoAmmoAvailable)(lua_game_object(), AC);
-			}
-		}
-		TriStateReload();
-	}else
-		inherited::Reload();
+    if (m_bTriStateReload)
+    {
+        if (m_pInventory)
+        {
+            CActor* A = smart_cast<CActor*>(H_Parent());
+            if (A)
+            {
+                int AC = GetSuitableAmmoTotal();
+                A->callback(GameObject::eWeaponNoAmmoAvailable)(lua_game_object(), AC);
+            }
+        }
+        TriStateReload();
+    }
+    else
+        inherited::Reload();
 }
 
 void CWeaponShotgun::TriStateReload()
@@ -177,21 +184,12 @@ void CWeaponShotgun::PlayAnimOpenWeapon()
     VERIFY(GetState() == eReload);
     PlayHUDMotion("anm_open", FALSE, this, GetState());
 
-    if (Actor()->m_block_sprint_counter > 0)
+    if (g_sprint_reload_wpn && Actor()->m_block_sprint_counter > 0 || Actor()->m_block_sprint_counter <= 0)
     {
         Actor()->m_block_sprint_counter = 0;
-        Log("- Class A-Shotgun");
-    //    Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
     }
-
-    if (Actor()->m_block_sprint_counter <= 0)
-    {
-        Actor()->m_block_sprint_counter = 0;
-        Log("- Class A-Shotgun");
-    //    Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
-    }
-
 }
+
 void CWeaponShotgun::PlayAnimAddOneCartridgeWeapon()
 {
     VERIFY(GetState() == eReload);
@@ -202,7 +200,6 @@ void CWeaponShotgun::PlayAnimCloseWeapon()
     VERIFY(GetState() == eReload);
 
     PlayHUDMotion("anm_close", FALSE, this, GetState());
-	
 }
 
 bool CWeaponShotgun::HaveCartridgeInInventory(u8 cnt)
@@ -247,9 +244,8 @@ u8 CWeaponShotgun::AddCartridge(u8 cnt)
     m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType.type1].c_str()));
     VERIFY((u32)m_ammoElapsed.type1 == m_magazine.size());
 
-
-	if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType.type1)
-		m_DefaultCartridge.Load(m_ammoTypes[m_ammoType.type1].c_str(), m_ammoType.type1, m_APk);
+    if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType.type1)
+        m_DefaultCartridge.Load(m_ammoTypes[m_ammoType.type1].c_str(), m_ammoType.type1, m_APk);
 
     CCartridge l_cartridge = m_DefaultCartridge;
     while (cnt)
@@ -301,6 +297,6 @@ void CWeaponShotgun::net_Import(NET_Packet& P)
 #ifdef DEBUG
         Msg("! %s reload to %s", *l_cartridge.m_ammoSect, m_ammoTypes[LocalAmmoType].c_str());
 #endif
-		l_cartridge.Load( m_ammoTypes[LocalAmmoType].c_str(), LocalAmmoType, m_APk );
-	}
+        l_cartridge.Load(m_ammoTypes[LocalAmmoType].c_str(), LocalAmmoType, m_APk);
+    }
 }

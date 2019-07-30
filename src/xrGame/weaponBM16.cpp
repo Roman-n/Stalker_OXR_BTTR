@@ -2,6 +2,8 @@
 #include "weaponBM16.h"
 #include "actor.h"
 
+extern int g_sprint_reload_wpn;
+
 CWeaponBM16::~CWeaponBM16() {}
 void CWeaponBM16::Load(LPCSTR section)
 {
@@ -14,12 +16,14 @@ void CWeaponBM16::PlayReloadSound()
     if (m_magazine.size() == 1)
     {
         PlaySound("sndReload1", get_LastFP());
-        //        Actor()->SetCantRunState(false); // oldSerpskiStalker
     }
     else
     {
         PlaySound("sndReload", get_LastFP());
-        Actor()->SetCantRunState(true); // oldSerpskiStalker
+        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+        {
+            Actor()->SetCantRunState(true); // oldSerpskiStalker
+        }
     }
 }
 void CWeaponBM16::PlayAnimShoot()
@@ -50,21 +54,11 @@ void CWeaponBM16::PlayAnimHide()
     case 2: PlayHUDMotion("anm_hide_2", TRUE, this, GetState()); break;
     }
     // oldSerpskiStalker
-    
-       if (Actor()->m_block_sprint_counter > 0)
-        {
-            Actor()->m_block_sprint_counter = 0;
-    //        Log("- Class BM16");
-    //        Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
-        }
 
-        if (Actor()->m_block_sprint_counter <= 0)
-        {
-            Actor()->m_block_sprint_counter = 0;
-    //        Log("- Class BM16");
-    //        Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
-        }
-    
+    if (g_sprint_reload_wpn && Actor()->m_block_sprint_counter > 0 || Actor()->m_block_sprint_counter <= 0)
+    {
+        Actor()->m_block_sprint_counter = 0;
+    }
 }
 
 void CWeaponBM16::PlayAnimBore()
@@ -80,8 +74,10 @@ void CWeaponBM16::PlayAnimBore()
 void CWeaponBM16::PlayAnimReload()
 {
     bool b_both = HaveCartridgeInInventory(2);
-
-    Actor()->SetCantRunState(false);                            // oldSerpskiStalker
+    if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+    {
+        Actor()->SetCantRunState(false); // oldSerpskiStalker
+    }
 
     VERIFY(GetState() == eReload);
 
@@ -89,12 +85,18 @@ void CWeaponBM16::PlayAnimReload()
         (m_set_next_ammoType_on_reload == undefined_ammo_type || m_ammoType.type1 == m_set_next_ammoType_on_reload))
     {
         PlayHUDMotion("anm_reload_1", TRUE, this, GetState());
-        Actor()->SetCantRunState(true);                         // oldSerpskiStalker
+        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+        {
+            Actor()->SetCantRunState(true); // oldSerpskiStalker
+        }
     }
     else
     {
         PlayHUDMotion("anm_reload_2", TRUE, this, GetState());
-        Actor()->SetCantRunState(true);                        // oldSerpskiStalker
+        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+        {
+            Actor()->SetCantRunState(true); // oldSerpskiStalker
+        }
     }
 }
 

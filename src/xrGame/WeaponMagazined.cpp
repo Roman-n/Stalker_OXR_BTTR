@@ -23,6 +23,8 @@
 #include "HudSound.h"
 #include "CustomDetector.h"
 
+extern int g_sprint_reload_wpn;
+
 CUIXml* pWpnScopeXml = nullptr;
 
 void createWpnScopeXML()
@@ -228,11 +230,12 @@ void CWeaponMagazined::OnAnimationEnd(u32 state)
     case eReload:
         ReloadMagazine();
         SwitchState(eIdle);
-        Actor()->SetCantRunState(false);                        // oldSerpskiStalker 
+        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+        {
+            Actor()->SetCantRunState(false); // oldSerpskiStalker
+        }
         break; // End of reload animation
-    case eHiding:
-        SwitchState(eHidden);
-        break; // End of Hide
+    case eHiding: SwitchState(eHidden); break; // End of Hide
     case eShowing: SwitchState(eIdle); break; // End of Show
     case eIdle: switch2_Idle(); break; // Keep showing idle
     }
@@ -278,8 +281,9 @@ bool CWeaponMagazined::TryReload()
             }
         }
     }
-
-    SwitchState(eIdle);
+    //fix
+    if (GetState() != eIdle)
+        SwitchState(eIdle);
 
     return false;
 }
@@ -1049,14 +1053,12 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
                 PIItem Det = Actor()->inventory().ItemFromSlot(DETECTOR_SLOT);
                 if (!Det)
                     Reload(); // Rietmon: Если в слоте нету детектора, то он не может быть активен
-	//			Actor()->SetCantRunState(true);         // oldSerpskiStalker 
 
                 if (Det)
                 {
                     CCustomDetector* pDet = smart_cast<CCustomDetector*>(Det);
                     if (!pDet->IsWorking())
                         Reload();
-	//				Actor()->SetCantRunState(true);         // oldSerpskiStalker 
                 }
             }
     }
@@ -1442,22 +1444,19 @@ void CWeaponMagazined::PlayAnimHide()
 {
     VERIFY(GetState() == eHiding);
     PlayHUDMotion("anm_hide", true, this, GetState());
-	
-	if (Actor()->m_block_sprint_counter > 0)
-    {
-        Actor()->m_block_sprint_counter = 0;
-    }
 
-    if (Actor()->m_block_sprint_counter <= 0)
+    if (g_sprint_reload_wpn && Actor()->m_block_sprint_counter > 0 || Actor()->m_block_sprint_counter <= 0)
     {
         Actor()->m_block_sprint_counter = 0;
     }
-	
 }
 
 void CWeaponMagazined::PlayAnimReload()
 {
-	Actor()->SetCantRunState(true);         // oldSerpskiStalker 
+    if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+    {
+        Actor()->SetCantRunState(true); // oldSerpskiStalker
+    }
     auto state = GetState();
     VERIFY(state == eReload);
 #ifdef NEW_ANIMS // AVO: use new animations

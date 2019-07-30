@@ -10,6 +10,8 @@
 #include "script_game_object.h"
 #include "actor.h"
 
+extern int g_sprint_reload_wpn;
+
 CWeaponAutomaticShotgun::CWeaponAutomaticShotgun()
 {
     m_eSoundClose = ESoundTypes(SOUND_TYPE_WEAPON_SHOOTING);
@@ -45,7 +47,7 @@ bool CWeaponAutomaticShotgun::Action(u16 cmd, u32 flags)
     {
         AddCartridge(1);
         m_sub_state = eSubstateReloadEnd;
-		//Log("- cmd 0");
+        // Log("- cmd 0");
         return true;
     }
     return false;
@@ -55,9 +57,10 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
 {
     if (!m_bTriStateReload || state != eReload)
         return inherited::OnAnimationEnd(state);
-	CActor* A = smart_cast<CActor*>(H_Parent());
-	if (A)
-		A->callback(GameObject::eActorHudAnimationEnd)(smart_cast<CGameObject*>(this)->lua_game_object(), this->hud_sect.c_str(), this->m_current_motion.c_str(), state, this->animation_slot());
+    CActor* A = smart_cast<CActor*>(H_Parent());
+    if (A)
+        A->callback(GameObject::eActorHudAnimationEnd)(smart_cast<CGameObject*>(this)->lua_game_object(),
+            this->hud_sect.c_str(), this->m_current_motion.c_str(), state, this->animation_slot());
 
     switch (m_sub_state)
     {
@@ -65,7 +68,7 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
     {
         m_sub_state = eSubstateReloadInProcess;
         SwitchState(eReload);
-		//Log("- cmd 1");
+        // Log("- cmd 1");
     }
     break;
 
@@ -74,10 +77,10 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
         if (0 != AddCartridge(1))
         {
             m_sub_state = eSubstateReloadEnd;
-			//Log("- cmd 2");
+            // Log("- cmd 2");
         }
         SwitchState(eReload);
-		//Log("- cmd 3");
+        // Log("- cmd 3");
     }
     break;
 
@@ -85,8 +88,11 @@ void CWeaponAutomaticShotgun::OnAnimationEnd(u32 state)
     {
         m_sub_state = eSubstateReloadBegin;
         SwitchState(eIdle);
-        Actor()->SetCantRunState(false); // oldSerpskiStalker 
-		//Log("- cmd 4");
+        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+        {
+            Actor()->SetCantRunState(false); // oldSerpskiStalker
+        }
+        // Log("- cmd 4");
     }
     break;
     };
@@ -97,8 +103,7 @@ void CWeaponAutomaticShotgun::Reload()
     if (m_bTriStateReload)
     {
         TriStateReload();
-//        Actor()->SetCantRunState(true); // oldSerpskiStalker 
-		//Log("- cmd 5");
+        // Log("- cmd 5");
     }
     else
         inherited::Reload();
@@ -111,7 +116,7 @@ void CWeaponAutomaticShotgun::TriStateReload()
     CWeapon::Reload();
     m_sub_state = eSubstateReloadBegin;
     SwitchState(eReload);
-	//Log("- cmd 6");
+    // Log("- cmd 6");
 }
 
 void CWeaponAutomaticShotgun::OnStateSwitch(u32 S, u32 oldState)
@@ -136,12 +141,12 @@ void CWeaponAutomaticShotgun::OnStateSwitch(u32 S, u32 oldState)
     case eSubstateReloadBegin:
         if (HaveCartridgeInInventory(1))
             switch2_StartReload();
-		//Log("- cmd 7");
+        // Log("- cmd 7");
         break;
     case eSubstateReloadInProcess:
         if (HaveCartridgeInInventory(1))
             switch2_AddCartgidge();
-		//Log("- cmd 8");
+        // Log("- cmd 8");
         break;
     case eSubstateReloadEnd: switch2_EndReload(); break;
     };
@@ -152,7 +157,7 @@ void CWeaponAutomaticShotgun::switch2_StartReload()
     PlaySound("sndOpen", get_LastFP());
     PlayAnimOpenWeapon();
     SetPending(TRUE);
-	//Log("- cmd 8.1");
+    // Log("- cmd 8.1");
 }
 
 void CWeaponAutomaticShotgun::switch2_AddCartgidge()
@@ -160,7 +165,7 @@ void CWeaponAutomaticShotgun::switch2_AddCartgidge()
     PlaySound("sndAddCartridge", get_LastFP());
     PlayAnimAddOneCartridgeWeapon();
     SetPending(TRUE);
-	//Log("- cmd 9");
+    // Log("- cmd 9");
 }
 
 void CWeaponAutomaticShotgun::switch2_EndReload()
@@ -168,7 +173,7 @@ void CWeaponAutomaticShotgun::switch2_EndReload()
     SetPending(FALSE);
     PlaySound("sndClose", get_LastFP());
     PlayAnimCloseWeapon();
-	//Log("- cmd 10");
+    // Log("- cmd 10");
 }
 
 void CWeaponAutomaticShotgun::PlayAnimOpenWeapon()
@@ -176,20 +181,10 @@ void CWeaponAutomaticShotgun::PlayAnimOpenWeapon()
     VERIFY(GetState() == eReload);
     PlayHUDMotion("anm_open", FALSE, this, GetState());
 
-    if (Actor()->m_block_sprint_counter > 0)
+    if (g_sprint_reload_wpn && Actor()->m_block_sprint_counter > 0 || Actor()->m_block_sprint_counter <= 0)
     {
         Actor()->m_block_sprint_counter = 0;
-    //    Log("- Class A-Shotgun");
-    //    Log("- m_block_sprint_counter > 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
     }
-
-    if (Actor()->m_block_sprint_counter <= 0)
-    {
-        Actor()->m_block_sprint_counter = 0;
-    //    Log("- Class A-Shotgun");
-    //    Log("- m_block_sprint_counter <= 0, m_block_sprint_counter = m_block_sprint_counter + cmd;");
-    }
-
 }
 void CWeaponAutomaticShotgun::PlayAnimAddOneCartridgeWeapon()
 {
@@ -201,20 +196,22 @@ void CWeaponAutomaticShotgun::PlayAnimCloseWeapon()
     VERIFY(GetState() == eReload);
 
     PlayHUDMotion("anm_close", FALSE, this, GetState());
-	
 }
 
 bool CWeaponAutomaticShotgun::HaveCartridgeInInventory(u8 cnt)
 {
-    if (unlimited_ammo()) return true;
-    if (!m_pInventory) return false;
+    if (unlimited_ammo())
+        return true;
+    if (!m_pInventory)
+        return false;
 
     u32 ac = GetAmmoCount(m_ammoType.type1);
     if (ac < cnt)
     {
         for (u8 i = 0; i < u8(m_ammoTypes.size()); ++i)
         {
-            if (m_ammoType.type1 == i) continue;
+            if (m_ammoType.type1 == i)
+                continue;
             ac += GetAmmoCount(i);
             if (ac >= cnt)
             {
@@ -243,22 +240,22 @@ u8 CWeaponAutomaticShotgun::AddCartridge(u8 cnt)
     m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType.type1].c_str()));
     VERIFY((u32)m_ammoElapsed.type1 == m_magazine.size());
 
-
-	if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType.type1)
-		m_DefaultCartridge.Load(m_ammoTypes[m_ammoType.type1].c_str(), m_ammoType.type1, m_APk);
-	CCartridge l_cartridge = m_DefaultCartridge;
-	while(cnt)
-	{
-		if (!unlimited_ammo())
-		{
-			if (!m_pCurrentAmmo->Get(l_cartridge)) break;
-		}
-		--cnt;
-		++m_ammoElapsed.type1;
-		l_cartridge.m_LocalAmmoType = m_ammoType.type1;
-		m_magazine.push_back(l_cartridge);
-//		m_fCurrentCartirdgeDisp = l_cartridge.m_kDisp;
-	}
+    if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType.type1)
+        m_DefaultCartridge.Load(m_ammoTypes[m_ammoType.type1].c_str(), m_ammoType.type1, m_APk);
+    CCartridge l_cartridge = m_DefaultCartridge;
+    while (cnt)
+    {
+        if (!unlimited_ammo())
+        {
+            if (!m_pCurrentAmmo->Get(l_cartridge))
+                break;
+        }
+        --cnt;
+        ++m_ammoElapsed.type1;
+        l_cartridge.m_LocalAmmoType = m_ammoType.type1;
+        m_magazine.push_back(l_cartridge);
+        //		m_fCurrentCartirdgeDisp = l_cartridge.m_kDisp;
+    }
 
     VERIFY((u32)m_ammoElapsed.type1 == m_magazine.size());
 
@@ -295,6 +292,6 @@ void CWeaponAutomaticShotgun::net_Import(NET_Packet& P)
 #ifdef DEBUG
         Msg("! %s reload to %s", *l_cartridge.m_ammoSect, m_ammoTypes[LocalAmmoType].c_str());
 #endif
-		l_cartridge.Load( m_ammoTypes[LocalAmmoType].c_str(), LocalAmmoType, m_APk );
-	}
+        l_cartridge.Load(m_ammoTypes[LocalAmmoType].c_str(), LocalAmmoType, m_APk);
+    }
 }
