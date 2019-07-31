@@ -116,6 +116,10 @@ void CWeaponAutomaticShotgun::TriStateReload()
     CWeapon::Reload();
     m_sub_state = eSubstateReloadBegin;
     SwitchState(eReload);
+    if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+    {
+        Actor()->SetCantRunState(true); // oldSerpskiStalker
+    }
     // Log("- cmd 6");
 }
 
@@ -148,7 +152,8 @@ void CWeaponAutomaticShotgun::OnStateSwitch(u32 S, u32 oldState)
             switch2_AddCartgidge();
         // Log("- cmd 8");
         break;
-    case eSubstateReloadEnd: switch2_EndReload(); break;
+    case eSubstateReloadEnd: switch2_EndReload(); 
+        break;
     };
 }
 

@@ -99,7 +99,7 @@ SCRIPT_EXPORT(CBlend, (), {
 });
 // clang-format on
 
-
+/*
 LPCSTR CPatrolPoint::getName(CPatrolPoint *pp) const {
 	return pp->m_name.c_str();
 }
@@ -142,4 +142,4 @@ SCRIPT_EXPORT(CPatrolPath, (), {
 //    DECLARE_SCRIPT_REGISTER_FUNCTION
 //};
 
-
+*/

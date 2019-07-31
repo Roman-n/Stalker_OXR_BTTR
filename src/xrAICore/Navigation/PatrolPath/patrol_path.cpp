@@ -52,12 +52,12 @@ void CPatrolPath::load(IReader& stream)
 }
 #endif
 
-CPatrolPoint CPatrolPath::add_point(Fvector pos)
-{
-    auto pp = CPatrolPoint(this).position(pos);
-    u32 index = vertices().size();
-    add_vertex(pp, index);
-    return vertex(index)->data();
-}
+//CPatrolPoint CPatrolPath::add_point(Fvector pos)
+//{
+//    auto pp = CPatrolPoint(this).position(pos);
+//    u32 index = vertices().size();
+//    add_vertex(pp, index);
+//    return vertex(index)->data();
+//}
 
-CPatrolPoint CPatrolPath::point(u32 index) { return vertex(index)->data(); }
+//CPatrolPoint CPatrolPath::point(u32 index) { return vertex(index)->data(); }

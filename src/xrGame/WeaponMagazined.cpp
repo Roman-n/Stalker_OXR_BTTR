@@ -235,7 +235,13 @@ void CWeaponMagazined::OnAnimationEnd(u32 state)
             Actor()->SetCantRunState(false); // oldSerpskiStalker
         }
         break; // End of reload animation
-    case eHiding: SwitchState(eHidden); break; // End of Hide
+    case eHiding: 
+	if (g_sprint_reload_wpn && Actor()->m_block_sprint_counter > 0 || Actor()->m_block_sprint_counter <= 0)
+    {
+        Actor()->m_block_sprint_counter = 0;
+    }
+	SwitchState(eHidden); 
+	break; // End of Hide
     case eShowing: SwitchState(eIdle); break; // End of Show
     case eIdle: switch2_Idle(); break; // Keep showing idle
     }
@@ -265,6 +271,10 @@ bool CWeaponMagazined::TryReload()
     {
         if (TryToGetAmmo(m_ammoType.type1) || unlimited_ammo() || (IsMisfire() && m_ammoElapsed.type1))
         {
+		if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+		{
+			Actor()->SetCantRunState(true); // oldSerpskiStalker
+		}
             SetPending(TRUE);
             SwitchState(eReload);
             return true;
@@ -1453,10 +1463,6 @@ void CWeaponMagazined::PlayAnimHide()
 
 void CWeaponMagazined::PlayAnimReload()
 {
-    if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
-    {
-        Actor()->SetCantRunState(true); // oldSerpskiStalker
-    }
     auto state = GetState();
     VERIFY(state == eReload);
 #ifdef NEW_ANIMS // AVO: use new animations

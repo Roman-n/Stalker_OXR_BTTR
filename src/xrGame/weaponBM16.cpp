@@ -20,10 +20,6 @@ void CWeaponBM16::PlayReloadSound()
     else
     {
         PlaySound("sndReload", get_LastFP());
-        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
-        {
-            Actor()->SetCantRunState(true); // oldSerpskiStalker
-        }
     }
 }
 void CWeaponBM16::PlayAnimShoot()
@@ -74,29 +70,17 @@ void CWeaponBM16::PlayAnimBore()
 void CWeaponBM16::PlayAnimReload()
 {
     bool b_both = HaveCartridgeInInventory(2);
-    if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
-    {
-        Actor()->SetCantRunState(false); // oldSerpskiStalker
-    }
-
+   
     VERIFY(GetState() == eReload);
 
     if ((m_magazine.size() == 1 || !b_both) &&
         (m_set_next_ammoType_on_reload == undefined_ammo_type || m_ammoType.type1 == m_set_next_ammoType_on_reload))
     {
         PlayHUDMotion("anm_reload_1", TRUE, this, GetState());
-        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
-        {
-            Actor()->SetCantRunState(true); // oldSerpskiStalker
-        }
     }
     else
     {
         PlayHUDMotion("anm_reload_2", TRUE, this, GetState());
-        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
-        {
-            Actor()->SetCantRunState(true); // oldSerpskiStalker
-        }
     }
 }
 

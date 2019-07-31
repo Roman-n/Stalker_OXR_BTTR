@@ -17,6 +17,8 @@
 #include "PHDebug.h"
 #endif
 
+extern int g_sprint_reload_wpn;
+
 CWeaponMagazinedWGrenade::CWeaponMagazinedWGrenade(ESoundTypes eSoundType) : CWeaponMagazined(eSoundType) {}
 
 CWeaponMagazinedWGrenade::~CWeaponMagazinedWGrenade() {}
@@ -414,6 +416,12 @@ void CWeaponMagazinedWGrenade::ReloadMagazine()
         shared_str fake_grenade_name = pSettings->r_string(m_ammoTypes[m_ammoType.type1].c_str(), "fake_grenade_name");
 
         CRocketLauncher::SpawnRocket(*fake_grenade_name, this);
+		
+		if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+		{
+			Actor()->SetCantRunState(true); // oldSerpskiStalker
+		}
+		
     }
 }
 
@@ -447,6 +455,10 @@ void CWeaponMagazinedWGrenade::OnAnimationEnd(u32 state)
     {
         if (m_bGrenadeMode)
             Reload();
+		if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+		{
+			Actor()->SetCantRunState(false); // oldSerpskiStalker
+		}
     }
     break;
     }

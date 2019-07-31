@@ -90,7 +90,7 @@ void CWeaponShotgun::OnAnimationEnd(u32 state)
     {
         m_sub_state = eSubstateReloadBegin;
         SwitchState(eIdle);
-        if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+		if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
         {
             Actor()->SetCantRunState(false); // oldSerpskiStalker
         }
@@ -125,6 +125,10 @@ void CWeaponShotgun::TriStateReload()
     CWeapon::Reload();
     m_sub_state = eSubstateReloadBegin;
     SwitchState(eReload);
+    if (g_sprint_reload_wpn && smart_cast<CActor*>(H_Parent()) != NULL)
+    {
+        Actor()->SetCantRunState(true); // oldSerpskiStalker
+    }
 }
 
 void CWeaponShotgun::OnStateSwitch(u32 S, u32 oldState)
@@ -300,3 +304,4 @@ void CWeaponShotgun::net_Import(NET_Packet& P)
         l_cartridge.Load(m_ammoTypes[LocalAmmoType].c_str(), LocalAmmoType, m_APk);
     }
 }
+
