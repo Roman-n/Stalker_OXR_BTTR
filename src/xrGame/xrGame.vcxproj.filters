@@ -3987,6 +3987,9 @@
     <ClInclude Include="ai\Monsters\Controller\controller.h">
       <Filter>AI\AMonsters\monsters\Controller</Filter>
     </ClInclude>
+	<ClInclude Include="ai\Monsters\Controller\controller_psy_aura.h">
+      <Filter>AI\AMonsters\monsters\Controller</Filter>
+    </ClInclude>
     <ClInclude Include="ai\Monsters\Controller\controller_state_manager.h">
       <Filter>AI\AMonsters\monsters\Controller</Filter>
     </ClInclude>
@@ -6947,6 +6950,9 @@
       <Filter>AI\AMonsters\monsters\Snork\Script</Filter>
     </ClCompile>
     <ClCompile Include="ai\Monsters\Controller\controller.cpp">
+      <Filter>AI\AMonsters\monsters\Controller</Filter>
+    </ClCompile>
+	<ClCompile Include="ai\Monsters\Controller\controller_psy_aura.cpp">
       <Filter>AI\AMonsters\monsters\Controller</Filter>
     </ClCompile>
     <ClCompile Include="ai\Monsters\Controller\controller_state_manager.cpp">

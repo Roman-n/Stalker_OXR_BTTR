@@ -114,7 +114,7 @@ Fvector& attachable_hud_item::hands_attach_pos()
 {
     Fvector v;
     v.set(m_measures.m_hands_attach[0]).add(m_hand_offset_pos);
-    return v;
+//    return v;
 }
 Fvector& attachable_hud_item::hands_attach_rot() { return m_measures.m_hands_attach[1]; }
 Fvector& attachable_hud_item::hands_offset_pos()
