@@ -110,26 +110,10 @@ void player_hud_motion_container::load(IKinematicsAnimated* model, const shared_
     }
 }
 
-Fvector& attachable_hud_item::hands_attach_pos()
-{
-    Fvector v;
-    v.set(m_measures.m_hands_attach[0]).add(m_hand_offset_pos);
-//    return v;
-}
+Fvector& attachable_hud_item::hands_attach_pos() { return m_measures.m_hands_attach[0]; }
 Fvector& attachable_hud_item::hands_attach_rot() { return m_measures.m_hands_attach[1]; }
-Fvector& attachable_hud_item::hands_offset_pos()
-{
-    u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx();
-    Fvector v;
-    v.set(m_measures.m_hands_offset[0][idx]).add(m_hud_offset_pos);
-    return v;
-}
-
-Fvector& attachable_hud_item::hands_offset_rot()
-{
-    u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx();
-    return m_measures.m_hands_offset[1][idx];
-}
+Fvector& attachable_hud_item::hands_offset_pos() { u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx(); return m_measures.m_hands_offset[0][idx]; }
+Fvector& attachable_hud_item::hands_offset_rot() { u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx(); return m_measures.m_hands_offset[1][idx]; }
 
 bool attachable_hud_item::set_bone_visible(const shared_str& bone_name, BOOL bVisibility, BOOL bSilent)
 {
@@ -561,6 +545,7 @@ u32 player_hud::motion_length(const MotionID& M, const CMotionDef*& md, float sp
     }
     return 0;
 }
+
 const Fvector& player_hud::attach_rot() const
 {
     if (m_attached_items[0])
