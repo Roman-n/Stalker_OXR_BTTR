@@ -254,11 +254,11 @@ bool CWeaponMagazined::TryToGetAmmo(u32_ id)
     if (smart_cast<CActor*>(H_Parent()) != NULL)
     {
         m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAmmoOnBelt(m_ammoTypes[id].c_str()));
-        Msg("~ Try reload for actor");
+    //    Msg("~ Try reload for actor");
     }
     else
     {
-        Msg("~ Try reload for npc");
+    //    Msg("~ Try reload for npc");
         m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[id].c_str()));
     }
 
@@ -1054,7 +1054,7 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
     {
     case kWPN_RELOAD:
     { // Like Lost Alpha
-        if (Actor()->mstate_real & (mcSprint))
+        if (g_sprint_reload_wpn && Actor()->mstate_real & (mcSprint))
             break;
         else if (flags & CMD_START)
             if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
