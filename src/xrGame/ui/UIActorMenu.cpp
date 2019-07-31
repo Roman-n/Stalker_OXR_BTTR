@@ -152,6 +152,7 @@ void CUIActorMenu::PlaySnd(eActorMenuSndAction a)
 }
 
 void CUIActorMenu::SendMessage(CUIWindow* pWnd, s16 msg, void* pData) { CUIWndCallback::OnEvent(pWnd, msg, pData); }
+extern int g_hand_hide_inventory;
 void CUIActorMenu::Show(bool status)
 {
 #ifndef UPDATEINVHANDS
@@ -182,7 +183,7 @@ void CUIActorMenu::Show(bool status)
 		
 	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
 	
-	if (pActor) 
+	if (pActor && g_hand_hide_inventory) 
 		
 		pActor->SetWeaponHideState(INV_STATE_BLOCK_ALL, true);
 	}
@@ -193,7 +194,7 @@ void CUIActorMenu::Show(bool status)
 		
 	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
 	
-	if(pActor)
+	if(pActor && g_hand_hide_inventory)
 		
 	pActor->SetWeaponHideState(INV_STATE_BLOCK_ALL, false);
 	

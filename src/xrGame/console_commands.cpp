@@ -99,6 +99,7 @@ extern BOOL g_ai_use_old_vision;
 float g_aim_predict_time = 0.40f;
 int g_keypress_on_start = 1;
 int g_sprint_reload_wpn = 0;
+int g_hand_hide_inventory = 0;
 
 ENGINE_API extern float g_console_sensitive;
 
@@ -2243,4 +2244,6 @@ void CCC_RegisterCommands()
     CMD4(CCC_Integer, "keypress_on_start", &g_keypress_on_start, 0, 1);
 	
 	CMD4(CCC_Integer, "sprint_reload_wpn", &g_sprint_reload_wpn, 0, 1);
+	
+	CMD4(CCC_Integer, "hand_hide_inventory", &g_hand_hide_inventory, 0, 1);
 }
