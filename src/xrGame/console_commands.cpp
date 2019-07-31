@@ -2154,10 +2154,10 @@ void CCC_RegisterCommands()
 
     CMD3(CCC_Mask, "ai_use_torch_dynamic_lights", &g_uCommonFlags, flAiUseTorchDynamicLights);
 
-    CMD4(CCC_Vector3, "psp_cam_offset", &CCameraLook2::m_cam_offset, Fvector().set(-1000, -1000, -1000),
-        Fvector().set(1000, 1000, 1000));
-    CMD4(CCC_Vector3, "hud_offset_pos", &m_hud_offset_pos, Fvector().set(-1000, -1000, -1000), Fvector().set(1000, 1000, 1000));
-    CMD4(CCC_Vector3, "hand_offset_pos", &m_hand_offset_pos, Fvector().set(-1000, -1000, -1000), Fvector().set(1000, 1000, 1000));
+//    CMD4(CCC_Vector3, "psp_cam_offset", &CCameraLook2::m_cam_offset, Fvector().set(-1000, -1000, -1000),
+ //       Fvector().set(1000, 1000, 1000));
+//    CMD4(CCC_Vector3, "hud_offset_pos", &m_hud_offset_pos, Fvector().set(-1000, -1000, -1000), Fvector().set(1000, 1000, 1000));
+//    CMD4(CCC_Vector3, "hand_offset_pos", &m_hand_offset_pos, Fvector().set(-1000, -1000, -1000), Fvector().set(1000, 1000, 1000));
 
 #ifdef DEBUG
     CMD1(CCC_Crash, "crash");
