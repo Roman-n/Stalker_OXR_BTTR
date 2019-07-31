@@ -1985,7 +1985,6 @@ void CCC_RegisterCommands()
     CMD4(CCC_Integer, "__type_hud_call_of_pripyat", &__type_hud_cop, 0, 1); // Зов Припяти
 
 
-    CMD3(CCC_Mask, "g_use_tracers", &psActorFlags, AF_USE_TRACERS);
     CMD3(CCC_Mask, "g_autopickup", &psActorFlags, AF_AUTOPICKUP);
     CMD3(CCC_Mask, "g_dynamic_music", &psActorFlags, AF_DYNAMIC_MUSIC);
     CMD3(CCC_Mask, "g_important_save", &psActorFlags, AF_IMPORTANT_SAVE);

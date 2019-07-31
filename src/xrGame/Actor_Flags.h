@@ -12,9 +12,8 @@ enum
     AF_GODMODE_RT = (1 << 8),
     AF_IMPORTANT_SAVE = (1 << 9),
     AF_CROUCH_TOGGLE = (1 << 10),
-    AF_USE_TRACERS = (1 << 11),
-    AF_CROSSHAIR_COLLIDE = (1 << 12),
-    AF_CROSSHAIR_INERT = (1 << 13),
+    AF_CROSSHAIR_COLLIDE = (1 << 11),
+    AF_CROSSHAIR_INERT = (1 << 12),
 };
 
 extern Flags32 psActorFlags;

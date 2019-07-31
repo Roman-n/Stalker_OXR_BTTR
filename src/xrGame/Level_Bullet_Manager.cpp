@@ -837,9 +837,6 @@ void CBulletManager::Render()
         if (!bullet->flags.allow_tracer)
             continue;
 
-        if (!psActorFlags.test(AF_USE_TRACERS))
-            continue;
-
         if (!bullet->CanBeRenderedNow())
             continue;
 
