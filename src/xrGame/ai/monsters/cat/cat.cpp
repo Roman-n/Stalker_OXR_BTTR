@@ -74,15 +74,11 @@ void CCat::Load(LPCSTR section)
     anim().LinkAction(ACT_STEAL, eAnimSteal);
     anim().LinkAction(ACT_LOOK_AROUND, eAnimLookAround);
 
-#ifdef DEBUG
-    anim().accel_chain_test();
-#endif
-
-	load_friend_community_overrides(section);  //Romann
+//	load_friend_community_overrides(section);  //Romann
 
     PostLoad(section);
 }
-
+/*
 	//-------------------------------------------------------------------Romann
 void CCat::load_friend_community_overrides(LPCSTR section)
 {
@@ -147,7 +143,7 @@ bool CCat::is_relation_enemy(const CEntityAlive *tpEntityAlive) const
 	return inherited::is_relation_enemy(tpEntityAlive);
 }
 	//-------------------------------------------------------------------Romann
-
+*/
 void CCat::reinit()
 {
     inherited::reinit();

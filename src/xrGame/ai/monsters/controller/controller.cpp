@@ -211,7 +211,7 @@ void CController::Load(LPCSTR section)
     m_velocity_move_fwd.Load(section, "Velocity_MoveFwd");
     m_velocity_move_bkwd.Load(section, "Velocity_MoveBkwd");
 
-    load_friend_community_overrides(section);
+//    load_friend_community_overrides(section);
 
     // load
     m_sound_hit_fx.create("affects\\tinnitus3a", st_Effect, sg_SourceType);
@@ -255,7 +255,7 @@ void CController::Load(LPCSTR section)
     PostLoad(section);
 	m_aura->load(section);
 }
-
+/*
 void CController::load_friend_community_overrides(LPCSTR section)
 {
     LPCSTR src = pSettings->r_string(section, "Friend_Community_Overrides");
@@ -282,7 +282,7 @@ bool CController::is_community_friend_overrides(const CEntityAlive* entity_alive
     return (std::find(m_friend_community_overrides.begin(), m_friend_community_overrides.end(),
                 IO->CharacterInfo().Community().id()) != m_friend_community_overrides.end());
 }
-
+*/
 BOOL CController::net_Spawn(CSE_Abstract* DC)
 {
     if (!inherited::net_Spawn(DC))
@@ -694,16 +694,16 @@ void CController::TranslateActionToPathParams()
     path().enable_path();
 }
 
-bool CController::is_relation_enemy(const CEntityAlive* tpEntityAlive) const
-{
+//bool CController::is_relation_enemy(const CEntityAlive* tpEntityAlive) const
+//{
     //	MONSTER_COMMUNITY_ID
-    if (xr_strcmp(*(tpEntityAlive->cNameSect()), "stalker_zombied") == 0)
-        return false;
-    if (is_community_friend_overrides(tpEntityAlive))
-        return false;
-
-    return inherited::is_relation_enemy(tpEntityAlive);
-}
+//    if (xr_strcmp(*(tpEntityAlive->cNameSect()), "stalker_zombied") == 0)
+//        return false;
+//    if (is_community_friend_overrides(tpEntityAlive))
+//        return false;
+//
+//    return inherited::is_relation_enemy(tpEntityAlive);
+//}
 
 void CController::set_mental_state(EMentalState state)
 {

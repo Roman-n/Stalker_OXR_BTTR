@@ -209,12 +209,13 @@ void CAI_Dog::Load(LPCSTR section)
     anim().accel_chain_test();
 #endif
 
-	load_friend_community_overrides(section);  //Romann
+//	load_friend_community_overrides(section);  //Romann
 
     PostLoad(section);
 }
 
 	//-------------------------------------------------------------------Romann
+/*	
 void CAI_Dog::load_friend_community_overrides(LPCSTR section)
 {
 	LPCSTR src = pSettings->r_string(section,"Friend_Community_Overrides");
@@ -278,7 +279,7 @@ bool CAI_Dog::is_relation_enemy(const CEntityAlive *tpEntityAlive) const
 	return inherited::is_relation_enemy(tpEntityAlive);
 }
 
-
+*/
 	//-------------------------------------------------------------------Romann
 
 void CAI_Dog::reinit()
