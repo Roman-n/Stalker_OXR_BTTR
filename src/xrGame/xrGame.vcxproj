@@ -227,7 +227,7 @@
     </ClCompile>
     <Link>
       <LinkTimeCodeGeneration />
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_COC|x64'">
@@ -465,7 +465,7 @@
     <ClInclude Include="ai\Monsters\Controller\controller_animation.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_direction.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_psy_hit.h" />
-	<ClInclude Include="ai\Monsters\Controller\controller_psy_aura.h" />
+    <ClInclude Include="ai\Monsters\Controller\controller_psy_aura.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_psy_hit_effector.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_state_attack.h" />
     <ClInclude Include="ai\Monsters\Controller\controller_state_attack_camp.h" />
@@ -511,7 +511,7 @@
     <ClInclude Include="ai\Monsters\custom_events.h" />
     <ClInclude Include="ai\Monsters\Dog\dog.h" />
     <ClInclude Include="ai\Monsters\Dog\dog_state_manager.h" />
-	<ClInclude Include="ai\Monsters\Dogsoc\dogsoc.h" />
+    <ClInclude Include="ai\Monsters\Dogsoc\dogsoc.h" />
     <ClInclude Include="ai\Monsters\Dogsoc\dogsoc_state_manager.h" />
     <ClInclude Include="ai\Monsters\energy_holder.h" />
     <ClInclude Include="ai\Monsters\Flesh\flesh.h" />
@@ -1881,7 +1881,7 @@
     <ClCompile Include="ai\Monsters\Controller\controller_animation.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_direction.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_psy_hit.cpp" />
-	<ClCompile Include="ai\Monsters\Controller\controller_psy_aura.cpp" />
+    <ClCompile Include="ai\Monsters\Controller\controller_psy_aura.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_psy_hit_effector.cpp" />
     <ClCompile Include="ai\Monsters\Controller\controller_script.cpp">
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
@@ -1924,7 +1924,7 @@
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-	<ClCompile Include="ai\Monsters\Dogsoc\dogsoc.cpp" />
+    <ClCompile Include="ai\Monsters\Dogsoc\dogsoc.cpp" />
     <ClCompile Include="ai\Monsters\Dogsoc\dogsoc_script.cpp">
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
