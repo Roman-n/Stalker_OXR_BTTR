@@ -14,6 +14,7 @@ enum
     AF_CROUCH_TOGGLE = (1 << 10),
     AF_CROSSHAIR_COLLIDE = (1 << 11),
     AF_CROSSHAIR_INERT = (1 << 12),
+	AF_CROSSHAIR_STANDART = (1 << 13),
 };
 
 extern Flags32 psActorFlags;
