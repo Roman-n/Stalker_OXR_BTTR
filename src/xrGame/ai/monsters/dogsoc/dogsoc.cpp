@@ -6,7 +6,7 @@
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 
-CAI_dogsoc::CAI_dogsoc()
+CAI_Dogsoc::CAI_Dogsoc()
 {
 	StateMan = new CStateManagerdogsoc(this);
 	
@@ -16,12 +16,12 @@ CAI_dogsoc::CAI_dogsoc()
 	com_man().add_ability(ControlCom::eControlMeleeJump);
 }
 
-CAI_dogsoc::~CAI_dogsoc()
+CAI_Dogsoc::~CAI_Dogsoc()
 {
 	xr_delete(StateMan);
 }
 
-void CAI_dogsoc::Load(LPCSTR section)
+void CAI_Dogsoc::Load(LPCSTR section)
 {
 	inherited::Load	(section);
 	
@@ -97,7 +97,7 @@ void CAI_dogsoc::Load(LPCSTR section)
 
 }
 
-void CAI_dogsoc::reinit()
+void CAI_Dogsoc::reinit()
 {
 	inherited::reinit();
 
@@ -109,7 +109,7 @@ void CAI_dogsoc::reinit()
 }
 
 
-void CAI_dogsoc::CheckSpecParams(u32 spec_params)
+void CAI_Dogsoc::CheckSpecParams(u32 spec_params)
 {
 	if ((spec_params & ASP_CHECK_CORPSE) == ASP_CHECK_CORPSE) {
 		com_man().seq_run(anim().get_motion_id(eAnimCheckCorpse));

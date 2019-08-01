@@ -16,17 +16,17 @@
 #include "../states/monster_state_controlled.h"
 #include "../states/monster_state_help_sound.h"
 
-CStateManagerdogsoc::CStateManagerdogsoc(CAI_dogsoc *monster) : inherited(monster)
+CStateManagerdogsoc::CStateManagerdogsoc(CAI_Dogsoc *monster) : inherited(monster)
 {
-	add_state(eStateRest,					new CStateMonsterRest<CAI_dogsoc> 					(monster));
-	add_state(eStatePanic,					new CStateMonsterPanic<CAI_dogsoc> 				    (monster));
-	add_state(eStateAttack,					new CStateMonsterAttack<CAI_dogsoc> 				(monster));
-	add_state(eStateEat,					new CStateMonsterEat<CAI_dogsoc> 					(monster));
-	add_state(eStateHearInterestingSound,	new CStateMonsterHearInterestingSound<CAI_dogsoc> 	(monster));
-	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CAI_dogsoc> 	(monster));
-	add_state(eStateHitted,					new CStateMonsterHitted<CAI_dogsoc> 				(monster));
-	add_state(eStateControlled,				new CStateMonsterControlled<CAI_dogsoc> 			(monster));
-	add_state(eStateHearHelpSound,			new CStateMonsterHearHelpSound<CAI_dogsoc> 		    (monster));
+	add_state(eStateRest,					new CStateMonsterRest<CAI_Dogsoc> 					(monster));
+	add_state(eStatePanic,					new CStateMonsterPanic<CAI_Dogsoc> 				    (monster));
+	add_state(eStateAttack,					new CStateMonsterAttack<CAI_Dogsoc> 				(monster));
+	add_state(eStateEat,					new CStateMonsterEat<CAI_Dogsoc> 					(monster));
+	add_state(eStateHearInterestingSound,	new CStateMonsterHearInterestingSound<CAI_Dogsoc> 	(monster));
+	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CAI_Dogsoc> 	(monster));
+	add_state(eStateHitted,					new CStateMonsterHitted<CAI_Dogsoc> 				(monster));
+	add_state(eStateControlled,				new CStateMonsterControlled<CAI_Dogsoc> 			(monster));
+	add_state(eStateHearHelpSound,			new CStateMonsterHearHelpSound<CAI_Dogsoc> 		    (monster));
 }
 
 void CStateManagerdogsoc::execute()
