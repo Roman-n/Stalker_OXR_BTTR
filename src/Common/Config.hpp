@@ -61,8 +61,8 @@
 #define VOLUMETRIK_TORCH							// Объемный свет фонаря
 #define ZOOM_MINIMAP								// Консольная команда зума для мини карты из XRay Oxygen
 #define __FIX										// Вылет по поясу, если переместить итем размера 2 на 1 ячейку
-#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
-
+//#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
+#define DOG_SOC										// Собака из ЧН/ТЧ
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -92,7 +92,6 @@
 //#define BLOODSUCKER_SOC							// Сосыч из Теней Чернобыля
 //#define BOAR_CS									// Кабан из Чистого неба
 //#define BURER_CS									// Бюрер из ЧН/ТЧ
-//#define DOG_SOC									// Собака из ЧН/ТЧ
 //#define POLTERGEIST_CS							// Полтергейсты из ЧН/ТЧ
 //#define SNORK_CS									// Снорк из ЧН/ТЧ
 //#define PSEUDO_GIANT_JUMPER						// Прыгающий псевдогигант из ЧН/ТЧ

@@ -1,17 +1,14 @@
 #include "stdafx.h"
+#ifdef DOG_SOC
 #include "dogsoc.h"
 #include "dogsoc_state_manager.h"
 #include "../monster_velocity_space.h"
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 
-#ifdef _DEBUG
-#	include <dinput.h>
-#endif
-
 CAI_dogsoc::CAI_dogsoc()
 {
-	StateMan = xr_new<CStateManagerdogsoc>(this);
+	StateMan = new CStateManagerdogsoc(this);
 	
 	CControlled::init_external	(this);
 
@@ -68,31 +65,22 @@ void CAI_dogsoc::Load(LPCSTR section)
 
 	anim().AddAnim(eAnimCheckCorpse,	"stand_check_corpse_",	-1,	&velocity_none,		PS_STAND);
 	anim().AddAnim(eAnimDragCorpse,		"stand_drag_",			-1, &velocity_drag,		PS_STAND);
-	//anim().AddAnim(eAnimSniff,		"stand_sniff_",			-1, &velocity_none,		PS_STAND);
-	//anim().AddAnim(eAnimHowling,		"stand_howling_",		-1,	&velocity_none,		PS_STAND);
-	//anim().AddAnim(eAnimJumpGlide,	"jump_glide_",			-1, &velocity_none,		PS_STAND);
 	anim().AddAnim(eAnimSteal,			"stand_steal_",			-1, &velocity_steal,	PS_STAND);
 	anim().AddAnim(eAnimThreaten,		"stand_threaten_",		-1, &velocity_none,		PS_STAND);
 
 	anim().AddAnim(eAnimSitLieDown,		"sit_lie_down_",		-1, &velocity_none,		PS_SIT);
 	anim().AddAnim(eAnimStandSitDown,	"stand_sit_down_",		-1, &velocity_none,		PS_STAND);	
 	anim().AddAnim(eAnimSitStandUp,		"sit_stand_up_",		-1, &velocity_none,		PS_SIT);
-	//anim().AddAnim(eAnimLieToSleep,	"lie_to_sleep_",		-1,	&velocity_none,		PS_LIE);
 	anim().AddAnim(eAnimLieSitUp,		"lie_to_sit_",		-1, &velocity_none,		PS_LIE);
 
 	anim().AddAnim(eAnimJumpLeft,		"stand_jump_left_",		-1, &velocity_none,		PS_STAND);
 	anim().AddAnim(eAnimJumpRight,		"stand_jump_right_",	-1, &velocity_none,		PS_STAND);
 
-	// define transitions
-	// order : 1. [anim -> anim]	2. [anim->state]	3. [state -> anim]		4. [state -> state]
 	anim().AddTransition(PS_SIT,		PS_LIE,		eAnimSitLieDown,		false);
 	anim().AddTransition(PS_STAND,		PS_SIT,		eAnimStandSitDown,		false);
 	anim().AddTransition(PS_SIT,		PS_STAND,	eAnimSitStandUp,		false, SKIP_IF_AGGRESSIVE);
 	anim().AddTransition(PS_LIE,		PS_SIT,		eAnimLieSitUp,			false, SKIP_IF_AGGRESSIVE);
-	
-	// todo: stand -> lie
 
-	// define links from Action to animations
 	anim().LinkAction(ACT_STAND_IDLE,	eAnimStandIdle);
 	anim().LinkAction(ACT_SIT_IDLE,		eAnimSitIdle);
 	anim().LinkAction(ACT_LIE_IDLE,		eAnimLieIdle);
@@ -106,10 +94,6 @@ void CAI_dogsoc::Load(LPCSTR section)
 	anim().LinkAction(ACT_ATTACK,		eAnimAttack);
 	anim().LinkAction(ACT_STEAL,		eAnimSteal);	
 	anim().LinkAction(ACT_LOOK_AROUND,	eAnimStandIdle);
-	
-#ifdef DEBUG	
-	anim().accel_chain_test		();
-#endif
 
 }
 
@@ -136,31 +120,4 @@ void CAI_dogsoc::CheckSpecParams(u32 spec_params)
 	}
 }
 
-
-
-#ifdef _DEBUG
-void CAI_dogsoc::debug_on_key(int key)
-{
-	CKinematicsAnimated *skel = smart_cast<CKinematicsAnimated *>(Visual());
-
-	switch (key){
-	case DIK_1:
-		Msg("Ohhhhhhhhhhhhhhh! Here it is!");
-		// strafe left
-		//com_man().seq_run(skel->ID_Cycle_Safe("stand_turn_ls_0"));
-		break;
-	case DIK_2:
-		// strafe right
-		com_man().seq_run(skel->ID_Cycle_Safe("stand_turn_ls_0"));
-		break;
-	case DIK_3:
-		// threaten
-		com_man().seq_run(skel->ID_Cycle_Safe("stand_threaten_0"));
-		break;
-	case DIK_0:
-		Msg("Ohhhhhhhhhhhhhhh! Here it is!");
-		break;
-	}
-}
 #endif
-

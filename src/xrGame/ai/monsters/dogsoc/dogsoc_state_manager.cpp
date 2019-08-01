@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#ifdef DOG_SOC
 #include "dogsoc.h"
 #include "dogsoc_state_manager.h"
 #include "../control_animation_base.h"
@@ -17,15 +18,15 @@
 
 CStateManagerdogsoc::CStateManagerdogsoc(CAI_dogsoc *monster) : inherited(monster)
 {
-	add_state(eStateRest,					xr_new<CStateMonsterRest<CAI_dogsoc> >					(monster));
-	add_state(eStatePanic,					xr_new<CStateMonsterPanic<CAI_dogsoc> >				(monster));
-	add_state(eStateAttack,					xr_new<CStateMonsterAttack<CAI_dogsoc> >				(monster));
-	add_state(eStateEat,					xr_new<CStateMonsterEat<CAI_dogsoc> >					(monster));
-	add_state(eStateHearInterestingSound,	xr_new<CStateMonsterHearInterestingSound<CAI_dogsoc> >	(monster));
-	add_state(eStateHearDangerousSound,		xr_new<CStateMonsterHearDangerousSound<CAI_dogsoc> >	(monster));
-	add_state(eStateHitted,					xr_new<CStateMonsterHitted<CAI_dogsoc> >				(monster));
-	add_state(eStateControlled,				xr_new<CStateMonsterControlled<CAI_dogsoc> >			(monster));
-	add_state(eStateHearHelpSound,			xr_new<CStateMonsterHearHelpSound<CAI_dogsoc> >		(monster));
+	add_state(eStateRest,					new CStateMonsterRest<CAI_dogsoc> 					(monster));
+	add_state(eStatePanic,					new CStateMonsterPanic<CAI_dogsoc> 				    (monster));
+	add_state(eStateAttack,					new CStateMonsterAttack<CAI_dogsoc> 				(monster));
+	add_state(eStateEat,					new CStateMonsterEat<CAI_dogsoc> 					(monster));
+	add_state(eStateHearInterestingSound,	new CStateMonsterHearInterestingSound<CAI_dogsoc> 	(monster));
+	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CAI_dogsoc> 	(monster));
+	add_state(eStateHitted,					new CStateMonsterHitted<CAI_dogsoc> 				(monster));
+	add_state(eStateControlled,				new CStateMonsterControlled<CAI_dogsoc> 			(monster));
+	add_state(eStateHearHelpSound,			new CStateMonsterHearHelpSound<CAI_dogsoc> 		    (monster));
 }
 
 void CStateManagerdogsoc::execute()
@@ -62,3 +63,4 @@ void CStateManagerdogsoc::execute()
 
 	prev_substate		= current_substate;
 }
+#endif

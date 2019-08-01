@@ -33,6 +33,9 @@
 #define CLSID_AI_FRACTURE MK_CLSID('A', 'I', '_', 'F', 'R', 'A', 'C', 'T')
 #define CLSID_AI_DOG_BLACK MK_CLSID('A', 'I', '_', 'D', 'O', 'G', '_', 'B')
 #define CLSID_AI_DOG_RED MK_CLSID('A', 'I', '_', 'D', 'O', 'G', '_', 'R')
+#ifdef DOG_SOC
+#define CLSID_AI_DOG_SOC MK_CLSID('A', 'I', '_', 'D', 'O', 'G', '_', 'S')
+#endif
 #define CLSID_AI_DOG_PSY MK_CLSID('A', 'I', '_', 'D', 'O', 'G', '_', 'P')
 #define CLSID_AI_DOG_PSY_PHANTOM MK_CLSID('A', 'I', '_', 'D', 'O', 'G', '_', 'F')
 #define CLSID_AI_TRADER MK_CLSID('A', 'I', '_', 'T', 'R', 'A', 'D', 'E')
