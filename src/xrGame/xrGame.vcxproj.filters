@@ -931,6 +931,12 @@
     <Filter Include="AI\AMonsters\monsters\Dog\Script">
       <UniqueIdentifier>{d959227f-d88e-467a-8f7b-b2265ac24d51}</UniqueIdentifier>
     </Filter>
+	<Filter Include="AI\AMonsters\monsters\Dogsoc">
+      <UniqueIdentifier>{4f457e84-16eb-4a6e-a8bc-811232138812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Dogsoc\Script">
+      <UniqueIdentifier>{d959227f-d88e-467a-8f7b-b2265ac24d12}</UniqueIdentifier>
+    </Filter>
     <Filter Include="AI\AMonsters\monsters\Rats">
       <UniqueIdentifier>{bf23cb55-2e31-4894-863b-9b3787d8c271}</UniqueIdentifier>
     </Filter>
@@ -4086,6 +4092,12 @@
     <ClInclude Include="ai\Monsters\Dog\dog_state_manager.h">
       <Filter>AI\AMonsters\monsters\Dog</Filter>
     </ClInclude>
+	<ClInclude Include="ai\Monsters\Dogsoc\dogsoc.h">
+      <Filter>AI\AMonsters\monsters\Dogsoc</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Dogsoc\dogsoc_state_manager.h">
+      <Filter>AI\AMonsters\monsters\Dogsoc</Filter>
+    </ClInclude>
     <ClInclude Include="ai\monsters\rats\ai_rat.h">
       <Filter>AI\AMonsters\monsters\Rats</Filter>
     </ClInclude>
@@ -7002,6 +7014,15 @@
     </ClCompile>
     <ClCompile Include="ai\Monsters\Dog\dog_script.cpp">
       <Filter>AI\AMonsters\monsters\Dog\Script</Filter>
+    </ClCompile>
+	<ClCompile Include="ai\Monsters\Dogsoc\dogsoc.cpp">
+      <Filter>AI\AMonsters\monsters\Dogsoc</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Dogsoc\dogsoc_state_manager.cpp">
+      <Filter>AI\AMonsters\monsters\Dogsoc</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Dogsoc\dogsoc_script.cpp">
+      <Filter>AI\AMonsters\monsters\Dogsoc\Script</Filter>
     </ClCompile>
     <ClCompile Include="ai\monsters\rats\ai_rat.cpp">
       <Filter>AI\AMonsters\monsters\Rats</Filter>

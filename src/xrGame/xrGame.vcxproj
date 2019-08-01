@@ -511,6 +511,8 @@
     <ClInclude Include="ai\Monsters\custom_events.h" />
     <ClInclude Include="ai\Monsters\Dog\dog.h" />
     <ClInclude Include="ai\Monsters\Dog\dog_state_manager.h" />
+	<ClInclude Include="ai\Monsters\Dogsoc\dogsoc.h" />
+    <ClInclude Include="ai\Monsters\Dogsoc\dogsoc_state_manager.h" />
     <ClInclude Include="ai\Monsters\energy_holder.h" />
     <ClInclude Include="ai\Monsters\Flesh\flesh.h" />
     <ClInclude Include="ai\Monsters\Flesh\flesh_state_manager.h" />
@@ -1922,6 +1924,12 @@
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+	<ClCompile Include="ai\Monsters\Dogsoc\dogsoc.cpp" />
+    <ClCompile Include="ai\Monsters\Dogsoc\dogsoc_script.cpp">
+      <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Dogsoc\dogsoc_state_manager.cpp" />
     <ClCompile Include="ai\Monsters\Flesh\flesh_state_manager.cpp" />
     <ClCompile Include="ai\Monsters\Fracture\fracture.cpp" />
     <ClCompile Include="ai\Monsters\Fracture\fracture_script.cpp">
