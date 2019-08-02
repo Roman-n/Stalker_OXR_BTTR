@@ -63,6 +63,7 @@
 #define __FIX										// Вылет по поясу, если переместить итем размера 2 на 1 ячейку
 //#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
 #define DOG_SOC										// Собака из ЧН/ТЧ
+//#define WARNING_SCRIPT							// ! WARNING: SV: can't find children [...] of parent [...]
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay

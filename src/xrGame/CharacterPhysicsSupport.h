@@ -162,6 +162,7 @@ public:
 private:
     void CreateSkeleton(CPhysicsShell*& pShell);
 	void AddActiveWeaponCollision();
+	void RemoveActiveWeaponCollision();
     void ActivateShell(IGameObject* who);
     void CreateShell(IGameObject* who, Fvector& dp, Fvector& velocity);
     void bone_chain_disable(u16 bone, u16 r_bone, IKinematics& K);

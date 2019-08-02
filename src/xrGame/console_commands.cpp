@@ -109,8 +109,6 @@ extern BOOL g_invert_zoom;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
-//int g_reload_on_sprint = 1;
-
 int __type_hud_lost_alpha = 0;
 int __type_hud_veter_vremeni = 0;
 int __type_hud_soc  = 0;
@@ -186,7 +184,7 @@ static void full_memory_stats()
         memCounters.PagefileUsage / (1024 * 1024), memCounters.PeakPagefileUsage / (1024 * 1024));
 
     Log("--------------------------------------------------------------------------------");
-	Log("# Build engine for <OpenXRay Call of Chernobyl x64>, build 7484");
+	Log("# Build engine for <OpenXRay Call of Chernobyl x64>, build 7482, Aug  2 2019");
     Log("--------------------------------------------------------------------------------");
 }
 
@@ -2247,4 +2245,5 @@ void CCC_RegisterCommands()
 	CMD4(CCC_Integer, "sprint_reload_wpn", &g_sprint_reload_wpn, 0, 1);
 	
 	CMD4(CCC_Integer, "hand_hide_inventory", &g_hand_hide_inventory, 0, 1);
+	
 }

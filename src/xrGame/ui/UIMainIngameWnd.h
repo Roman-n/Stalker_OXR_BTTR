@@ -135,7 +135,6 @@ public:
     void SetWarningIconColor(EWarningIcons icon, const u32 cl);
     void TurnOffWarningIcon(EWarningIcons icon);
 
-    // Пороги изменения цвета индикаторов, загружаемые из __engine_export.open_xray
     typedef xr_map<EWarningIcons, xr_vector<float>> Thresholds;
     typedef Thresholds::iterator Thresholds_it;
     Thresholds m_Thresholds;
