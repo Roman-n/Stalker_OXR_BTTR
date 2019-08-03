@@ -76,10 +76,10 @@ private:
 
 public:
     typedef AssociativeVector<u32, STravelParams> VELOCITIES;
-#ifdef POLTERGEIST_CS
-    u32 m_current_travel_point_cs;
-#endif
-protected:
+//#ifdef POLTERGEIST_CS
+//    u32 m_current_travel_point_cs;
+//#endif
+//protected:
     VELOCITIES m_movement_params;
     u32 m_current_travel_point;
 

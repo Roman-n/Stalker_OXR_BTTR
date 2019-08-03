@@ -51,10 +51,10 @@ static BOOL bException = FALSE;
 #endif
 #pragma comment(lib, "FaultRep.lib")
 
-#ifdef DEBUG //|| defined(Call_of_Chernobyl)
-#define USE_OWN_ERROR_MESSAGE_WINDOW
-#else
+#ifdef MINI_DUMP_GENERATE
 #define USE_OWN_MINI_DUMP
+#else
+#define USE_OWN_ERROR_MESSAGE_WINDOW
 #endif
 
 #if defined XR_X64

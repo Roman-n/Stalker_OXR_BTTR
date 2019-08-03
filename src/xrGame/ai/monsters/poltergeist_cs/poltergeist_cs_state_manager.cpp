@@ -30,9 +30,7 @@ CStateManagerPoltergeist_cs::CStateManagerPoltergeist_cs(CPoltergeist_cs *obj) :
 	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CPoltergeist_cs> (obj));
 }
 
-CStateManagerPoltergeist_cs::~CStateManagerPoltergeist_cs()
-{
-}
+CStateManagerPoltergeist_cs::~CStateManagerPoltergeist_cs() {}
 
 void CStateManagerPoltergeist_cs::reinit()
 {
@@ -48,49 +46,53 @@ void CStateManagerPoltergeist_cs::execute()
 {
 	u32 state_id = u32(-1);
 #ifdef NEW_AI_POLTER
-	const CEntityAlive* enemy	= object->EnemyMan.get_enemy();
+    const CEntityAlive* enemy = object->EnemyMan.get_enemy();
 
-	if (enemy) {
-		if (object->is_hidden()) state_id = eStateAttack_AttackHidden;
-		else {
-			switch (object->EnemyMan.get_danger_type()) {
-				case eStrong:	state_id = eStatePanic; break;
-				case eWeak:		state_id = eStateAttack; break;
-			}
-		}
-	} else if (object->HitMemory.is_hit() && !object->is_hidden()) {
-		state_id = eStateHitted;
-	} else if (object->hear_dangerous_sound) {
-		if (!object->is_hidden()) state_id = eStateHearDangerousSound;
-		else state_id = eStateHearInterestingSound;
-	} else if (object->hear_interesting_sound ) {
-		state_id = eStateHearInterestingSound;
-	} else {
-		if (can_eat()) state_id = eStateEat;
-		else state_id = eStateRest;
-		
-		if (state_id == eStateEat) {
-			if (object->CorpseMan.get_corpse()->Position().distance_to(object->Position()) < 5.f) {
-				if (object->is_hidden()) {
-					object->CEnergyHolder::deactivate();
-				}
-				
-				object->DisableHide();
-			}
-		}
+    if (enemy)
+    {
+        switch (object->EnemyMan.get_danger_type()) // Чтобы полтер улетал от НПС, приводит к багу
+        {
+        case eStrong: 
+					state_id = eStatePanic; 
+					break; 
+        case eWeak: 
+					state_id = eStatePanic;
+					break;  
+        }
+    }
+    else if (object->HitMemory.is_hit())
+    {
+        state_id = eStateHitted;
+    }
+    else if (object->hear_interesting_sound || object->hear_dangerous_sound)
+    {
+        state_id = eStateHearDangerousSound;
+    }
+    else
+    {
+        if (can_eat())
+            state_id = eStateEat;
+        else
+        {
+            state_id = eStateRest;	// Если другая анимация, не едим ничего
+			object->EnableHide();	// Обратно взлетаем
+        }
+    }
 
-	}
-
-//	if (state_id == eStateAttack_AttackHidden) polter_attack();
-
-	if ((prev_substate == eStateEat) && (state_id != eStateEat)) 
-		object->EnableHide();
+    if (state_id == eStateEat) {	// Хотим покушать, спустились на землю
+    	if (object->CorpseMan.get_corpse()->Position().distance_to(object->Position()) < 10.f) {
+    		if (object->is_hidden()) {
+    			object->CEnergyHolder::deactivate();
+    		}
+    		object->DisableHide();
+    	}
+    }
+#else
+    state_id = eStateRest;
 #endif
-	state_id = eStateRest;
-	
 	select_state(state_id); 
 
-	// ��������� ������� ���������
+	// выполнить текущее состояние
 	get_state_current()->execute();
 
 	prev_substate = current_substate;
@@ -98,36 +100,5 @@ void CStateManagerPoltergeist_cs::execute()
 
 #define TIME_SEEN_FOR_FIRE 5000
 
-void CStateManagerPoltergeist_cs::polter_attack()
-{
-/*
-#ifdef NEW_AI_POLTER
-	u32 cur_time = Device.dwTimeGlobal;
-	const CEntityAlive* enemy	= object->EnemyMan.get_enemy();
-	
-	bool b_aggressive = object->conditions().GetHealth() < 0.5f;
-
-	if ((time_next_flame_attack < cur_time) && (object->EnemyMan.get_enemy_time_last_seen() + TIME_SEEN_FOR_FIRE > cur_time)) {
-		
-
-    	object->FireFlame(enemy);
-		time_next_flame_attack = cur_time + Random.randI(object->m_flame_delay.min, (b_aggressive) ? object->m_flame_delay.aggressive : object->m_flame_delay.normal);
-	}
-
-	if (time_next_tele_attack < cur_time) {
-	object->ProcessTelekinesis(enemy);
-		time_next_tele_attack = cur_time + Random.randI(object->m_tele_delay.min, (b_aggressive) ? object->m_tele_delay.aggressive : object->m_tele_delay.normal);
-	}
-
-	if (time_next_scare_attack < cur_time) {
-		if (Random.randI(2))
-			object->PhysicalImpulse(enemy->Position());
-		else 
-			object->StrangeSounds(enemy->Position());
-		
-		time_next_scare_attack = cur_time + Random.randI(object->m_scare_delay.min, (b_aggressive) ? object->m_scare_delay.aggressive : object->m_scare_delay.normal);
-	}
-    #endif
-*/
-}
+void CStateManagerPoltergeist_cs::polter_attack(){}
 #endif
