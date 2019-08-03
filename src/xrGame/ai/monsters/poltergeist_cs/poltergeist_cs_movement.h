@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef POLTERGEIST_CS
 #include "../control_path_builder.h"
 
 class CPoltergeist_cs;
@@ -19,3 +19,4 @@ public:
 			Fvector	CalculateRealPosition		();
 };
 
+#endif

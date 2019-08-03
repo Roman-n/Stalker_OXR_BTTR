@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef POLTERGEIST_CS
 #include "../states/monster_state_rest.h"
 
 template<typename _Object>
@@ -54,3 +54,4 @@ void CPoltergeist_csStateRest<_Object>::execute()
 	prev_substate = current_substate;
 }
 
+#endif

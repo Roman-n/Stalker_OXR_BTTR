@@ -64,6 +64,8 @@
 //#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
 #define DOG_SOC										// Собака из ЧН/ТЧ
 //#define WARNING_SCRIPT							// ! WARNING: SV: can't find children [...] of parent [...]
+#define POLTERGEIST_CS								// Полтергейсты из ЧН/ТЧ
+#define NEW_AI_POLTER								// Новый AI(т.е старый) полтера ТЧ\ЧН
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
@@ -93,6 +95,5 @@
 //#define BLOODSUCKER_SOC							// Сосыч из Теней Чернобыля
 //#define BOAR_CS									// Кабан из Чистого неба
 //#define BURER_CS									// Бюрер из ЧН/ТЧ
-//#define POLTERGEIST_CS							// Полтергейсты из ЧН/ТЧ
 //#define SNORK_CS									// Снорк из ЧН/ТЧ
 //#define PSEUDO_GIANT_JUMPER						// Прыгающий псевдогигант из ЧН/ТЧ

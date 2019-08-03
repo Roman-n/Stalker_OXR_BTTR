@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#ifdef POLTERGEIST_CS
 #include "poltergeist_cs.h"
 #include "../../../../xrphysics/PhysicsShell.h"
 #include "../../../level.h"
@@ -106,7 +107,7 @@ void CPolterSpecialAbility_cs::on_hit(SHit* pHDS)
 
 void CPoltergeist_cs::PhysicalImpulse	(const Fvector &position)
 {
-	m_nearest.clear_not_free		();
+    m_nearest.clear();
 	Level().ObjectSpace.GetNearest	(m_nearest,position, IMPULSE_RADIUS, NULL); 
 	//xr_vector<CObject*> &m_nearest = Level().ObjectSpace.q_nearest;
 	if (m_nearest.empty())			return;
@@ -139,19 +140,21 @@ void CPoltergeist_cs::StrangeSounds(const Fvector &position)
 
 				// Получить пару материалов
 				CDB::TRI*	pTri	= Level().ObjectSpace.GetStaticTris() + l_rq.element;
-				SGameMtlPair* mtl_pair = GMLib.GetMaterialPair(material().self_material_idx(),pTri->material);
+                SGameMtlPair* mtl_pair = GMLib.GetMaterialPairByIndices(material().self_material_idx(), pTri->material);
 				if (!mtl_pair) continue;
 
 				// Играть звук
 				if (!mtl_pair->CollideSounds.empty()) {
-					CLONE_MTL_SOUND(m_strange_sound, mtl_pair, CollideSounds);
-					Fvector pos;
-					pos.mad(position, dir, ((l_rq.range - 0.1f > 0) ? l_rq.range - 0.1f  : l_rq.range));
-					m_strange_sound.play_at_pos(this,pos);
-					return;
+                    ref_sound& randSound = mtl_pair->CollideSounds[Random.randI(mtl_pair->CollideSounds.size())];
+                    m_strange_sound.clone(randSound, st_Effect, sg_SourceType);
+                    Fvector pos;
+                    pos.mad(position, dir, ((l_rq.range - 0.1f > 0) ? l_rq.range - 0.1f : l_rq.range));
+                    m_strange_sound.play_at_pos(this, pos);
+                    return;
 				}			
 			}
 		}
 	}
 }
 
+#endif

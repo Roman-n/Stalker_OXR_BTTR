@@ -1,8 +1,9 @@
 #pragma once
+#ifdef POLTERGEIST_CS
 #include "../BaseMonster/base_monster.h"
 #include "../telekinesis.h"
 #include "../energy_holder.h"
-#include "../../../../xrServerEntities/script_export_space.h"
+
 
 class CPhysicsShellHolder;
 class CStateManagerPoltergeist_cs;
@@ -40,12 +41,12 @@ public:
 
 	virtual BOOL	net_Spawn			(CSE_Abstract* DC);
 	virtual void	net_Destroy			();
-	virtual void	net_Relcase			(CObject *O);
+	virtual void	net_Relcase			(IGameObject *O);
 
 	virtual void	UpdateCL			();
 	virtual	void	shedule_Update		(u32 dt);
 
-	virtual void	Die					(CObject* who);
+	virtual void	Die					(IGameObject* who);
 
 	virtual CMovementManager *create_movement_manager();
 	
@@ -54,7 +55,8 @@ public:
 	virtual	void	on_activate			();
 	virtual	void	on_deactivate		();
 	virtual	void	Hit					(SHit* pHDS);
-	virtual	char*	get_monster_class_name () { return "poltergeistcs"; }
+    pcstr get_monster_class_name() override { return "poltergeist_cs"; }
+	//virtual	char*	get_monster_class_name () { return "poltergeistcs"; }
 
 	IC		CPolterSpecialAbility_cs		*ability() {return (m_flame ? m_flame : m_tele);}
 	
@@ -87,19 +89,7 @@ private:
 			void	Show					();
 
 
-public:
-#ifdef DEBUG
-			virtual CBaseMonster::SDebugInfo show_debug_info();
-#endif
-
-
-	DECLARE_SCRIPT_REGISTER_FUNCTION
 };
-
-add_to_type_list(CPoltergeist_cs)
-#undef script_type_list
-#define script_type_list save_type_list(CPoltergeist_cs)
-
 
 //////////////////////////////////////////////////////////////////////////
 // Interface
@@ -192,7 +182,7 @@ class CPolterFlame_cs : public CPolterSpecialAbility_cs {
 
 public:
 	struct SFlameElement {
-		const CObject		*target_object;
+		const IGameObject		*target_object;
 		Fvector				position;
 		Fvector				target_dir;
 		u32					time_started;
@@ -218,8 +208,8 @@ public:
 
 private:
 			void	select_state				(SFlameElement *elem, EFlameState state);
-			bool	get_valid_flame_position	(const CObject *target_object, Fvector &res_pos);
-			void	create_flame				(const CObject *target_object);
+			bool	get_valid_flame_position	(const IGameObject *target_object, Fvector &res_pos);
+			void	create_flame				(const IGameObject *target_object);
 };
 
 
@@ -229,7 +219,7 @@ private:
 class CPolterTele_cs : public CPolterSpecialAbility_cs {
 	typedef CPolterSpecialAbility_cs inherited;
 
-	xr_vector<CObject*>	m_nearest;
+	xr_vector<IGameObject*>	m_nearest;
 
 	// external params
 	float				m_pmt_radius;
@@ -268,10 +258,11 @@ public:
 	virtual void	update_schedule				();
 
 private:
-			void	tele_find_objects			(xr_vector<CObject*> &objects, const Fvector &pos);
+			void	tele_find_objects			(xr_vector<IGameObject*> &objects, const Fvector &pos);
 			bool	tele_raise_objects			();
 			void	tele_fire_objects			();
 
-			bool	trace_object				(CObject *obj, const Fvector &target);
+			bool	trace_object				(IGameObject *obj, const Fvector &target);
 };
 
+#endif

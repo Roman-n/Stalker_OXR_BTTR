@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#ifdef POLTERGEIST_CS
 #include "poltergeist_cs.h"
 #include "../../../PhysicsShellHolder.h"
 #include "../../../level.h"
@@ -31,8 +32,8 @@ void CPolterTele_cs::load(LPCSTR section)
 	m_pmt_raise_time_to_wait_in_objects	= READ_IF_EXISTS(pSettings,r_u32,section,	"Tele_Delay_Between_Objects_Raise_Time", 500);
 	m_pmt_fly_velocity					= READ_IF_EXISTS(pSettings,r_float,section, "Tele_Fly_Velocity",				30.f);
 
-	::Sound->create						(m_sound_tele_hold,		pSettings->r_string(section,"sound_tele_hold"),	st_Effect,SOUND_TYPE_WORLD);
-	::Sound->create						(m_sound_tele_throw,	pSettings->r_string(section,"sound_tele_throw"),st_Effect,SOUND_TYPE_WORLD);
+	GEnv.Sound->create						(m_sound_tele_hold,		pSettings->r_string(section,"sound_tele_hold"),	st_Effect,SOUND_TYPE_WORLD);
+	GEnv.Sound->create						(m_sound_tele_throw,	pSettings->r_string(section,"sound_tele_throw"),st_Effect,SOUND_TYPE_WORLD);
 
 
 	m_state								= eWait;
@@ -122,7 +123,7 @@ class best_object_predicate2 {
 	Fvector enemy_pos;
 	Fvector monster_pos;
 public:
-	typedef CObject*	CObject_ptr;
+	typedef IGameObject*	CObject_ptr;
 
 	best_object_predicate2(const Fvector &m_pos, const Fvector &pos) {
 		monster_pos = m_pos;
@@ -140,7 +141,7 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
 
-bool CPolterTele_cs::trace_object(CObject *obj, const Fvector &target)
+bool CPolterTele_cs::trace_object(IGameObject *obj, const Fvector &target)
 {
 	Fvector			trace_from;
 	obj->Center		(trace_from);
@@ -161,9 +162,9 @@ bool CPolterTele_cs::trace_object(CObject *obj, const Fvector &target)
 }
 
 
-void CPolterTele_cs::tele_find_objects(xr_vector<CObject*> &objects, const Fvector &pos) 
+void CPolterTele_cs::tele_find_objects(xr_vector<IGameObject*> &objects, const Fvector &pos) 
 {
-	m_nearest.clear_not_free		();
+    m_nearest.clear();
 	Level().ObjectSpace.GetNearest	(m_nearest, pos, m_pmt_radius, NULL);
 
 	for (u32 i=0;i<m_nearest.size();i++) {
@@ -193,7 +194,7 @@ void CPolterTele_cs::tele_find_objects(xr_vector<CObject*> &objects, const Fvect
 bool CPolterTele_cs::tele_raise_objects()
 {
 	// find objects near actor
-	xr_vector<CObject*>		tele_objects;
+	xr_vector<IGameObject*>		tele_objects;
 	tele_objects.reserve	(20);
 
 	// получить список объектов вокруг врага
@@ -265,4 +266,4 @@ void CPolterTele_cs::tele_fire_objects()
 		}
 	}
 }
-
+#endif

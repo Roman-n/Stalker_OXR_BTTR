@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#ifdef POLTERGEIST_CS
 #include "poltergeist_cs.h"
 #include "poltergeist_cs_state_manager.h"
 #include "../../../characterphysicssupport.h"
@@ -32,7 +33,7 @@
 
 CPoltergeist_cs::CPoltergeist_cs()
 {
-	StateMan					= xr_new<CStateManagerPoltergeist_cs>(this);
+	StateMan					= new CStateManagerPoltergeist_cs(this);
 	
 	invisible_vel.set			(0.1f, 0.1f);
 	
@@ -109,10 +110,10 @@ void CPoltergeist_cs::Load(LPCSTR section)
 	LPCSTR polter_type = pSettings->r_string(section,"type");
 	
 	if (xr_strcmp(polter_type,"flamer") == 0) {
-		m_flame			= xr_new<CPolterFlame_cs>(this);
+		m_flame			= new CPolterFlame_cs(this);
 		m_flame->load	(section);
 	} else {
-		m_tele			= xr_new<CPolterTele_cs>(this);
+		m_tele			= new CPolterTele_cs(this);
 		m_tele->load	(section);
 	}
 	
@@ -228,7 +229,7 @@ void CPoltergeist_cs::net_Destroy()
 	ability()->on_destroy();
 }
 
-void CPoltergeist_cs::Die(CObject* who)
+void CPoltergeist_cs::Die(IGameObject* who)
 {
 	//oldSerpski_stalker
  	if (m_tele) {
@@ -290,7 +291,7 @@ void CPoltergeist_cs::on_deactivate()
 
 CMovementManager *CPoltergeist_cs::create_movement_manager	()
 {
-	m_movement_manager				= xr_new<CPoltergeisMovementManager_cs>(this);
+	m_movement_manager				= new CPoltergeisMovementManager_cs(this);
 
 	control().add					(m_movement_manager, ControlCom::eControlPath);
 	control().install_path_manager	(m_movement_manager);
@@ -300,7 +301,7 @@ CMovementManager *CPoltergeist_cs::create_movement_manager	()
 }
 
 
-void CPoltergeist_cs::net_Relcase(CObject *O)
+void CPoltergeist_cs::net_Relcase(IGameObject *O)
 {
 	inherited::net_Relcase		(O);
 	CTelekinesis::remove_links	(O);
@@ -322,3 +323,4 @@ CBaseMonster::SDebugInfo CPoltergeist_cs::show_debug_info()
 }
 #endif
 
+#endif

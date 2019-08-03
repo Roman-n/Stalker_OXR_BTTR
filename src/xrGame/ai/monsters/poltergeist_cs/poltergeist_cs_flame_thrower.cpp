@@ -1,8 +1,7 @@
 #include "stdafx.h"
+#ifdef POLTERGEIST_CS
 #include "poltergeist_cs.h"
 #include "../../../../xrServerEntities/xrmessages.h"
-#include "../../../ai_object_location.h"
-#include "../../../level_graph.h"
 #include "../../../level.h"
 #include "../../../ai_space.h"
 #include "../../../restricted_object.h"
@@ -82,12 +81,12 @@ void CPolterFlame_cs::load(LPCSTR section)
 	m_time_flame_started	= 0;
 }
 
-void CPolterFlame_cs::create_flame(const CObject *target_object)
+void CPolterFlame_cs::create_flame(const IGameObject *target_object)
 {
 	Fvector position;
 	if (!get_valid_flame_position(target_object, position)) return;
 
-	SFlameElement *element			= xr_new<SFlameElement>();
+	SFlameElement *element			= new SFlameElement();
 	
 	element->position				= position;
 	element->target_object			= target_object;
@@ -97,7 +96,7 @@ void CPolterFlame_cs::create_flame(const CObject *target_object)
 	element->particles_object		= 0;
 	element->time_last_hit			= 0;
 
-	Fvector target_point			= get_head_position(const_cast<CObject*>(target_object));
+	Fvector target_point			= get_head_position(const_cast<IGameObject*>(target_object));
 	element->target_dir.sub			(target_point, element->position);
 	element->target_dir.normalize	();
 	
@@ -159,10 +158,10 @@ void CPolterFlame_cs::update_schedule()
 
 					// играть звук
 					//m_scan_sound.play_at_pos(m_object, get_head_position(Actor()),sm_2D);
-					::Sound->play_at_pos(m_scan_sound, 0, Actor()->Position());
+                    GEnv.Sound->play_at_pos(m_scan_sound, 0, Actor()->Position());
 
 					// постпроцесс
-					Actor()->Cameras().AddPPEffector(xr_new<CMonsterEffector>(m_scan_effector_info, m_scan_effector_time, m_scan_effector_time_attack, m_scan_effector_time_release));
+					Actor()->Cameras().AddPPEffector(new CMonsterEffector(m_scan_effector_info, m_scan_effector_time, m_scan_effector_time_attack, m_scan_effector_time_release));
 				}
 				
 			}
@@ -288,7 +287,7 @@ void CPolterFlame_cs::on_die()
 
 #define FIND_POINT_ATTEMPT_COUNT	5
 
-bool CPolterFlame_cs::get_valid_flame_position(const CObject *target_object, Fvector &res_pos)
+bool CPolterFlame_cs::get_valid_flame_position(const IGameObject *target_object, Fvector &res_pos)
 {
 	const CGameObject *Obj = smart_cast<const CGameObject *>(target_object);
 	if (!Obj) return (false);
@@ -337,3 +336,4 @@ bool CPolterFlame_cs::get_valid_flame_position(const CObject *target_object, Fve
 	return (false);
 }
 
+#endif

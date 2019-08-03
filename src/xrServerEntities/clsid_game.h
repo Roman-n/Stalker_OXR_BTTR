@@ -15,7 +15,9 @@
 
 #define CLSID_AI_ZOMBIE MK_CLSID('A', 'I', '_', 'Z', 'O', 'M', ' ', ' ')
 #define CLSID_AI_POLTERGEIST MK_CLSID('A', 'I', '_', 'P', 'O', 'L', 'T', 'R')
-
+#ifdef POLTERGEIST_CS
+#define CLSID_AI_POLTERGEIST_CS MK_CLSID('A', 'I', '_', 'P', 'O', 'L', 'C', 'S')
+#endif
 #define CLSID_AI_FLESH MK_CLSID('A', 'I', '_', 'F', 'L', 'E', 'S', 'H')
 #define CLSID_AI_FLESH_GROUP MK_CLSID('A', 'I', '_', 'F', 'L', 'E', '_', 'G')
 

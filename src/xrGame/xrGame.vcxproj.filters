@@ -859,6 +859,18 @@
     <Filter Include="AI\AMonsters\monsters\Poltergeist\Abilities">
       <UniqueIdentifier>{c8cffc20-4b96-4e96-9eff-868c6f8f7d72}</UniqueIdentifier>
     </Filter>
+	<Filter Include="AI\AMonsters\monsters\Poltergeist_cs">
+      <UniqueIdentifier>{af50598f-db2f-4151-89b1-2100e2843891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Poltergeist_cs\Script">
+      <UniqueIdentifier>{f4c16e04-474d-48bd-a5dd-ff38c23bd982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Poltergeist_cs\Hidden Attack">
+      <UniqueIdentifier>{a3358a33-880e-445e-9cba-5d7cb4b9db03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\AMonsters\monsters\Poltergeist_cs\Abilities">
+      <UniqueIdentifier>{c8cffc20-4b96-4e96-9eff-868c6f8f7d74}</UniqueIdentifier>
+    </Filter>
     <Filter Include="AI\AMonsters\monsters\Zombie">
       <UniqueIdentifier>{41d0fd68-dd22-4f31-a236-6ebf5692cc9b}</UniqueIdentifier>
     </Filter>
@@ -3963,6 +3975,24 @@
     <ClInclude Include="ai\Monsters\Poltergeist\poltergeist_state_attack_hidden_inline.h">
       <Filter>AI\AMonsters\monsters\Poltergeist\Hidden Attack</Filter>
     </ClInclude>
+	<ClInclude Include="ai\Monsters\Poltergeist_cs\poltergeist_cs.h">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_movement.h">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_state_manager.h">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_state_rest.h">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_state_attack_hidden.h">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs\Hidden Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_state_attack_hidden_inline.h">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs\Hidden Attack</Filter>
+    </ClInclude>
     <ClInclude Include="ai\Monsters\Zombie\zombie.h">
       <Filter>AI\AMonsters\monsters\Zombie</Filter>
     </ClInclude>
@@ -6930,6 +6960,27 @@
     </ClCompile>
     <ClCompile Include="ai\Monsters\Poltergeist\poltergeist_telekinesis.cpp">
       <Filter>AI\AMonsters\monsters\Poltergeist\Abilities</Filter>
+    </ClCompile>
+	<ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_movement.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_state_manager.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_script.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_ability.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_flame_thrower.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ai\Monsters\Poltergeist_cs\poltergeist_cs_telekinesis.cpp">
+      <Filter>AI\AMonsters\monsters\Poltergeist_cs\Abilities</Filter>
     </ClCompile>
     <ClCompile Include="ai\Monsters\Zombie\zombie.cpp">
       <Filter>AI\AMonsters\monsters\Zombie</Filter>

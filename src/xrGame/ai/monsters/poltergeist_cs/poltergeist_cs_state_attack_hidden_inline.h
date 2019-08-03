@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef POLTERGEIST_CS
 #include "../../../sound_player.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
@@ -54,3 +54,5 @@ void CStatePoltergeistAttackHiddenAbstract::select_target_point()
 
 #undef TEMPLATE_SPECIALIZATION
 #undef CStatePoltergeistAttackHiddenAbstract
+
+#endif

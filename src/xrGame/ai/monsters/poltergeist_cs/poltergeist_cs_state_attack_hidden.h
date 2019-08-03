@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef POLTERGEIST_CS
 #include "../state.h"
 
 template<typename _Object>
@@ -21,7 +21,7 @@ public:
 
 	virtual void	initialize				();
 	virtual void	execute					();
-	virtual void	remove_links			(CObject* object) { inherited::remove_links(object);}
+	virtual void	remove_links			(IGameObject* object) { inherited::remove_links(object);}
 
 private:
 
@@ -29,3 +29,4 @@ private:
 };
 
 #include "poltergeist_cs_state_attack_hidden_inline.h"
+#endif
