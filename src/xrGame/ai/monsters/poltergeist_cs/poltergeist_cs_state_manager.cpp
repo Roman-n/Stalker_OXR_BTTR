@@ -87,8 +87,20 @@ void CStateManagerPoltergeist_cs::execute()
     		object->DisableHide();
     	}
     }
+	
+	if (enemy->conditions().health() < 0.35f) // У врага 35% здоровья, спускаемся и бьем его руками
+	{
+        state_id = eStateAttack;
+        object->DisableHide();
+	}
+    else 
+    { 
+        state_id = eStateAttack_AttackHidden; // Летаем дальше, кидаемся предметами
+        object->EnableHide();
+    }
+
 #else
-    state_id = eStateRest;
+    state_id = eStateRest;           // Просто летаем по карте и кидаемся в актера предметами, при отключении дефайна
 #endif
 	select_state(state_id); 
 
@@ -97,8 +109,6 @@ void CStateManagerPoltergeist_cs::execute()
 
 	prev_substate = current_substate;
 }
-
-#define TIME_SEEN_FOR_FIRE 5000
 
 void CStateManagerPoltergeist_cs::polter_attack(){}
 #endif
