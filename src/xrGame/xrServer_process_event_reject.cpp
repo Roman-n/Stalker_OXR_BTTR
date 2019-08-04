@@ -42,9 +42,9 @@ bool xrServer::Process_event_reject(
     xr_vector<u16>& C = e_parent->children;
     xr_vector<u16>::iterator c = std::find(C.begin(), C.end(), id_entity);
     if (c == C.end())
-    {
 	// 
 #ifdef WARNING_SCRIPT
+	{
 		xr_string clildrenList; 
 		for (const u16& childID : e_parent->children) 
 		{ 
@@ -54,7 +54,6 @@ bool xrServer::Process_event_reject(
 		return false; 
 	}	
 #endif		
-        return false;
     }
 
     if (0xffff == e_entity->ID_Parent)
