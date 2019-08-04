@@ -916,9 +916,15 @@ IC static void CLevel_Export(lua_State* luaState)
         ]
     ];
 
-    module(luaState)[def("command_line", &command_line), def("IsGameTypeSingle", &IsGameTypeSingle),
-        def("IsDynamicMusic", &IsDynamicMusic), def("render_get_dx_level", &render_get_dx_level),
-        def("IsImportantSave", &IsImportantSave)];
+     module(luaState)
+    [
+        def("command_line", &command_line),
+        def("IsGameTypeSingle", REMOVE_NOEXCEPT(&IsGameTypeSingle)),
+        def("IsDynamicMusic", &IsDynamicMusic),
+        def("render_get_dx_level", &render_get_dx_level),
+        def("IsImportantSave", &IsImportantSave)
+    ];
+
 
     module(luaState, "relation_registry")[def("community_goodwill", &g_community_goodwill),
         def("set_community_goodwill", &g_set_community_goodwill),
