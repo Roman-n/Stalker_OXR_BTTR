@@ -6126,7 +6126,6 @@
     <ClInclude Include="StdAfx.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="$(xrExternals)GameSpy\src\GameSpy\md5.h" />
     <ClInclude Include="profile_data_types_script.h">
       <Filter>Core\Server\Games\PlayerAccounts</Filter>
     </ClInclude>
@@ -9124,7 +9123,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="$(xrExternals)GameSpy\src\GameSpy\md5c.c" />
     <ClCompile Include="WeaponRevolver.cpp">
       <Filter>Core\Client\Objects\items &amp; weapons\Weapons\Custom Weapon\Pistol</Filter>
     </ClCompile>
