@@ -18,46 +18,67 @@
 #include "../states/monster_state_hitted.h"
 #include "../../../entitycondition.h"
 
-CStateManagerPoltergeist_cs::CStateManagerPoltergeist_cs(CPoltergeist_cs *obj) : inherited(obj)
+CStateManagerPoltergeist_cs::CStateManagerPoltergeist_cs(CPoltergeist_cs* obj) : inherited(obj)
 {
-	add_state(eStateRest,					new CPoltergeist_csStateRest<CPoltergeist_cs>  (obj));
-	add_state(eStateEat,					new CStateMonsterEat<CPoltergeist_cs> (obj));
-	add_state(eStateAttack,					new CStateMonsterAttack<CPoltergeist_cs> (obj));
-	add_state(eStateAttack_AttackHidden,	new CStatePoltergeistAttackHidden<CPoltergeist_cs>  (obj));
-	add_state(eStatePanic,					new CStateMonsterPanic<CPoltergeist_cs> (obj));
-	add_state(eStateHitted,					new CStateMonsterHitted<CPoltergeist_cs> (obj));
-	add_state(eStateHearInterestingSound,	new CStateMonsterHearInterestingSound<CPoltergeist_cs> (obj));
-	add_state(eStateHearDangerousSound,		new CStateMonsterHearDangerousSound<CPoltergeist_cs> (obj));
+
+    CStateMonsterAttackMoveToHomePoint<CPoltergeist_cs>* PolterAttack_Hands =
+    new CStateMonsterAttackMoveToHomePoint<CPoltergeist_cs>(obj);               // Разрешить бить руками 
+
+    add_state(eStateRest, new CPoltergeist_csStateRest<CPoltergeist_cs>(obj));
+    add_state(eStateEat, new CStateMonsterEat<CPoltergeist_cs>(obj));
+    add_state(eStateAttack, new CStateMonsterAttack<CPoltergeist_cs>(obj, PolterAttack_Hands)); // state_id = eStateAttack(obj * PolterAttack_Hands)
+    add_state(eStateAttack_AttackHidden, new CStatePoltergeistAttackHidden<CPoltergeist_cs>(obj));
+    add_state(eStatePanic, new CStateMonsterPanic<CPoltergeist_cs>(obj));
+    add_state(eStateHitted, new CStateMonsterHitted<CPoltergeist_cs>(obj));
+    add_state(eStateHearInterestingSound, new CStateMonsterHearInterestingSound<CPoltergeist_cs>(obj));
+    add_state(eStateHearDangerousSound, new CStateMonsterHearDangerousSound<CPoltergeist_cs>(obj));
 }
 
 CStateManagerPoltergeist_cs::~CStateManagerPoltergeist_cs() {}
 
 void CStateManagerPoltergeist_cs::reinit()
 {
-	inherited::reinit();
-	
-	time_next_flame_attack	= 0;
-	time_next_tele_attack	= 0;
-	time_next_scare_attack	= 0;
+    inherited::reinit();
 
+    time_next_flame_attack = 0;
+    time_next_tele_attack = 0;
+    time_next_scare_attack = 0;
 }
 
 void CStateManagerPoltergeist_cs::execute()
 {
-	u32 state_id = u32(-1);
+    u32 state_id = u32(-1);
 #ifdef NEW_AI_POLTER
     const CEntityAlive* enemy = object->EnemyMan.get_enemy();
 
     if (enemy)
     {
-        switch (object->EnemyMan.get_danger_type()) // Чтобы полтер улетал от НПС, приводит к багу
+        switch (object->EnemyMan.get_danger_type())
         {
-        case eStrong: 
-					state_id = eStatePanic; 
-					break; 
-        case eWeak: 
-					state_id = eStatePanic;
-					break;  
+        case eStrong:
+            if (object->is_hidden())
+            {
+                object->CEnergyHolder::activate();
+            }
+            object->EnableHide();
+            state_id = eStatePanic;
+            break;
+        case eWeak:                                   // В любом случаем придется делать разные секции полтергейстов, настравивать панику
+                                                      // Чтобы толпой они не забивали в упор
+            if (enemy->conditions().health() < 0.35f) // У врага 35% здоровья, спускаемся и бьем его руками
+            {
+                if (object->is_hidden())
+                {
+                    object->CEnergyHolder::deactivate();
+                }
+                object->DisableHide();
+                state_id = eStateAttack;
+            }
+            else
+            {
+                state_id = eStatePanic;
+            }
+            break;
         }
     }
     else if (object->HitMemory.is_hit())
@@ -74,41 +95,51 @@ void CStateManagerPoltergeist_cs::execute()
             state_id = eStateEat;
         else
         {
-            state_id = eStateRest;	// Если другая анимация, не едим ничего
-			object->EnableHide();	// Обратно взлетаем
+            state_id = eStateRest; // Если другая анимация, не едим ничего
+            if (object->is_hidden())
+            {
+                object->CEnergyHolder::activate();
+            }
+            object->EnableHide(); // Обратно взлетаем
         }
     }
 
-    if (state_id == eStateEat) {	// Хотим покушать, спустились на землю
-    	if (object->CorpseMan.get_corpse()->Position().distance_to(object->Position()) < 10.f) {
-    		if (object->is_hidden()) {
-    			object->CEnergyHolder::deactivate();
-    		}
-    		object->DisableHide();
-    	}
+    if (state_id == eStateEat)
+    { // Хотим покушать, спустились на землю
+        if (object->CorpseMan.get_corpse()->Position().distance_to(object->Position()) < 10.f)
+        {
+            if (object->is_hidden())
+            {
+                object->CEnergyHolder::deactivate();
+            }
+            object->DisableHide();
+        }
     }
-	
-	if (enemy->conditions().health() < 0.35f) // У врага 35% здоровья, спускаемся и бьем его руками
-	{
+/*
+    if (enemy->conditions().health() < 0.35f) // У врага 35% здоровья, спускаемся и бьем его руками
+    {
         state_id = eStateAttack;
+        if (object->is_hidden()) {
+                object->CEnergyHolder::deactivate();
+            }
         object->DisableHide();
-	}
-    else 
-    { 
+    }
+    else
+    {
         state_id = eStateAttack_AttackHidden; // Летаем дальше, кидаемся предметами
         object->EnableHide();
     }
-
+*/
 #else
-    state_id = eStateRest;           // Просто летаем по карте и кидаемся в актера предметами, при отключении дефайна
+    state_id = eStateRest; // Просто летаем по карте и кидаемся в актера предметами, при отключении дефайна
 #endif
-	select_state(state_id); 
+    select_state(state_id);
 
-	// выполнить текущее состояние
-	get_state_current()->execute();
+    // выполнить текущее состояние
+    get_state_current()->execute();
 
-	prev_substate = current_substate;
+    prev_substate = current_substate;
 }
 
-void CStateManagerPoltergeist_cs::polter_attack(){}
+void CStateManagerPoltergeist_cs::polter_attack() {}
 #endif
