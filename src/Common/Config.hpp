@@ -63,7 +63,7 @@
 #define __FIX										// Вылет по поясу, если переместить итем размера 2 на 1 ячейку
 //#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
 #define DOG_SOC										// Собака из ЧН/ТЧ
-//#define WARNING_SCRIPT							// ! WARNING: SV: can't find children [...] of parent [...]
+#define WARNING_SCRIPT							    // Новый лог: ! WARNING: SV: can't find children [...] of parent [...]
 #define POLTERGEIST_CS								// Полтергейсты из ЧН/ТЧ
 #define NEW_AI_POLTER								// Новый AI(т.е старый) полтера ТЧ\ЧН
 #define MINI_DUMP_GENERATE							// Создание мини дампа в логе

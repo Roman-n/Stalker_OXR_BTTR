@@ -43,9 +43,16 @@ bool xrServer::Process_event_reject(
     xr_vector<u16>::iterator c = std::find(C.begin(), C.end(), id_entity);
     if (c == C.end())
     {
-	// На Зов Чернобыля вечно была эта проблема, как итог все работает без вылетов. Пусть будет под дефайном отключена
+	// 
 #ifdef WARNING_SCRIPT
-        Msg("! WARNING: SV: can't find children [%d] of parent [%d]", id_entity, e_parent);
+		xr_string clildrenList; 
+		for (const u16& childID : e_parent->children) 
+		{ 
+			clildrenList.append("! ").append(game->get_entity_from_eid(childID)->name_replace()).append("\n"); 
+		} 
+		Msg("! WARNING: SV: can't find child [%s] of parent [%s]! Children list:\n%s", e_entity->name_replace(), e_parent->name_replace(), clildrenList.c_str()); 
+		return false; 
+	}	
 #endif		
         return false;
     }
