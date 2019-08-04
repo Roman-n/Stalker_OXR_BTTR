@@ -697,7 +697,8 @@ void CCC_Register()
     CMD3(CCC_Mask, "rs_fullscreen", &psDeviceFlags, rsFullscreen);
     CMD3(CCC_Mask, "rs_refresh_60hz", &psDeviceFlags, rsRefresh60hz);
     CMD3(CCC_Mask, "rs_stats", &psDeviceFlags, rsStatistic);
-    CMD4(CCC_Float, "rs_vis_distance", &psVisDistance, 0.4f, 1.0f);
+	CMD3(CCC_Mask, "rs_fps", &psDeviceFlags, rsShowFPS);
+    CMD4(CCC_Float, "rs_vis_distance", &psVisDistance, 0.4f, 1.5f); // Все работает и с 1.5 , если оптимизация уровней есть.
 
     CMD3(CCC_Mask, "rs_cam_pos", &psDeviceFlags, rsCameraPos);
 #ifdef DEBUG
