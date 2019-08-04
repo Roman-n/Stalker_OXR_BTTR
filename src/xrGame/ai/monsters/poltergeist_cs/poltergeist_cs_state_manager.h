@@ -22,9 +22,5 @@ private:
 			u32			time_next_tele_attack;
 			u32			time_next_scare_attack;
 
-			void		polter_attack				();
-			
-
-
 };
 #endif

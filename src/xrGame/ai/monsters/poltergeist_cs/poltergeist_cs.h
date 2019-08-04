@@ -28,7 +28,7 @@ class CPoltergeist_cs :	public CBaseMonster ,
 
 
 	CPolterSpecialAbility_cs	*m_flame;
-	CPolterSpecialAbility_cs	*m_tele;
+	CPolterSpecialAbility_cs	*m_tele_cs; // Пересечение с ЗП классом
 
 
 public:
@@ -56,9 +56,8 @@ public:
 	virtual	void	on_deactivate		();
 	virtual	void	Hit					(SHit* pHDS);
     pcstr get_monster_class_name() override { return "poltergeist_cs"; }
-	//virtual	char*	get_monster_class_name () { return "poltergeistcs"; }
 
-	IC		CPolterSpecialAbility_cs		*ability() {return (m_flame ? m_flame : m_tele);}
+	IC		CPolterSpecialAbility_cs		*ability() {return (m_flame ? m_flame : m_tele_cs);}
 	
 	
 	IC		bool	is_hidden			() {return state_invisible;}
@@ -71,7 +70,7 @@ public:
 			ref_sound m_strange_sound;
 	
 	// Movement
-			Fvector m_current_position;		// ������� �� ����
+			Fvector m_current_position;		// Позиция на ноде
 
 	// Dynamic Height
 			u32		time_height_updated;
@@ -84,9 +83,9 @@ public:
 			void	EnableHide				(){m_disable_hide = false;}
 			void	DisableHide				(){m_disable_hide = true;}
 	
-private:
-			void	Hide					();
-			void	Show					();
+public:												// Из приватной в публичную, для доступа в poltergeist_cs_state_manager.cpp
+			void	Hide_pcs					();
+			void	Show_pcs					();
 
 
 };

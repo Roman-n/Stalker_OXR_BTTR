@@ -20,13 +20,11 @@
 
 CStateManagerPoltergeist_cs::CStateManagerPoltergeist_cs(CPoltergeist_cs* obj) : inherited(obj)
 {
-
     CStateMonsterAttackMoveToHomePoint<CPoltergeist_cs>* PolterAttack_Hands =
-    new CStateMonsterAttackMoveToHomePoint<CPoltergeist_cs>(obj);               // Разрешить бить руками 
-
+        new CStateMonsterAttackMoveToHomePoint<CPoltergeist_cs>(obj);
     add_state(eStateRest, new CPoltergeist_csStateRest<CPoltergeist_cs>(obj));
     add_state(eStateEat, new CStateMonsterEat<CPoltergeist_cs>(obj));
-    add_state(eStateAttack, new CStateMonsterAttack<CPoltergeist_cs>(obj, PolterAttack_Hands)); // state_id = eStateAttack(obj * PolterAttack_Hands)
+    add_state(eStateAttack, new CStateMonsterAttack<CPoltergeist_cs>(obj, PolterAttack_Hands));
     add_state(eStateAttack_AttackHidden, new CStatePoltergeistAttackHidden<CPoltergeist_cs>(obj));
     add_state(eStatePanic, new CStateMonsterPanic<CPoltergeist_cs>(obj));
     add_state(eStateHitted, new CStateMonsterHitted<CPoltergeist_cs>(obj));
@@ -48,98 +46,71 @@ void CStateManagerPoltergeist_cs::reinit()
 void CStateManagerPoltergeist_cs::execute()
 {
     u32 state_id = u32(-1);
-#ifdef NEW_AI_POLTER
     const CEntityAlive* enemy = object->EnemyMan.get_enemy();
+    select_state(state_id);
+    get_state_current()->execute();
+    prev_substate = current_substate;
 
-    if (enemy)
+// --' Новый AI полтергейста
+// --' oldSerpski stalker
+
+#ifdef NEW_AI_POLTER
+    CPolterSpecialAbility_cs* m_tele_cs; // Тип полтергейста m_tele_cs
+    if (m_tele_cs)
     {
-        switch (object->EnemyMan.get_danger_type())
+        if (enemy)
         {
-        case eStrong:
-            if (object->is_hidden())
+            switch (object->EnemyMan.get_danger_type())
             {
-                object->CEnergyHolder::activate();
-            }
-            object->EnableHide();
-            state_id = eStatePanic;
-            break;
-        case eWeak:                                   // В любом случаем придется делать разные секции полтергейстов, настравивать панику
-                                                      // Чтобы толпой они не забивали в упор
-            if (enemy->conditions().health() < 0.35f) // У врага 35% здоровья, спускаемся и бьем его руками
-            {
-                if (object->is_hidden())
-                {
-                    object->CEnergyHolder::deactivate();
-                }
-                object->DisableHide();
-                state_id = eStateAttack;
-            }
-            else
-            {
+            case eStrong:
+                object->on_activate();
                 state_id = eStatePanic;
+                break;
+            case eWeak:
+                if (enemy->conditions().health() < 0.50f) // Видим раненного врага, спустимся на землю и добьем рукой. Относится к атеру, если бежать уже не можем
+                {                                         // CStateMonsterAttack<CPoltergeist_cs>(obj, PolterAttack_Hands)
+                    object->on_deactivate();
+                    state_id = eStateAttack;
+                }
+                else
+                {
+                    state_id = eStatePanic;               // У врага больше 50 %, летаем и кидаемся предметами
+                    object->on_activate();
+                }
+                break;
             }
-            break;
         }
-    }
-    else if (object->HitMemory.is_hit())
-    {
-        state_id = eStateHitted;
-    }
-    else if (object->hear_interesting_sound || object->hear_dangerous_sound)
-    {
-        state_id = eStateHearDangerousSound;
-    }
-    else
-    {
-        if (can_eat())
-            state_id = eStateEat;
+        else if (object->HitMemory.is_hit())
+        {
+            state_id = eStateHitted;
+        }
+        else if (object->hear_interesting_sound || object->hear_dangerous_sound)
+        {
+            state_id = eStateHearDangerousSound;
+        }
         else
         {
-            state_id = eStateRest; // Если другая анимация, не едим ничего
-            if (object->is_hidden())
+            if (can_eat())
+                state_id = eStateEat; 
+            else
             {
-                object->CEnergyHolder::activate();
+                state_id = eStateRest;
+                object->on_activate(); // Летаем дальше, пока голод не упадет
             }
-            object->EnableHide(); // Обратно взлетаем
         }
-    }
 
-    if (state_id == eStateEat)
-    { // Хотим покушать, спустились на землю
-        if (object->CorpseMan.get_corpse()->Position().distance_to(object->Position()) < 10.f)
+        if (state_id == eStateEat) // Если мы кушаем, проверить дист. до трупа, спустится на землю
         {
-            if (object->is_hidden())
+            if (object->CorpseMan.get_corpse()->Position().distance_to(object->Position()) < 10.f)
             {
-                object->CEnergyHolder::deactivate();
+                object->on_deactivate();   // Отключить полет
             }
-            object->DisableHide();
         }
-    }
-/*
-    if (enemy->conditions().health() < 0.35f) // У врага 35% здоровья, спускаемся и бьем его руками
-    {
-        state_id = eStateAttack;
-        if (object->is_hidden()) {
-                object->CEnergyHolder::deactivate();
-            }
-        object->DisableHide();
     }
     else
-    {
-        state_id = eStateAttack_AttackHidden; // Летаем дальше, кидаемся предметами
-        object->EnableHide();
-    }
-*/
+        state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
 #else
-    state_id = eStateRest; // Просто летаем по карте и кидаемся в актера предметами, при отключении дефайна
+    state_id = eStateRest; // Дефайн отлючен, запустить логику ЗП полтера
 #endif
-    select_state(state_id);
-
-    // выполнить текущее состояние
-    get_state_current()->execute();
-
-    prev_substate = current_substate;
 }
-
-void CStateManagerPoltergeist_cs::polter_attack() {}
 #endif
