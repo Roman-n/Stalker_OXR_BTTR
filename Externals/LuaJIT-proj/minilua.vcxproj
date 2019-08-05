@@ -30,7 +30,7 @@
   </ImportGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <OutDir>$(ProjectDir)..\LuaJIT\bin\$(PlatformShortName)\</OutDir>
   </PropertyGroup>
