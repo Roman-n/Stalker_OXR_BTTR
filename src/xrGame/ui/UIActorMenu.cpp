@@ -22,7 +22,7 @@
 #include "CustomDetector.h"
 #include "eatable_item.h"
 #include "UIProgressBar.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "UICursor.h"
 #include "UICellItem.h"
 #include "UICharacterInfo.h"
 #include "UIItemInfo.h"

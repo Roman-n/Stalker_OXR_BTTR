@@ -6,11 +6,11 @@
 #include "xrEngine/IGame_Level.h"
 #include "xrEngine/CameraManager.h"
 #include "xr_Level_controller.h"
-#include "xrUICore/XML/UItextureMaster.h"
+#include "ui\UITextureMaster.h"
 #include "ui\UIXmlInit.h"
 #include <dinput.h>
-#include "xrUICore/Buttons/UIBtnHint.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "ui\UIBtnHint.h"
+#include "UICursor.h"
 
 #include "string_table.h"
 #include "xrCore/os_clipboard.h"
@@ -497,7 +497,7 @@ void CMainMenu::DestroyInternal(bool bForce)
 
 void	CMainMenu::OnLoadError				(LPCSTR module)
 {
-    LPCSTR str = StringTable().translate("ui_st_error_loading").c_str();
+    LPCSTR str = CStringTable().translate("ui_st_error_loading").c_str();
     string1024 Text;
     strconcat(sizeof(Text), Text, str, " ");
     xr_strcat(Text, sizeof(Text), module);

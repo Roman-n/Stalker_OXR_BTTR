@@ -31,7 +31,7 @@
 #include "mt_config.h"
 #include "UIGameSP.h"
 #include "ui/UIActorMenu.h"
-#include "xrUICore/Static/UIStatic.h"
+#include "ui/UIStatic.h"
 #include "zone_effector.h"
 #include "GameTask.h"
 #include "MainMenu.h"
@@ -223,7 +223,7 @@ class CCC_GameLanguage : public CCC_Token
 public:
     CCC_GameLanguage(LPCSTR N) : CCC_Token(N, (u32*)&gLanguage, NULL)
     {
-        StringTable();
+        CStringTable();
         tokens = gLanguagesToken.data();
     };
 
@@ -232,7 +232,7 @@ public:
         tokens = gLanguagesToken.data();
 
         CCC_Token::Execute(args);
-        StringTable().ReloadLanguage();
+        CStringTable().ReloadLanguage();
     }
 };
 #endif
@@ -594,7 +594,7 @@ public:
 #endif
         StaticDrawableWrapper* _s = CurrentGameUI()->AddCustomStatic("game_saved", true);
         LPSTR save_name;
-        STRCONCAT(save_name, StringTable().translate("st_game_saved").c_str(), ": ", S);
+        STRCONCAT(save_name, CStringTable().translate("st_game_saved").c_str(), ": ", S);
         _s->wnd()->TextItemControl()->SetText(save_name);
 
         xr_strcat(S, ".dds");
@@ -2132,7 +2132,7 @@ void CCC_RegisterCommands()
 #endif
 
 #ifdef DEBUG
-    CMD4(CCC_Integer, "string_table_error_msg", &StringTable::m_bWriteErrorsToLog, 0, 1);
+    CMD4(CCC_Integer, "string_table_error_msg", &CStringTable::m_bWriteErrorsToLog, 0, 1);
 
     CMD1(CCC_DumpInfos, "dump_infos");
     CMD1(CCC_DumpTasks, "dump_tasks");

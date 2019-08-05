@@ -9,7 +9,7 @@
 #include "StdAfx.h"
 #include "UILine.h"
 #include "uilinestd.h"
-#include "xrUICore/ui_base.h"
+#include "ui_base.h"
 #include "xrEngine/GameFont.h"
 
 //#define LOG_ALL_LINES

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UIWindow.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "UICursor.h"
 #include "MainMenu.h"
 #include "Include/xrRender/DebugRender.h"
 #include "Include/xrRender/UIRender.h"

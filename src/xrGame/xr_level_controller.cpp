@@ -399,7 +399,7 @@ void GetActionAllBinding(LPCSTR _action, char* dst_buff, int dst_buff_sz)
     }
     if (NULL == pbinding->m_keyboard[0] && NULL == pbinding->m_keyboard[1])
     {
-        xr_sprintf(dst_buff, dst_buff_sz, "%s", StringTable().translate("st_key_notbinded").c_str());
+        xr_sprintf(dst_buff, dst_buff_sz, "%s", CStringTable().translate("st_key_notbinded").c_str());
     }
     else
         xr_sprintf(
@@ -468,7 +468,7 @@ public:
             }
         }
 
-        StringTable::ReparseKeyBindings();
+        CStringTable::ReparseKeyBindings();
     }
     virtual void Save(IWriter* F)
     {
@@ -499,7 +499,7 @@ public:
         _binding* pbinding = &g_key_bindings[action_id];
         pbinding->m_keyboard[m_work_idx] = NULL;
 
-        StringTable::ReparseKeyBindings();
+        CStringTable::ReparseKeyBindings();
     }
 };
 

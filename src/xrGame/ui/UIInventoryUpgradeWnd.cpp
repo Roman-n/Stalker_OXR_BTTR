@@ -27,7 +27,7 @@
 #include "UIFrameLineWnd.h"
 #include "UI3tButton.h"
 #include "UIHelper.h"
-#include "xrUICore/ui_defs.h"
+#include "ui_defs.h"
 #include "Weapon.h"
 #include "WeaponRPG7.h"
 #include "CustomOutfit.h"

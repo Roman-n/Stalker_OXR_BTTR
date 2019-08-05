@@ -16,7 +16,7 @@
 #include "UIMapWndActionsSpace.h"
 #include "UIHint.h"
 #include "map_hint.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "uicursor.h"
 #include "UIPropertiesBox.h"
 #include "UIListBoxItem.h"
 #include "UIPdaSpot.h"

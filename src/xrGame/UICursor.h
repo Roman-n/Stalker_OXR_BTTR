@@ -1,6 +1,6 @@
 #pragma once
 
-#include "xrUICore/ui_base.h"
+#include "ui_base.h"
 class CUIStatic;
 
 class CUICursor : public pureRender, public pureScreenResolutionChanged

@@ -198,7 +198,7 @@ void CUIScrollBar::UpdateScrollBar()
     ClampByViewRect();
 }
 
-#include "xrUICore/Cursor/UICursor.h"
+#include "UICursor.h"
 
 u32 last_hold_time = 0;
 

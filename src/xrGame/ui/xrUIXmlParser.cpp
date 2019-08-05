@@ -2,7 +2,7 @@
 #include "xrUIXmlParser.h"
 
 #ifdef XRGAME_EXPORTS
-#include "xrUICore/ui_base.h"
+#include "ui_base.h"
 #endif
 
 shared_str CUIXml::correct_file_name(pcstr path, pcstr fn)

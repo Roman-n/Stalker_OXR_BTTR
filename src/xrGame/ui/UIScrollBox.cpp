@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UIScrollBox.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "UICursor.h"
 
 CUIScrollBox::CUIScrollBox() {}
 bool CUIScrollBox::OnMouseAction(float x, float y, EUIMessages mouse_action)

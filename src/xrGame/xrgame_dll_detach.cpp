@@ -105,7 +105,7 @@ void clean_game_globals()
     CEntityAlive::UnloadBloodyWallmarks();
     CEntityAlive::UnloadFireParticles();
     //очищение памяти таблицы строк
-    StringTable::Destroy();
+    CStringTable::Destroy();
     // Очищение таблицы цветов
     CUIXmlInit::DeleteColorDefs();
     // Очищение таблицы идентификаторов рангов и отношений сталкеров

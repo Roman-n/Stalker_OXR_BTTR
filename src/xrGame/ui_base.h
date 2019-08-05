@@ -1,5 +1,5 @@
 #pragma once
-#include "xrUICore/ui_defs.h"
+#include "ui_defs.h"
 #include "xrEngine/pure.h"
 #include "xrEngine/device.h"
 #include "xrCommon/xr_vector.h"

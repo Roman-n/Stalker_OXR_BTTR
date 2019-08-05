@@ -16,7 +16,7 @@
 #include "Common/object_broker.h"
 #include "UIInventoryUtilities.h"
 #include "game_cl_base.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "UICursor.h"
 #include "UICellItem.h"
 #include "UICharacterInfo.h"
 #include "UIItemInfo.h"

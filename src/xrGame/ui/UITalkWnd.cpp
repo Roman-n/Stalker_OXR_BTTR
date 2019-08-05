@@ -86,7 +86,7 @@ void CUITalkWnd::InitOthersStartDialog()
         m_pOthersDialogManager->InitDialog(m_pOurDialogManager, m_pCurrentDialog);
 
         //сказать фразу
-        StringTable stbl;
+        CStringTable stbl;
         AddAnswer(m_pCurrentDialog->GetPhraseText("0"), m_pOthersInvOwner->Name());
         m_pOthersDialogManager->SayPhrase(m_pCurrentDialog, "0");
 
@@ -293,7 +293,7 @@ void CUITalkWnd::AddQuestion(const shared_str& text, const shared_str& value, in
     if (text.size() == 0)
         return;
 
-    UITalkDialogWnd->AddQuestion(StringTable().translate(text).c_str(), value.c_str(), number, b_finalizer);
+    UITalkDialogWnd->AddQuestion(CStringTable().translate(text).c_str(), value.c_str(), number, b_finalizer);
 }
 
 void CUITalkWnd::AddAnswer(const shared_str& text, LPCSTR SpeakerName)
@@ -306,7 +306,7 @@ void CUITalkWnd::AddAnswer(const shared_str& text, LPCSTR SpeakerName)
     PlaySnd(text.c_str());
 
     bool i_am = (0 == xr_strcmp(SpeakerName, m_pOurInvOwner->Name()));
-    UITalkDialogWnd->AddAnswer(SpeakerName, *StringTable().translate(text), i_am);
+    UITalkDialogWnd->AddAnswer(SpeakerName, *CStringTable().translate(text), i_am);
 }
 
 void CUITalkWnd::SwitchToTrade()

@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "uicursor.h"
 
-#include "xrUICore/Static/UIStatic.h"
+#include "ui/UIStatic.h"
 #include "ui/UIBtnHint.h"
 #include "xrEngine/IInputReceiver.h"
 #include "xrEngine/xr_input.h"

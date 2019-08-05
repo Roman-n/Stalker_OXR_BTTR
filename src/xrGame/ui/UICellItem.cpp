@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UICellItem.h"
-#include "xrUICore/Cursor/UICursor.h"
+#include "uicursor.h"
 #include "inventory_item.h"
 #include "UIDragDropListEx.h"
 #include "eatable_item.h"

@@ -126,9 +126,6 @@
     </Filter>
     <Filter Include="RenderRef">
       <UniqueIdentifier>{e4d34774-3a5b-468f-9400-12c702636fa1}</UniqueIdentifier>
-	  </Filter>
-    <Filter Include="Game API\StringTable">
-      <UniqueIdentifier>{948b4643-0f42-4027-ac44-dbe3702887f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="RenderRef\Execution &amp; 3D">
       <UniqueIdentifier>{32271206-64dd-4f87-a215-4b1106afd35f}</UniqueIdentifier>
@@ -449,15 +446,6 @@
     </ClInclude>
     <ClInclude Include="Stats.h">
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-	  </ClInclude>
-    <ClInclude Include="xr_input_xinput.h">
-      <Filter>Interfaces\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="StringTable\IStringTable.h">
-      <Filter>Game API\StringTable</Filter>
-    </ClInclude>
-    <ClInclude Include="StringTable\IStringTableDefs.h">
-      <Filter>Game API\StringTable</Filter>
     </ClInclude>
     <ClInclude Include="engine_impl.hpp">
       <Filter>editor\engine_impl</Filter>
@@ -799,12 +787,6 @@
     </ClCompile>
     <ClCompile Include="StatGraph.cpp">
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-	  </ClCompile>
-    <ClCompile Include="xr_input_xinput.cpp">
-      <Filter>Interfaces\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="StringTable\IStringTable.cpp">
-      <Filter>Game API\StringTable</Filter>
     </ClCompile>
     <ClCompile Include="Stats.cpp">
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
