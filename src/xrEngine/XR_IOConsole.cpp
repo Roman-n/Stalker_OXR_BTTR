@@ -595,8 +595,8 @@ void CConsole::ExecuteCommand(LPCSTR cmd_str, bool record_cmd)
 }
 
 void CConsole::Show()
-{
-	if(!strstr(Core.Params,"-consoleOn")) return;
+{	// Заблокировать консоль без ключа
+	if(!strstr(Core.Params,"-console")) return;
 	
     if (bVisible)
     {

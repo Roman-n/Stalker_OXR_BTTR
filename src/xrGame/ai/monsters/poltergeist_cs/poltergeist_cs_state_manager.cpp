@@ -55,9 +55,10 @@ void CStateManagerPoltergeist_cs::execute()
 // --' oldSerpski stalker
 
 #ifdef NEW_AI_POLTER
-    CPolterSpecialAbility_cs* m_tele_cs; // Тип полтергейста m_tele_cs
+//    CPolterSpecialAbility_cs* m_tele_cs; // Тип полтергейста m_tele_cs
     if (m_tele_cs)
     {
+
         if (enemy)
         {
             switch (object->EnemyMan.get_danger_type())
@@ -107,8 +108,8 @@ void CStateManagerPoltergeist_cs::execute()
             }
         }
     }
-    else
-        state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
+    else if (m_flame)
+       state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
 #else
     state_id = eStateRest; // Дефайн отлючен, запустить логику ЗП полтера
 #endif

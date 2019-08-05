@@ -7,6 +7,8 @@ class CPoltergeist_cs;
 class CStateManagerPoltergeist_cs : public CMonsterStateManager<CPoltergeist_cs> {
 	typedef CMonsterStateManager<CPoltergeist_cs> inherited;
 
+    CPolterSpecialAbility_cs* m_tele_cs; // Тип полтергейста m_tele_cs
+    CPolterSpecialAbility_cs* m_flame;
 
 public:
 						CStateManagerPoltergeist_cs		(CPoltergeist_cs *obj);

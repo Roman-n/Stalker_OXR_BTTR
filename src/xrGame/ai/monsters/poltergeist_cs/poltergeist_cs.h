@@ -26,10 +26,8 @@ class CPoltergeist_cs :	public CBaseMonster ,
 
 	SMotionVel				invisible_vel;
 
-
-	CPolterSpecialAbility_cs	*m_flame;
-	CPolterSpecialAbility_cs	*m_tele_cs; // Пересечение с ЗП классом
-
+    CPolterSpecialAbility_cs* m_flame;
+    CPolterSpecialAbility_cs* m_tele_cs; // Пересечение с ЗП классом
 
 public:
 					CPoltergeist_cs		();

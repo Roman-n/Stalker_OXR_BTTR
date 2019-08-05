@@ -11,7 +11,7 @@ namespace XRay.SdkControls
 {
     public partial class NumericSpinner : UserControl
     {
-        private bool ignoreOnChanged;
+        private bool ignoreOnChanged = false;
 
         public NumericSpinner()
         {
@@ -59,8 +59,6 @@ namespace XRay.SdkControls
         {
             get;
             set;
-            /*get { return trackBar.Maximum; }
-            set { trackBar.Maximum = value; }*/
         }
 
         private void OnValueChanged()

@@ -52,9 +52,7 @@ bool xrServer::Process_event_reject(
 		} 
 		Msg("! WARNING: SV: can't find child [%s] of parent [%s]! Children list:\n%s", e_entity->name_replace(), e_parent->name_replace(), clildrenList.c_str()); 
 		return false; 
-	}	
 #endif		
-        return false;
     }
 
     if (0xffff == e_entity->ID_Parent)
