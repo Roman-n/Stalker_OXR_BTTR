@@ -64,7 +64,23 @@ struct other
 };
 };
 
-using std::remove_pointer;
+template <typename T>
+struct remove_pointer
+{
+    typedef T type;
+};
+
+template <typename T>
+struct remove_pointer<T*>
+{
+    typedef T type;
+};
+
+template <typename T>
+struct remove_pointer<T* const>
+{
+    typedef T type;
+};
 
 template <typename T>
 struct remove_reference
@@ -84,42 +100,70 @@ struct remove_reference<T const&>
     typedef T type;
 };
 
-using std::remove_const;
+template <typename T>
+struct remove_const
+{
+    typedef T type;
+};
 
 template <typename T>
-struct remove_noexcept;
-
-template <typename R, typename... Args>
-struct remove_noexcept<R(Args...) noexcept>
+struct remove_const<T const>
 {
-    using type = R(Args...);
+    typedef T type;
 };
 
-template <typename R, typename... Args>
-struct remove_noexcept<R (*)(Args...) noexcept>
+template <typename T>
+struct is_void
 {
-    using type = R (*)(Args...);
+    enum
+    {
+        value = std::is_same<void, T>::value
+    };
 };
 
-template <typename C, typename R, typename... Args>
-struct remove_noexcept<R (C::*)(Args...) noexcept>
+template <typename T>
+struct is_const
 {
-    using type = R (C::*)(Args...);
+    enum
+    {
+        value = false
+    };
 };
 
-template <typename C, typename R, typename... Args>
-struct remove_noexcept<R (C::*)(Args...) const noexcept>
+template <typename T>
+struct is_const<T const>
 {
-    using type = R (C::*)(Args...) const;
+    enum
+    {
+        value = true
+    };
 };
 
-#define REMOVE_NOEXCEPT(fn) (object_type_traits::remove_noexcept<decltype(fn)>::type)(fn)
+template <typename T>
+struct is_pointer
+{
+    template <typename P>
+    static detail::yes select(detail::other<P*>);
+    static detail::no select(...);
 
-using std::is_void;
-using std::is_const;
-using std::is_pointer;
-using std::is_reference;
+    enum
+    {
+        value = sizeof(detail::yes) == sizeof(select(detail::other<T>()))
+    };
+};
 
+template <typename T>
+struct is_reference
+{
+    template <typename P>
+    static detail::yes select(detail::other<P&>);
+    static detail::no select(...);
+
+    enum
+    {
+        value = sizeof(detail::yes) == sizeof(select(detail::other<T>()))
+    };
+};
 
 template <typename _T1, typename _T2>
 struct is_same
