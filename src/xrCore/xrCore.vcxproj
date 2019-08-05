@@ -323,6 +323,7 @@
     <ClCompile Include="Math\PLC_CPP.cpp" />
     <ClCompile Include="Math\PLC_SSE.cpp" />
     <ClCompile Include="Math\SkinXW_CPP.cpp" />
+    <ClCompile Include="Math\Skin4W_MT.cpp" />
     <ClCompile Include="Math\SkinXW_SSE.cpp" />
     <ClCompile Include="Math\MathUtil.cpp" />
     <ClCompile Include="Media\Image.cpp" />
@@ -384,6 +385,7 @@
     <ClCompile Include="Text\MbHelpers.cpp" />
     <ClCompile Include="Threading\Event.cpp" />
     <ClCompile Include="Threading\ScopeLock.cpp" />
+    <ClCompile Include="Threading\ThreadPool.cpp" />
     <ClCompile Include="Threading\Lock.cpp" />
     <ClCompile Include="XML\tinystr.cpp" />
     <ClCompile Include="XML\tinyxml.cpp" />
@@ -466,6 +468,7 @@
     <ClInclude Include="Math\PLC_CPP.hpp" />
     <ClInclude Include="Math\PLC_SSE.hpp" />
     <ClInclude Include="Math\Random32.hpp" />
+    <ClInclude Include="Math\Skin4W_MT.hpp" />
     <ClInclude Include="Math\SkinXW_CPP.hpp" />
     <ClInclude Include="Math\SkinXW_SSE.hpp" />
     <ClInclude Include="Math\MathUtil.hpp" />
@@ -490,6 +493,7 @@
     <ClInclude Include="Text\MbHelpers.h" />
     <ClInclude Include="Threading\Event.hpp" />
     <ClInclude Include="Threading\ScopeLock.hpp" />
+    <ClInclude Include="Threading\ThreadPool.hpp" />
     <ClInclude Include="Threading\Lock.hpp" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="XML\tinystr.h" />
