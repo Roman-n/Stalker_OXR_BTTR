@@ -444,6 +444,13 @@ public:
         : CCC_Vector3(N, &p, Fvector().set(-FLT_MAX, -FLT_MAX, -FLT_MAX), Fvector().set(FLT_MAX, FLT_MAX, FLT_MAX)){};
     virtual void Execute(LPCSTR args)
     {
+#ifndef DEBUG
+// if (GameID() != eGameIDSingle)
+//{
+//	Msg("For this game type Demo Record is disabled.");
+//	return;
+//};
+#endif
         CDemoRecord::GetGlobalPosition(p);
         CCC_Vector3::Execute(args);
         CDemoRecord::SetGlobalPosition(p);
@@ -1756,33 +1763,8 @@ public:
         if (!xr_strlen(args))
             return;
 
-		if (!g_pGamePersistent || !g_pGameLevel)
-            return;
-
         if (!Device.editor())
             g_pGamePersistent->Environment().SetWeather(args, true);
-    }
-	void fill_tips(vecTips& tips, u32 mode) override
-    {
-        if (!g_pGamePersistent || !g_pGameLevel || Device.editor())
-        {
-            IConsole_Command::fill_tips(tips, mode);
-            return;
-        }
-
-        string128 buff = {};
-        shared_str currWeather = g_pGamePersistent->Environment().GetWeather();
-
-        for (auto& [name, cycle] : g_pGamePersistent->Environment().WeatherCycles)
-        {
-            if (currWeather == name)
-            {
-                xr_sprintf(buff, sizeof(buff), "%s (current)", currWeather.c_str());
-                tips.push_back(buff);
-                continue;
-            }
-            tips.push_back(name);
-        }
     }
 };
 
