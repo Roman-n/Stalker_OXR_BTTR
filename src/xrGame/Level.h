@@ -241,6 +241,7 @@ protected:
     bool xr_stdcall net_start_client4();
     bool xr_stdcall net_start_client5();
     bool xr_stdcall net_start_client6();
+    void net_OnChangeSelfName(NET_Packet* P);
     void CalculateLevelCrc32();
 
 public:
@@ -252,6 +253,8 @@ public:
     shared_str m_caClientOptions;
     // Starting/Loading
     virtual bool net_Start(const char* op_server, const char* op_client);
+    virtual void net_Load(const char* name);
+    virtual void net_Save(const char* name);
     virtual void net_Stop();
     virtual bool net_Start_client(const char* name);
     virtual void net_Update();
