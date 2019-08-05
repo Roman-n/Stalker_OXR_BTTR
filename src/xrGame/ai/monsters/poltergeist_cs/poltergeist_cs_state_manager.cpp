@@ -52,8 +52,8 @@ void CStateManagerPoltergeist_cs::execute()
 
 #ifdef NEW_AI_POLTER
 //    CPolterSpecialAbility_cs* m_tele_cs; // Тип полтергейста m_tele_cs
-//    if (m_tele_cs)
-//    {
+    if (m_tele_cs)
+    {
 
         if (enemy)
         {
@@ -103,9 +103,9 @@ void CStateManagerPoltergeist_cs::execute()
                 object->on_deactivate();   // Отключить полет
             }
         }
-//    }
-//    else if (m_flame)
-//       state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
+    }
+    else 
+       state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
 #else
     state_id = eStateRest; // Дефайн отлючен, запустить логику ЗП полтера
 #endif
