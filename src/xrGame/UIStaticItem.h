@@ -1,5 +1,5 @@
 #pragma once
-#include "ui_defs.h"
+#include "xrUICore/ui_defs.h"
 #include "xrCore/_flags.h"
 #include "xrCore/_vector2.h"
 #ifdef DEBUG

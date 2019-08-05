@@ -1,6 +1,6 @@
 #pragma once
 
-#include "script_callback_ex.h"
+#include "xrScriptEngine/script_callback_ex.h"
 
 class CUIWindow;
 struct SCallbackInfo

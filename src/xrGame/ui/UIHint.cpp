@@ -95,7 +95,7 @@ void UIHintWindow::set_hint_text(shared_str const& text)
     }
 }
 
-void UIHintWindow::set_hint_text_ST(shared_str const& text) { set_hint_text(CStringTable().translate(text)); }
+void UIHintWindow::set_hint_text_ST(shared_str const& text) { set_hint_text(StringTable().translate(text)); }
 void UIHintWindow::update_hint_text()
 {
     if (!m_bCursorOverWindow || !m_hint_text.size() || !m_enable)

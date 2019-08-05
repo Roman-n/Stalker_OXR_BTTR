@@ -6,7 +6,7 @@
 #include "UI/UIButton.h"
 #include "UI/UIProgressBar.h"
 #include "UI/UIEditBox.h"
-#include "UI/UIMessageBox.h"
+#include "xrUICore/MessageBox/UIMessageBox.h"
 #include "UI/UIPropertiesBox.h"
 #include "UI/UITabControl.h"
 #include "UI/UIComboBox.h"

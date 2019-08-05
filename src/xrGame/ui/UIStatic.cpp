@@ -4,12 +4,12 @@
 #include "UITextureMaster.h"
 #include "xrEngine/LightAnimLibrary.h"
 #include "uilines.h"
-#include "ui_base.h"
+#include "xrUICore/ui_base.h"
 
 #include "Include/xrRender/UIRender.h"
 
 #include "UIBtnHint.h"
-#include "UICursor.h"
+#include "xrUICore/Cursor/UICursor.h"
 
 bool is_in2(const Frect& b1, const Frect& b2);
 

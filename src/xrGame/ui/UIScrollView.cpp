@@ -2,8 +2,8 @@
 #include "UIScrollView.h"
 #include "UIScrollBar.h"
 #include "UIFixedScrollBar.h"
-#include "ui_base.h"
-#include "UICursor.h"
+#include "xrUICore/ui_base.h"
+#include "xrUICore/Cursor/UICursor.h"
 #include "xrEngine/xr_input.h"
 
 CUIScrollView::CUIScrollView()

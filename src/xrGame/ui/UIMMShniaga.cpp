@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "UIMMShniaga.h"
-#include "UICursor.h"
+#include "xrUICore/Cursor/UICursor.h"
 #include "UIStatic.h"
 #include "UIScrollView.h"
 #include "UIXmlInit.h"

@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "ui_base.h"
+#include "xrUICore/ui_base.h"
 #include "GamePersistent.h"
-#include "UICursor.h"
+#include "xrUICore/Cursor/UICursor.h"
 #include "xrCore/XML/XMLDocument.hpp"
 
 CUICursor& GetUICursor() { return UI().GetUICursor(); };

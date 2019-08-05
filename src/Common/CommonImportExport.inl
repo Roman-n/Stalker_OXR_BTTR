@@ -23,6 +23,12 @@
 #define XRCDB_API XR_IMPORT
 #endif
 
+#ifdef XRUICORE_EXPORTS
+#define XRUICORE_API XR_EXPORT
+#else
+#define XRUICORE_API XR_IMPORT
+#endif
+
 #ifdef XRCORE_EXPORTS
 #define XRCORE_API XR_EXPORT
 #else

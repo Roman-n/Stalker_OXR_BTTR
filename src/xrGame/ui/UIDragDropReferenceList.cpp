@@ -9,7 +9,7 @@
 #include "actor_defs.h"
 #include "UIInventoryUtilities.h"
 #include "xrEngine/xr_input.h"
-#include "UICursor.h"
+#include "xrUICore/Cursor/UICursor.h"
 #include "UICellItemFactory.h"
 
 CUIDragDropReferenceList::CUIDragDropReferenceList()

@@ -23,7 +23,7 @@
 #include "relation_registry.h"
 #include "string_table.h"
 #include "UICharacterInfo.h"
-#include "ui_base.h"
+#include "xrUICore/ui_base.h"
 
 #ifdef Call_of_Chernobyl_OXR
 #define PDA_RANKING_XML "pda_ranking.xml"
@@ -152,7 +152,7 @@ void CUIRankingWnd::Init()
 #ifndef CALLOFCHERNOBYL_RANKING
     string256 buf;
     xr_strcpy(buf, sizeof(buf), m_center_caption->GetText());
-    xr_strcat(buf, sizeof(buf), CStringTable().translate("ui_ranking_center_caption").c_str());
+    xr_strcat(buf, sizeof(buf), StringTable().translate("ui_ranking_center_caption").c_str());
     m_center_caption->SetText(buf);
 
     m_monster_icon_back = UIHelper::CreateStatic(xml, "monster_icon_back", this);

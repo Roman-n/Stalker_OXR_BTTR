@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "UIButton.h"
 #include "UIBtnHint.h"
-#include "UICursor.h"
-#include "ui_base.h"
+#include "xrUICore/Cursor/UICursor.h"
+#include "xrUICore/ui_base.h"
 #include "xrEngine/xr_input.h"
 #include "xr_level_controller.h"
 
