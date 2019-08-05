@@ -47,17 +47,13 @@ void CStateManagerPoltergeist_cs::execute()
 {
     u32 state_id = u32(-1);
     const CEntityAlive* enemy = object->EnemyMan.get_enemy();
-    select_state(state_id);
-    get_state_current()->execute();
-    prev_substate = current_substate;
-
 // --' Новый AI полтергейста
 // --' oldSerpski stalker
 
 #ifdef NEW_AI_POLTER
 //    CPolterSpecialAbility_cs* m_tele_cs; // Тип полтергейста m_tele_cs
-    if (m_tele_cs)
-    {
+//    if (m_tele_cs)
+//    {
 
         if (enemy)
         {
@@ -107,11 +103,17 @@ void CStateManagerPoltergeist_cs::execute()
                 object->on_deactivate();   // Отключить полет
             }
         }
-    }
-    else if (m_flame)
-       state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
+//    }
+//    else if (m_flame)
+//       state_id = eStateRest;    // Если тип полтергейста огненный, на землю не спускаемся - летаем, отключается логика 
 #else
     state_id = eStateRest; // Дефайн отлючен, запустить логику ЗП полтера
 #endif
+    select_state(state_id);
+
+    get_state_current()->execute();
+
+    prev_substate = current_substate;
+
 }
 #endif
