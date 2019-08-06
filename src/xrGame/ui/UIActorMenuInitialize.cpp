@@ -361,25 +361,25 @@ void CUIActorMenu::InitCallbacks()
 void CUIActorMenu::UpdateButtonsLayout()
 {
     string32 tmp;
-    LPCSTR str = StringTable().translate("quick_use_str_1").c_str();
+    LPCSTR str = CStringTable().translate("quick_use_str_1").c_str();
     strncpy_s(tmp, sizeof(tmp), str, 3);
     if (tmp[2] == ',')
         tmp[1] = '\0';
     m_QuickSlot1->SetTextST(tmp);
 
-    str = StringTable().translate("quick_use_str_2").c_str();
+    str = CStringTable().translate("quick_use_str_2").c_str();
     strncpy_s(tmp, sizeof(tmp), str, 3);
     if (tmp[2] == ',')
         tmp[1] = '\0';
     m_QuickSlot2->SetTextST(tmp);
 
-    str = StringTable().translate("quick_use_str_3").c_str();
+    str = CStringTable().translate("quick_use_str_3").c_str();
     strncpy_s(tmp, sizeof(tmp), str, 3);
     if (tmp[2] == ',')
         tmp[1] = '\0';
     m_QuickSlot3->SetTextST(tmp);
 
-    str = StringTable().translate("quick_use_str_4").c_str();
+    str = CStringTable().translate("quick_use_str_4").c_str();
     strncpy_s(tmp, sizeof(tmp), str, 3);
     if (tmp[2] == ',')
         tmp[1] = '\0';

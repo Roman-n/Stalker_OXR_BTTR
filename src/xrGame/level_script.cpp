@@ -586,7 +586,7 @@ LPCSTR tutorial_name()
     return "invalid";
 }
 
-LPCSTR translate_string(LPCSTR str) { return *StringTable().translate(str); }
+LPCSTR translate_string(LPCSTR str) { return *CStringTable().translate(str); }
 bool has_active_tutotial() { return (g_tutorial != NULL); }
 
 //Alundaio: namespace level exports extension
@@ -708,7 +708,7 @@ void set_monster_relation( LPCSTR from, LPCSTR to, int rel )
 #endif
 void reload_language()
 {
-    StringTable().ReloadLanguage();
+    CStringTable().ReloadLanguage();
 }
 
 void LevelPressAction(EGameActions cmd) { Level().IR_OnKeyboardPress(cmd); }

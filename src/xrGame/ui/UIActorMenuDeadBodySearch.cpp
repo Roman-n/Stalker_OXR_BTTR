@@ -211,7 +211,7 @@ void CUIActorMenu::UpdateDeadBodyBag()
 {
     string64 buf;
 
-    LPCSTR kg_str = StringTable().translate("st_kg").c_str();
+    LPCSTR kg_str = CStringTable().translate("st_kg").c_str();
     float total = CalcItemsWeight(m_pDeadBodyBagList);
     xr_sprintf(buf, "%.1f %s", total, kg_str);
     m_PartnerWeight->SetText(buf);

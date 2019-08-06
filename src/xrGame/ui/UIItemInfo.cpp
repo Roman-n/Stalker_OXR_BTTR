@@ -209,7 +209,7 @@ void CUIItemInfo::InitItem(CUICellItem* pCellItem, CInventoryItem* pCompareItem,
     }
     if (UIWeight)
     {
-        LPCSTR kg_str = StringTable().translate("st_kg").c_str();
+        LPCSTR kg_str = CStringTable().translate("st_kg").c_str();
         float weight = pInvItem->Weight();
 
         if (!weight)
@@ -260,7 +260,7 @@ void CUIItemInfo::InitItem(CUICellItem* pCellItem, CInventoryItem* pCompareItem,
             UITradeTip->Show(false);
         else
         {
-            UITradeTip->SetText(StringTable().translate(trade_tip).c_str());
+            UITradeTip->SetText(CStringTable().translate(trade_tip).c_str());
             UITradeTip->AdjustHeightToText();
             UITradeTip->SetWndPos(pos);
             UITradeTip->Show(true);
