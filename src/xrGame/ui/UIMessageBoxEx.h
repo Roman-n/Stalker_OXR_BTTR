@@ -1,6 +1,6 @@
 #pragma once
 #include "UIDialogWnd.h"
-#include "xruicore/Callbacks/UIWndCallback.h"
+#include "UIWndCallback.h"
 
 class CUIMessageBox;
 

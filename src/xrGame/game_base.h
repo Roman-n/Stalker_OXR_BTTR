@@ -1,8 +1,8 @@
 #pragma once
 
-#include "xrServerEntities/game_base_space.h"
-#include "xrServerEntities/alife_space.h"
-#include "xrServerEntities/gametype_chooser.h"
+#include "game_base_space.h"
+#include "alife_space.h"
+#include "gametype_chooser.h"
 #include "xrCommon/xr_deque.h"
 #include "xrCommon/xr_vector.h"
 #include "xrEngine/EngineAPI.h"

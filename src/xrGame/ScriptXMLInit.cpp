@@ -1,21 +1,21 @@
 #include "pch_script.h"
 #include "ScriptXmlInit.h"
 #include "ui\UIXmlInit.h"
-#include "xruicore\xml\UITextureMaster.h"
-#include "xruicore\buttons\UICheckButton.h"
-#include "xrUICore\SpinBox\UISpinNum.h"
-#include "xrUICore\SpinBox\UISpinText.h"
-#include "xrUICore\combobox\UIComboBox.h"
-#include "xruicore\TabControl\UITabControl.h"
-#include "xruicore\windows\UIFrameWindow.h"
+#include "ui\UITextureMaster.h"
+#include "ui\UICheckButton.h"
+#include "ui\UISpinNum.h"
+#include "ui\UISpinText.h"
+#include "ui\UIComboBox.h"
+#include "ui\UITabControl.h"
+#include "ui\UIFrameWindow.h"
 #include "ui\UIKeyBinding.h"
-#include "xrUICore\editbox\UIEditBox.h"
-#include "xrUICore\static\UIAnimatedStatic.h"
-#include "xruicore\TrackBar\UITrackBar.h"
+#include "ui\UIEditBox.h"
+#include "ui\UIAnimatedStatic.h"
+#include "ui\UITrackBar.h"
 #include "ui\UIMMShniaga.h"
-#include "xruicore\ScrollView\UIScrollView.h"
-#include "xruicore\ProgressBar\UIProgressBar.h"
-#include "xruicore\hint\UIHint.h"
+#include "ui\UIScrollView.h"
+#include "ui\UIProgressBar.h"
+#include "ui\UIHint.h"
 #include "ui\UIHelper.h"
 #include "xrScriptEngine/ScriptExporter.hpp"
 
@@ -99,6 +99,14 @@ CUIStatic* CScriptXmlInit::InitAnimStatic(LPCSTR path, CUIWindow* parent)
 {
     CUIAnimatedStatic* pWnd = new CUIAnimatedStatic();
     CUIXmlInit::InitAnimatedStatic(m_xml, path, 0, pWnd);
+    _attach_child(pWnd, parent);
+    return pWnd;
+}
+
+CUIStatic* CScriptXmlInit::InitSleepStatic(LPCSTR path, CUIWindow* parent)
+{
+    CUISleepStatic* pWnd = new CUISleepStatic();
+    CUIXmlInit::InitSleepStatic(m_xml, path, 0, pWnd);
     _attach_child(pWnd, parent);
     return pWnd;
 }

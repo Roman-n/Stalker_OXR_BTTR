@@ -7,11 +7,11 @@
 
 #include "pch_script.h"
 #include "UIRankingWnd.h"
-#include "xruicore/scrollbar/UIFixedScrollBar.h"
+#include "UIFixedScrollBar.h"
 #include "UIXmlInit.h"
-#include "xruicore/progressbar/UIProgressBar.h"
-#include "xruicore/Windows/UIFrameLineWnd.h"
-#include "xrUICore\ScrollView\UIScrollView.h"
+#include "UIProgressBar.h"
+#include "UIFrameLineWnd.h"
+#include "UIScrollView.h"
 #include "UIHelper.h"
 #include "UIInventoryUtilities.h"
 #include "Actor.h"
@@ -23,7 +23,7 @@
 #include "relation_registry.h"
 #include "string_table.h"
 #include "UICharacterInfo.h"
-#include "xruicore/ui_base.h"
+#include "ui_base.h"
 
 #ifdef Call_of_Chernobyl_OXR
 #define PDA_RANKING_XML "pda_ranking.xml"

@@ -246,7 +246,7 @@ void game_sv_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
     P.w_u16(dest);
 }
 
-void game_sv_GameState::u_EventSend(NET_Packet& P) { m_server->SendBroadcast(BroadcastCID, P); }
+void game_sv_GameState::u_EventSend(NET_Packet& P, u32 dwFlags) { m_server->SendBroadcast(BroadcastCID, P, dwFlags); }
 void game_sv_GameState::Update()
 {
     if (!GEnv.isDedicatedServer)

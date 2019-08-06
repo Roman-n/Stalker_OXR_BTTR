@@ -1,5 +1,5 @@
 #pragma once
-#include "xruicore/windows/uiwindow.h"
+#include "uiwindow.h"
 #include "UIDialogHolder.h"
 
 class CDialogHolder;

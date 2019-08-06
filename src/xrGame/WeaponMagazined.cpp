@@ -16,7 +16,7 @@
 #include "Common/object_broker.h"
 #include "string_table.h"
 #include "ui/UIXmlInit.h"
-#include "xruicore/static/UIStatic.h"
+#include "ui/UIStatic.h"
 #include "game_object_space.h"
 #include "script_callback_ex.h"
 #include "script_game_object.h"

@@ -10,7 +10,7 @@
 #include "game_object_space.h"
 #include "script_game_object.h"
 #include "xrEngine/LightAnimLibrary.h"
-#include "xruicore/ui_base.h"
+#include "ui_base.h"
 
 #include "holder_custom.h"
 #include "cameralook.h"

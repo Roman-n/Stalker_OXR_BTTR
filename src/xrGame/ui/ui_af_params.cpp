@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ui_af_params.h"
-#include "xruicore/static/UIStatic.h"
+#include "UIStatic.h"
 #include "Actor.h"
 #include "ActorCondition.h"
 #include "Common/object_broker.h"

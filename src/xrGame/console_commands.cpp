@@ -31,7 +31,7 @@
 #include "mt_config.h"
 #include "UIGameSP.h"
 #include "ui/UIActorMenu.h"
-#include "xruicore/static/UIStatic.h"
+#include "ui/UIStatic.h"
 #include "zone_effector.h"
 #include "GameTask.h"
 #include "MainMenu.h"
@@ -83,7 +83,7 @@ extern BOOL g_ShowAnimationInfo;
 extern BOOL g_bShowHitSectors;
 // extern	BOOL	g_bDebugDumpPhysicsStep	;
 extern ESingleGameDifficulty g_SingleGameDifficulty;
-XRUICORE_API extern BOOL g_show_wnd_rect2;
+extern BOOL g_show_wnd_rect2;
 //-----------------------------------------------------------
 extern float g_fTimeFactor;
 extern BOOL b_toggle_weapon_aim;

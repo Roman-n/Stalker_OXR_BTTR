@@ -1,6 +1,6 @@
 #pragma once
 #ifdef CALLOFCHERNOBYL_RANKING
-#include "xruicore/windows/uiwindow.h"
+#include "UIWindow.h"
 
 class CUIXml;
 class CUIStatic;

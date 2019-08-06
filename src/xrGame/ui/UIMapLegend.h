@@ -8,7 +8,7 @@
 #ifndef UI_MAP_LEGEND_WND_H_INCLUDED
 #define UI_MAP_LEGEND_WND_H_INCLUDED
 
-#include "xruicore/windows/uiwindow.h"
+#include "UIWindow.h"
 
 class CUIXml;
 class CUIFrameWindow;

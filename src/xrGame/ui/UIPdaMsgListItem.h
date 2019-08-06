@@ -1,5 +1,5 @@
 #pragma once
-#include "xruicore/static/UIStatic.h"
+#include "UIStatic.h"
 
 class CUIPdaMsgListItem : public CUIColorAnimConrollerContainer
 {

@@ -11,9 +11,9 @@
 #include "string_table.h"
 #include "Actor.h"
 
-#include "xruicore/static/UIStatic.h"
+#include "UIStatic.h"
 #include "UIXmlInit.h"
-#include "xruicore/Windows/UIFrameWindow.h"
+#include "UIFrameWindow.h"
 
 #include "UIInvUpgradeProperty.h"
 

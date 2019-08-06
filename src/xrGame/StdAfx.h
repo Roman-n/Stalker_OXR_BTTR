@@ -53,7 +53,7 @@
 #include "xrGame/Entity.h" // ~490
 #include "xrGame/damage_manager.h" // ~490
 #include "xrGame/EntityCondition.h" // ~490
-#include "xrUICore/ui_defs.h" // ~450
+#include "xrGame/ui_defs.h" // ~450
 #include "xrGame/entity_alive.h" // ~430
 #include "xrCore/XML/XMLDocument.hpp" // ~400
 #include "xrPhysics/xrPhysics.h" // ~400
@@ -78,16 +78,16 @@
 #include "xrGame/script_entity.h" // ~290
 #include "xrEngine/Feel_Vision.h" // ~270
 #include "xrGame/CustomMonster.h" // ~265
-#include "xrUICore/ui_base.h" // ~260
+#include "xrGame/ui_base.h" // ~260
 #include "xrPhysics/MathUtils.h" // ~260
 #include "xrGame/WeaponAmmo.h" // ~250
 #include "xrEngine/GameFont.h" // ~250
 #include "xrGame/detail_path_manager.h" // ~120 + 120 for its inlines
 #include "xrPhysics/MovementBoxDynamicActivate.h" // ~240
 #include "xrPhysics/PHItemList.h"
-#include "xrUICore/editbox/UIEditBox.h"
-#include "xrUICore/windows/UIWindow.h" // ~225
-#include "xrUICore/UIMessages.h" // ~225  one single enum
+#include "xrGame/ui/UIEditBox.h"
+#include "xrGame/ui/UIWindow.h" // ~225
+#include "xrGame/ui/UIMessages.h" // ~225  one single enum
 #include "xrScriptEngine/Functor.hpp" // ~225 // XXX: See to it this goes to pch_script
 #include "xrGame/fire_disp_controller.h" // ~220
 #include "xrGame/Actor.h" // ~220
@@ -108,34 +108,34 @@
 //#include "xrCore/dump_string.h" // ~260
 //#include "xrCore/Math/Random32.hpp" // ~220
 //#include "xrEngine/LightAnimLibrary.h" // ~200
-#include "xrUICore/cursor/UICursor.h"
+#include "xrGame/UICursor.h"
 #include "xrGame/UIDialogHolder.h" // ~135, somewhat heavy to compile
-#include "xrUICore/static/UIStaticItem.h" // ~190, and quite heavy to compile
+#include "xrGame/UIStaticItem.h" // ~190, and quite heavy to compile
 //#include "xrGame/ui/Restrictions.h"
-#include "xrUICore/InteractiveBackground/UI_IB_Static.h" // ~60, very heavy to compile
-#include "xrUICore/buttons/UI3tButton.h" // ~60, very heavy to compile
-#include "xrgame/ui/UIActorMenu.h"
-#include "xrUICore/buttons/UIButton.h" // ~80, very heavy to compile
+#include "xrGame/ui/UI_IB_Static.h" // ~60, very heavy to compile
+#include "xrGame/ui/UI3tButton.h" // ~60, very heavy to compile
+#include "xrGame/ui/UIActorMenu.h"
+#include "xrGame/ui/UIButton.h" // ~80, very heavy to compile
 //#include "xrGame/ui/UIBuyWndBase.h"
 //#include "xrGame/ui/UIBuyWndShared.h"
 #include "xrGame/ui/UICellItem.h"
-#include "xruicore/editbox/UICustomEdit.h"
+#include "xrGame/ui/UICustomEdit.h"
 #include "xrGame/ui/UIDialogWnd.h" // ~100
 #include "xrGame/ui/UIDragDropListEx.h"
-#include "xruicore/windows/UIFrameWindow.h"
-#include "xruicore/hint/UIHint.h"
+#include "xrGame/ui/UIFrameWindow.h"
+#include "xrGame/ui/UIHint.h"
 #include "xrGame/ui/UIInventoryUtilities.h"
-#include "xruicore/static/UILanimController.h" // ~190
-#include "xruicore/lines/UILine.h" // ~190
-#include "xruicore/lines/UILines.h" // ~190
-#include "xruicore/listbox/UIListBox.h"
-#include "xruicore/options/UIOptionsItem.h" // ~60, somewhat heavy to compile
+#include "xrGame/ui/UILanimController.h" // ~190
+#include "xrGame/ui/UILine.h" // ~190
+#include "xrGame/ui/UILines.h" // ~190
+#include "xrGame/ui/UIListBox.h"
+#include "xrGame/ui/UIOptionsItem.h" // ~60, somewhat heavy to compile
 //#include "xrGame/ui/UIOptionsManager.h" // ~60, somewhat heavy to compile
-#include "xruicore/progressbar/UIProgressBar.h" // ~23, very heavy to compile
-#include "xruicore/scrollview/UIScrollView.h" // ~70, quite heavy to compile
-#include "xruicore/Static/UIStatic.h" // ~190
-#include "xruicore/lines/UISubLine.h" // ~190
-#include "xruicore/callbacks/UIWndCallback.h" // 135, somewhat heavy to compile
+#include "xrGame/ui/UIProgressBar.h" // ~23, very heavy to compile
+#include "xrGame/ui/UIScrollView.h" // ~70, quite heavy to compile
+#include "xrGame/ui/UIStatic.h" // ~190
+#include "xrGame/ui/UISubLine.h" // ~190
+#include "xrGame/ui/UIWndCallback.h" // 135, somewhat heavy to compile
 #include "xrGame/ui/UIXmlInit.h" // ~105, somewhat heavy to compile
 #include "xrGame/smart_cover.h" // ~30, VERY heavy to compile
 #include "xrGame/team_hierarchy_holder.h" // ~35, but quite heavy to compile
@@ -236,7 +236,6 @@
 #include "xrAICore/Navigation/ai_object_location.h" // ~95, very heavy to compile
 #include "xrAICore/Navigation/graph_engine.h" // ~80, VERY heavy to compile
 #include "xrAICore/Navigation/PatrolPath/patrol_path.h" // ~80, VERY heavy to compile
-#include "xr_level_controller.h"
 #ifdef DEBUG
 #include "Include/xrRender/DebugRender.h"
 #endif

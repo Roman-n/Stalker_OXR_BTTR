@@ -1,6 +1,6 @@
 #pragma once
-#include "xruicore/windows/uiwindow.h"
-#include "xruicore/progressbar/UIDoubleProgressBar.h"
+#include "UIWindow.h"
+#include "UIDoubleProgressBar.h"
 #include "xrServerEntities/alife_space.h"
 
 class CCustomOutfit;

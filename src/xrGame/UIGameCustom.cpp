@@ -2,7 +2,7 @@
 #include "UIGameCustom.h"
 #include "Level.h"
 #include "ui/UIXmlInit.h"
-#include "xruicore/static/UIStatic.h"
+#include "ui/UIStatic.h"
 #include "Common/object_broker.h"
 #include "string_table.h"
 

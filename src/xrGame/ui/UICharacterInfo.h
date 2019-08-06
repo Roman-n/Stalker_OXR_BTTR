@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "xruicore/windows/uiwindow.h"
+#include "uiwindow.h"
 #include "xrServerEntities/alife_space.h"
 #include "character_info_defs.h"
 

@@ -1,7 +1,7 @@
 #include "pch_script.h"
 #include "UIGameCustom.h"
 #include "Level.h"
-#include "xruicore/static/UIStatic.h"
+#include "ui/uistatic.h"
 #include "UIDialogHolder.h"
 #include "ui/UIDialogWnd.h"
 #include "xrScriptEngine/ScriptExporter.hpp"

@@ -16,12 +16,6 @@
 #define XRAICORE_API XR_IMPORT
 #endif
 
-#ifdef XRUICORE_EXPORTS
-#define XRUICORE_API XR_EXPORT
-#else
-#define XRUICORE_API XR_IMPORT
-#endif
-
 #ifdef XRCDB_EXPORTS
 #define XRCDB_API XR_EXPORT
 #define NO_ENGINE_API

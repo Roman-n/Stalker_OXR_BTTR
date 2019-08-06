@@ -7,7 +7,7 @@
 #include "character_info.h"
 
 #ifdef XRGAME_EXPORTS
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "ui/xrUIXmlParser.h"
 #include "PhraseDialog.h"
 #include "xrServer_Objects_ALife_Monsters.h"
 #else // XRGAME_EXPORTS

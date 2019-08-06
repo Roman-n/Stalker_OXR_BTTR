@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef XRGAME_EXPORTS
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "ui/xrUIXmlParser.h"
 #else // XRGAME_EXPORTS
 #include "xrUIXmlParser.h"
 #include "Common/object_broker.h"

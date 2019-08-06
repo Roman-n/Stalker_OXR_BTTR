@@ -20,7 +20,7 @@
 #include "ai/monsters/basemonster/base_monster.h"
 #include "UIGameCustom.h"
 #include "ui/UIMainIngameWnd.h"
-#include "xruicore/static/UIStatic.h"
+#include "ui/UIStatic.h"
 
 #include "CustomOutfit.h"
 #define MAX_SATIETY 1.0f

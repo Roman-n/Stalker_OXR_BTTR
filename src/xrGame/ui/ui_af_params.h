@@ -1,5 +1,5 @@
 #pragma once
-#include "xruicore/windows/uiwindow.h"
+#include "UIWindow.h"
 #include "xrServerEntities/alife_space.h"
 
 class CInventoryItem;

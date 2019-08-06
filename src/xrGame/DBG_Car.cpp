@@ -6,7 +6,7 @@
 #include "PHDestroyable.h"
 #include "Car.h"
 #include "Level.h"
-#include "xruicore/ui_base.h"
+#include "ui_base.h"
 #include "xrEngine/GameFont.h"
 
 void CCar::InitDebug()

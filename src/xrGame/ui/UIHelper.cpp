@@ -9,14 +9,14 @@
 #include "UIHelper.h"
 #include "UIXmlInit.h"
 
-#include "xruicore/progressbar/UIProgressBar.h"
-#include "xruicore/Windows/UIFrameLineWnd.h"
-#include "xruicore/Windows/UIFrameWindow.h"
-#include "xruicore/buttons/UI3tButton.h"
-#include "xruicore/buttons/UICheckButton.h"
-#include "xruicore/hint/UIHint.h"
+#include "UIProgressBar.h"
+#include "UIFrameLineWnd.h"
+#include "UIFrameWindow.h"
+#include "UI3tButton.h"
+#include "UICheckButton.h"
+#include "UIHint.h"
 #include "UIDragDropReferenceList.h"
-#include "xruicore/editbox/UIEditBox.h"
+#include "UIEditBox.h"
 
 CUIStatic* UIHelper::CreateStatic(CUIXml& xml, LPCSTR ui_path, CUIWindow* parent)
 {

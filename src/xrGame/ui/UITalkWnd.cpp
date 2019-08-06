@@ -14,7 +14,7 @@
 #include "xr_level_controller.h"
 #include "xrEngine/cameraBase.h"
 #include "UIXmlInit.h"
-#include "xruicore/buttons/UI3tButton.h"
+#include "UI3tButton.h"
 
 CUITalkWnd::CUITalkWnd()
 {

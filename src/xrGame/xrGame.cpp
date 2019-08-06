@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "object_factory.h"
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "ui/xrUIXmlParser.h"
 #include "xr_level_controller.h"
 #include "xrEngine/profiler.h"
 

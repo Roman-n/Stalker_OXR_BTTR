@@ -1,5 +1,5 @@
 #pragma once
-#include "xruicore/Windows/UIFrameLineWnd.h"
+#include "UIFrameLineWnd.h"
 
 class CUIStatic;
 class CUIFrameLineWnd;

@@ -9,7 +9,7 @@
 #include "StdAfx.h"
 #include "UIMessagesWindow.h"
 #include "UIGameLog.h"
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "xrUIXmlParser.h"
 #include "UIXmlInit.h"
 #include "UIInventoryUtilities.h"
 #include "game_news.h"

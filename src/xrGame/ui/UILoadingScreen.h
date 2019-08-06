@@ -9,8 +9,8 @@
 #pragma once
 
 #include "xrEngine/ILoadingScreen.h"
-#include "xruicore/static/UIStatic.h"
-#include "xruicore/windows/uiwindow.h"
+#include "UIStatic.h"
+#include "UIWindow.h"
 
 class CApplication;
 

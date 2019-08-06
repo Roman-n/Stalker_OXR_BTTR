@@ -4,7 +4,7 @@
 #include "xr_level_controller.h"
 
 #include "Level.h"
-#include "xrUICore\windows\UIFrameWindow.h"
+#include "ui\UIFrameWindow.h"
 #include "WeaponBinocularsVision.h"
 #include "Common/object_broker.h"
 #include "inventory.h"

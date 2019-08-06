@@ -9,7 +9,7 @@
 #include "UIGameLog.h"
 #include "UIXmlInit.h"
 #include "UIPdaMsgListItem.h"
-#include "xruicore/Lines/UILines.h"
+#include "UILines.h"
 
 CUIGameLog::CUIGameLog()
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "xruicore/windows/uiwindow.h"
+#include "UIWindow.h"
 #include "xrServerEntities/alife_space.h"
 #include "xrServerEntities/inventory_space.h"
-#include "xrGame/actor_defs.h"
+#include "actor_defs.h"
 
 class CUIStatic;
 class CUITextWnd;

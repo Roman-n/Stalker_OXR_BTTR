@@ -1,6 +1,6 @@
 #include "pch_script.h"
 #include "GameTask.h"
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "ui/xrUIXmlParser.h"
 #include "encyclopedia_article.h"
 #include "map_location.h"
 #include "map_spot.h"
@@ -17,7 +17,7 @@
 #include "alife_story_registry.h"
 #include "game_object_space.h"
 #include "Common/object_broker.h"
-#include "xruicore/xml/uitexturemaster.h"
+#include "ui/uitexturemaster.h"
 
 CGameTask::CGameTask()
     : m_map_object_id(0), m_TimeToComplete(0), m_priority(0)

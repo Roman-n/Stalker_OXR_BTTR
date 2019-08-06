@@ -8,7 +8,7 @@
 #include "xrEngine/Effector.h"
 #include "xrEngine/CameraManager.h"
 #include "xrEngine/FDemoRecord.h"
-#include "xruicore/ui_base.h"
+#include "ui_base.h"
 #include "debug_renderer.h"
 #include "xrEngine/GameFont.h"
 

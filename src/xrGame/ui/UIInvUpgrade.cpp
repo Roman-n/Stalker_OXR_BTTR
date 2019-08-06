@@ -12,7 +12,7 @@
 
 #include "UIInvUpgrade.h"
 
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "xrUIXmlParser.h"
 #include "UIXmlInit.h"
 
 #include "ai_space.h"

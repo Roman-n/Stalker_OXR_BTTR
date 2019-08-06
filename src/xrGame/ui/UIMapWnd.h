@@ -1,7 +1,7 @@
 #pragma once
 
-#include "xruicore/windows/uiwindow.h"
-#include "xruicore/Callbacks/UIWndCallback.h"
+#include "UIWindow.h"
+#include "UIWndCallback.h"
 
 class CUICustomMap;
 class CUIGlobalMap;

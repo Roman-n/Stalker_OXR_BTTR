@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 
 #include "MMSound.h"
-#include "xruicore/xml/xrUIXmlParser.h"
+#include "xrUIXmlParser.h"
 
 CMMSound::CMMSound() {}
 CMMSound::~CMMSound() { all_Stop(); }

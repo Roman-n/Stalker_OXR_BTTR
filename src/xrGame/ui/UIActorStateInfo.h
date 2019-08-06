@@ -8,8 +8,8 @@
 #ifndef UI_ACTOR_STATE_INFO_H_INCLUDED
 #define UI_ACTOR_STATE_INFO_H_INCLUDED
 
-#include "xrserverentities\alife_space.h"
-#include "xruicore/hint/UIHint.h"
+#include "alife_space.h"
+#include "UIHint.h"
 
 class CUIProgressBar;
 class CUIProgressShape;

@@ -10,7 +10,7 @@
 #include "game_cl_base.h"
 #include "xrEngine/IGame_Persistent.h"
 
-#include "xruicore/ui_base.h"
+#include "ui_base.h"
 #include "InventoryOwner.h"
 #include "relation_registry.h"
 #include "character_info.h"

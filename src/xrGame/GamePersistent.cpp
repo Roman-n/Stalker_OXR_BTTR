@@ -6,7 +6,7 @@
 #include "Include/xrRender/Kinematics.h"
 #include "xrEngine/profiler.h"
 #include "MainMenu.h"
-#include "xruicore\cursor\UICursor.h"
+#include "UICursor.h"
 #include "game_base_space.h"
 #include "Level.h"
 #include "ParticlesObject.h"
@@ -17,7 +17,7 @@
 #include "ActorEffector.h"
 #include "actor.h"
 
-#include "xruicore/XML/UITextureMaster.h"
+#include "UI/UItextureMaster.h"
 
 #include "xrEngine/xrSASH.h"
 #include "ai_space.h"
@@ -124,6 +124,7 @@ CGamePersistent::CGamePersistent(void)
 
     ZeroMemory(ambient_sound_next_time, sizeof(ambient_sound_next_time));
 
+    m_pUI_core = nullptr;
     m_pMainMenu = nullptr;
     m_intro = nullptr;
     m_intro_event.bind(this, &CGamePersistent::start_logo_intro);
@@ -219,7 +220,7 @@ void CGamePersistent::OnAppStart()
     GMLib.Load();
     init_game_globals();
     super::OnAppStart();
-    GEnv.UICore = new ui_core();
+    m_pUI_core = new ui_core();
     m_pMainMenu = new CMainMenu();
 }
 
@@ -229,7 +230,7 @@ void CGamePersistent::OnAppEnd()
         m_pMainMenu->Activate(false);
 
     xr_delete(m_pMainMenu);
-    xr_delete(GEnv.UICore);
+    xr_delete(m_pUI_core);
 
     super::OnAppEnd();
 

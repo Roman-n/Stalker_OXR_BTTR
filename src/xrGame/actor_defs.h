@@ -1,6 +1,6 @@
 #pragma once
-#include "xrserverentities/PHSynchronize.h"
-#include "xrserverentities/xrserver_space.h"
+#include "PHSynchronize.h"
+#include "xrserver_space.h"
 #include "xrCommon/misc_math_types.h"
 
 #define ACTOR_HEIGHT 1.75f

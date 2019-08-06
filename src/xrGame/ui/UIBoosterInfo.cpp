@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UIBoosterInfo.h"
-#include "xruicore/static/UIStatic.h"
+#include "UIStatic.h"
 #include "Common/object_broker.h"
 #include "EntityCondition.h"
 #include "Actor.h"
