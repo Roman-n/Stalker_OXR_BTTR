@@ -39,6 +39,7 @@ public:
     CUIEditBox* InitEditBox(LPCSTR path, CUIWindow* parent);
     CUIStatic* InitStatic(LPCSTR path, CUIWindow* parent);
     CUIStatic* InitAnimStatic(LPCSTR path, CUIWindow* parent);
+    CUIStatic* InitSleepStatic(LPCSTR path, CUIWindow* parent);
     CUITextWnd* InitTextWnd(LPCSTR path, CUIWindow* parent);
     CUICheckButton* InitCheck(LPCSTR path, CUIWindow* parent);
     CUISpinNum* InitSpinNum(LPCSTR path, CUIWindow* parent);

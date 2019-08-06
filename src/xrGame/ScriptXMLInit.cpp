@@ -222,6 +222,7 @@ SCRIPT_EXPORT(CScriptXmlInit, (), {
                          .def("InitStatic", &CScriptXmlInit::InitStatic)
                          .def("InitTextWnd", &CScriptXmlInit::InitTextWnd)
                          .def("InitAnimStatic", &CScriptXmlInit::InitAnimStatic)
+                         .def("InitSleepStatic", &CScriptXmlInit::InitSleepStatic)
                          .def("Init3tButton", &CScriptXmlInit::Init3tButton)
                          .def("InitCheck", &CScriptXmlInit::InitCheck)
                          .def("InitSpinNum", &CScriptXmlInit::InitSpinNum)
