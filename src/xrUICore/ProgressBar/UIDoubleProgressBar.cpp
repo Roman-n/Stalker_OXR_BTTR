@@ -1,6 +1,8 @@
+// sea 08.01.2008
+
 #include "pch.hpp"
 #include "UIDoubleProgressBar.h"
-#include "XML/UIXmlInitBase.h"
+#include "xrgame/ui/UIXmlInit.h"
 
 CUIDoubleProgressBar::CUIDoubleProgressBar()
 {

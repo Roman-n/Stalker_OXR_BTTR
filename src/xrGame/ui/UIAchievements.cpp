@@ -68,7 +68,7 @@ void CUIAchievements::SetDescription(LPCSTR desc)
         SetWndSize(Fvector2().set(GetWndSize().x, descr_size.y));
 }
 
-void CUIAchievements::SetHint(LPCSTR hint) { m_hint->set_text(StringTable().translate(hint).c_str()); }
+void CUIAchievements::SetHint(LPCSTR hint) { m_hint->set_text(CStringTable().translate(hint).c_str()); }
 void CUIAchievements::SetIcon(LPCSTR icon) { m_icon->InitTexture(icon); }
 void CUIAchievements::SetFunctor(LPCSTR func)
 {

@@ -1,15 +1,16 @@
 #include "pch.hpp"
 #include "UIBtnHint.h"
-#include "Static/UIStatic.h"
-#include "XML/UIXmlInitBase.h"
+#include "windows/UIFrameWindow.h"
+#include "static/UIStatic.h"
+#include "xrgame/ui/UIXmlInit.h"
 
 CUIButtonHint* g_btnHint = NULL;
 CUIButtonHint* g_statHint = NULL;
 
-CUIButtonHint::CUIButtonHint()
-: m_ownerWnd(NULL)
-, m_enabledOnFrame(false)
+CUIButtonHint::CUIButtonHint() : m_ownerWnd(NULL), m_enabledOnFrame(false)
 {
+    //	Device.seqRender.Add		(this, REG_PRIORITY_LOW-1000);
+
     CUIXmlInitBase xml_init;
     CUIXml uiXml;
     uiXml.Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, "hint_item.xml");
@@ -22,7 +23,9 @@ CUIButtonHint::CUIButtonHint()
 }
 
 CUIButtonHint::~CUIButtonHint()
-{}
+{
+    //	Device.seqRender.Remove		(this);
+}
 
 void CUIButtonHint::OnRender()
 {

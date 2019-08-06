@@ -497,7 +497,7 @@ void CMainMenu::DestroyInternal(bool bForce)
 
 void	CMainMenu::OnLoadError				(LPCSTR module)
 {
-    LPCSTR str = StringTable().translate("ui_st_error_loading").c_str();
+    LPCSTR str = CStringTable().translate("ui_st_error_loading").c_str();
     string1024 Text;
     strconcat(sizeof(Text), Text, str, " ");
     xr_strcat(Text, sizeof(Text), module);

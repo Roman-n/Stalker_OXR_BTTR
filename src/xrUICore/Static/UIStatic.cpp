@@ -1,11 +1,13 @@
 #include "pch.hpp"
-#include "Windows/UIWindow.h"
-#include "UIStatic.h"
-
+#include "uistatic.h"
+#include "xrGame/ui/UIXmlInit.h"
 #include "XML/UITextureMaster.h"
 #include "xrEngine/LightAnimLibrary.h"
-#include "Lines/uiLines.h"
+#include "lines/uilines.h"
+#include "ui_base.h"
+
 #include "Include/xrRender/UIRender.h"
+
 #include "Buttons/UIBtnHint.h"
 #include "Cursor/UICursor.h"
 

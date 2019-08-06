@@ -1,6 +1,6 @@
 #include "pch.hpp"
-#include "UIRadioButton.h"
-#include "Lines/UILines.h"
+#include ".\uiradiobutton.h"
+#include "lines/UILines.h"
 
 void CUIRadioButton::InitButton(Fvector2 pos, Fvector2 size)
 {

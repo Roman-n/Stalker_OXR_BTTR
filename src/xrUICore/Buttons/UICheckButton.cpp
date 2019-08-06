@@ -3,10 +3,10 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "pch.hpp"
-#include "UICheckButton.h"
+#include ".\uicheckbutton.h"
+#include "xrgame/ui/UIXmlInit.h"
 #include "Hint/UIHint.h"
 #include "xrEngine/xr_input.h"
-#include "xrEngine/xr_input_xinput.h"
 
 CUICheckButton::CUICheckButton()
 {

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "xrUICore/Static/UIStatic.h"
 
 class XRUICORE_API CUIButton : public CUIStatic

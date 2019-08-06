@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Natvis Include="..\TypeHelper.natvis" />
@@ -73,7 +73,7 @@
     <Filter Include="Callbacks">
       <UniqueIdentifier>{49658579-42e7-425d-b701-eddd1b219e84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FontManager">
+	<Filter Include="FontManager">
       <UniqueIdentifier>{6a4dc39a-f6c8-45f8-9505-11e65cb12e49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -247,10 +247,7 @@
     <ClCompile Include="XML\xrUIXmlParser.cpp">
       <Filter>XML</Filter>
     </ClCompile>
-    <ClCompile Include="XML\UIXmlInitBase.cpp">
-      <Filter>XML</Filter>
-    </ClCompile>
-    <ClCompile Include="FontManager\FontManager.cpp">
+	<ClCompile Include="FontManager\FontManager.cpp">
       <Filter>FontManager</Filter>
     </ClCompile>
     <ClCompile Include="Windows\UIWindow_script.cpp">
@@ -415,10 +412,7 @@
     <ClInclude Include="XML\xrUIXmlParser.h">
       <Filter>XML</Filter>
     </ClInclude>
-    <ClInclude Include="XML\UIXmlInitBase.h">
-      <Filter>XML</Filter>
-    </ClInclude>
-    <ClInclude Include="FontManager\FontManager.h">
+	<ClInclude Include="FontManager\FontManager.h">
       <Filter>FontManager</Filter>
     </ClInclude>
     <ClInclude Include="Options\UIOptionsManagerScript.h">

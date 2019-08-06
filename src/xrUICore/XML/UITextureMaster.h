@@ -10,7 +10,7 @@
 #pragma once
 
 class CUIStaticItem;
-#include "xrUICore/ui_defs.h"
+#include "xruicore/ui_defs.h"
 
 struct TEX_INFO
 {

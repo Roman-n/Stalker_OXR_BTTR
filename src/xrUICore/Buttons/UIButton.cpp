@@ -1,10 +1,10 @@
 #include "pch.hpp"
 #include "UIButton.h"
 #include "UIBtnHint.h"
-#include "Cursor/UICursor.h"
-#include "xrEngine/xr_input.h"
-#include "Windows/UIWindow.h"
+#include "cursor/UICursor.h"
+#include "ui_base.h"
 #include "xrEngine/xr_input_xinput.h"
+#include "xrGame/xr_level_controller.h"
 
 #define PUSH_OFFSET_RIGHT 1
 #define PUSH_OFFSET_DOWN 1

@@ -1,4 +1,6 @@
+// sea 08.01.2008
 #pragma once
+
 #include "xrUICore/Windows/UIWindow.h"
 #include "xrUICore/ProgressBar/UIProgressBar.h"
 

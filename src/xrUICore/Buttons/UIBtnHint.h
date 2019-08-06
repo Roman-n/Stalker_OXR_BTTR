@@ -1,5 +1,5 @@
 #pragma once
-#include "xrUICore/Windows/UIFrameWindow.h"
+#include "xrUICore/windows/UIFrameWindow.h"
 
 class CUITextWnd;
 

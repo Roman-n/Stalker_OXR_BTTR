@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "UI3tButton.h"
+#include "xrgame/ui/UIXmlInit.h"
 #include "Hint/UIHint.h"
 
 CUI3tButton::CUI3tButton()

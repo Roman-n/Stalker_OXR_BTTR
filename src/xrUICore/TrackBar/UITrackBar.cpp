@@ -1,7 +1,8 @@
 #include "pch.hpp"
+
 #include "UITrackBar.h"
-#include "Buttons/UI3tButton.h"
-#include "XML/UITextureMaster.h"
+#include "buttons/UI3tButton.h"
+#include "xml/UITextureMaster.h"
 #include "xrEngine/xr_input.h"
 
 #define DEF_CONTROL_HEIGHT 16.0f
@@ -125,6 +126,7 @@ void CUITrackBar::Update()
 
 void CUITrackBar::SetCurrentOptValue()
 {
+    CUIOptionsItem::SetCurrentOptValue();
     if (m_b_is_float)
         GetOptFloatValue(m_f_val, m_f_min, m_f_max);
     else
@@ -156,6 +158,8 @@ bool CUITrackBar::IsChangedOptValue() const
 
 void CUITrackBar::SaveBackUpOptValue()
 {
+    CUIOptionsItem::SaveBackUpOptValue();
+
     if (m_b_is_float)
         m_f_opt_backup_value = m_f_val;
     else

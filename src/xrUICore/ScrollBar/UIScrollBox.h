@@ -1,5 +1,5 @@
 #pragma once
-#include "Windows/uiFrameLineWnd.h"
+#include "windows/uiFrameLineWnd.h"
 
 class CUIScrollBox : public CUIFrameLineWnd
 {

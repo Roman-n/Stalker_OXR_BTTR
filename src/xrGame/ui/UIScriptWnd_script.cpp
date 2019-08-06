@@ -12,7 +12,7 @@ extern export_class& script_register_ui_window1(export_class&);
 extern export_class& script_register_ui_window2(export_class&);
 
 SCRIPT_EXPORT(CUIDialogWndEx, (), {
-   export_class instance("CUIScriptWnd");
+    export_class instance("CUIScriptWnd");
 
     module(luaState)[script_register_ui_window2(script_register_ui_window1(instance)).def("Load", &BaseType::Load)];
 });

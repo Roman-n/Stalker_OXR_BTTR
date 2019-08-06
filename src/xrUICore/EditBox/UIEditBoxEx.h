@@ -1,9 +1,10 @@
 #pragma once
-#include "xrUICore/EditBox/UICustomEdit.h"
+
+#include "UICustomEdit.h"
 
 class CUIFrameWindow;
 
-class CUIEditBoxEx : public CUICustomEdit
+class XRUICORE_API CUIEditBoxEx : /*public CUIMultiTextureOwner, */ public CUICustomEdit
 {
 public:
     CUIEditBoxEx();

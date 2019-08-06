@@ -1,10 +1,9 @@
 #include "pch.hpp"
 #include "uiscrollbar.h"
-#include "Buttons/UI3tButton.h"
-#include "UIScrollBox.h"
-#include "XML/UIXmlInitBase.h"
-#include "XML/UITextureMaster.h"
-#include "Cursor/UICursor.h"
+#include "buttons/UI3tButton.h"
+#include "ScrollBar/UIScrollBox.h"
+#include "xrgame/ui/UIXmlInit.h"
+#include "xml/UITextureMaster.h"
 #include "xrEngine/xr_input_xinput.h"
 
 CUIScrollBar::CUIScrollBar()
@@ -199,6 +198,8 @@ void CUIScrollBar::UpdateScrollBar()
 
     ClampByViewRect();
 }
+
+#include "cursor/UICursor.h"
 
 u32 last_hold_time = 0;
 

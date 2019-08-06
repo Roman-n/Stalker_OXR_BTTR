@@ -5,7 +5,7 @@
 #include "pch.hpp"
 #include <dinput.h>
 #include "uieditbox.h"
-#include "Windows/UIFrameLineWnd.h"
+#include "windows/UIFrameLineWnd.h"
 
 CUIEditBox::CUIEditBox() : m_frameLine(NULL) {}
 void CUIEditBox::InitCustomEdit(Fvector2 pos, Fvector2 size)

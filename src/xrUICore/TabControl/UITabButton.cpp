@@ -1,7 +1,6 @@
 #include "pch.hpp"
 #include "UITabButton.h"
 #include "xrEngine\xr_input_xinput.h"
-
 CUITabButton::CUITabButton() {}
 CUITabButton::~CUITabButton() {}
 bool CUITabButton::OnMouseAction(float x, float y, EUIMessages mouse_action)

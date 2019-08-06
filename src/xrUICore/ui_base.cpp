@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "ui_base.h"
+#include "xrGame/GamePersistent.h"
 #include "Cursor/UICursor.h"
 #include "xrCore/XML/XMLDocument.hpp"
 
@@ -216,8 +217,8 @@ ui_core::ui_core()
     }
     else
     {
-        m_pUICursor = nullptr;
-        m_pFontManager = nullptr;
+        m_pUICursor = NULL;
+        m_pFontManager = NULL;
     }
     m_bPostprocess = false;
 
