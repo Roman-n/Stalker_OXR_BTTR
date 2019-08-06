@@ -50,7 +50,10 @@ bool xrServer::Process_event_reject(
 		{ 
 			clildrenList.append("! ").append(game->get_entity_from_eid(childID)->name_replace()).append("\n"); 
 		} 
-		Msg("! WARNING: SV: can't find child [%s] of parent [%s]! Children list:\n%s", e_entity->name_replace(), e_parent->name_replace(), clildrenList.c_str()); 
+		if(!strstr(Core.Params,"-wrng_cop")) // Разблокировать показать лог ! WARNING: SV: can't find child [%s] of parent [%s]!
+		{
+			Msg("! WARNING: SV: can't find child [%s] of parent [%s]! Children list:\n%s", e_entity->name_replace(), e_parent->name_replace(), clildrenList.c_str()); 
+		}
 		return false; 
 #endif		
     }
