@@ -180,7 +180,7 @@ public:
             }
         }
 
-        CStringTable::ReparseKeyBindings();
+        StringTable::ReparseKeyBindings();
     }
     virtual void Save(IWriter* F)
     {
@@ -211,7 +211,7 @@ public:
         _binding* pbinding = &g_key_bindings[action_id];
         pbinding->m_keyboard[m_work_idx] = NULL;
 
-        CStringTable::ReparseKeyBindings();
+        StringTable::ReparseKeyBindings();
     }
 };
 

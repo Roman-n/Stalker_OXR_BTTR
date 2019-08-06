@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "string_table_defs.h"
+#include "xrEngine/StringTable/IStringTable.h"
 #include "xrCommon/xr_map.h"
 
 using STRING_TABLE_MAP = xr_map<STRING_ID, STRING_VALUE>;
@@ -15,10 +15,10 @@ struct STRING_TABLE_DATA
     STRING_TABLE_MAP m_string_key_binding;
 };
 
-class CStringTable
+class StringTable : public IStringTable
 {
 public:
-    CStringTable();
+    StringTable();
 
     static void Destroy();
 

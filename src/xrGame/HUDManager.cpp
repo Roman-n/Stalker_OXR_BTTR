@@ -180,7 +180,7 @@ void CHUDManager::RenderUI()
     {
         CGameFont* pFont = UI().Font().pFontGraffiti50Russian;
         pFont->SetColor(0x80FF0000);
-        LPCSTR _str = CStringTable().translate("st_game_paused").c_str();
+        LPCSTR _str = StringTable().translate("st_game_paused").c_str();
 
         Fvector2 _pos;
         _pos.set(UI_BASE_WIDTH / 2.0f, UI_BASE_HEIGHT / 2.0f);
