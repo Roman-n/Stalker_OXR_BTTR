@@ -1,6 +1,7 @@
 #pragma once
 #include "xrUICore/Options/UIOptionsItem.h"
 #include "xrUICore/EditBox/UICustomEdit.h"
+
 class CUIFrameLineWnd;
 
 class XRUICORE_API CUIEditBox : public CUIOptionsItem, public CUICustomEdit

@@ -12,9 +12,9 @@
 
 #pragma once
 
-#include "xruicore/windows/UIFrameWindow.h"
-#include "xruicore/windows/UIWindow.h"
-#include "xruicore/windows/UIFrameLineWnd.h"
+#include "xrUICore/Windows/UIFrameWindow.h"
+#include "xrUICore/Windows/UIWindow.h"
+#include "xrUICore/Windows/UIFrameLineWnd.h"
 
 enum IBState
 {

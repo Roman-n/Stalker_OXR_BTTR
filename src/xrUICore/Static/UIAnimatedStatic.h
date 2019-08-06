@@ -1,9 +1,4 @@
-
-#ifndef UI_ANIMATED_STATIC_H_
-#define UI_ANIMATED_STATIC_H_
-
 #pragma once
-
 #include "UIStatic.h"
 
 class XRUICORE_API CUIAnimatedStatic : public CUIStatic
@@ -78,5 +73,3 @@ public:
 
     virtual void Update();
 };
-
-#endif // UI_ANIMATED_STATIC_H_

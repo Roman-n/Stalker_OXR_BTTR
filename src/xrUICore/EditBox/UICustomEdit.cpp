@@ -1,8 +1,6 @@
 #include "pch.hpp"
-
-#include "editbox/UICustomEdit.h"
-#include "lines/UILines.h"
-
+#include "UICustomEdit.h"
+#include "Lines/UILines.h"
 #include "xrEngine/line_edit_control.h"
 #include "xrEngine/xr_input.h"
 

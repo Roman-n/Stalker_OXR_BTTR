@@ -5457,9 +5457,6 @@
     <ClInclude Include="string_table.h">
       <Filter>Core\Common\StringTable</Filter>
     </ClInclude>
-    <ClInclude Include="string_table_defs.h">
-      <Filter>Core\Common\StringTable</Filter>
-    </ClInclude>
     <ClInclude Include="static_cast_checked.hpp">
       <Filter>Core\Common\debug\static_cast_checked</Filter>
     </ClInclude>

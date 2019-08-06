@@ -3,7 +3,6 @@
 #pragma warning(disable : 4511)
 #pragma warning(disable : 4512)
 
-#include "ui_base.h"
 #include "Common/Noncopyable.hpp"
 #include "xrEngine/GameFont.h"
 

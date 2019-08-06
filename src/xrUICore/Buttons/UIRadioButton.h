@@ -1,9 +1,7 @@
 #pragma once
+#include "xrUICore/TabControl/UITabButton.h"
 
-#pragma once
-#include "xruicore/TabControl/UITabButton.h"
-
-class XRUICORE_API CUIRadioButton : public CUITabButton
+class CUIRadioButton : public CUITabButton
 {
     typedef CUITabButton inherited;
 

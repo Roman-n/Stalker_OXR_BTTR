@@ -1,8 +1,7 @@
 #include "pch.hpp"
 #include "UIPropertiesBox.h"
-#include "xrgame/Level.h"
-#include "listbox/UIListBoxItem.h"
-#include "xrgame/ui/UIXmlInit.h"
+#include "ListBox/UIListBoxItem.h"
+#include "XML/UIXmlInitBase.h"
 
 #define OFFSET_X (5.0f)
 #define OFFSET_Y (5.0f)

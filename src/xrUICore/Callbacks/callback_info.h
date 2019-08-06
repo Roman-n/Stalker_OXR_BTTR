@@ -1,5 +1,4 @@
 #pragma once
-
 #include "xrgame/script_callback_ex.h"
 
 class CUIWindow;

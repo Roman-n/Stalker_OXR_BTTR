@@ -6,7 +6,7 @@
 class XRUICORE_API CUI3tButton : public CUIButton
 {
     typedef CUIButton inherited;
-    friend class CUIXmlInitBaseBase;
+    friend class CUIXmlInitBase;
     //.	using CUIButton::SetTextColor;
 public:
     CUI3tButton();

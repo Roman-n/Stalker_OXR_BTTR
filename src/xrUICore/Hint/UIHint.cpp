@@ -8,11 +8,9 @@
 #include "pch.hpp"
 #include "UIHint.h"
 
-#include "static/UIStatic.h"
-#include "windows/UIFrameWindow.h"
-#include "xrgame/ui/UIXmlInit.h"
-#include "xrgame/ui/UIHelper.h"
-#include "xrgame/string_table.h"
+#include "Static/UIStatic.h"
+#include "Windows/UIFrameWindow.h"
+#include "XML/UIXmlInitBase.h"
 #include "xrEngine/StringTable/IStringTable.h"
 
 UIHint::UIHint()
@@ -38,6 +36,7 @@ void UIHint::init_from_xml(CUIXml& xml, LPCSTR path)
     AttachChild(m_text);
     m_text->SetAutoDelete(true);
     CUIXmlInitBase::InitTextWnd(xml, "text", 0, m_text);
+
     m_border = xml.ReadAttribFlt("background", 0, "border", 0.0f);
 
     xml.SetLocalRoot(stored_root);

@@ -1,15 +1,11 @@
 #include "pch.hpp"
 #include "UIProgressShape.h"
-
-#include "static/UIStatic.h"
 #include "Include/xrRender/UIShader.h"
 #include "Include/xrRender/UIRender.h"
 
 CUIProgressShape::CUIProgressShape()
 {
     m_bText = false;
-    //	m_pTexture		= new CUIStatic();
-    //	AttachChild		(m_pTexture);
     m_blend = true;
     m_angle_begin = 0.0f;
     m_angle_end = PI_MUL_2;
@@ -17,9 +13,7 @@ CUIProgressShape::CUIProgressShape()
 };
 
 CUIProgressShape::~CUIProgressShape()
-{
-    //	xr_delete		(m_pTexture);
-}
+{}
 
 void CUIProgressShape::SetPos(float pos) { m_stage = pos; }
 void CUIProgressShape::SetPos(int pos, int max)

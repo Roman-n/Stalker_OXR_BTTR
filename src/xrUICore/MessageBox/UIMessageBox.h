@@ -1,5 +1,4 @@
 #pragma once
-
 #include "xrUICore/Static/UIStatic.h"
 
 class CUI3tButton;

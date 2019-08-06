@@ -1393,7 +1393,6 @@
     <ClInclude Include="step_manager.h" />
     <ClInclude Include="step_manager_defs.h" />
     <ClInclude Include="string_table.h" />
-    <ClInclude Include="string_table_defs.h" />
     <ClInclude Include="team_base_zone.h" />
     <ClInclude Include="team_hierarchy_holder.h" />
     <ClInclude Include="team_hierarchy_holder_inline.h" />

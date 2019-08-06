@@ -1,10 +1,6 @@
-#ifndef UI_ARROW_H_INCLUDED
-#define UI_ARROW_H_INCLUDED
+#pragma once
+#include "xrUICore/Static/UIStatic.h"
 
-#include "xruicore/Static/UIStatic.h"
-#include "xrgame/ScriptXmlInit.h"
-#include "xrgame/ui/uihudstateswnd.h"
-#include "xrgame/ui/uiactorstateinfo.h"
 class XRUICORE_API UI_Arrow : public CUIStatic
 {
 private:
@@ -28,5 +24,3 @@ private:
     float m_pos;
 
 }; // class UI_Arrow
-
-#endif // UI_ARROW_H_INCLUDED

@@ -47,7 +47,6 @@
 #include "xrPhysics/console_vars.h"
 #ifdef DEBUG
 #include "PHDebug.h"
-#include "ui/UIDebugFonts.h"
 #include "xrAICore/Navigation/game_graph.h"
 #include "LevelGraphDebugRender.hpp"
 #include "CharacterPhysicsSupport.h"
@@ -221,18 +220,36 @@ public:
 class CCC_GameLanguage : public CCC_Token
 {
 public:
-    CCC_GameLanguage(LPCSTR N) : CCC_Token(N, (u32*)&gLanguage, NULL)
-    {
-        CStringTable();
-        tokens = gLanguagesToken.data();
-    };
+    CCC_GameLanguage(LPCSTR N) : CCC_Token(N, (u32*)&gLanguage, NULL) {};
 
     virtual void Execute(LPCSTR args)
     {
         tokens = gLanguagesToken.data();
 
         CCC_Token::Execute(args);
-        CStringTable().ReloadLanguage();
+        StringTable().ReloadLanguage();
+
+        if (g_pGamePersistent && g_pGamePersistent->IsMainMenuActive())
+            MainMenu()->setLanguageChanged(true);
+
+        if (!g_pGameLevel)
+            return;
+
+        for (u16 id = 0; id < 0xffff; id++)
+        {
+            CGameObject* pGameObject = smart_cast<CGameObject*>(Level().Objects.net_Find(id));
+            if (!pGameObject)
+                continue;
+
+            if (CInventoryItem* p = smart_cast<CInventoryItem*>(pGameObject))
+                p->reloadNames();
+        }
+    }
+
+    const xr_token* GetToken() noexcept override
+    {
+        tokens = gLanguagesToken.data();
+        return CCC_Token::GetToken();
     }
 };
 #endif
@@ -594,7 +611,7 @@ public:
 #endif
         StaticDrawableWrapper* _s = CurrentGameUI()->AddCustomStatic("game_saved", true);
         LPSTR save_name;
-        STRCONCAT(save_name, CStringTable().translate("st_game_saved").c_str(), ": ", S);
+        STRCONCAT(save_name, StringTable().translate("st_game_saved").c_str(), ": ", S);
         _s->wnd()->TextItemControl()->SetText(save_name);
 
         xr_strcat(S, ".dds");
@@ -1005,17 +1022,6 @@ public:
         }
     }
     virtual void Info(TInfo& I) { xr_strcpy(I, "dumps all creature names"); }
-};
-
-class CCC_DebugFonts : public IConsole_Command
-{
-public:
-    CCC_DebugFonts(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = true; }
-    virtual void Execute(LPCSTR args)
-    {
-        // BUG: leak
-        (new CUIDebugFonts())->ShowDialog(true);
-    }
 };
 
 class CCC_DebugNode : public IConsole_Command
@@ -1948,7 +1954,6 @@ void CCC_RegisterCommands()
 #endif // #if defined(USE_DEBUGGER) && defined(USE_LUA_STUDIO)
 
     CMD1(CCC_ShowMonsterInfo, "ai_monster_info");
-    CMD1(CCC_DebugFonts, "debug_fonts");
     CMD1(CCC_TuneAttachableItem, "dbg_adjust_attachable_item");
 
     CMD1(CCC_ShowAnimationStats, "ai_show_animation_stats");

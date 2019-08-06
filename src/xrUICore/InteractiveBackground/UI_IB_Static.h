@@ -8,11 +8,10 @@
 // Copyright 2005 GSC Game World
 
 #pragma once
+#include "xrUICore/InteractiveBackground/UIInteractiveBackground.h"
+#include "xrUICore/Static/UIStatic.h"
 
-#include "UIInteractiveBackground.h"
-#include "xruicore/static/UIStatic.h"
-
-class XRUICORE_API CUI_IB_Static : public CUIInteractiveBackground<CUIStatic>
+class CUI_IB_Static : public CUIInteractiveBackground<CUIStatic>
 {
 public:
     virtual void SetTextureOffset(float x, float y);

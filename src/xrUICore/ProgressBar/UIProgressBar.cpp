@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "uiprogressbar.h"
+#include "UIProgressBar.h"
 
 CUIProgressBar::CUIProgressBar(void)
 {
@@ -46,18 +46,15 @@ void CUIProgressBar::UpdateProgressBar()
     case om_fromcenter:
         m_CurrentLength = GetWidth() * fCurrentLength;
         break;
-
     case om_vert:
     case om_down:
     case om_vfromcenter:
         m_CurrentLength = GetHeight() * fCurrentLength;
         break;
-
     case om_tocenter:
     case om_vtocenter:
         R_ASSERT2(false, "to_center mode is not implemented.");
         break;
-
     default:
         m_CurrentLength = 0.0f;
     }
@@ -126,7 +123,7 @@ void CUIProgressBar::Draw()
     case om_vert: progress_rect.set(0, GetHeight() - m_CurrentLength, GetWidth(), GetHeight()); break;
     case om_back: progress_rect.set(GetWidth() - m_CurrentLength * 1.01f, 0, GetWidth(), GetHeight()); break;
     case om_down: progress_rect.set(0, 0, GetWidth(), m_CurrentLength); break;
-    case om_fromcenter: 
+    case om_fromcenter:
     {
         const float center = GetWidth() / 2.f;
         progress_rect.set(center - m_CurrentLength, 0, center + m_CurrentLength, GetHeight());
@@ -138,7 +135,7 @@ void CUIProgressBar::Draw()
         progress_rect.set(0, center - m_CurrentLength, GetWidth(), center + m_CurrentLength);
         break;
     }
-    // XXX: Implement to_center mode
+    // XXX: Implement two-way progress bar
     case om_tocenter:
     case om_vtocenter: R_ASSERT2(false, "to_center mode is not implemented."); break;
     default: NODEFAULT; break;

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "xrUICore/Options/UIOptionsItem.h"
 #include "xrUICore/InteractiveBackground/UI_IB_Static.h"
 

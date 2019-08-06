@@ -1,9 +1,9 @@
 #include "pch.hpp"
 #include "UIScrollView.h"
-#include "scrollbar/UIScrollBar.h"
+#include "ScrollBar/UIScrollBar.h"
 #include "ScrollBar/UIFixedScrollBar.h"
 #include "ui_base.h"
-#include "cursor/UICursor.h"
+#include "Cursor/UICursor.h"
 #include "xrEngine/xr_input.h"
 
 CUIScrollView::CUIScrollView()

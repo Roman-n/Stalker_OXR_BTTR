@@ -1,9 +1,11 @@
 #include "pch.hpp"
 #include "UIFixedScrollbar.h"
-#include "buttons/UI3tButton.h"
-#include "windows/UIFrameLineWnd.h"
+#include "Buttons/UI3tButton.h"
+#include "Windows/UIFrameLineWnd.h"
 #include "UIScrollBox.h"
-#include "xrgame/ui/UIXmlInit.h"
+#include "XML/UIXmlInitBase.h"
+#include "Cursor/UICursor.h"
+#include "xrEngine/xr_input_xinput.h"
 
 CUIFixedScrollBar::CUIFixedScrollBar()
 {
@@ -133,8 +135,6 @@ void CUIFixedScrollBar::ClampByViewRect()
                 m_IncButton->GetWndPos().y - m_ScrollBox->GetHeight() - m_ScrollBoxOffset.y));
     }
 }
-
-#include "cursor/UICursor.h"
 
 u32 last_hold_tm = 0;
 bool CUIFixedScrollBar::OnKeyboardHold(int dik)

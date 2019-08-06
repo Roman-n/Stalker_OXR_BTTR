@@ -1,8 +1,8 @@
 #include "pch.hpp"
 #include "uicursor.h"
 
-#include "static/UIStatic.h"
-#include "buttons/UIBtnHint.h"
+#include "Static/UIStatic.h"
+#include "Buttons/UIBtnHint.h"
 #include "xrEngine/IInputReceiver.h"
 #include "xrEngine/xr_input.h"
 

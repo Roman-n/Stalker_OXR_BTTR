@@ -45,16 +45,16 @@ BOOL APIENTRY DllMain(HANDLE hModule, u32 ul_reason_for_call, LPVOID lpReserved)
         CCC_RegisterCommands();
         // keyboard binding
         CCC_RegisterInput();
-#ifdef DEBUG
-// XXX nitrocaster PROFILER: temporarily disabled due to linkage issues
-// g_profiler			= new CProfiler();
-#endif
+		
+		gStringTable = new CStringTable();
+        StringTable().Init();
         break;
     }
 
     case DLL_PROCESS_DETACH:
     {
         CleanupUIStyleToken();
+		xr_delete(gStringTable);
         break;
     }
     }

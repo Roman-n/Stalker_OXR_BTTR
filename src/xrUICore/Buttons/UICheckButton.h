@@ -1,5 +1,4 @@
 #pragma once
-
 #include "xrUICore/Buttons/UI3tButton.h"
 #include "xrUICore/Options/UIOptionsItem.h"
 

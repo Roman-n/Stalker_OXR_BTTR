@@ -11,7 +11,6 @@ CUITabControl::CUITabControl()
 CUITabControl::~CUITabControl() { RemoveAll(); }
 void CUITabControl::SetCurrentOptValue()
 {
-    CUIOptionsItem::SetCurrentOptValue();
     shared_str v = GetOptStringValue();
     CUITabButton* b = GetButtonById(v);
     if (NULL == b)
@@ -38,7 +37,6 @@ void CUITabControl::UndoOptValue()
 
 void CUITabControl::SaveBackUpOptValue()
 {
-    CUIOptionsItem::SaveBackUpOptValue();
     m_opt_backup_value = GetActiveId();
 }
 

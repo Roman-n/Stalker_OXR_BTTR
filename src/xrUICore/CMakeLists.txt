@@ -27,7 +27,7 @@ file(GLOB TRACK_BAR TrackBar/*.h TrackBar/*.cpp)
 file(GLOB WINDOWS Windows/*.h Windows/*.cpp)
 file(GLOB XML XML/*.h XML/*.cpp)
 set(GENERAL ui_base.cpp ui_base.h ui_defs.h uiabstract.h UIMessages.h)
-
+				 
 ######################################################
 
 source_group("arrow" FILES ${ARROW})
