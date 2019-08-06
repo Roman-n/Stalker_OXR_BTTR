@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "UIWindow.h"
+#include "xruicore/windows/uiwindow.h"
 
 class CUIGameLog;
 class CUIChatWnd;

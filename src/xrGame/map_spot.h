@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ui/UIStatic.h"
+#include "xruicore/static/UIStatic.h"
 #include "alife_space.h"
 
 class CMapLocation;

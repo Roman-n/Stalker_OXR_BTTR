@@ -8,8 +8,8 @@
 #ifndef UI_SECOND_TASK_WND_H_INCLUDED
 #define UI_SECOND_TASK_WND_H_INCLUDED
 
-#include "UIWindow.h"
-#include "UIWndCallback.h"
+#include "xruicore/windows/uiwindow.h"
+#include "xruicore/Callbacks/UIWndCallback.h"
 
 #define PDA_TASK_XML "pda_tasks.xml"
 

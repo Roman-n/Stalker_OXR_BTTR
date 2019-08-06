@@ -11,7 +11,7 @@
 #include "inventory_item.h"
 
 #include "UIGameCustom.h"
-#include "UIWindow.h"
+#include "xruicore/windows/uiwindow.h"
 #include "UICellItemFactory.h"
 #include "UIDragDropListEx.h"
 #include "UIDragDropReferenceList.h"
@@ -23,7 +23,7 @@
 #include "eatable_item.h"
 
 #include "UIPdaWnd.h"
-#include "UITabControl.h"
+#include "xruicore/TabControl/UITabControl.h"
 #include "UIActorMenu.h"
 #include "UIMainIngameWnd.h"
 #include "UIZoneMap.h"

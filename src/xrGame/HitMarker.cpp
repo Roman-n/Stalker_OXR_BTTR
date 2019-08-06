@@ -4,7 +4,7 @@
 #include "HitMarker.h"
 #include "xrEngine/render.h"
 #include "xrEngine/LightAnimLibrary.h"
-#include "UIStaticItem.h"
+#include "xruicore/static/UIStaticItem.h"
 
 #include "grenade.h"
 

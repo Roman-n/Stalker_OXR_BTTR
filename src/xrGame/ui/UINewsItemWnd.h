@@ -1,6 +1,6 @@
 #pragma once
-#include "UIWindow.h"
-#include "xrUIXmlParser.h"
+#include "xruicore/windows/uiwindow.h"
+#include "xruicore/xml/xrUIXmlParser.h"
 
 class CUIStatic;
 class CUITextWnd;

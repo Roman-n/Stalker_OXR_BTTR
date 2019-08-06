@@ -36,7 +36,7 @@
 #include "attachable_item.h"
 #include "xrEngine/xr_input.h"
 #endif
-#include "UIScrollView.h"
+#include "xrUICore\ScrollView\UIScrollView.h"
 #include "map_hint.h"
 #include "game_news.h"
 #include "static_cast_checked.hpp"
@@ -78,7 +78,7 @@ CUIMainIngameWnd::CUIMainIngameWnd() : m_pPickUpItem(NULL), m_pMPChatWnd(NULL), 
     UIZoneMap = new CUIZoneMap();
 }
 
-#include "UIProgressShape.h"
+#include "xruicore/ProgressBar/UIProgressShape.h"
 extern CUIProgressShape* g_MissileForceShape;
 
 CUIMainIngameWnd::~CUIMainIngameWnd()

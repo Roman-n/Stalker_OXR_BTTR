@@ -9,9 +9,9 @@
 #ifndef UI_INVENTORY_UPGRADE_H_INCLUDED
 #define UI_INVENTORY_UPGRADE_H_INCLUDED
 
-#include "UIStatic.h"
+#include "xruicore/static/UIStatic.h"
 
-#include "xrUIXmlParser.h"
+#include "xruicore/xml/xrUIXmlParser.h"
 #include "UIXmlInit.h"
 
 namespace inventory

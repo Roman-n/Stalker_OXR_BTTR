@@ -6,11 +6,11 @@
 #include "xrEngine/IGame_Level.h"
 #include "xrEngine/CameraManager.h"
 #include "xr_Level_controller.h"
-#include "ui\UITextureMaster.h"
+#include "xruicore/xml/UITextureMaster.h"
 #include "ui\UIXmlInit.h"
 #include <dinput.h>
-#include "ui\UIBtnHint.h"
-#include "UICursor.h"
+#include "xrUICore\buttons\UIBtnHint.h"
+#include "xruicore\cursor\UICursor.h"
 
 #include "string_table.h"
 #include "xrCore/os_clipboard.h"

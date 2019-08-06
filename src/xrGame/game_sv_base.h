@@ -1,7 +1,7 @@
 #pragma once
 
 #include "game_base.h"
-#include "alife_space.h"
+#include "xrServerEntities/alife_space.h"
 
 #include "xrCore/client_id.h"
 #include "game_sv_event_queue.h"
@@ -113,8 +113,8 @@ public:
 	string64&						get_option_s			(LPCSTR lst, LPCSTR name, LPCSTR def = 0);
 
 	virtual		xr_vector<u16>*		get_children			(ClientID id_who);
-	void							u_EventGen				(NET_Packet& P, u16 type, u16 dest	);
-	void							u_EventSend				(NET_Packet& P, u32 dwFlags = DPNSEND_GUARANTEED);
+    void                            u_EventGen(NET_Packet& P, u16 type, u16 dest);
+    void                            u_EventSend(NET_Packet& P);
 
     // Events
     virtual BOOL OnPreCreate(CSE_Abstract* E) { return TRUE; };

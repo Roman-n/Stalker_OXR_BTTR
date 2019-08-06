@@ -22,7 +22,7 @@
 #include "actorcondition.h"
 #include "actor_input_handler.h"
 #include "string_table.h"
-#include "UI/UIStatic.h"
+#include "xruicore/static/UIStatic.h"
 #include "UI/UIActorMenu.h"
 #include "UI/UIDragDropReferenceList.h"
 #include "CharacterPhysicsSupport.h"

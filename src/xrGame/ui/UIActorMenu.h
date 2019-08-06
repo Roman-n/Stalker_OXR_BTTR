@@ -1,9 +1,9 @@
 #pragma once
 
 #include "UIDialogWnd.h"
-#include "UIWndCallback.h"
+#include "xruicore/Callbacks/UIWndCallback.h"
 #include "xrServerEntities/inventory_space.h"
-#include "UIHint.h"
+#include "xruicore/hint/UIHint.h"
 
 #include "script_game_object.h" //Alundaio
 

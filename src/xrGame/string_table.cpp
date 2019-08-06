@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "string_table.h"
 #include "xrEngine/xr_ioconsole.h"
-#include "ui/xrUIXmlParser.h"
+#include "xruicore/xml/xrUIXmlParser.h"
 #include "xr_level_controller.h"
 #include "MainMenu.h"
 

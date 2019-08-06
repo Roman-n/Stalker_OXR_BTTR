@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "UIMessageBox.h"
+#include "xruicore/MessageBox/UIMessageBox.h"
 #include "UIMessageBoxEx.h"
 #include "UIDialogHolder.h"
 #include <dinput.h>

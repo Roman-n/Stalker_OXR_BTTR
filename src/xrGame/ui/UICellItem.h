@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UIStatic.h"
+#include "xruicore/static/UIStatic.h"
 #include "UIDialogWnd.h"
 
 class CUIDragItem;

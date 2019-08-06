@@ -1,5 +1,5 @@
 #pragma once
-#include "UIWindow.h"
+#include "xruicore/windows/uiwindow.h"
 
 class CUIXml;
 class CUIStatic;

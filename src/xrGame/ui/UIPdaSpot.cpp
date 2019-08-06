@@ -5,11 +5,11 @@
 #include "Level.h"
 #include "map_manager.h"
 #include "map_location.h"
-#include "UIEditBox.h"
-#include "UIStatic.h"
+#include "xruicore/editbox/UIEditBox.h"
+#include "xruicore/static/UIStatic.h"
 #include "UIXmlInit.h"
 #include "UIHelper.h"
-#include "UI3tButton.h"
+#include "xruicore/buttons/UI3tButton.h"
 #include "string_table.h"
 
 CUIPdaSpot::CUIPdaSpot()

@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "UITalkDialogWnd.h"
 //OldSerpskiStalker - добавил в диалоги иконки с инфо. о нпс
-#include "xrUIXmlParser.h"
+#include "xruicore/xml/xrUIXmlParser.h"
 #include "UIXmlInit.h"
-#include "UIScrollView.h"
-#include "UI3tButton.h"
+#include "xrUICore\ScrollView\UIScrollView.h"
+#include "xruicore/buttons/UI3tButton.h"
 #include "UITalkWnd.h"
 #include "UIInventoryUtilities.h"
-#include "UIBtnHint.h"
+#include "xruicore/buttons/UIBtnHint.h"
 
 #include "game_news.h"
 #include "Level.h"

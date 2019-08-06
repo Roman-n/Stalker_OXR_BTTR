@@ -7,8 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "UIWindow.h"
-#include "UIWndCallback.h"
+#include "xruicore/windows/uiwindow.h"
+#include "xruicore/Callbacks/UIWndCallback.h"
 //#include "UIRankFaction.h"
 #include "UIAchievements.h"
 #include "UIRankingsCoC.h"

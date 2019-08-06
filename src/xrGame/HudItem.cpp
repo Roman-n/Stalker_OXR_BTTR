@@ -12,7 +12,7 @@
 #include "xrCore/Animation/SkeletonMotions.hpp"
 #include "xrNetServer/NET_Messages.h"
 
-#include "ui_base.h"
+#include "xruicore/ui_base.h"
 
 #include "script_callback_ex.h"
 #include "script_game_object.h"

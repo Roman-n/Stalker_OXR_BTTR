@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "map_hint.h"
-#include "UIStatic.h"
+#include "xruicore/static/UIStatic.h"
 #include "UIXmlInit.h"
 #include "map_location.h"
 #include "map_spot.h"

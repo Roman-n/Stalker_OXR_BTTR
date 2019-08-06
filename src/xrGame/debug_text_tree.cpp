@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "debug_text_tree.h"
 #include "Level.h"
-#include "ui_base.h"
+#include "xruicore/ui_base.h"
 #include "xrEngine/GameFont.h"
 
 namespace debug
