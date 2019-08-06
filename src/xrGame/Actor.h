@@ -395,6 +395,9 @@ public:
     void g_sv_Orientate(u32 mstate_rl, float dt);
     void g_Orientate(u32 mstate_rl, float dt);
     bool g_LadderOrient();
+	
+	u32 MovingState() const { return mstate_real; }
+	
 #ifdef MOTIONICON_SOC	
 	void UpdateMotionIcon(u32 mstate_rl);
 #endif	
