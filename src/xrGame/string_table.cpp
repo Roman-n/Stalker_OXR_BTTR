@@ -5,16 +5,16 @@
 #include "xr_level_controller.h"
 #include "MainMenu.h"
 
-STRING_TABLE_DATA* CStringTable::pData = NULL;
-BOOL CStringTable::m_bWriteErrorsToLog = FALSE;
+STRING_TABLE_DATA* StringTable::pData = NULL;
+BOOL StringTable::m_bWriteErrorsToLog = FALSE;
 #ifdef Call_of_Chernobyl_OXR
 u32 gLanguage = -1;
 xr_vector<xr_token> gLanguagesToken;
 #endif
 
-CStringTable::CStringTable() { Init(); }
-void CStringTable::Destroy() { xr_delete(pData); }
-void CStringTable::rescan()
+StringTable::StringTable() { Init(); }
+void StringTable::Destroy() { xr_delete(pData); }
+void StringTable::rescan()
 {
     if (NULL != pData)
         return;
@@ -22,7 +22,7 @@ void CStringTable::rescan()
     Init();
 }
 
-void CStringTable::Init()
+void StringTable::Init()
 {
     if (NULL != pData)
         return;
@@ -94,7 +94,7 @@ void CStringTable::Init()
     ReparseKeyBindings();
 }
 
-void CStringTable::Load(LPCSTR xml_file_full)
+void StringTable::Load(LPCSTR xml_file_full)
 {
     CUIXml uiXml;
     string_path _s;
@@ -125,7 +125,7 @@ void CStringTable::Load(LPCSTR xml_file_full)
     }
 }
 
-void CStringTable::ReparseKeyBindings()
+void StringTable::ReparseKeyBindings()
 {
     if (!pData)
         return;
@@ -138,7 +138,7 @@ void CStringTable::ReparseKeyBindings()
     }
 }
 
-void CStringTable::ReloadLanguage()
+void StringTable::ReloadLanguage()
 {
 #ifdef Call_of_Chernobyl_OXR
     if (0 == xr_strcmp(gLanguagesToken.at(gLanguage).name, pData->m_sLanguage.c_str()))
@@ -169,7 +169,7 @@ void CStringTable::ReloadLanguage()
     }
 }
 
-STRING_VALUE CStringTable::ParseLine(LPCSTR str, LPCSTR skey, bool bFirst)
+STRING_VALUE StringTable::ParseLine(LPCSTR str, LPCSTR skey, bool bFirst)
 {
     //	LPCSTR str = "1 $$action_left$$ 2 $$action_right$$ 3 $$action_left$$ 4";
     xr_string res;
@@ -216,7 +216,7 @@ STRING_VALUE CStringTable::ParseLine(LPCSTR str, LPCSTR skey, bool bFirst)
     return STRING_VALUE(res.c_str());
 }
 
-STRING_VALUE CStringTable::translate(const STRING_ID& str_id) const
+STRING_VALUE StringTable::translate(const STRING_ID& str_id) const
 {
     VERIFY(pData);
 

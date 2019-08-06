@@ -56,7 +56,7 @@ void	game_cl_GameState::net_import_update(NET_Packet& P)
 void game_cl_GameState::net_signal(NET_Packet& P) {}
 void game_cl_GameState::TranslateGameMessage(u32 msg, NET_Packet& P)
 {
-    CStringTable st;
+    StringTable st;
 
     string512 Text;
     constexpr char Color_Main[] = "%c[255,192,192,192]";
