@@ -209,41 +209,49 @@ ENGINE_API int RunApplication()
         {
             CCC_LoadCFG_custom cmd("renderer renderer_r4");
             cmd.Execute(Console->ConfigFile);
+            renderer_allow_override = true;
         }
         else if (strstr(Core.Params, "-dx10"))
             {
                 CCC_LoadCFG_custom cmd("renderer renderer_r3");
                 cmd.Execute(Console->ConfigFile);
+                renderer_allow_override = true;
             }
             else if (strstr(Core.Params, "-opengl"))
                 {
                     CCC_LoadCFG_custom cmd("renderer renderer_gl");
                     cmd.Execute(Console->ConfigFile);
+                    renderer_allow_override = true;
                 }
                 else if (strstr(Core.Params, "-dx9_5"))
                     {
                         CCC_LoadCFG_custom cmd("renderer renderer_r2.5");
                         cmd.Execute(Console->ConfigFile);
+                        renderer_allow_override = true;
                     }
                     else if (strstr(Core.Params, "-dx9c"))
                          {
                             CCC_LoadCFG_custom cmd("renderer renderer_r2a");
                             cmd.Execute(Console->ConfigFile);
+                            renderer_allow_override = true;
                          }
                         else if (strstr(Core.Params, "-dx9"))
                             {
                                 CCC_LoadCFG_custom cmd("renderer renderer_r2");
                                 cmd.Execute(Console->ConfigFile);
+                                renderer_allow_override = true;
                             }
                             else if (strstr(Core.Params, "-dx8"))
                                  {
                                     CCC_LoadCFG_custom cmd("renderer renderer_r1");
                                     cmd.Execute(Console->ConfigFile);
+                                    renderer_allow_override = true;
                                  }
     else // без указания ключа, запустить r2_5
     {
         CCC_LoadCFG_custom cmd("renderer renderer_r2.5");
         cmd.Execute(Console->ConfigFile);
+        renderer_allow_override = true;
     }
 
     Engine.External.Initialize();

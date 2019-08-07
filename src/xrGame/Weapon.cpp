@@ -1813,7 +1813,7 @@ void CWeapon::UpdateHudAdditonal(Fmatrix& trans)
     if ((IsZoomed() && m_zoom_params.m_fZoomRotationFactor <= 1.f) ||
         (!IsZoomed() && m_zoom_params.m_fZoomRotationFactor > 0.f))
     {
-        u8 idx = GetCurrentHudOffsetIdx();
+        u8 idx = GetCurrentHudOffsetIdx_void();
         //		if(idx==0)					return;
 
         attachable_hud_item* hi = HudItemData();
@@ -2118,6 +2118,21 @@ u8 CWeapon::GetCurrentHudOffsetIdx() const
 
 	if (!b_aiming)
 		return 0;
+}
+
+u8 CWeapon::GetCurrentHudOffsetIdx_void()
+{
+    CActor* pActor = smart_cast<CActor*>(H_Parent());
+    if (!pActor)
+        return 0;
+
+    bool b_aiming = ((IsZoomed() && m_zoom_params.m_fZoomRotationFactor <= 1.f) ||
+        (!IsZoomed() && m_zoom_params.m_fZoomRotationFactor > 0.f));
+
+    if (!b_aiming)
+        return 0;
+    else
+        return 1;
 }
 
 void CWeapon::render_hud_mode() { RenderLight(); }
