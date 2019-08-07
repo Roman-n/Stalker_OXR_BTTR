@@ -49,9 +49,6 @@ ENGINE_API void InitSettings()
 {
     string_path fname;
     FS.update_path(fname, "$game_config$", "game_export.openxray");
-#ifdef DEBUG
-    Msg("Updated path to system.ltx is %s", fname);
-#endif
     pSettings = new CInifile(fname, TRUE);
     CHECK_OR_EXIT(pSettings->section_count(),
         make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
@@ -124,18 +121,7 @@ void slowdownthread(void*)
             return;
     }
 }
-void CheckPrivilegySlowdown()
-{
-#ifdef DEBUG
-    if (strstr(Core.Params, "-slowdown"))
-        thread_spawn(slowdownthread, "slowdown", 0, 0);
-    if (strstr(Core.Params, "-slowdown2x"))
-    {
-        thread_spawn(slowdownthread, "slowdown", 0, 0);
-        thread_spawn(slowdownthread, "slowdown", 0, 0);
-    }
-#endif
-}
+void CheckPrivilegySlowdown(){}
 
 ENGINE_API void Startup()
 {
@@ -220,30 +206,25 @@ ENGINE_API int RunApplication()
     if (CheckBenchmark())
         return 0;
 
-    if (!GEnv.isDedicatedServer)
-    {
-        if (strstr(Core.Params, "-gl"))
-            Console->Execute("renderer renderer_gl");
-        else if (strstr(Core.Params, "-r4"))
-            Console->Execute("renderer renderer_r4");
-        else if (strstr(Core.Params, "-r3"))
-            Console->Execute("renderer renderer_r3");
-        else if (strstr(Core.Params, "-r2.5"))
-            Console->Execute("renderer renderer_r2.5");
-        else if (strstr(Core.Params, "-r2a"))
-            Console->Execute("renderer renderer_r2a");
-        else if (strstr(Core.Params, "-r2"))
-            Console->Execute("renderer renderer_r2");
-        else if (strstr(Core.Params, "-r1"))
-            Console->Execute("renderer renderer_r1");
-        else
-        {
-            CCC_LoadCFG_custom cmd("renderer ");
-            cmd.Execute(Console->ConfigFile);
-        }
-    }
-    else
+    if (strstr(Core.Params, "-gl"))
+        Console->Execute("renderer renderer_gl");
+    else if (strstr(Core.Params, "-r4"))
+        Console->Execute("renderer renderer_r4");
+    else if (strstr(Core.Params, "-r3"))
+        Console->Execute("renderer renderer_r3");
+    else if (strstr(Core.Params, "-r2.5"))
+        Console->Execute("renderer renderer_r2.5");
+    else if (strstr(Core.Params, "-r2a"))
+        Console->Execute("renderer renderer_r2a");
+    else if (strstr(Core.Params, "-r2"))
+        Console->Execute("renderer renderer_r2");
+    else if (strstr(Core.Params, "-r1"))
         Console->Execute("renderer renderer_r1");
+    else
+    {
+        CCC_LoadCFG_custom cmd("renderer ");
+        cmd.Execute(Console->ConfigFile);
+    }
 
     Engine.External.Initialize();
     Startup();
