@@ -271,7 +271,7 @@ public:
     virtual float CurrentZoomFactor();
     //показывает, что оружие находится в соостоянии поворота для приближенного прицеливания
     bool IsRotatingToZoom() const { return (m_zoom_params.m_fZoomRotationFactor < 1.f); }
-    virtual u8 GetCurrentHudOffsetIdx();
+//    virtual u8 GetCurrentHudOffsetIdx();
 
     virtual float Weight() const;
     virtual u32 Cost() const;

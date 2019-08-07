@@ -538,23 +538,21 @@ void CWeapon::Load(LPCSTR section)
 	////////////////////////////////////////////
 	//--#SM+# Begin--
 	string16 _prefix = { "" };
-	//xr_sprintf(_prefix, "%s", UI()->is_widescreen() ? "_16x9" : ""); //KRodin: на мой взгляд это лишнее.
-
 	string128 val_name;
 
 	// Смещение в стрейфе
-	m_strafe_offset[0][0] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name),val_name, "strafe_hud_offset_pos", _prefix), Fvector().set(0.015f, 0.f, 0.f));
-    m_strafe_offset[1][0] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name, "strafe_hud_offset_rot", _prefix), Fvector().set(0.f, 0.f, 4.5f));
+	m_strafe_offset[0][0] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name, "strafe_hud_offset_pos", _prefix), Fvector().set(0.015f, 0.f, 0.f));
+	m_strafe_offset[1][0] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name, "strafe_hud_offset_rot", _prefix), Fvector().set(0.f, 0.f, 4.5f));
 
 	// Поворот в стрейфе
-    m_strafe_offset[0][1] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name,  "strafe_aim_hud_offset_pos", _prefix), Fvector().set(0.005f, 0.f, 0.f));
-    m_strafe_offset[1][1] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name,  "strafe_aim_hud_offset_rot", _prefix), Fvector().set(0.f, 0.f, 2.5f));
+	m_strafe_offset[0][1] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name, "strafe_aim_hud_offset_pos", _prefix), Fvector().set(0.005f, 0.f, 0.f));
+	m_strafe_offset[1][1] = READ_IF_EXISTS(pSettings, r_fvector3, section, strconcat(sizeof(val_name), val_name, "strafe_aim_hud_offset_rot", _prefix), Fvector().set(0.f, 0.f, 2.5f));
 
 	// Параметры стрейфа
-	float fFullStrafeTime     = READ_IF_EXISTS(pSettings, r_float, section, "strafe_transition_time", 0.25f);
+	float fFullStrafeTime = READ_IF_EXISTS(pSettings, r_float, section, "strafe_transition_time", 0.25f);
 	float fFullStrafeTime_aim = READ_IF_EXISTS(pSettings, r_float, section, "strafe_aim_transition_time", 0.15f);
-	bool bStrafeEnabled       = READ_IF_EXISTS(pSettings, r_bool, section, "strafe_enabled", true);
-	bool bStrafeEnabled_aim   = READ_IF_EXISTS(pSettings, r_bool, section, "strafe_aim_enabled", false);
+	bool bStrafeEnabled = READ_IF_EXISTS(pSettings, r_bool, section, "strafe_enabled", true);
+	bool bStrafeEnabled_aim = READ_IF_EXISTS(pSettings, r_bool, section, "strafe_aim_enabled", false);
 
 	m_strafe_offset[2][0].set(bStrafeEnabled, fFullStrafeTime, 0.f); // normal
 	m_strafe_offset[2][1].set(bStrafeEnabled_aim, fFullStrafeTime_aim, 0.f); // aim-GL
@@ -1804,29 +1802,9 @@ bool CWeapon::ready_to_kill() const
         !IsMisfire() && ((GetState() == eIdle) || (GetState() == eFire) || (GetState() == eFire2)) && GetAmmoElapsed());
 }
 
-// Получить индекс текущих координат худа
-u8 CWeapon::GetCurrentHudOffsetIdx() const
-{
-    auto pActor = smart_cast<const CActor*>(H_Parent());
-    if (!pActor)
-        return 0;
-
-    bool b_aiming = ((IsZoomed() && m_zoom_params.m_fZoomRotationFactor <= 1.f) ||
-        (!IsZoomed() && m_zoom_params. m_fZoomRotationFactor > 0.f));
-
-    if (!b_aiming)
-        return 0;
-    else if (IsGrenadeLauncherAttached())
-        return 2;
-    else
-        return 1;
-}
-
-
 void CWeapon::UpdateHudAdditonal(Fmatrix& trans)
 {
 	auto pActor = smart_cast<const CActor*>(H_Parent());
-//    CActor* pActor = smart_cast<CActor*>(H_Parent());
     if (!pActor)
         return;
 	
@@ -1870,40 +1848,88 @@ void CWeapon::UpdateHudAdditonal(Fmatrix& trans)
         clamp(m_zoom_params.m_fZoomRotationFactor, 0.f, 1.f);
     }
 // Боковой стрейф с оружием
-    clamp(idx, 0ui8, 1ui8);
+	clamp(idx, 0ui8, 1ui8);
 
-    // Рассчитываем фактор боковой ходьбы
-    float fStrafeMaxTime = /*hi->m_measures.*/ m_strafe_offset[2][idx]
-                               .y; // Макс. время в секундах, за которое мы наклонимся из центрального положения
-    if (fStrafeMaxTime <= EPS)
-        fStrafeMaxTime = 0.01f;
+	// Рассчитываем фактор боковой ходьбы
+	float fStrafeMaxTime = /*hi->m_measures.*/m_strafe_offset[2][idx].y; // Макс. время в секундах, за которое мы наклонимся из центрального положения
+	if (fStrafeMaxTime <= EPS)
+		fStrafeMaxTime = 0.01f;
 
-    float fStepPerUpd = Device.fTimeDelta / fStrafeMaxTime; // Величина изменение фактора поворота
+	float fStepPerUpd = Device.fTimeDelta / fStrafeMaxTime; // Величина изменение фактора поворота
 
-    u32 iMovingState = pActor->MovingState();
-    if ((iMovingState & mcLStrafe) != 0)
-    { // Движемся влево
-        float fVal = (m_fLR_MovingFactor > 0.f ? fStepPerUpd * 3 : fStepPerUpd);
-        m_fLR_MovingFactor -= fVal;
-    }
-    else if ((iMovingState & mcRStrafe) != 0)
-    { // Движемся вправо
-        float fVal = (m_fLR_MovingFactor < 0.f ? fStepPerUpd * 3 : fStepPerUpd);
-        m_fLR_MovingFactor += fVal;
-    }
-    else
-    { // Двигаемся в любом другом направлении
-        if (m_fLR_MovingFactor < 0.0f)
-        {
-            m_fLR_MovingFactor += fStepPerUpd;
-            clamp(m_fLR_MovingFactor, -1.0f, 0.0f);
-        }
-        else
-        {
-            m_fLR_MovingFactor -= fStepPerUpd;
-            clamp(m_fLR_MovingFactor, 0.0f, 1.0f);
-        }
-    }
+	u32 iMovingState = pActor->MovingState();
+	if ((iMovingState & mcLStrafe) != 0)
+	{ // Движемся влево
+		float fVal = (m_fLR_MovingFactor > 0.f ? fStepPerUpd * 3 : fStepPerUpd);
+		m_fLR_MovingFactor -= fVal;
+	}
+	else if ((iMovingState & mcRStrafe) != 0)
+	{ // Движемся вправо
+		float fVal = (m_fLR_MovingFactor < 0.f ? fStepPerUpd * 3 : fStepPerUpd);
+		m_fLR_MovingFactor += fVal;
+	}
+	else
+	{ // Двигаемся в любом другом направлении
+		if (m_fLR_MovingFactor < 0.0f)
+		{
+			m_fLR_MovingFactor += fStepPerUpd;
+			clamp(m_fLR_MovingFactor, -1.0f, 0.0f);
+		}
+		else
+		{
+			m_fLR_MovingFactor -= fStepPerUpd;
+			clamp(m_fLR_MovingFactor, 0.0f, 1.0f);
+		}
+	}
+
+	clamp(m_fLR_MovingFactor, -1.0f, 1.0f); // Фактор боковой ходьбы не должен превышать эти лимиты
+
+	// Производим наклон ствола для нормального режима и аима
+	for (int _idx = 0; _idx <= 1; _idx++)
+	{
+		bool bEnabled = /*hi->m_measures.*/m_strafe_offset[2][_idx].x;
+		if (!bEnabled)
+			continue;
+
+		Fvector curr_offs, curr_rot;
+
+		// Смещение позиции худа в стрейфе
+		curr_offs = /*hi->m_measures.*/m_strafe_offset[0][_idx]; //pos
+		curr_offs.mul(m_fLR_MovingFactor);                   // Умножаем на фактор стрейфа
+
+		// Поворот худа в стрейфе
+		curr_rot = /*hi->m_measures.*/m_strafe_offset[1][_idx]; //rot
+		curr_rot.mul(-PI / 180.f);                          // Преобразуем углы в радианы
+		curr_rot.mul(m_fLR_MovingFactor);                   // Умножаем на фактор стрейфа
+
+		if (_idx == 0)
+		{ // От бедра
+			curr_offs.mul(1.f - /*m_zoom_params.*/m_zoom_params.m_fZoomRotationFactor);
+			curr_rot.mul(1.f - /*m_zoom_params.*/m_zoom_params.m_fZoomRotationFactor);
+		}
+		else
+		{ // Во время аима
+			curr_offs.mul(/*m_zoom_params.*/m_zoom_params.m_fZoomRotationFactor);
+			curr_rot.mul(/*m_zoom_params.*/m_zoom_params.m_fZoomRotationFactor);
+		}
+
+		Fmatrix hud_rotation;
+		Fmatrix hud_rotation_y;
+
+		hud_rotation.identity();
+		hud_rotation.rotateX(curr_rot.x);
+
+		hud_rotation_y.identity();
+		hud_rotation_y.rotateY(curr_rot.y);
+		hud_rotation.mulA_43(hud_rotation_y);
+
+		hud_rotation_y.identity();
+		hud_rotation_y.rotateZ(curr_rot.z);
+		hud_rotation.mulA_43(hud_rotation_y);
+
+		hud_rotation.translate_over(curr_offs);
+		trans.mulB_43(hud_rotation);
+	}
 }
 
 void CWeapon::SetAmmoElapsed(int ammo_count)
@@ -2055,24 +2081,7 @@ BOOL CWeapon::ParentIsActor()
 
 extern u32 hud_adj_mode;
 
-void CWeapon::debug_draw_firedeps()
-{
-#ifdef DEBUG
-    if (hud_adj_mode == 5 || hud_adj_mode == 6 || hud_adj_mode == 7)
-    {
-        CDebugRenderer& render = Level().debug_renderer();
-
-        if (hud_adj_mode == 5)
-            render.draw_aabb(get_LastFP(), 0.005f, 0.005f, 0.005f, color_xrgb(255, 0, 0));
-
-        if (hud_adj_mode == 6)
-            render.draw_aabb(get_LastFP2(), 0.005f, 0.005f, 0.005f, color_xrgb(0, 0, 255));
-
-        if (hud_adj_mode == 7)
-            render.draw_aabb(get_LastSP(), 0.005f, 0.005f, 0.005f, color_xrgb(0, 255, 0));
-    }
-#endif // DEBUG
-}
+void CWeapon::debug_draw_firedeps(){}
 
 const float& CWeapon::hit_probability() const
 {
@@ -2099,19 +2108,16 @@ void CWeapon::OnStateSwitch(u32 S, u32 oldState)
 }
 
 void CWeapon::OnAnimationEnd(u32 state) { inherited::OnAnimationEnd(state); }
-u8 CWeapon::GetCurrentHudOffsetIdx()
+u8 CWeapon::GetCurrentHudOffsetIdx() const
 {
-    CActor* pActor = smart_cast<CActor*>(H_Parent());
-    if (!pActor)
-        return 0;
+	auto pActor = smart_cast<const CActor*>(H_Parent());
+	if (!pActor)
+		return 0;
 
-    bool b_aiming = ((IsZoomed() && m_zoom_params.m_fZoomRotationFactor <= 1.f) ||
-        (!IsZoomed() && m_zoom_params.m_fZoomRotationFactor > 0.f));
+	bool b_aiming = ((IsZoomed() && /*m_zoom_params.*/ m_zoom_params.m_fZoomRotationFactor <= 1.f) || (!IsZoomed() && /*m_zoom_params.*/m_zoom_params.m_fZoomRotationFactor > 0.f));
 
-    if (!b_aiming)
-        return 0;
-    else
-        return 1;
+	if (!b_aiming)
+		return 0;
 }
 
 void CWeapon::render_hud_mode() { RenderLight(); }

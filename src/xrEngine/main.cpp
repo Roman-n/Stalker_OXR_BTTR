@@ -121,7 +121,7 @@ void slowdownthread(void*)
             return;
     }
 }
-void CheckPrivilegySlowdown(){}
+void CheckPrivilegySlowdown() {}
 
 ENGINE_API void Startup()
 {
@@ -145,9 +145,9 @@ ENGINE_API void Startup()
     g_SpatialSpace = new ISpatial_DB("Spatial obj");
     g_SpatialSpacePhysic = new ISpatial_DB("Spatial phys");
 #ifdef __DISCORD_API
-	g_discord.Initialize();
-	g_discord.Shutdown();
-#endif	
+    g_discord.Initialize();
+    g_discord.Shutdown();
+#endif
     // Main cycle
     Device.Run();
     // Destroy APP
@@ -183,7 +183,6 @@ ENGINE_API int RunApplication()
             MessageBox(nullptr, "The game has already been launched!", nullptr, MB_ICONERROR | MB_OK);
             return 2;
         }
-        
     }
 #endif
     *g_sLaunchOnExit_app = 0;
@@ -206,30 +205,51 @@ ENGINE_API int RunApplication()
     if (CheckBenchmark())
         return 0;
 
-    if (strstr(Core.Params, "-gl"))
-        Console->Execute("renderer renderer_gl");
-    else if (strstr(Core.Params, "-r4"))
-        Console->Execute("renderer renderer_r4");
-    else if (strstr(Core.Params, "-r3"))
-        Console->Execute("renderer renderer_r3");
-    else if (strstr(Core.Params, "-r2.5"))
-        Console->Execute("renderer renderer_r2.5");
-    else if (strstr(Core.Params, "-r2a"))
-        Console->Execute("renderer renderer_r2a");
-    else if (strstr(Core.Params, "-r2"))
-        Console->Execute("renderer renderer_r2");
-    else if (strstr(Core.Params, "-r1"))
-        Console->Execute("renderer renderer_r1");
-    else
+   if (strstr(Core.Params, "-dx11"))
+        {
+            CCC_LoadCFG_custom cmd("renderer renderer_r4");
+            cmd.Execute(Console->ConfigFile);
+        }
+        else if (strstr(Core.Params, "-dx10"))
+            {
+                CCC_LoadCFG_custom cmd("renderer renderer_r3");
+                cmd.Execute(Console->ConfigFile);
+            }
+            else if (strstr(Core.Params, "-opengl"))
+                {
+                    CCC_LoadCFG_custom cmd("renderer renderer_gl");
+                    cmd.Execute(Console->ConfigFile);
+                }
+                else if (strstr(Core.Params, "-dx9_5"))
+                    {
+                        CCC_LoadCFG_custom cmd("renderer renderer_r2.5");
+                        cmd.Execute(Console->ConfigFile);
+                    }
+                    else if (strstr(Core.Params, "-dx9c"))
+                         {
+                            CCC_LoadCFG_custom cmd("renderer renderer_r2a");
+                            cmd.Execute(Console->ConfigFile);
+                         }
+                        else if (strstr(Core.Params, "-dx9"))
+                            {
+                                CCC_LoadCFG_custom cmd("renderer renderer_r2");
+                                cmd.Execute(Console->ConfigFile);
+                            }
+                            else if (strstr(Core.Params, "-dx8"))
+                                 {
+                                    CCC_LoadCFG_custom cmd("renderer renderer_r1");
+                                    cmd.Execute(Console->ConfigFile);
+                                 }
+    else // без указания ключа, запустить r2_5
     {
-        CCC_LoadCFG_custom cmd("renderer ");
+        CCC_LoadCFG_custom cmd("renderer renderer_r2.5");
         cmd.Execute(Console->ConfigFile);
     }
 
     Engine.External.Initialize();
     Startup();
     // check for need to execute something external
-    if (/*xr_strlen(g_sLaunchOnExit_params) && */ xr_strlen(g_sLaunchOnExit_app))
+    if (xr_strlen(g_sLaunchOnExit_app))
     {
         // CreateProcess need to return results to next two structures
         STARTUPINFO si = {};

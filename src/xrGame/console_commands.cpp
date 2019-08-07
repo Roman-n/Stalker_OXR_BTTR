@@ -133,9 +133,6 @@ static void full_memory_stats()
     Msg("~ [ D3D ]: textures[%d K]", (m_base + m_lmaps) / 1024);
     Msg("~ [OpenXRay]: process heap[%u K]", _process_heap / 1024);
     Msg("~ [OpenXRay]: economy: strings[%d K], smem[%d K]", _eco_strings / 1024, _eco_smem);
-	//For test
-    Msg("~ [OpenXRay]: file mapping: memory[%d K], count[%d]", g_file_mapped_memory / 1024, g_file_mapped_count);
-    dump_file_mappings();
 
     Log("--------------------------------------------------------------------------------");
 
@@ -1037,17 +1034,34 @@ public:
 
     virtual void Execute(LPCSTR args) { CCC_Integer::Execute(args); }
 };
-#ifdef DEBUG
-void DBG_CashedClear();
-class CCC_DBGDrawCashedClear : public IConsole_Command
+
+class CCC_InvDropAllItems : public IConsole_Command
 {
 public:
-    CCC_DBGDrawCashedClear(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = true; }
-private:
-    virtual void Execute(LPCSTR args) { DBG_CashedClear(); }
-};
-
-#endif
+    CCC_InvDropAllItems(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
+    virtual void Execute(LPCSTR args)
+    {
+        if (!g_pGameLevel)
+        {
+            return;
+        }
+        CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(CurrentGameUI());
+        if (!ui_game_sp)
+        {
+            return;
+        }
+        int d = 0;
+        sscanf(args, "%d", &d);
+        if (ui_game_sp->GetActorMenu().DropAllItemsFromRuck(d == 1))
+        {
+            Msg("- All items from ruck of Actor is dropping now.");
+        }
+        else
+        {
+            Msg("! ActorMenu is not in state `Inventory`");
+        }
+    }
+}; 
 
 class CCC_DbgVar : public IConsole_Command
 {
@@ -1181,15 +1195,8 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "mt_alife", &g_mt_config, mtALife);
     CMD3(CCC_Mask, "mt_map", &g_mt_config, mtMap);
 
-
-    CMD3(CCC_Mask, "ai_obstacles_avoiding", &psAI_Flags, aiObstaclesAvoiding);
-    CMD3(CCC_Mask, "ai_obstacles_avoiding_static", &psAI_Flags, aiObstaclesAvoidingStatic);
-    CMD3(CCC_Mask, "ai_use_smart_covers", &psAI_Flags, aiUseSmartCovers);
-    CMD3(CCC_Mask, "ai_use_smart_covers_animation_slots", &psAI_Flags, (u32)aiUseSmartCoversAnimationSlot);
     CMD4(CCC_Float, "ai_smart_factor", &g_smart_cover_factor, 0.f, 1000000.f);
     CMD3(CCC_Mask, "lua_debug", &g_LuaDebug, 1);
-
-    CMD3(CCC_Mask, "ai_ignore_actor", &psAI_Flags, aiIgnoreActor);
 
     // Physics
     CMD1(CCC_PHFps, "ph_frequency");
@@ -1198,8 +1205,6 @@ void CCC_RegisterCommands()
     CMD1(CCC_JumpToLevel, "jump_to_level");
     CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
     CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
-	
-//	CMD4(CCC_Integer, "g_reload_on_sprint", &g_reload_on_sprint, 0, 1);
 	
     CMD1(CCC_TimeFactor, "time_factor");
 	CMD1(CCC_Spawn,         "g_spawn");
