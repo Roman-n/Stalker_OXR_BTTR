@@ -156,8 +156,8 @@ extern int g_hand_hide_inventory;
 void CUIActorMenu::Show(bool status)
 {
 #ifndef UPDATEINVHANDS
-	
-    inherited::Show						(status);
+
+    inherited::Show(status);
     if (status)
     {
         SetMenuMode(m_currMenuMode);
@@ -171,39 +171,46 @@ void CUIActorMenu::Show(bool status)
     }
     m_ActorStateInfo->Show(status);
 #else
-	//oldSerpskiStalker
-	//Убрать руки при открытом инвентаре, сделал в движок чтобы не нагружать скрипты
-	inherited::Show							(status);
+    // oldSerpskiStalker
+    //Убрать руки при открытом инвентаре, сделал в движок чтобы не нагружать скрипты
 
-	if(status)
-	{
-		SetMenuMode							(m_currMenuMode);
-		PlaySnd								(eSndOpen);
-		m_ActorStateInfo->UpdateActorInfo	(m_pActorInvOwner);
-		
-	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
-	
-	if (pActor && g_hand_hide_inventory) 
-		
-		pActor->SetWeaponHideState(INV_STATE_BLOCK_ALL, true);
-	}
-	else
-	{
-		PlaySnd								(eSndClose);
-		SetMenuMode							(mmUndefined);
-		
-	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
-	
-	if(pActor && g_hand_hide_inventory)
-		
-	pActor->SetWeaponHideState(INV_STATE_BLOCK_ALL, false);
-	
-	}
+    //+ Небольшая фишка из NLC 7, нельзя открыть рюкзак пока руки заняты
+    u16 slot = CActor().inventory().GetActiveSlot();
+    if (CActor().inventory().ActiveItem() &&
+        (slot == INV_SLOT_3 || slot == INV_SLOT_2 || slot == KNIFE_SLOT ||
+         slot == DETECTOR_SLOT || slot == BOLT_SLOT || slot == GRENADE_SLOT ||
+         slot == BINOCULAR_SLOT)) {return;}
+    else
 
-	m_ActorStateInfo->Show					(status);
+    inherited::Show(status);
 
-#endif	
-	
+    if (status)
+    {
+        SetMenuMode(m_currMenuMode);
+        PlaySnd(eSndOpen);
+        m_ActorStateInfo->UpdateActorInfo(m_pActorInvOwner);
+
+        CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
+
+        if (pActor && g_hand_hide_inventory)
+
+            pActor->SetWeaponHideState(INV_STATE_BLOCK_ALL, true);
+    }
+    else
+    {
+        PlaySnd(eSndClose);
+        SetMenuMode(mmUndefined);
+
+        CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
+
+        if (pActor && g_hand_hide_inventory)
+
+            pActor->SetWeaponHideState(INV_STATE_BLOCK_ALL, false);
+    }
+
+    m_ActorStateInfo->Show(status);
+
+#endif
 }
 
 void CUIActorMenu::Draw()
@@ -227,8 +234,9 @@ void CUIActorMenu::Update()
     {
     case mmUndefined: break;
     case mmInventory:
-    {//Показать время при открытом инвентаре
-        m_clock_value->TextItemControl()->SetText( InventoryUtilities::GetGameTimeAsString(InventoryUtilities::etpTimeToMinutes ).c_str() );
+    { //Показать время при открытом инвентаре
+        m_clock_value->TextItemControl()->SetText(
+            InventoryUtilities::GetGameTimeAsString(InventoryUtilities::etpTimeToMinutes).c_str());
         CurrentGameUI()->UIMainIngameWnd->UpdateZoneMap();
         break;
     }
@@ -248,7 +256,7 @@ void CUIActorMenu::Update()
     case mmDeadBodySearch:
     {
         // Alundaio: remove distance check when opening inventory boxes
-        //CheckDistance(); 
+        // CheckDistance();
         break;
     }
     default: R_ASSERT(0); break;
@@ -346,13 +354,19 @@ CUIDragDropListEx* CUIActorMenu::GetListByType(EDDListType t)
             return m_pInventoryBagList;
     }
     break;
-    case iDeadBodyBag: { return m_pDeadBodyBagList;
+    case iDeadBodyBag:
+    {
+        return m_pDeadBodyBagList;
     }
     break;
-    case iActorBelt: { return m_pInventoryBeltList;
+    case iActorBelt:
+    {
+        return m_pInventoryBeltList;
     }
     break;
-    default: { R_ASSERT("invalid call");
+    default:
+    {
+        R_ASSERT("invalid call");
     }
     break;
     }
@@ -425,9 +439,10 @@ void CUIActorMenu::InfoCurItem(CUICellItem* cell_item)
             }
         }
 
-        if (!current_item->CanTrade() || (!m_pPartnerInvOwner->trade_parameters().enabled(
-                                              CTradeParameters::action_buy(0), current_item->object().cNameSect()) &&
-                                             item_owner && item_owner == m_pActorInvOwner))
+        if (!current_item->CanTrade() ||
+            (!m_pPartnerInvOwner->trade_parameters().enabled(
+                 CTradeParameters::action_buy(0), current_item->object().cNameSect()) &&
+                item_owner && item_owner == m_pActorInvOwner))
             m_ItemInfo->InitItem(cell_item, compare_item, u32(-1), "st_no_trade_tip_1");
         else if (current_item->GetCondition() < m_pPartnerInvOwner->trade_parameters().buy_item_condition_factor)
             m_ItemInfo->InitItem(cell_item, compare_item, u32(-1), "st_no_trade_tip_2");
@@ -785,7 +800,7 @@ void CUIActorMenu::ClearAllLists()
 {
     m_pInventoryBagList->ClearAll(true);
     m_pInventoryBeltList->ClearAll(true);
-    
+
     for (u8 i = 1; i <= m_slot_count; ++i)
     {
         if (m_pInvList[i])
@@ -877,10 +892,10 @@ void CUIActorMenu::UpdateConditionProgressBars()
     {
         PIItem itm = m_pActorInvOwner->inventory().ItemFromSlot(i);
         if (m_pInvSlotProgress[i])
-            m_pInvSlotProgress[i]->SetProgressPos(itm ? iCeil(itm->GetCondition()*10.f) / 10.f : 0);
+            m_pInvSlotProgress[i]->SetProgressPos(itm ? iCeil(itm->GetCondition() * 10.f) / 10.f : 0);
     }
 
-    //Highlight 'equipped' items in actor bag
+    // Highlight 'equipped' items in actor bag
     CUIDragDropListEx* slot_list = m_pInventoryBagList;
     u32 const cnt = slot_list->ItemsCount();
     for (u32 i = 0; i < cnt; ++i)
