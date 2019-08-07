@@ -175,13 +175,15 @@ void CUIActorMenu::Show(bool status)
     //Убрать руки при открытом инвентаре, сделал в движок чтобы не нагружать скрипты
 
     //+ Небольшая фишка из NLC 7, нельзя открыть рюкзак пока руки заняты
+    //- работает, но не нужна
+    /*
     u16 slot = CActor().inventory().GetActiveSlot();
     if (CActor().inventory().ActiveItem() &&
         (slot == INV_SLOT_3 || slot == INV_SLOT_2 || slot == KNIFE_SLOT ||
          slot == DETECTOR_SLOT || slot == BOLT_SLOT || slot == GRENADE_SLOT ||
          slot == BINOCULAR_SLOT)) {return;}
     else
-
+    */
     inherited::Show(status);
 
     if (status)

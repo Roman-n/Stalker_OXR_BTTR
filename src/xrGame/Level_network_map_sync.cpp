@@ -45,10 +45,6 @@ bool CLevel::synchronize_map_data()
 #endif // #ifndef MASTER_GOLD
 
     map_data.CheckToSendMapSync();
-
-#ifdef DEBUG
-    Msg("--- Waiting for server map name...");
-#endif // #ifdef DEBUG
     ClientReceive();
 
     if ((map_data.m_wait_map_time >= 1000) && (!map_data.m_map_sync_received)) // about 5 seconds
@@ -98,9 +94,6 @@ bool CLevel::synchronize_client()
         deny_m_spawn = FALSE;
         return true;
     }
-#ifdef DEBUG
-    Msg("--- Waiting for server configuration...");
-#endif // #ifdef DEBUG
     if (Server)
     {
         ClientReceive();
