@@ -22,6 +22,8 @@ xr_vector<xr_token> vid_quality_token;
 
 const xr_token vid_bpp_token[] = {{"16", 16}, {"32", 32}, {0, 0}};
 
+ENGINE_API bool renderer_allow_override = false;
+
 void IConsole_Command::InvalidSyntax()
 {
     TInfo I;
@@ -451,69 +453,35 @@ public:
     }
 };
 
-//-----------------------------------------------------------------------
-/*
-#ifdef DEBUG
-extern INT g_bDR_LM_UsePointsBBox;
-extern INT g_bDR_LM_4Steps;
-extern INT g_iDR_LM_Step;
-extern Fvector g_DR_LM_Min, g_DR_LM_Max;
-
-class CCC_DR_ClearPoint : public IConsole_Command
-{
-public:
-CCC_DR_ClearPoint(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
-virtual void Execute(LPCSTR args) {
-g_DR_LM_Min.x = 1000000.0f;
-g_DR_LM_Min.z = 1000000.0f;
-
-g_DR_LM_Max.x = -1000000.0f;
-g_DR_LM_Max.z = -1000000.0f;
-
-Msg("Local BBox (%f, %f) - (%f, %f)", g_DR_LM_Min.x, g_DR_LM_Min.z, g_DR_LM_Max.x, g_DR_LM_Max.z);
-}
-};
-
-class CCC_DR_TakePoint : public IConsole_Command
-{
-public:
-CCC_DR_TakePoint(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
-virtual void Execute(LPCSTR args) {
-Fvector CamPos = Device.vCameraPosition;
-
-if (g_DR_LM_Min.x > CamPos.x) g_DR_LM_Min.x = CamPos.x;
-if (g_DR_LM_Min.z > CamPos.z) g_DR_LM_Min.z = CamPos.z;
-
-if (g_DR_LM_Max.x < CamPos.x) g_DR_LM_Max.x = CamPos.x;
-if (g_DR_LM_Max.z < CamPos.z) g_DR_LM_Max.z = CamPos.z;
-
-Msg("Local BBox (%f, %f) - (%f, %f)", g_DR_LM_Min.x, g_DR_LM_Min.z, g_DR_LM_Max.x, g_DR_LM_Max.z);
-}
-};
-
-class CCC_DR_UsePoints : public CCC_Integer
-{
-public:
-CCC_DR_UsePoints(LPCSTR N, int* V, int _min=0, int _max=999) : CCC_Integer(N, V, _min, _max) {};
-virtual void Save (IWriter *F) {};
-};
-#endif
-*/
-
 ENGINE_API BOOL r2_sun_static = TRUE;
 ENGINE_API BOOL r2_advanced_pp = FALSE; // advanced post process and effects
 
-u32 renderer_value = 3;
-
-class CCC_r2 : public CCC_Token
+class CCC_renderer : public CCC_Token
 {
     typedef CCC_Token inherited;
 
+    u32 renderer_value = 3;
+    static bool cmd_lock;
+
 public:
-    CCC_r2(LPCSTR N) : inherited(N, &renderer_value, NULL) { renderer_value = 3; };
-    virtual ~CCC_r2() {}
-    virtual void Execute(LPCSTR args)
+    CCC_renderer(LPCSTR N) : inherited(N, &renderer_value, NULL){};
+    ~CCC_renderer() override {}
+    void Execute(LPCSTR args) override
     {
+        if ((renderer_allow_override == false) && (cmd_lock == true))
+        {
+            /*
+             * It is a case when the renderer type was specified as
+             * an application command line argument. This setting should
+             * have the highest priority over other command invocations
+             * (e.g. user config loading).
+             * Since the Engine doesn't support switches between renderers
+             * in runtime, it's safe to disable this command until restart.
+             */
+            Msg("Renderer is overrided by command line argument");
+            return;
+        }
+
         tokens = vid_quality_token.data();
 
         inherited::Execute(args);
@@ -531,11 +499,17 @@ public:
         r2_sun_static = (renderer_value < 2);
 
         r2_advanced_pp = (renderer_value >= 3);
+
+        cmd_lock = true;
+
     }
 
-    virtual void Save(IWriter* F)
+    void Save(IWriter* F) override
     {
-        // fill_render_mode_list ();
+        if (renderer_allow_override == false)
+        { // Do not save forced value
+            return;
+        }
         tokens = vid_quality_token.data();
         inherited::Save(F);
     }
@@ -546,6 +520,8 @@ public:
         return inherited::GetToken();
     }
 };
+
+bool CCC_renderer::cmd_lock = false;
 
 class CCC_soundDevice : public CCC_Token
 {
@@ -763,7 +739,7 @@ void CCC_Register()
 	
 	CMD4(CCC_Integer, "demo_record_teleport", &ps_demo_record_teleport, 0, 1);
 
-    CMD1(CCC_r2, "renderer");
+    CMD1(CCC_renderer, "renderer");
 
     if (!GEnv.isDedicatedServer)
         CMD1(CCC_soundDevice, "snd_device");
