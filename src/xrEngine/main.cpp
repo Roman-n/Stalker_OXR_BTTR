@@ -204,7 +204,7 @@ ENGINE_API int RunApplication()
 
     if (CheckBenchmark())
         return 0;
-
+/*
    if (strstr(Core.Params, "-dx11"))
         {
             CCC_LoadCFG_custom cmd("renderer renderer_r4");
@@ -253,6 +253,29 @@ ENGINE_API int RunApplication()
         cmd.Execute(Console->ConfigFile);
         renderer_allow_override = true;
     }
+*/
+
+    if (strstr(Core.Params, "-opengl"))
+        Console->Execute("renderer renderer_gl");
+    else if (strstr(Core.Params, "-dx11"))
+        Console->Execute("renderer renderer_r4");
+    else if (strstr(Core.Params, "-dx10"))
+        Console->Execute("renderer renderer_r3");
+    else if (strstr(Core.Params, "-dx9_5"))
+        Console->Execute("renderer renderer_r2.5");
+    else if (strstr(Core.Params, "-dx9c"))
+        Console->Execute("renderer renderer_r2a");
+    else if (strstr(Core.Params, "-dx9"))
+        Console->Execute("renderer renderer_r2");
+    else if (strstr(Core.Params, "-dx8"))
+        Console->Execute("renderer renderer_r1");
+    else
+    {
+        CCC_LoadCFG_custom cmd("renderer ");
+        cmd.Execute(Console->ConfigFile);
+		renderer_allow_override = true;
+    }
+
 
     Engine.External.Initialize();
     Startup();
