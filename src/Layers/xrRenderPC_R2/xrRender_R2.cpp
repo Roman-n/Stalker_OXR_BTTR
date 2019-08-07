@@ -3,19 +3,18 @@
 #include "Layers/xrRender/dxUIRender.h"
 #include "Layers/xrRender/dxDebugRender.h"
 
-void SetupEnvR2()
+extern "C"
+{
+XR_EXPORT void SetupEnv()
 {
     GEnv.Render = &RImplementation;
     GEnv.RenderFactory = &RenderFactoryImpl;
     GEnv.DU = &DUImpl;
     GEnv.UIRender = &UIRenderImpl;
-#ifdef DEBUG
-    GEnv.DRender = &DebugRenderImpl;
-#endif
     xrRender_initconsole();
 }
 
-bool SupportsAdvancedRendering()
+XR_EXPORT bool CheckRendererSupport()
 {
     D3DCAPS9 caps;
     CHW _HW;
@@ -29,19 +28,4 @@ bool SupportsAdvancedRendering()
     else
         return true;
 }
-
-// This must not be optimized by compiler
-static const volatile class GEnvHelper
-{
-public:
-    GEnvHelper()
-    {
-        GEnv.CheckR2 = SupportsAdvancedRendering;
-        GEnv.SetupR2 = SetupEnvR2;
-    }
-    ~GEnvHelper()
-    {
-        GEnv.CheckR2 = nullptr;
-        GEnv.SetupR2 = nullptr;
-    }
-} helper;
+}
