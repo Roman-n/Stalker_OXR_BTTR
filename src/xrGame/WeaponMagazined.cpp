@@ -24,7 +24,7 @@
 #include "CustomDetector.h"
 
 extern int g_sprint_reload_wpn;
-
+#ifndef SecondVP
 CUIXml* pWpnScopeXml = nullptr;
 
 void createWpnScopeXML()
@@ -35,7 +35,7 @@ void createWpnScopeXML()
         pWpnScopeXml->Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, "scopes.xml");
     }
 }
-
+#endif
 CWeaponMagazined::CWeaponMagazined(ESoundTypes eSoundType) : CWeapon()
 {
     m_eSoundShow = ESoundTypes(SOUND_TYPE_ITEM_TAKING | eSoundType);
@@ -1237,7 +1237,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
             //.			pIItem->Drop					();
             pIItem->object().DestroyObject();
         };
-
+		UpdateAltScope();
         UpdateAddonsVisibility();
         InitAddons();
 
@@ -1302,7 +1302,7 @@ bool CWeaponMagazined::Detach(const char* item_section_name, bool b_spawn_item)
             return true;
         }
         m_flagsAddOnState &= ~CSE_ALifeItemWeapon::eWeaponAddonScope;
-
+		UpdateAltScope();
         UpdateAddonsVisibility();
         InitAddons();
         SyncronizeWeaponToServer();
@@ -1353,6 +1353,7 @@ void CWeaponMagazined::InitAddons()
     {
         if (m_eScopeStatus == ALife::eAddonAttachable)
         {
+#ifndef SecondVP			
             shared_str scope_tex_name;
 
             scope_tex_name = pSettings->r_string(GetScopeName(), "scope_texture");
@@ -1379,6 +1380,10 @@ void CWeaponMagazined::InitAddons()
                 createWpnScopeXML();
                 CUIXmlInit::InitWindow(*pWpnScopeXml, scope_tex_name.c_str(), 0, m_UIScope);
             }
+#endif
+#ifdef SecondVP
+			LoadCurrentScopeParams(GetScopeName().c_str());	
+#endif			
         }
     }
     else

@@ -50,6 +50,30 @@ public:
     virtual void save(NET_Packet& output_packet);
     virtual void load(IReader& input_packet);
     virtual BOOL net_SaveRelevant() { return inherited::net_SaveRelevant(); }
+#ifdef SecondVP
+    bool UseAltScope;
+    bool ScopeIsHasTexture;
+    bool bNVsecondVPavaible;
+    bool bNVsecondVPstatus;
+
+    IC bool bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
+    IC bool IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+    BOOL LoadAltScopesParams(LPCSTR section);
+
+    virtual void UpdateSecondVP(bool bInGrenade = false);
+    void Load3DScopeParams(LPCSTR section);
+    void LoadOriginalScopesParams(LPCSTR section);
+    void LoadCurrentScopeParams(LPCSTR section);
+    void ZoomDynamicMod(bool bIncrement, bool bForceLimit);
+    void UpdateAltScope();
+    bool bChangeNVSecondVPStatus();
+
+    virtual float GetControlInertionFactor() const;
+    IC float GetZRotatingFactor() const { return m_zoom_params.m_fZoomRotationFactor; }
+    IC float GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
+    float GetSecondVPFov() const;
+    float m_fScopeInertionFactor;
+#endif	
     virtual void UpdateCL();
     virtual void shedule_Update(u32 dt);
 
@@ -220,7 +244,9 @@ protected:
         float m_fScopeZoomFactorMin;
 
         float m_fZoomRotationFactor;
-
+#ifdef SecondVP		
+		float m_fSecondVPFovFactor;
+#endif
         Fvector m_ZoomDof;
         Fvector4 m_ReloadDof;
         Fvector4 m_ReloadEmptyDof;
@@ -567,16 +593,12 @@ protected:
     float m_addon_holder_range_modifier;
     float m_addon_holder_fov_modifier;
 #ifdef COLLISION_WPN	
-
 	float m_nearwall_last_hud_fov;
-
 	float m_nearwall_target_hud_fov = 0.f;
 	float m_nearwall_dist_max = 0.f;
 	float m_nearwall_dist_min = 0.f;
 	float m_nearwall_speed_mod = 0.f;
-
 	bool m_nearwall_on = false;
-	
 #endif
 public:
     virtual void modify_holder_params(float& range, float& fov) const;

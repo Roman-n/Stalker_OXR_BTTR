@@ -21,7 +21,9 @@ protected:
     EffectorCamVec m_EffectorsCam;
     EffectorCamVec m_EffectorsCam_added_deffered;
     EffectorPPVec m_EffectorsPP;
-
+#ifdef SecondVP	
+	float fFovSecond;
+#endif
     bool m_bAutoApply;
     SPPInfo pp_affected;
     void UpdateDeffered();
@@ -33,9 +35,6 @@ protected:
     void OnEffectorReleased(SBaseEffector* e);
 
 public:
-#ifdef DEBUG
-    u32 dbg_upd_frame;
-#endif
 
     BENCH_SEC_SCRAMBLEMEMBER2
 

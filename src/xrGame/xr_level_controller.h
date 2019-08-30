@@ -86,8 +86,9 @@ enum	EGameActions
 	
 	kQUICK_SAVE,
 	kQUICK_LOAD,
-//	kALIFE_CMD,
-
+#ifdef SecondVP
+	kWPN_NV_CHANGE,
+#endif
 	kCUSTOM1,
 	kCUSTOM2,
 	kCUSTOM3,

@@ -97,7 +97,9 @@ void CWeaponBinoculars::render_item_ui()
     m_binoc_vision->Draw();
     inherited::render_item_ui();
 }
-
+#ifdef SecondVP
+void GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor);
+#endif
 void CWeaponBinoculars::ZoomInc()
 {
 	if (!m_zoom_params.m_bUseDynamicZoom)	return;

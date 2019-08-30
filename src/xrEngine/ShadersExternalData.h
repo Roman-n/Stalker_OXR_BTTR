@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef SecondVP
 // Хранилище внешних шейдерных параметров, которые читаются в Blender_Recorder_StandartBinding.cpp
 class ShadersExternalData //--#SM+#--
 {
@@ -16,3 +16,4 @@ public:
         m_blender_mode.set(0.f, 0.f, 0.f, 0.f);
     }
 };
+#endif

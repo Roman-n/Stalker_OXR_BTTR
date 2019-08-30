@@ -46,7 +46,9 @@ public:
     virtual bool Action(u16 cmd, u32 flags);
 
     virtual void UpdateSounds();
-
+#ifdef SecondVP
+	virtual void UpdateSecondVP(bool bInGrenade = false);
+#endif
     //переключение в режим подствольника
     virtual bool SwitchMode();
     void PerformSwitchGL();

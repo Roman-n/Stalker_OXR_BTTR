@@ -69,8 +69,9 @@ public:
     ref_rt rt_LUM_8; // 64bit, 8x8,		log-average in all components
 
     //  Second viewport
+#ifdef SecondVP	
     ref_rt rt_secondVP; // 32bit		(r,g,b,a) --//#SM+#-- +SecondVP+
-
+#endif
     //	Igor: for async screenshots
     IDirect3DSurface9* pFB; // 32bit		(r,g,b,a) is situated in the system memory
 

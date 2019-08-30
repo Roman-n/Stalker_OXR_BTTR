@@ -160,7 +160,7 @@ void CRender::OnFrame()
         Device.seqParallel.insert(Device.seqParallel.begin(), fastdelegate::FastDelegate0<>(&HOM, &CHOM::MT_RENDER));
     }
 }
-
+#ifdef SecondVP
 // Перед началом рендера мира --#SM+#-- +SecondVP+
 void CRender::BeforeWorldRender() {}
 
@@ -177,7 +177,7 @@ void CRender::AfterWorldRender()
         pBackBuffer->Release(); // Корректно очищаем ссылку на бэкбуфер (иначе игра зависнет в опциях)
     }
 }
-
+#endif
 // Implementation
 IRender_ObjectSpecific* CRender::ros_create(IRenderable* parent) { return new CROS_impl(); }
 void CRender::ros_destroy(IRender_ObjectSpecific*& p) { xr_delete(p); }

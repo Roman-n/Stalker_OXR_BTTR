@@ -5,14 +5,17 @@
 static LPCSTR RTname = "$user$rendertarget";
 static LPCSTR RTname_color_map = "$user$rendertarget_color_map";
 static LPCSTR RTname_distort = "$user$distort";
+#ifdef SecondVP
 static LPCSTR RTname_SecondVP = "$user$viewport2"; //--#SM+#-- +SecondVP+
-
+#endif
 CRenderTarget::CRenderTarget()
 {
     bAvailable = FALSE;
     RT = nullptr;
     RT_color_map = nullptr;
+#ifdef SecondVP	
     RT_SecondVP  = nullptr; //--#SM+# +SecondVP+
+#endif	
     pTempZB = nullptr;
     ZB = nullptr;
     pFB = nullptr;
@@ -65,9 +68,9 @@ BOOL CRenderTarget::Create()
         RT_color_map.create(RTname_color_map, curWidth, curHeight, HW.Caps.fTarget);
     }
     // RImplementation.o.color_mapping = RT_color_map->valid();
-
+#ifdef SecondVP
     RT_SecondVP.create(RTname_SecondVP, rtWidth, rtHeight, HW.Caps.fTarget); //--#SM+#-- +SecondVP+
-
+#endif
     if ((rtHeight != Device.dwHeight) || (rtWidth != Device.dwWidth))
     {
         R_CHK(HW.pDevice->CreateDepthStencilSurface(
@@ -115,7 +118,9 @@ CRenderTarget::~CRenderTarget()
     s_postprocess_D[0].destroy();
     s_postprocess[1].destroy();
     g_postprocess.destroy();
+#ifdef SecondVP	
     RT_SecondVP.destroy(); //--#SM+#-- +SecondVP+
+#endif	
     RT_distort.destroy();
     RT_color_map.destroy();
     RT.destroy();

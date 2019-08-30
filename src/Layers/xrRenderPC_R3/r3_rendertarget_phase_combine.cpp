@@ -44,7 +44,7 @@ void CRenderTarget::phase_combine()
 
     //*** exposure-pipeline
     u32 gpu_id = Device.dwFrame % HW.Caps.iGPUNum;
-
+#ifdef SecondVP
     if (Device.m_SecondViewport.IsSVPActive()) //--#SM+#-- +SecondVP+ Fix for screen flickering
     {
         // clang-format off
@@ -56,6 +56,7 @@ void CRenderTarget::phase_combine()
                                                             // то при попытке создания "плавного" перехода между ними получается эффект мерцания
         // clang-format on
     }
+#endif	
     {
         t_LUM_src->surface_set(rt_LUM_pool[gpu_id * 2 + 0]->pSurface);
         t_LUM_dest->surface_set(rt_LUM_pool[gpu_id * 2 + 1]->pSurface);

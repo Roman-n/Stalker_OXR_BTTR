@@ -38,8 +38,9 @@ IGame_Persistent::IGame_Persistent()
         pEnvironment = new editor::environment::manager();
     else
         pEnvironment = new CEnvironment();
-
+#ifdef SecondVP
     m_pGShaderConstants = new ShadersExternalData(); //--#SM+#--
+#endif
 }
 
 IGame_Persistent::~IGame_Persistent()
@@ -52,8 +53,9 @@ IGame_Persistent::~IGame_Persistent()
 #ifndef _EDITOR
     xr_delete(pEnvironment);
 #endif
-
+#ifdef SecondVP
     xr_delete(m_pGShaderConstants); //--#SM+#--
+#endif
 }
 
 void IGame_Persistent::OnAppActivate() {}

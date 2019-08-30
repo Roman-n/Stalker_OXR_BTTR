@@ -45,9 +45,9 @@
 #define r2_jitter "$user$jitter_" // --- dither
 #define r2_jitter_mipped "$user$jitter_mipped" // --- dither
 #define r2_sunmask "sunmask"
-
+#ifdef SecondVP
 #define r2_RT_secondVP "$user$viewport2" // --#SM+#-- +SecondVP+ Хранит картинку со второго вьюпорта
-
+#endif
 #define JITTER(a) r2_jitter #a
 
 const float SMAP_near_plane = .1f;
