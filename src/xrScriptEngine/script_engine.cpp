@@ -867,9 +867,11 @@ int CScriptEngine::lua_panic(lua_State* L)
 }
 
 void CScriptEngine::lua_error(lua_State* L)
-{
+{   
     pcstr err = lua_tostring(L, -1);
-    onErrorCallback(L, "", LUA_ERRRUN, err);
+    if (0 != strstr(Core.Params, "-lua_error"))
+         { xrDebug::Fatal(DEBUG_INFO, "LUA error: %s", err); } 
+    else { onErrorCallback(L, "", LUA_ERRRUN, err); }
 }
 
 int CScriptEngine::lua_pcall_failed(lua_State* L)
