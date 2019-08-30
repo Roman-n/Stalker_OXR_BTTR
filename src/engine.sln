@@ -182,6 +182,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Stalker-CoP.vcxproj", "{1908E312-8385-463D-9B1C-5F86293817BB}"
 EndProject
 
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Launcher_CS", "Launcher_CS", "{6924FCCC-95E6-4A0F-BE0A-4CDA9E41A0AF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher_CS", "Launcher_CS\Launcher_renders.csproj", "{4AB457A3-A7F9-4A69-8038-303040FF7205}"
 EndProject
 
