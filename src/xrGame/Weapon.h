@@ -53,6 +53,8 @@ public:
     virtual void UpdateCL();
     virtual void shedule_Update(u32 dt);
 
+	void UpdateSecondVP();
+
     virtual void renderable_Render();
     virtual void render_hud_mode();
     virtual bool need_renderable();
@@ -257,6 +259,11 @@ public:
     virtual void OnZoomIn();
     virtual void OnZoomOut();
     IC bool IsZoomed() const { return m_zoom_params.m_bIsZoomModeNow; };
+	
+	IC SZoomParams& GetZoomParams() const { return C_THIS_WPN->m_zoom_params[m_iCurZoomType]; }
+    IC SZoomParams& GetZoomParams(EZoomTypes iType) const { return C_THIS_WPN->m_zoom_params[iType]; }
+	IC float IsSecondVPZoomPresent() const { return GetZoomParams().m_fZoomFovSVP > 0.000f; }
+	
     CUIWindow* ZoomTexture();
 
     bool ZoomHideCrosshair()
