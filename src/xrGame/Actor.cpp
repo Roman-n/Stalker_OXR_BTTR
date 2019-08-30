@@ -1051,6 +1051,9 @@ void CActor::UpdateCL()
             if (!Device.m_SecondViewport.IsSVPFrame())
                 HUD().SetCrosshairDisp(fire_disp_full, 0.02f);
 
+#ifdef DEBUG
+            HUD().SetFirstBulletCrosshairDisp(pWeapon->GetFirstBulletDisp());
+#endif
             HUD().ShowCrosshair(pWeapon->use_crosshair());
 
             BOOL B = !((mstate_real & mcLookout) && !IsGameTypeSingle());
@@ -1068,11 +1071,11 @@ void CActor::UpdateCL()
             psHUD_Flags.set(HUD_DRAW_RT, pWeapon->show_indicators());
             
             // Обновляем двойной рендер от оружия [Update SecondVP with weapon data]
-            pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
+            //pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
 
             // Обновляем информацию об оружии в шейдерах
-            g_pGamePersistent->m_pGShaderConstants->hud_params.x = pWeapon->GetZRotatingFactor(); //--#SM+#--
-            g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVP_FovFactor(); //--#SM+#--
+            //g_pGamePersistent->m_pGShaderConstants->hud_params.x = pWeapon->GetZRotatingFactor(); //--#SM+#--
+            //g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVP_FovFactor(); //--#SM+#--
 
         }
     }

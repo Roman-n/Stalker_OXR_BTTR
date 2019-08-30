@@ -408,8 +408,6 @@ void CWeapon::Load(LPCSTR section)
     m_zoom_params.m_bZoomEnabled = !!pSettings->r_bool(section, "zoom_enabled");
     m_zoom_params.m_fZoomRotateTime = pSettings->r_float(section, "zoom_rotate_time");
 
-
-
     if (m_eScopeStatus == ALife::eAddonAttachable)
     {
         if (pSettings->line_exist(section, "scopes_sect"))
@@ -2140,37 +2138,33 @@ u8 CWeapon::GetCurrentHudOffsetIdx_void()
 void CWeapon::render_hud_mode() { RenderLight(); }
 bool CWeapon::MovingAnimAllowedNow() { return !IsZoomed(); }
 bool CWeapon::IsHudModeNow() { return (HudItemData() != nullptr); }
-// Увеличение динамического зума
-void CWeapon::ZoomInc(bool bForceLimit) { ZoomDynamicMod(true, bForceLimit); }
-
-// Уменьшение динамического зума
-void CWeapon::ZoomDec(bool bForceLimit) { ZoomDynamicMod(false, bForceLimit); }
-
-// Изменить динамический зум (в обе стороны)
-void CWeapon::ZoomDynamicMod(bool bIncrement, bool bForceLimit)
+void CWeapon::ZoomInc()
 {
-    if (!GetZoomParams().m_bUseDynamicZoom)
+    if (!IsScopeAttached())
         return;
+    if (!m_zoom_params.m_bUseDynamicZoom)
+        return;
+    float delta, min_zoom_factor;
+    GetZoomData(m_zoom_params.m_fScopeZoomFactor, delta, min_zoom_factor);
 
-    float delta, min_zoom_factor, max_zoom_factor;
-    max_zoom_factor = GetAimZoomFactor(IsSecondVPZoomPresent()); //--> Получаем макс. возможный зум (для мира \ линзы)
-    GetDynZoomData(max_zoom_factor, delta, min_zoom_factor);
-
-    if (bForceLimit)
-    {
-        GetZoomParams().m_fRTZoomFactor = (bIncrement ? max_zoom_factor : min_zoom_factor);
-    }
-    else
-    {
-        R_ASSERT(GetZoomParams().m_fRTZoomFactor >= 0.0f);
-
-        float f = (bIncrement ? GetZoomParams().m_fRTZoomFactor - delta : GetZoomParams().m_fRTZoomFactor + delta);
-        clamp(f, max_zoom_factor, min_zoom_factor);
-
-        GetZoomParams().m_fRTZoomFactor = f;
-    }
+    float f = GetZoomFactor() + delta;
+    clamp(f, min_zoom_factor, m_zoom_params.m_fScopeZoomFactor);
+    SetZoomFactor(f);
 }
 
+void CWeapon::ZoomDec()
+{
+    if (!IsScopeAttached())
+        return;
+    if (!m_zoom_params.m_bUseDynamicZoom)
+        return;
+    float delta, min_zoom_factor;
+    GetZoomData(m_zoom_params.m_fScopeZoomFactor, delta, min_zoom_factor);
+
+    float f = GetZoomFactor() - delta;
+    clamp(f, min_zoom_factor, m_zoom_params.m_fScopeZoomFactor);
+    SetZoomFactor(f);
+}
 u32 CWeapon::Cost() const
 {
     u32 res = CInventoryItem::Cost();
@@ -2237,82 +2231,3 @@ float CWeapon::GetHudFov()
     return m_nearwall_last_hud_fov;
 }
 #endif
-
-
-// Получить мировой FOV от текущего оружия игрока
-float CWeapon::GetFov() const
-{
-    if (IsBipodsDeployed() && !ZoomTexture())
-    { // FOV при сошках
-        if (m_bipods.m_bZoomMode)
-        {
-            return (IsScopeAttached() && m_bipods.m_fCurScopeZoomFov > 0.0f ? m_bipods.m_fCurScopeZoomFov : m_bipods.fZoomFOV);
-        }
-        else
-            return g_fov;
-    }
-    else
-    { // FOV при обычном зуме
-        if (IsZoomed() && (!ZoomTexture() || (!IsRotatingToZoom() && ZoomTexture())))
-        {
-            float fCurZoomFactor = (GetZoomParams().m_bUseDynamicZoom && !IsSecondVPZoomPresent()) ?
-                GetZoomParams().m_fRTZoomFactor : //--> Динамический зум, только если прицел без двойного вьюпорта
-                GetAimZoomFactor();
-
-            return fCurZoomFactor;
-        }
-    }
-
-    // Дефолт (от бедра)
-    return g_fov;
-}
-
-// Получить линзовый FOV от текущего оружия игрока для второго вьюпорта
-float CWeapon::GetFovSVP() const
-{
-    if (GetZoomParams().m_bUseDynamicZoom && IsSecondVPZoomPresent())
-        return GetZoomParams().m_fRTZoomFactor;
-
-    return GetAimZoomFactor(true);
-}
-
-// Получить целевой FOV для обычного зума (не динамического)
-float CWeapon::GetAimZoomFactor(bool bForSVP) const
-{
-    if (bForSVP)
-    { // Линза
-        if (IsSecondVPZoomPresent())
-        {
-            if (GetZoomParams().m_bNoZoomSVP == true)
-                return g_fov;
-
-            return GetZoomParams().m_fZoomFovSVP + m_fZoomFovFactorUpgr;
-        }
-
-        return 0.0f;
-    }
-
-    // Мир
-    if (GetZoomParams().m_bNoZoom == true)
-        return g_fov;
-
-    return (GetZoomParams().m_fZoomFov > 0.000f ? GetZoomParams().m_fZoomFov + m_fZoomFovFactorUpgr :
-                                                  (GetZoomParams().m_fZoomFovFactor + m_fZoomFovFactorUpgr) * 0.75f);
-}
-
-// Обновление необходимости включения второго вьюпорта +SecondVP+
-// Вызывается только для активного оружия игрока
-void CWeapon::UpdateSecondVP()
-{
-    // + CActor::UpdateCL();
-    bool b_is_active_item = (m_pInventory != NULL) && (m_pInventory->ActiveItem() == this);
-    R_ASSERT(ParentIsActor() && b_is_active_item); // Эта функция должна вызываться только для оружия в руках нашего игрока
-
-    CActor* pActor = H_Parent()->cast_actor();
-
-    bool bCond_1 = m_fZoomRotationFactor > 0.05f; // Мы должны целиться
-    bool bCond_2 = IsSecondVPZoomPresent();       // В конфиге должен быть прописан FOV для второго вьюпорта
-    bool bCond_3 = pActor->cam_Active() == pActor->cam_FirstEye(); // Мы должны быть от 1-го лица
-
-    Device.m_SecondViewport.SetSVPActive(bCond_1 && bCond_2 && bCond_3);
-}
