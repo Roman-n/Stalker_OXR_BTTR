@@ -67,7 +67,7 @@ ENGINE_API void InitConsole()
         Console = new CConsole();
 
     Console->Initialize();
-    xr_strcpy(Console->ConfigFile, "game_settings.openxray");
+    xr_strcpy(Console->ConfigFile, "user.ltx");
     if (strstr(Core.Params, "-ltx "))
     {
         string64 c_name;
@@ -292,7 +292,7 @@ void RunBenchmark(pcstr name)
         if (i)
             InitEngine();
         Engine.External.Initialize();
-        xr_strcpy(Console->ConfigFile, "game_settings.openxray");
+        xr_strcpy(Console->ConfigFile, "user.ltx");
         if (strstr(Core.Params, "-ltx "))
         {
             string64 cfgName;

@@ -505,7 +505,7 @@ void CRender::render_forward()
 
     RImplementation.o.distortion = FALSE; // disable distorion
 }
-#ifdef SecondVP
+
 // Перед началом рендера мира --#SM+#-- +SecondVP+
 void CRender::BeforeWorldRender() {}
 
@@ -521,4 +521,3 @@ void CRender::AfterWorldRender()
         pBackBuffer->Release(); // Корректно очищаем ссылку на бэкбуфер (иначе игра зависнет в опциях)
     }
 }
-#endif

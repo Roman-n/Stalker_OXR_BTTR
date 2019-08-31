@@ -55,12 +55,7 @@ void CWeaponMagazinedWGrenade::Load(LPCSTR section)
         CRocketLauncher::m_fLaunchSpeed = pSettings->r_float(section, "grenade_vel");
     }
 }
-#ifdef SecondVP
-void CWeaponMagazinedWGrenade::UpdateSecondVP(bool bInGrenade)
-{
-	inherited::UpdateSecondVP(m_bGrenadeMode);
-}
-#endif
+
 void CWeaponMagazinedWGrenade::net_Destroy() { inherited::net_Destroy(); }
 BOOL CWeaponMagazinedWGrenade::net_Spawn(CSE_Abstract* DC)
 {

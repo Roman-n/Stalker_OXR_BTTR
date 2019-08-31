@@ -12,9 +12,8 @@
 #include "EngineAPI.h"
 #include "IGame_ObjectPool.h"
 #endif
-#ifdef SecondVP
 #include "ShadersExternalData.h" //--#SM+#--
-#endif
+
 class IRenderVisual;
 class IMainMenu;
 class ENGINE_API CPS_Instance;
@@ -98,9 +97,9 @@ public:
     static bool IsMainMenuActive();
 
     ParticleStatistics stats;
-#ifdef SecondVP
+
     ShadersExternalData* m_pGShaderConstants; //--#SM+#--
-#endif
+
     const ParticleStatistics& GetStats() { return stats; }
     virtual bool OnRenderPPUI_query() { return FALSE; }; // should return true if we want to have second function called
     virtual void OnRenderPPUI_main(){};

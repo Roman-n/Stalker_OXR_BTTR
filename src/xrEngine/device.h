@@ -131,7 +131,6 @@ protected:
 // refs
 class ENGINE_API CRenderDevice : public CRenderDeviceBase
 {
-#ifdef SecondVP	
 public:
     class ENGINE_API CSecondVPParams //--#SM+#-- +SecondVP+
     {
@@ -153,7 +152,7 @@ public:
             clamp<u8>(frameDelay, 2, u8(-1));
         }
     };
-#endif
+
 private:
     // Main objects used for creating and rendering the 3D scene
     u32 m_dwWindowStyle;

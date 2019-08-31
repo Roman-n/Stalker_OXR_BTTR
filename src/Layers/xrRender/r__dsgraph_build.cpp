@@ -1052,24 +1052,11 @@ void D3DXRenderBase::End()
     RCache.OnFrameEnd();
     DoAsyncScreenshot();
 #if defined(USE_DX10) || defined(USE_DX11) || defined(USE_OGL)
-#ifdef SecondVP
-	if (!Device.m_SecondViewport.IsSVPFrame() && !Device.m_SecondViewport.isCamReady) //--#SM+#-- +SecondVP+ Íå âûâîäèì êàäð èç âòîðîãî ðåíäåðà íà ýêðàí
-	{
-		bool bUseVSync = psDeviceFlags.is(rsFullscreen) && psDeviceFlags.test(rsVSync); // xxx: weird tearing glitches when VSync turned on for windowed mode in DX10\11
-		HW.m_pSwapChain->Present(bUseVSync ? 1 : 0, 0);
-	}
-#else
     bool bUseVSync = psDeviceFlags.is(rsFullscreen) && psDeviceFlags.test(rsVSync); //xxx: weird tearing glitches when VSync turned on for windowed mode in DX10\11
     HW.m_pSwapChain->Present(bUseVSync ? 1 : 0, 0);
-#endif	
 #else
     CHK_DX(HW.pDevice->EndScene());
-#ifdef SecondVP
-	if (!Device.m_SecondViewport.IsSVPFrame() && !Device.m_SecondViewport.isCamReady) //--#SM+#-- +SecondVP+ Íå âûâîäèì êàäð èç âòîðîãî ðåíäåðà íà ýêðàí
-		HW.pDevice->Present(NULL, NULL, NULL, NULL);
-#else
     HW.pDevice->Present(nullptr, nullptr, nullptr, nullptr);
-#endif
 #endif
 }
 

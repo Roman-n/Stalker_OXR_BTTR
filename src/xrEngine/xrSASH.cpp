@@ -456,7 +456,7 @@ void xrSASH::TryInitEngine(bool bNoRun)
         Console->Initialize();
     }
 
-    xr_strcpy(Console->ConfigFile, "game_settings.openxray");
+    xr_strcpy(Console->ConfigFile, "user.ltx");
     if (strstr(Core.Params, "-ltx "))
     {
         string64 c_name;

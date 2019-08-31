@@ -67,7 +67,6 @@
 #define POLTERGEIST_CS								// Полтергейсты из ЧН/ТЧ
 #define NEW_AI_POLTER								// Новый AI(т.е старый) полтера ТЧ\ЧН
 #define MINI_DUMP_GENERATE							// Создание мини дампа в логе
-#define SecondVP									// 3д линзы
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay
