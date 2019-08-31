@@ -1101,12 +1101,9 @@ bool CWeapon::Action(u16 cmd, u32 flags)
 
     switch (cmd)
     {
-		
-//	case kWPN_NV_CHANGE:
-//		{
-//			return ChangeNVSecondVPStatus();
-//		}	
-		
+//Test		
+	case kWPN_NV_CHANGE: {return ChangeNVSecondVPStatus();}	
+//		
     case kWPN_FIRE:
     {
         //если оружие чем-то занято, то ничего не делать
@@ -1121,8 +1118,7 @@ bool CWeapon::Action(u16 cmd, u32 flags)
         };
     }
         return true;
-    case kWPN_NEXT: { return SwitchAmmoType(flags);
-    }
+    case kWPN_NEXT: { return SwitchAmmoType(flags); }
 
     case kWPN_ZOOM:
         if (IsZoomEnabled())

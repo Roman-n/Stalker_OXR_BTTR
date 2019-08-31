@@ -3,12 +3,14 @@
 // --' АМК - наше всё
 
 #define BTTR
-
 using System;
+
+/*
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+*/
 
 namespace launcher_stalker
 {
@@ -108,7 +110,6 @@ namespace launcher_stalker
                         }
                 }
             };
-
             ConsoleTitle(); char ch; do
             {
                 CC(ConsoleColor.Green);

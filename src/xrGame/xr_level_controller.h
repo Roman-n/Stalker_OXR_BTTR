@@ -28,7 +28,6 @@ enum	EGameActions
 	kCAM_ZOOM_IN,
 	kCAM_ZOOM_OUT,
 
-	
 	kTORCH,
 	kTORCH_MODE, 
 	kKICK,
@@ -47,12 +46,14 @@ enum	EGameActions
 	kWPN_ZOOM,
 	kWPN_ZOOM_INC,
 	kWPN_ZOOM_DEC,
+//Test
+    kWPN_NV_CHANGE,
+//
 	kWPN_RELOAD,
 	kWPN_FUNC,
 	kWPN_FIREMODE_PREV,
 	kWPN_FIREMODE_NEXT,
-	
-						
+				
 	kPAUSE,
 	kDROP,
 	kUSE,
@@ -123,6 +124,7 @@ struct _keyboard
     int dik;
     xr_string key_local_name;
 };
+
 enum _key_group
 {
     _both = (1 << 0),
@@ -151,8 +153,6 @@ EGameActions action_name_to_id(pcstr _name);
 _action* action_name_to_ptr(pcstr _name);
 
 extern _action actions[];
-// extern _keyboard	keyboards	[];
-// extern xr_vector< _keyboard >	keyboards;
 
 #define bindings_count kLASTACTION
 struct _binding
