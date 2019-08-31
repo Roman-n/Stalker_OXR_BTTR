@@ -188,8 +188,8 @@ public:
     virtual void ScreenshotAsyncEnd(CMemoryWriter& memory_writer) override;
     virtual void OnFrame() override;
 
-    void BeforeWorldRender() override; //--#SM+#-- +SecondVP+ Вызывается перед началом рендера мира и пост-эффектов
-    void AfterWorldRender() override;  //--#SM+#-- +SecondVP+ Вызывается после рендера мира и перед UI
+    virtual void BeforeWorldRender(); //--#SM+#-- +SecondVP+ 
+	virtual void AfterWorldRender();  //--#SM+#-- +SecondVP+
 
     // Render mode
     virtual void rmNear() override;

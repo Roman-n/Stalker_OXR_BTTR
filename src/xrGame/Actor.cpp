@@ -1051,9 +1051,6 @@ void CActor::UpdateCL()
             if (!Device.m_SecondViewport.IsSVPFrame())
                 HUD().SetCrosshairDisp(fire_disp_full, 0.02f);
 
-#ifdef DEBUG
-            HUD().SetFirstBulletCrosshairDisp(pWeapon->GetFirstBulletDisp());
-#endif
             HUD().ShowCrosshair(pWeapon->use_crosshair());
 
             BOOL B = !((mstate_real & mcLookout) && !IsGameTypeSingle());

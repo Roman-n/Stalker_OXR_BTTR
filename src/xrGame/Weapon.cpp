@@ -70,6 +70,8 @@ CWeapon::CWeapon(): m_fLR_MovingFactor(0.f), m_strafe_offset{}
     m_zoom_params.m_fScopeZoomFactor = 1.0f;
     m_zoom_params.m_fScopeZoomFactorMin = 0.3f;
 
+	m_zoom_params.m_fSecondVPFovFactor = 0.0f;
+
     m_pCurrentAmmo = nullptr;
 
     m_pFlameParticles2 = nullptr;
@@ -667,6 +669,11 @@ void CWeapon::Load(LPCSTR section)
     else
         m_bAutoSpawnAmmo = TRUE;
 
+	bool SWM_3D_SCOPES = READ_IF_EXISTS(pFFSettings, r_bool, "gameplay", "SWM_3D_scopes", false);
+
+	if(SWM_3D_SCOPES)
+		m_zoom_params.m_fSecondVPFovFactor = READ_IF_EXISTS(pSettings, r_float, section, "3d_fov", 0.0f);
+
     m_zoom_params.m_bHideCrosshairInZoom = true;
 
     if (pSettings->line_exist(hud_sect, "zoom_hide_crosshair"))
@@ -1140,7 +1147,7 @@ void CWeapon::UpdateCL()
         m_zoom_params.m_pVision->Update();
 }
 
-bool CWeapon::need_renderable() { return !(IsZoomed() && ZoomTexture() && !IsRotatingToZoom()); }
+bool CWeapon::need_renderable() { return !Device.m_SecondViewport.IsSVPFrame() && !(IsZoomed() && ZoomTexture() && !IsRotatingToZoom()); }
 void CWeapon::renderable_Render()
 {
     UpdateXForm();
@@ -2392,3 +2399,27 @@ float CWeapon::GetHudFov()
     return m_nearwall_last_hud_fov;
 }
 #endif
+
+float CWeapon::GetSecondVPFov() const
+{
+	if (m_zoom_params.m_bUseDynamicZoom && IsSecondVPZoomPresent())
+		return (m_fRTZoomFactor / 100.f) * g_fov;
+
+	return GetSecondVPZoomFactor() * g_fov;
+}
+
+void CWeapon::UpdateSecondVP()
+{
+
+	bool b_is_active_item = (m_pInventory != NULL) && (m_pInventory->ActiveItem() == this);
+	R_ASSERT(
+		ParentIsActor() && b_is_active_item);
+
+	CActor* pActor = smart_cast<CActor*>(H_Parent());
+
+	bool bCond_1 = m_zoom_params.m_fZoomRotationFactor > 0.05f;
+	bool bCond_2 = IsSecondVPZoomPresent();									
+	bool bCond_3 = pActor->cam_Active() == pActor->cam_FirstEye(); 
+
+	Device.m_SecondViewport.SetSVPActive(bCond_1 && bCond_2 && bCond_3);
+}
