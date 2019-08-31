@@ -36,6 +36,35 @@ public:
     CWeapon();
     virtual ~CWeapon();
 
+			bool			UseAltScope;
+			bool			ScopeIsHasTexture;
+			bool            bNVsecondVPavaible;
+			bool            bNVsecondVPstatus;
+
+	IC		bool			bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
+	IC		bool			IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+			BOOL			LoadAltScopesParams(LPCSTR section);
+			bool            ChangeNVSecondVPStatus();
+
+	virtual void			UpdateSecondVP(bool bInGrenade = false);
+			void			LoadModParams(LPCSTR section);
+			void			Load3DScopeParams(LPCSTR section);
+			void			LoadOriginalScopesParams(LPCSTR section);
+			void			LoadCurrentScopeParams(LPCSTR section);
+			void			ZoomDynamicMod(bool bIncrement, bool bForceLimit);
+			void			UpdateAltScope();
+
+	virtual float			GetControlInertionFactor() const;
+	IC		float			GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
+	IC		float			GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
+			float			GetSecondVPFov() const;
+
+			shared_str		GetNameWithAttachment();
+
+
+			float			m_fScopeInertionFactor;
+
+
     // Generic
     virtual void Load(LPCSTR section);
 
@@ -50,28 +79,7 @@ public:
     virtual void save(NET_Packet& output_packet);
     virtual void load(IReader& input_packet);
     virtual BOOL net_SaveRelevant() { return inherited::net_SaveRelevant(); }
-	
-	bool					UseAltScope;
-	void					UpdateAltScope();
-	bool					ScopeIsHasTexture;
-	bool                    NVScopeSecondVP;
-	shared_str				GetNameWithAttachment();
-	
-	void Load3DScopeParams(LPCSTR section);
-	BOOL LoadAltScopesParams(LPCSTR section);
-	void LoadOriginalScopesParams(LPCSTR section);
-	void LoadCurrentScopeParams(LPCSTR section);
-	
-	IC bool bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
-	float CWeapon::GetSecondVPFov() const;
-	IC float GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
-	IC float GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
-	IC bool  IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
-	void ZoomDynamicMod(bool bIncrement, bool bForceLimit);
-	float m_fScopeInertionFactor;
-	virtual float GetControlInertionFactor() const;
-	virtual void UpdateSecondVP(bool bInGrenade = false);
-	
+
     virtual void UpdateCL();
     virtual void shedule_Update(u32 dt);
 
@@ -426,6 +434,18 @@ protected:
 public:
     float GetMisfireStartCondition() const { return misfireStartCondition; };
     float GetMisfireEndCondition() const { return misfireEndCondition; };
+
+    void GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
+    {
+        float def_fov = float(g_fov);
+        float min_zoom_k = 0.3f;
+        float zoom_step_count = 3.0f;
+        float delta_factor_total = def_fov - scope_factor;
+        VERIFY(delta_factor_total>0);
+		min_zoom_factor = def_fov-delta_factor_total*min_zoom_k;
+        delta = (delta_factor_total * (1 - min_zoom_k)) / zoom_step_count;
+    }
+
 protected:
     struct SPDM
     {
@@ -539,6 +559,8 @@ public:
     SCOPES_VECTOR m_scopes;
     SCOPES_VECTOR m_silencers;
     SCOPES_VECTOR m_launchers;
+
+    u8 m_cur_scope;
 
     CWeaponAmmo* m_pCurrentAmmo;
 

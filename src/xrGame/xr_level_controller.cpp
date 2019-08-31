@@ -120,7 +120,6 @@ _action  actions[]		= {
 #ifdef COC_KICK
     { "kick", kKICK, _sp },
 #endif
-
 	{ "torch_mode",	kTORCH_MODE,_both},	
 	{ NULL, 				kLASTACTION				,_both}		
 };						

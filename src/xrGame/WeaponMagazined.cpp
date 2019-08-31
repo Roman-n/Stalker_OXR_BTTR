@@ -1280,6 +1280,7 @@ bool CWeaponMagazined::DetachScope(const char* item_section_name, bool b_spawn_i
         if (!xr_strcmp(iter_scope_name, item_section_name))
         {
             m_cur_addon.scope = 0;
+			m_cur_scope = NULL;
             detached = true;
         }
     }
