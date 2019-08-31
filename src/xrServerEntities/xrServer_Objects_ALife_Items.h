@@ -184,6 +184,8 @@ public:
     u8 wpn_flags;
     u8 wpn_state;
 
+	u8 cur_scope;
+
     struct ammo_type_t
     {
         union

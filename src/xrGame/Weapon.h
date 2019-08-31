@@ -50,6 +50,12 @@ public:
     virtual void save(NET_Packet& output_packet);
     virtual void load(IReader& input_packet);
     virtual BOOL net_SaveRelevant() { return inherited::net_SaveRelevant(); }
+	
+	bool					UseAltScope;
+	void					UpdateAltScope();
+	bool					ScopeIsHasTexture;
+	shared_str				GetNameWithAttachment();
+	
     virtual void UpdateCL();
     virtual void shedule_Update(u32 dt);
 
@@ -160,14 +166,14 @@ public:
     virtual void InitAddons();
 
     //для отоброажения иконок апгрейдов в интерфейсе
-    int GetScopeX() { return pSettings->r_s32(m_scopes[m_cur_addon.scope], "scope_x"); }
-    int GetScopeY() { return pSettings->r_s32(m_scopes[m_cur_addon.scope], "scope_y"); }
+    int GetScopeX();
+	int GetScopeY();
     int GetSilencerX() { return pSettings->r_s32(m_silencers[m_cur_addon.silencer], "silencer_x"); }
     int GetSilencerY() { return pSettings->r_s32(m_silencers[m_cur_addon.silencer], "silencer_y"); }
     int GetGrenadeLauncherX() { return pSettings->r_s32(m_launchers[m_cur_addon.launcher], "grenade_launcher_x"); }
     int GetGrenadeLauncherY() { return pSettings->r_s32(m_launchers[m_cur_addon.launcher], "grenade_launcher_y"); }
     const shared_str GetGrenadeLauncherName() const { return pSettings->r_string(m_launchers[m_cur_addon.launcher], "grenade_launcher_name"); }
-    const shared_str GetScopeName() const { return pSettings->r_string(m_scopes[m_cur_addon.scope], "scope_name"); }
+    const shared_str GetScopeName() const;
     const shared_str GetSilencerName() const { return pSettings->r_string(m_silencers[m_cur_addon.silencer], "silencer_name"); }
     const shared_str GetGrenadeLauncherBoneName() const { return READ_IF_EXISTS(pSettings, r_string, GetGrenadeLauncherName(), "addon_bone", "wpn_launcher"); }
     const shared_str GetScopeBoneName() const { return READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "addon_bone", "wpn_scope"); }
