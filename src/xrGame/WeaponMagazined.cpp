@@ -1388,21 +1388,12 @@ void CWeaponMagazined::InitAddons()
     {
         if (m_eScopeStatus == ALife::eAddonAttachable)
         {
+			ScopeIsHasTexture = false;
 			if (pSettings->line_exist(GetScopeName(), "scope_texture"))
 			{
 				scope_tex_name = pSettings->r_string(GetScopeName(), "scope_texture");
 				if (xr_strcmp(scope_tex_name, "none") != 0)
-				{
 					ScopeIsHasTexture = true;
-				}
-				else
-				{
-					ScopeIsHasTexture = false;
-				}
-			}
-			else
-			{
-				ScopeIsHasTexture = false;
 			}
 			
             shared_str scope_tex_name;
@@ -1425,7 +1416,7 @@ void CWeaponMagazined::InitAddons()
                 xr_delete(m_UIScope);
             }
 
-            if (!GEnv.isDedicatedServer && ScopeIsHasTexture)
+            if (ScopeIsHasTexture)
             {
                 m_UIScope = new CUIWindow();
                 createWpnScopeXML();
