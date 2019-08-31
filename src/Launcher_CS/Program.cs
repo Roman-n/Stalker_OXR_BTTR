@@ -113,7 +113,7 @@ namespace launcher_stalker
             {
                 CC(ConsoleColor.Green);
 
-                Console.Write("Введите цифру соотв. рендеру: ");
+                Console.Write("Введите цифру соответствующую рендеру: ");
 
                 ConsoleKeyInfo key;
 
@@ -156,7 +156,7 @@ namespace launcher_stalker
 
             CC(ConsoleColor.Yellow);
 
-            Console.WriteLine("Вас приветствует консольный лаунчер! Выберите рендер с которым хотите запустить игру: \n");
+            Console.WriteLine("Информация о запуске игры с определенным рендером: \n");
 
             Command("0", "DirectX 8");
 
