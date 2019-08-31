@@ -56,6 +56,8 @@ void CWeaponMagazinedWGrenade::Load(LPCSTR section)
     }
 }
 
+void CWeaponMagazinedWGrenade::UpdateSecondVP(bool bInGrenade) { inherited::UpdateSecondVP(m_bGrenadeMode); }
+
 void CWeaponMagazinedWGrenade::net_Destroy() { inherited::net_Destroy(); }
 BOOL CWeaponMagazinedWGrenade::net_Spawn(CSE_Abstract* DC)
 {

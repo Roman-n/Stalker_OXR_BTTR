@@ -25,17 +25,6 @@
 
 extern int g_sprint_reload_wpn;
 
-CUIXml* pWpnScopeXml = nullptr;
-
-void createWpnScopeXML()
-{
-    if (!pWpnScopeXml)
-    {
-        pWpnScopeXml = new CUIXml();
-        pWpnScopeXml->Load(CONFIG_PATH, UI_PATH, UI_PATH_DEFAULT, "scopes.xml");
-    }
-}
-
 CWeaponMagazined::CWeaponMagazined(ESoundTypes eSoundType) : CWeapon()
 {
     m_eSoundShow = ESoundTypes(SOUND_TYPE_ITEM_TAKING | eSoundType);
@@ -1388,40 +1377,7 @@ void CWeaponMagazined::InitAddons()
     {
         if (m_eScopeStatus == ALife::eAddonAttachable)
         {
-			ScopeIsHasTexture = false;
-			if (pSettings->line_exist(GetScopeName(), "scope_texture"))
-			{
-				scope_tex_name = pSettings->r_string(GetScopeName(), "scope_texture");
-				if (xr_strcmp(scope_tex_name, "none") != 0)
-					ScopeIsHasTexture = true;
-			}
-			
-            shared_str scope_tex_name;
-            m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(GetScopeName(), "scope_zoom_factor");
-            m_zoom_params.m_fScopeZoomFactorMin = READ_IF_EXISTS(pSettings, r_float, GetScopeName(), "scope_zoom_factor_min", 0.3f);
-            
-            if (ScopeIsHasTexture)
-			{
-				m_zoom_params.m_sUseZoomPostprocess = READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "scope_nightvision", 0);
-				m_zoom_params.m_bUseDynamicZoom = READ_IF_EXISTS(pSettings, r_bool, GetScopeName(), "scope_dynamic_zoom", FALSE);
-				m_zoom_params.m_sUseBinocularVision = READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "scope_alive_detector", 0);
-			}
-			m_fRTZoomFactor = m_zoom_params.m_fScopeZoomFactor;
-			
-            float delta, min_zoom_factor;
-            GetZoomData(m_zoom_params.m_fScopeZoomFactor, delta, min_zoom_factor);
-            m_fRTZoomFactor = min_zoom_factor;
-            if (m_UIScope)
-            {
-                xr_delete(m_UIScope);
-            }
-
-            if (ScopeIsHasTexture)
-            {
-                m_UIScope = new CUIWindow();
-                createWpnScopeXML();
-                CUIXmlInit::InitWindow(*pWpnScopeXml, scope_tex_name.c_str(), 0, m_UIScope);
-            }
+			LoadCurrentScopeParams(GetScopeName().c_str());
         }
     }
     else

@@ -54,7 +54,23 @@ public:
 	bool					UseAltScope;
 	void					UpdateAltScope();
 	bool					ScopeIsHasTexture;
+	bool                    NVScopeSecondVP;
 	shared_str				GetNameWithAttachment();
+	
+	void Load3DScopeParams(LPCSTR section);
+	BOOL LoadAltScopesParams(LPCSTR section);
+	void LoadOriginalScopesParams(LPCSTR section);
+	void LoadCurrentScopeParams(LPCSTR section);
+	
+	IC bool bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
+	float CWeapon::GetSecondVPFov() const;
+	IC float GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
+	IC float GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
+	IC bool  IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+	void ZoomDynamicMod(bool bIncrement, bool bForceLimit);
+	float m_fScopeInertionFactor;
+	virtual float GetControlInertionFactor() const;
+	virtual void UpdateSecondVP(bool bInGrenade = false);
 	
     virtual void UpdateCL();
     virtual void shedule_Update(u32 dt);
@@ -227,6 +243,8 @@ protected:
 
         float m_fZoomRotationFactor;
 
+		float m_fSecondVPFovFactor;
+
         Fvector m_ZoomDof;
         Fvector4 m_ReloadDof;
         Fvector4 m_ReloadEmptyDof;
@@ -243,17 +261,6 @@ protected:
     CUIWindow* m_UIScope;
 
 public:
-
-    void GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
-    {
-        float def_fov = 1.0f; // float(g_fov);
-        float min_zoom_k = m_zoom_params.m_fScopeZoomFactorMin; // 0.3f;
-        float zoom_step_count = 3.0f;
-        float delta_factor_total = def_fov - scope_factor;
-        // VERIFY(delta_factor_total>0);
-        min_zoom_factor = (def_fov - delta_factor_total) * min_zoom_k;
-        delta = (delta_factor_total * (1 - min_zoom_k)) / zoom_step_count;
-    }
     void AllowNightVision(bool value) { m_zoom_params.m_bNightVisionAllow = value; };
     bool AllowNightVision() { return m_zoom_params.m_bNightVisionAllow; };
 
