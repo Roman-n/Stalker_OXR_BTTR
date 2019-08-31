@@ -72,7 +72,6 @@ public:
     IC float GetZRotatingFactor() const { return m_zoom_params.m_fZoomRotationFactor; }
     IC float GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
     float GetSecondVPFov() const;
-    shared_str GetNameWithAttachment();
     float m_fScopeInertionFactor;
 #endif	
     virtual void UpdateCL();
