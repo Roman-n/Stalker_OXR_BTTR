@@ -271,28 +271,52 @@ bool CWeapon::install_upgrade_addon(LPCSTR section, bool test)
             result |= process_if_exists(
                 section, "holder_fov_modifier", &CInifile::r_float, m_addon_holder_fov_modifier, test);
 
-            if (m_eScopeStatus == ALife::eAddonAttachable)
+			UseAltScope = pSettings->line_exist(section, "scopes");
+
+            if (UseAltScope)
             {
-                if (pSettings->line_exist(section, "scopes_sect"))
+                LPCSTR str = pSettings->r_string(section, "scopes");
+				for (int i = 0, count = _GetItemCount(str); i < count; ++i)
                 {
-                    pcstr str = pSettings->r_string(section, "scopes_sect");
-                    for (int i = 0, count = _GetItemCount(str); i < count; ++i)
+                    string128 scope_section;
+					_GetItem(str, i, scope_section);
+
+					if (!xr_strcmp(scope_section, "none"))
+					{
+						UseAltScope = 0;
+					}
+					else
                     {
-                        string128 scope_section;
-                        _GetItem(str, i, scope_section);
-                        m_scopes.push_back(scope_section);
+                        						m_scopes.push_back(scope_section);
+					}
+				}
+			}
+
+			if (!UseAltScope)
+			{
+				if (m_eScopeStatus == ALife::eAddonAttachable)
+				{
+					if (pSettings->line_exist(section, "scopes_sect"))
+					{
+						LPCSTR str = pSettings->r_string(section, "scopes_sect");
+						for (int i = 0, count = _GetItemCount(str); i < count; ++i)
+						{
+							string128						scope_section;
+							_GetItem(str, i, scope_section);
+							m_scopes.push_back(scope_section);
+						}
+					}
+					else
+					{
+						m_scopes.push_back(section);
                     }
                 }
                 else
                 {
                     m_scopes.push_back(section);
+					if (m_eScopeStatus == ALife::eAddonPermanent)
+						InitAddons();
                 }
-            }
-            else
-            {
-                m_scopes.push_back(section);
-                if (m_eScopeStatus == ALife::eAddonPermanent)
-                    InitAddons();
             }
         }
     }
