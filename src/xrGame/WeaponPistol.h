@@ -1,40 +1,38 @@
 #pragma once
-#include "weaponcustomauto.h"
+//#include "WeaponCustomPistol.h"
+#include "WeaponCustomPistolAuto.h"
 
-class CWeaponPistol :
-    public CWeaponAutoPistol
+class CWeaponPistol : public CWeaponCustomPistolAuto
 {
-    typedef CWeaponAutoPistol inherited;
+    using inherited = CWeaponCustomPistolAuto;
+
 public:
     CWeaponPistol();
-    virtual			~CWeaponPistol();
+    virtual ~CWeaponPistol();
 
-    virtual void	Load(LPCSTR section);
+    virtual void Load(LPCSTR section);
 
-    virtual void	switch2_Reload();
+    virtual void switch2_Reload();
 
-    virtual void	OnShot();
-    virtual void	OnAnimationEnd(u32 state);
-    virtual void	net_Destroy();
-    virtual void	OnH_B_Chield();
+    virtual void OnShot();
+    virtual void OnAnimationEnd(u32 state);
+    virtual void net_Destroy();
+    virtual void OnH_B_Chield();
 
-    //анимации
-    virtual void	PlayAnimShow();
-    virtual void	PlayAnimIdle();
-    virtual void	PlayAnimIdleMoving();
-    virtual void	PlayAnimIdleSprint();
-    virtual void	PlayAnimHide();
-    virtual void	PlayAnimReload();
-    virtual void	PlayAnimShoot();
-    virtual void	PlayAnimBore();
-    virtual void	PlayAnimAim();
+    //Р°РЅРёРјР°С†РёРё
+    virtual void PlayAnimShow();
+    virtual void PlayAnimIdle();
+    virtual void PlayAnimIdleMoving();
+    virtual void PlayAnimIdleSprint();
+    virtual void PlayAnimHide();
+    virtual void PlayAnimReload();
+    virtual void PlayAnimShoot();
+    virtual void PlayAnimBore();
+    virtual void PlayAnimAim();
 
-    virtual void	UpdateSounds();
+    virtual void UpdateSounds();
+
 protected:
-    virtual bool	AllowFireWhileWorking()
-    {
-        return true;
-    }
-
-    ESoundTypes			m_eSoundClose;
+    virtual bool AllowFireWhileWorking() { return true; }
+    ESoundTypes m_eSoundClose;
 };
