@@ -99,7 +99,6 @@ CWeapon::CWeapon(): m_fLR_MovingFactor(0.f), m_strafe_offset{}
 	bScopeIsHasTexture = false;
 	bNVsecondVPavaible = false;
 	bNVsecondVPstatus = false;
-	m_cur_scope	= NULL;
 	m_fZoomStepCount = 3.0f;
 	m_fZoomMinKoeff = 0.3f;
 }
@@ -108,11 +107,11 @@ const shared_str CWeapon::GetScopeName() const
 {
 	if (bUseAltScope)
 	{
-		return m_scopes[m_cur_scope];
+        return m_scopes[m_cur_addon.scope];
 	}
 	else
 	{
-		return pSettings->r_string(m_scopes[m_cur_scope], "scope_name");
+        return pSettings->r_string(m_scopes[m_cur_addon.scope], "scope_name");
 	}
 }
 

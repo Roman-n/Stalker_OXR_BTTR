@@ -561,7 +561,7 @@ public:
     SCOPES_VECTOR m_silencers;
     SCOPES_VECTOR m_launchers;
 
-    u8 m_cur_scope;
+    u8            m_cur_scope;
 
     CWeaponAmmo* m_pCurrentAmmo;
 
