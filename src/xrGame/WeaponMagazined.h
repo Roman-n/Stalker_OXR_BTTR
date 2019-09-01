@@ -38,6 +38,10 @@ protected:
     //кадр момента пересчета UpdateSounds
     u32 dwUpdateSounds_Frame;
 
+public:
+	// Mortan: Новые параметры здеся
+	virtual	bool    bMarkCanShow() { return IsZoomed(); }
+
 protected:
     virtual void OnMagazineEmpty();
 

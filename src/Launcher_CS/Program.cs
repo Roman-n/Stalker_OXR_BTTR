@@ -64,7 +64,7 @@ namespace launcher_stalker
 
                     case '3':
                         {
-                            System.Diagnostics.Process.Start("OpenXRay - DX9.5");
+                            System.Diagnostics.Process.Start("OpenXRay - DX9_5");
                             CC(ConsoleColor.Cyan);
                             Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;

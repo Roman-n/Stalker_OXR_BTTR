@@ -24,6 +24,11 @@ public:
     virtual void save(NET_Packet& output_packet);
     virtual void load(IReader& input_packet);
 
+	// Mortan: Новые параметры здеся
+	virtual	bool    bMarkCanShow() { return IsZoomed() && !m_bGrenadeMode; }
+
+	virtual void	UpdateSecondVP(bool bInGrenade = false);
+
     virtual bool Attach(PIItem pIItem, bool b_send_event);
     virtual bool Detach(pcstr item_section_name, bool b_spawn_item);
     virtual bool CanAttach(PIItem pIItem);
@@ -46,8 +51,6 @@ public:
     virtual bool Action(u16 cmd, u32 flags);
 
     virtual void UpdateSounds();
-
-	virtual void UpdateSecondVP(bool bInGrenade = false);
 
     //переключение в режим подствольника
     virtual bool SwitchMode();

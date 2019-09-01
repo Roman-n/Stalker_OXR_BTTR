@@ -36,15 +36,16 @@ public:
     CWeapon();
     virtual ~CWeapon();
 
-			bool			UseAltScope;
-			bool			ScopeIsHasTexture;
+			bool			bUseAltScope;
+			bool			bScopeIsHasTexture;
 			bool            bNVsecondVPavaible;
 			bool            bNVsecondVPstatus;
 
 	IC		bool			bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
-	IC		bool			IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
-			BOOL			LoadAltScopesParams(LPCSTR section);
-			bool            ChangeNVSecondVPStatus();
+	IC		bool			bIsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+			BOOL			bLoadAltScopesParams(LPCSTR section);
+	virtual	bool            bMarkCanShow() { return IsZoomed(); }
+			bool            bChangeNVSecondVPStatus();
 
 	virtual void			UpdateSecondVP(bool bInGrenade = false);
 			void			LoadModParams(LPCSTR section);
@@ -208,7 +209,7 @@ public:
 
     void CWeapon::GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
     {
-        float def_fov = IsSecondVPZoomPresent() ? 75.0f : g_fov; // float(g_fov);
+        float def_fov = bIsSecondVPZoomPresent() ? 75.0f : g_fov; // float(g_fov);
         float delta_factor_total = def_fov - scope_factor;
         VERIFY(delta_factor_total > 0);
         min_zoom_factor = def_fov - delta_factor_total * m_fZoomMinKoeff;
