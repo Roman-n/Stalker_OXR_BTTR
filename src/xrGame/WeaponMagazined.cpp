@@ -1244,6 +1244,10 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
 
     if (result)
     {
+		if (pScope && UseAltScope)
+		{
+			bNVsecondVPstatus = !!pSettings->line_exist(pIItem->object().cNameSect(), "scope_nightvision");
+		}
         SyncronizeWeaponToServer();
         if (b_send_event && OnServer())
         {

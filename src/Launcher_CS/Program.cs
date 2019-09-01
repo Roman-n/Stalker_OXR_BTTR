@@ -22,7 +22,6 @@ namespace launcher_stalker
         public void OnKeyDown(char ch)
         {
             launcher_class c = new launcher_class();
-
             if (KeyDown != null)
             {
                 c.ch = ch;
@@ -30,7 +29,6 @@ namespace launcher_stalker
             }
         }
     }
-
     class Base
     {
         static void Main()
@@ -44,7 +42,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - DX8");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -52,7 +50,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - DX9");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -60,7 +58,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - DX9c");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -68,7 +66,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - DX9.5");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -76,7 +74,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - DX10");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -84,7 +82,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - DX11");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -92,7 +90,7 @@ namespace launcher_stalker
                         {
                             System.Diagnostics.Process.Start("OpenXRay - OpenGL");
                             CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт...");
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -110,6 +108,7 @@ namespace launcher_stalker
                         }
                 }
             };
+
             ConsoleTitle(); char ch; do
             {
                 CC(ConsoleColor.Green);
@@ -132,7 +131,7 @@ namespace launcher_stalker
                 evnt.OnKeyDown(key.KeyChar);
 
             }
-            while (ch != '7'); 
+            while (ch != '7');
         }
         // Описание в консоли
         static void ConsoleTitle()
@@ -175,11 +174,28 @@ namespace launcher_stalker
 
             Command("7", "Выход из лаунчера");
 
+
             Console.WriteLine();
+
         }
-        static void CC(ConsoleColor color) { Console.ForegroundColor = color; }
-        static void Command(string s1, string s2)
-        { CC(ConsoleColor.Green); Console.Write(s1); CC(ConsoleColor.Red); Console.Write(" - " + s2 + "\n"); }
+                                               // --' Важное, запуск рендеров
+            static void CC(ConsoleColor color)
+                {
+                    Console.ForegroundColor = color;
+                }
+            static void Command(string s1, string s2)
+                {
+                    CC(ConsoleColor.Green); Console.Write(s1); CC(ConsoleColor.Red); Console.Write(" - " + s2 + "\n");
+                }
+                                              // --' Другие ключи запуска
+            static void CC1(ConsoleColor color)
+                {
+                    Console.ForegroundColor = color;
+                }
+            static void Command_other(string s1, string s2)
+                {
+                    CC1(ConsoleColor.Green); Console.Write(s1); CC1(ConsoleColor.Cyan); Console.Write(" - " + s2 + "\n");
+                }
     }
 }
 

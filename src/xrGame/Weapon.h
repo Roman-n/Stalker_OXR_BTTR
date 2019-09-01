@@ -63,6 +63,8 @@ public:
 
 
 			float			m_fScopeInertionFactor;
+			float           m_fZoomStepCount;
+			float           m_fZoomMinKoeff;
 
 
     // Generic
@@ -203,6 +205,15 @@ public:
     const shared_str GetScopeBoneName() const { return READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "addon_bone", "wpn_scope"); }
     const shared_str GetSilencerBoneName() const { return READ_IF_EXISTS(pSettings, r_string, GetSilencerName(), "addon_bone", "wpn_silencer"); }
     bool SetBoneVisible(IKinematics* m_model, const shared_str& bone_name, BOOL bVisibility, BOOL bSilent);
+
+    void CWeapon::GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
+    {
+        float def_fov = IsSecondVPZoomPresent() ? 75.0f : g_fov; // float(g_fov);
+        float delta_factor_total = def_fov - scope_factor;
+        VERIFY(delta_factor_total > 0);
+        min_zoom_factor = def_fov - delta_factor_total * m_fZoomMinKoeff;
+        delta = (delta_factor_total * (1 - m_fZoomMinKoeff)) / m_fZoomStepCount;
+    }
 
     IC void ForceUpdateAmmo() { m_BriefInfo_CalcFrame = 0; }
     u8 GetAddonsState() const { return m_flagsAddOnState; };
@@ -434,17 +445,6 @@ protected:
 public:
     float GetMisfireStartCondition() const { return misfireStartCondition; };
     float GetMisfireEndCondition() const { return misfireEndCondition; };
-
-    void GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
-    {
-        float def_fov = float(g_fov);
-        float min_zoom_k = 0.3f;
-        float zoom_step_count = 3.0f;
-        float delta_factor_total = def_fov - scope_factor;
-        VERIFY(delta_factor_total>0);
-		min_zoom_factor = def_fov-delta_factor_total*min_zoom_k;
-        delta = (delta_factor_total * (1 - min_zoom_k)) / zoom_step_count;
-    }
 
 protected:
     struct SPDM
