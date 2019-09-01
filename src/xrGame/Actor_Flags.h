@@ -15,6 +15,8 @@ enum
     AF_CROSSHAIR_COLLIDE = (1 << 11),
     AF_CROSSHAIR_INERT = (1 << 12),
 	AF_CROSSHAIR_STANDART = (1 << 13),
+	AF_3DSCOPE_ENABLE		=(1<<14),
+	AF_PNV_W_SCOPE_DIS		=(1<<15),
 };
 
 extern Flags32 psActorFlags;
