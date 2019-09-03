@@ -155,22 +155,6 @@ void CUIActorMenu::SendMessage(CUIWindow* pWnd, s16 msg, void* pData) { CUIWndCa
 extern int g_hand_hide_inventory;
 void CUIActorMenu::Show(bool status)
 {
-#ifndef UPDATEINVHANDS
-
-    inherited::Show(status);
-    if (status)
-    {
-        SetMenuMode(m_currMenuMode);
-        PlaySnd(eSndOpen);
-        m_ActorStateInfo->UpdateActorInfo(m_pActorInvOwner);
-    }
-    else
-    {
-        PlaySnd(eSndClose);
-        SetMenuMode(mmUndefined);
-    }
-    m_ActorStateInfo->Show(status);
-#else
     // oldSerpskiStalker
     //Убрать руки при открытом инвентаре, сделал в движок чтобы не нагружать скрипты
 
@@ -212,7 +196,6 @@ void CUIActorMenu::Show(bool status)
 
     m_ActorStateInfo->Show(status);
 
-#endif
 }
 
 void CUIActorMenu::Draw()

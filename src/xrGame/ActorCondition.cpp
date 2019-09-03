@@ -297,10 +297,10 @@ void CActorCondition::UpdateCondition()
 					RemoveEffector(m_object,effPsyHealth);
 			}
 		}
-#ifdef PSYHEALTH
+
         if (fis_zero(GetPsyHealth()))
             SetHealth(0.0f);
-#endif
+
         UpdateSatiety();
         UpdateBoosters();
 

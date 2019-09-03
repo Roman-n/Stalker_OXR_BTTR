@@ -2,16 +2,12 @@
 
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl Back to the roots
-#define UPDATEINVHANDS 						        // Убрать руки при открытом инвентаре
-#define SHOWMAPINVCOP 						        // Убрать мини карту при открытом инвентаре
 #define AMBIENTSFILELOAD 					        // Отключил загрузку отдельного файла амбиента для каждой локации -> ...level_name.c_str(), ".ltx");
-#define PSYHEALTH 							        // Пси-здоровье, убить ГГ при низком уровне psy_health
-#define NEWIND 								        // Новые индикаторы, восстановление старых
 #define SCREENSPACE_OFF 					        // Лучи проходят через холм, если на них смотреть в сторону солнца
 #define RAINDROPS 							        // Капли на экран из XRay Oxygen, общие функции + R2
 #define RAINDROPS_R3 						        // Капли на экран R3, зависимость от дефайна RAINDROPS
 #define RAINDROPS_R4 						        // Капли на экран R4, зависимость от дефайна RAINDROPS
-#define AMMO_FROM_BELT					            // Патроны берем только с пояса
+//#define AMMO_FROM_BELT					            // Патроны берем только с пояса
 #define POLTER_DEATH_SOC					        // Смерть полтера как в ТЧ
 #define POLTER_FIX_DEATH					        // Полтер не кидается предметами после смерти
 #define POLTER_POLZUN						        // Потеря энергии у полтергейста
@@ -30,7 +26,6 @@
 #define GAME_OBJECT_EXTENDED_EXPORTS                // Смотри: script_game_object*.cpp/h
 #define GAME_OBJECT_TESTING_EXPORTS                 // Смотри: script_game_object4.cpp  functions for object testing (ie. is_stalker(), is_heli())
 #define NAMESPACE_LEVEL_EXPORTS                     // Смотри: level_script.cpp, новые функции
-#define GRASS_SHADOWS                               // Тени от травы, без зависаний (by K.D.)
 #define ECO_RENDER                                  // Ограничение кадров в секунду (by alpet)
 //#define FP_DEATH                                  // Смерть от первого лица
 #define DEAD_BODY_COLLISION                         // Коллизия мертвых тел спасибо malandrinus
@@ -38,17 +33,9 @@
 #define CONFIG_SUN_MOVEMENT                         // Движение солнца по конфигам погоды в .ltx
 //#define NEW_SOUNDS                                  // Новые звуки для оружие Р1
 //#define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
-#define LOST_ALPHA_HUD_IND				        	// Движковые индикаторы на худ как в Лост Альфе
 #define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
-#define CROW_FIX_POSITION							// Вороны не разлетаются с одной точки при старте игры
 #define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
-#define LOST_ALPHA_INV_IND							// Движковые колбы в инвентаре из Лост Альфы
-#define FIX_COUNT_ART								// Исправлена ошибка с нулевым m_artefact_spawn_count
-#define EXPORT_OLD_MUTANTS							// Обязательное условие для подключения старых классов мутантов
 #define CHIMERA_CS									// Химера из ЧН/ТЧ
-#define MOTIONICON_SOC								// Текущее положение ГГ на худ из ТЧ
-#define VOLUMETRIK_TORCH							// Объемный свет фонаря
-#define ZOOM_MINIMAP								// Консольная команда зума для мини карты из XRay Oxygen
 #define __FIX										// Вылет по поясу, если переместить итем размера 2 на 1 ячейку
 //#define SPRINT_COUNTER							// Счетчик s8, т.е блокировок бега ГГ, всегда должен быть 0
 #define DOG_SOC										// Собака из ЧН/ТЧ

@@ -187,12 +187,10 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
     light_render->set_cone(deg2rad(pUserData->r_float("torch_definition", "spot_angle")));
     light_render->set_texture(pUserData->r_string("torch_definition", "spot_texture"));
 
-#ifdef VOLUMETRIK_TORCH
     light_render->set_volumetric(pUserData->r_bool("torch_definition", "volumetric")); // Enable or not
     light_render->set_volumetric_distance(pUserData->r_float("torch_definition", "volumetric_distance"));
     light_render->set_volumetric_intensity(pUserData->r_float("torch_definition", "volumetric_intensity"));
     light_render->set_volumetric_quality(pUserData->r_float("torch_definition", "volumetric_quality"));
-#endif
 
     glow_render->set_color(clr);
     glow_render->set_texture(pUserData->r_string("torch_definition", "glow_texture"));
@@ -302,22 +300,15 @@ void CTorch::UpdateCL()
                 offset.mad(M.j, TORCH_OFFSET.y);
                 offset.mad(M.k, TORCH_OFFSET.z);
                 light_render->set_position(offset);
-#ifdef VOLUMETRIK_TORCH
                 light_render->set_volumetric(false);
-#endif
 
-                //                if (true /*false*/)
-                //                {
                 offset = M.c;
                 offset.mad(M.i, OMNI_OFFSET.x);
                 offset.mad(M.j, OMNI_OFFSET.y);
                 offset.mad(M.k, OMNI_OFFSET.z);
                 light_omni->set_position(offset);
-                //                }
 
-                //               if (actor->cam_FirstEye())
-                //                    light_omni->set_shadow(false);
-            } // if (true)
+            } 
             glow_render->set_position(M.c);
 
             if (true)

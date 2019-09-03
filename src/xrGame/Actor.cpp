@@ -68,9 +68,7 @@
 #include "Include/xrRender/UIRender.h"
 
 #include "xrAICore/Navigation/ai_object_location.h"
-#ifdef MOTIONICON_SOC
 #include "ui/uiMotionIcon.h"
-#endif
 #include "ui/UIActorMenu.h"
 #include "ActorHelmet.h"
 #include "UI/UIDragDropReferenceList.h"
@@ -1276,13 +1274,12 @@ void CActor::shedule_Update(u32 DT)
         }
         mstate_old = mstate_real;
     }
-#ifdef MOTIONICON_SOC
-	//fixed
+	
     if (this == Level().CurrentViewEntity())
     {
         UpdateMotionIcon		(mstate_real);
     };	
-#endif
+	
     NET_Jump = 0;
 
     inherited::shedule_Update(DT);
@@ -1878,7 +1875,7 @@ void CActor::AnimTorsoPlayCallBack(CBlend* B)
     CActor* actor = (CActor*)B->CallbackParam;
     actor->m_bAnimTorsoPlayed = FALSE;
 }
-#ifdef MOTIONICON_SOC
+
 // Показать текущее положение гг
 void CActor::UpdateMotionIcon(u32 mstate_rl)
 {
@@ -1909,7 +1906,7 @@ void CActor::UpdateMotionIcon(u32 mstate_rl)
 	}
 	}
 }
-#endif
+
 
 CPHDestroyable* CActor::ph_destroyable() { return smart_cast<CPHDestroyable*>(character_physics_support()); }
 CEntityConditionSimple* CActor::create_entity_condition(CEntityConditionSimple* ec)

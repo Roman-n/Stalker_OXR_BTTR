@@ -396,9 +396,8 @@ public:
 	
 	u32 MovingState() const { return mstate_real; }
 	
-#ifdef MOTIONICON_SOC	
 	void UpdateMotionIcon(u32 mstate_rl);
-#endif	
+
     bool CanAccelerate();
     bool CanJump();
     bool CanMove();

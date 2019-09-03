@@ -49,10 +49,6 @@ public:
     CUIStatic* m_starvation_soc_lvl_2;
     CUIStatic* m_starvation_soc_lvl_3;
 
-    CUIStatic* m_overweight_soc_lvl_1;
-    CUIStatic* m_overweight_soc_lvl_2;
-    CUIStatic* m_overweight_soc_lvl_3;
-
     CUIStatic* m_broken_helmet_soc_lvl_1;
     CUIStatic* m_broken_helmet_soc_lvl_2;
     CUIStatic* m_broken_helmet_soc_lvl_3;
@@ -73,7 +69,6 @@ public:
     CUIStatic* m_radiation_soc_lvl_2;
     CUIStatic* m_radiation_soc_lvl_3;
 	
-#ifdef LOST_ALPHA_HUD_IND
 	CUIStatic* m_bleeding_lvl_0;
 	CUIStatic* m_bleeding_lvl_1;
 	CUIStatic* m_bleeding_lvl_2;
@@ -113,7 +108,6 @@ public:
     CUIStatic* m_sleep_lvl_1;
     CUIStatic* m_sleep_lvl_2;
     CUIStatic* m_sleep_lvl_3;
-#endif
 
 	CUIStatic* m_static_health;	
     CUIStatic* m_static_armor;

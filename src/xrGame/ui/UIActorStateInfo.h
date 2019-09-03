@@ -29,7 +29,6 @@ private:
 
     enum EStateType
     {
-#ifdef LOST_ALPHA_INV_IND
         stt_sleep,
         stt_psy_health,
         stt_bleding,
@@ -40,7 +39,6 @@ private:
         stt_healh,
         stt_armor,
         stt_armor1,
-#endif
         stt_fire,
         stt_radia,
         stt_acid,

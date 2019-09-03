@@ -28,9 +28,9 @@ extern int __type_hud_veter_vremeni;
 extern int __type_hud_soc;
 extern int __type_hud_coc;
 extern int __type_hud_cop;
-#ifdef ZOOM_MINIMAP
+
 extern float minimap_zoom_factor;
-#endif
+
 //////////////////////////////////////////////////////////////////////////
 
 CUIZoneMap::CUIZoneMap() : m_current_map_idx(u8(-1)), visible(true) { disabled = false; }
@@ -279,11 +279,7 @@ void CUIZoneMap::SetupCurrentMap()
     m_activeMap->WorkingArea().set(r);
 
     Fvector2 wnd_size;
-#ifdef ZOOM_MINIMAP
 	float zoom_factor = float(m_clipFrame.GetWidth()) / 100.0f * minimap_zoom_factor;
-#else
-    float zoom_factor = float(m_clipFrame.GetWidth()) / 100.0f;
-#endif
     LPCSTR ln = Level().name().c_str();
     if (pGameIni->section_exist(ln))
     {

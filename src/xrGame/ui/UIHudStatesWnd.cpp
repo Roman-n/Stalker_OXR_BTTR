@@ -154,10 +154,6 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
         m_starvation_soc_lvl_2 = UIHelper::CreateStatic(xml, "satiety_lvl_2", this);
         m_starvation_soc_lvl_3 = UIHelper::CreateStatic(xml, "satiety_lvl_3", this);
 
-        m_overweight_soc_lvl_1 = UIHelper::CreateStatic(xml, "overweight_lvl_1", this);
-        m_overweight_soc_lvl_2 = UIHelper::CreateStatic(xml, "overweight_lvl_2", this);
-        m_overweight_soc_lvl_3 = UIHelper::CreateStatic(xml, "overweight_lvl_3", this);
-
         m_broken_helmet_soc_lvl_1 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_1", this);
         m_broken_helmet_soc_lvl_2 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_2", this);
         m_broken_helmet_soc_lvl_3 = UIHelper::CreateStatic(xml, "broken_helmet_lvl_3", this);
@@ -180,7 +176,7 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 
         m_static_health = UIHelper::CreateStatic(xml, "static_health", this);
     }
-#ifdef LOST_ALPHA_HUD_IND
+
 	if(__type_hud_lost_alpha)
 	{
 		m_bleeding_lvl_0 = UIHelper::CreateStatic(xml, "bleeding_lvl_0", this);
@@ -224,7 +220,7 @@ void CUIHudStatesWnd::InitFromXml(CUIXml& xml, LPCSTR path)
 		m_sleep_lvl_3 = UIHelper::CreateStatic(xml, "sleeping_lvl_3", this);
 	
 	}
-#endif
+
     m_ui_weapon_icon = UIHelper::CreateStatic(xml, "static_wpn_icon", this);
     m_ui_weapon_icon->SetShader(InventoryUtilities::GetEquipmentIconsShader());
     m_ui_weapon_icon_rect = m_ui_weapon_icon->GetWndRect();
@@ -738,27 +734,6 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
             }
         }
 
-        m_overweight_soc_lvl_1->Show(false);
-        m_overweight_soc_lvl_2->Show(false);
-        m_overweight_soc_lvl_3->Show(false);
-        if (cur_weight >= max_carry_weight)
-        {
-            if (cur_weight >= max_weight)
-            {
-                m_overweight_soc_lvl_3->Show(true);
-                m_overweight_soc_lvl_2->Show(false);
-            }
-            else if (max_carry_weight / max_weight >= 0.5f)
-            {
-                m_overweight_soc_lvl_1->Show(false);
-                m_overweight_soc_lvl_2->Show(true);
-            }
-            else if (max_carry_weight / max_weight <= 0.5f)
-            {
-                m_overweight_soc_lvl_1->Show(true);
-            }
-        }
-
         m_broken_weapon_soc_lvl_1->Show(false);
         m_broken_weapon_soc_lvl_2->Show(false);
         m_broken_weapon_soc_lvl_3->Show(false);
@@ -893,7 +868,7 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
         }
     }
 	
-	#ifdef LOST_ALPHA_HUD_IND
+
 	if (__type_hud_lost_alpha)
 {
     // Код в UIMainIngameWnd очень старый, не совместим с новыми функциями. Пришлось переносить сюда
@@ -1120,8 +1095,6 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
         }
     }
 }
-#endif
-	
 }
 
 void CUIHudStatesWnd::UpdateIndicatorType(CActor* actor, ALife::EInfluenceType type)

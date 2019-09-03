@@ -65,20 +65,14 @@ void CUIActorMenu::InitInventoryMode()
 		CurrentGameUI()->UIMainIngameWnd->ShowZoneMap(true);	
 	}
 	
-#ifndef SHOWMAPINVCOP
-    CurrentGameUI()->UIMainIngameWnd->ShowZoneMap(true);
-#endif
-#ifdef NEWIND	
     m_clock_value->Show					(true); //Показать время при открытом инвентаре
-#endif
+
 }
 
 void CUIActorMenu::DeInitInventoryMode()
 {
     m_pTrashList->Show(false);
-#ifdef NEWIND	
     m_clock_value->Show					(false); //Показать время при открытом инвентаре
-#endif	
 }
 
 void CUIActorMenu::SendEvent_ActivateSlot(u16 slot, u16 recipient)

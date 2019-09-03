@@ -170,9 +170,8 @@ protected:
     CUI3tButton* m_trade_sell_button;
     CUI3tButton* m_takeall_button;
     CUI3tButton* m_exit_button;
-#ifdef NEWIND		
+	
     CUIStatic* m_clock_value; //Показать время при открытом инвентаре
-#endif
 
     u32 m_last_time;
     bool m_repair_mode;

@@ -50,7 +50,7 @@ void ui_actor_state_wnd::init_from_xml(CUIXml& xml, LPCSTR path)
         AttachChild(m_state[i]);
         m_state[i]->set_hint_wnd(m_hint_wnd);
     }
-#ifdef LOST_ALPHA_INV_IND
+	
     m_state[stt_sleep]->init_from_xml(xml, "sleeping_bar");
     m_state[stt_psy_health]->init_from_xml(xml, "psy_health_bar");
     m_state[stt_bleding]->init_from_xml(xml, "bleding_bar");
@@ -61,7 +61,7 @@ void ui_actor_state_wnd::init_from_xml(CUIXml& xml, LPCSTR path)
     m_state[stt_healh]->init_from_xml(xml, "health_bar");
     m_state[stt_armor]->init_from_xml(xml, "armor_bar");
     m_state[stt_armor1]->init_from_xml(xml, "armor1_bar");
-#endif
+
     m_state[stt_fire]->init_from_xml(xml, "fire_sensor");
     m_state[stt_radia]->init_from_xml(xml, "radia_sensor");
     m_state[stt_acid]->init_from_xml(xml, "acid_sensor");
@@ -87,7 +87,7 @@ void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
     CHelmet* helmet = smart_cast<CHelmet*>(itm);
 
 
-#ifdef LOST_ALPHA_INV_IND
+
     float value = 0.0f;
     value = floor(value * 55) / 55; 
 	//Усталость
@@ -165,8 +165,6 @@ void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
         m_state[stt_armor1]->set_progress(0.0f);
         //m_state[stt_armor1]->set_text(0.0f);
     }
-
-#endif
 
     m_state[stt_fire]->set_text(0.0f);
     m_state[stt_radia]->set_text(0.0f);
