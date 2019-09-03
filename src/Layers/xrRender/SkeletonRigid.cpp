@@ -108,7 +108,7 @@ void CKinematics::BuildBoneMatrix(
     const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
 {
     bi.mTransform.mul_43(*parent, bd->bind_transform);
-	CalculateBonesAdditionalTransforms(bd, bi, parent, channel_mask); //--#SM+#--
+	CalculateBonesAdditionalTransforms(bd, bi, parent/*,channel_mask*/); //--#SM+#--
 }
 
 void CKinematics::CalculateBonesAdditionalTransforms(
@@ -140,7 +140,7 @@ void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* 
         }
         else
         {
-            BuildBoneMatrix(bd, bi, parent, channel_mask);
+            BuildBoneMatrix(bd, bi, parent/*, channel_mask*/);
 #ifndef MASTER_GOLD
             R_ASSERT2(_valid(bi.mTransform), "anim kils bone matrix");
 #endif // #ifndef MASTER_GOLD
