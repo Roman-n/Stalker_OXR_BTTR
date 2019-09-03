@@ -11,8 +11,6 @@
 #define RAINDROPS 							        // Капли на экран из XRay Oxygen, общие функции + R2
 #define RAINDROPS_R3 						        // Капли на экран R3, зависимость от дефайна RAINDROPS
 #define RAINDROPS_R4 						        // Капли на экран R4, зависимость от дефайна RAINDROPS
-#define FIX_FLASHING_POINTS_LAMPS			        // Исправление мигания света ламп, XRay Oxygen
-#define _STD_EXTENSIONS_SATURATE__LERP 		        // XRay Oxygen, Адаптация новых функций для _std_extensions.h OpenXRay
 #define AMMO_FROM_BELT					            // Патроны берем только с пояса
 #define POLTER_DEATH_SOC					        // Смерть полтера как в ТЧ
 #define POLTER_FIX_DEATH					        // Полтер не кидается предметами после смерти
@@ -23,9 +21,6 @@
 #define ANOMALIUS_ZONE_SOC					        // Перенес код CustomZone и Mincer с ТЧ, при срабатывании зоны вызов функции: self::SpawnArtefact()
 #define ENGINE_THIRST						        // Движковая жажда
 #define ENGINE_SLEEP						        // Движковый сон
-#define FIX_ACTORCONDITION					        // Исправление проверки состояния гг в скриптах, Oxygen
-#define OLD_TYPEDEF							        // Старые типы u16\32, s16\32 для адаптации х32 кода
-#define COLLISION_WPN						        // Коллизия оружия, спасибо Daniel Surs
 #define EXTENDED_ITEM_CALLBACKS                     // Новые каллбеки - eItemToBelt, eItemToSlot, eItemToRuck. Т.е. те функции, которые были в bind_stalker ТЧ
 #define EXTENDED_WEAPON_CALLBACKS                   // Новые функции для скриптов - eOnWeaponZoomIn, eOnWeaponZoomOut, eOnWeaponJammed
 #define INPUT_CALLBACKS                             // Новые функции для биндов клавиш - eKeyPress, eKeyRelease, eKeyHold, eMouseMove, eMouseWheel)
@@ -35,19 +30,14 @@
 #define GAME_OBJECT_EXTENDED_EXPORTS                // Смотри: script_game_object*.cpp/h
 #define GAME_OBJECT_TESTING_EXPORTS                 // Смотри: script_game_object4.cpp  functions for object testing (ie. is_stalker(), is_heli())
 #define NAMESPACE_LEVEL_EXPORTS                     // Смотри: level_script.cpp, новые функции
-#define DETAIL_RADIUS                               // Правильный радиус травы (by K.D.)
 #define GRASS_SHADOWS                               // Тени от травы, без зависаний (by K.D.)
 #define ECO_RENDER                                  // Ограничение кадров в секунду (by alpet)
 //#define FP_DEATH                                  // Смерть от первого лица
 #define DEAD_BODY_COLLISION                         // Коллизия мертвых тел спасибо malandrinus
 #define NEW_ANIMS                                   // Использование новых анимаций (?)
 #define CONFIG_SUN_MOVEMENT                         // Движение солнца по конфигам погоды в .ltx
-#define NEW_SOUNDS                                  // Новые звуки для оружие Р1
-#define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
-#define DIST_TO_POINT_CS							// Показать дистанцию до цели на карте 
-#define NEW_ZOMBIE						        	// НПС не видят зомби пока активна фейк смерть
-#define HIT_SLOWMO									// Опциональный запрет на прыжок при замедлении после укуса
-#define DSAJ										// Снижение скорости после прыжка
+//#define NEW_SOUNDS                                  // Новые звуки для оружие Р1
+//#define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
 #define LOST_ALPHA_HUD_IND				        	// Движковые индикаторы на худ как в Лост Альфе
 #define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
 #define CROW_FIX_POSITION							// Вороны не разлетаются с одной точки при старте игры

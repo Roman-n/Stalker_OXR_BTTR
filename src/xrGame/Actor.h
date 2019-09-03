@@ -206,10 +206,8 @@ protected:
     // Death
     float m_hit_probability;
     float m_hit_slowmo;	
-#ifdef HIT_SLOWMO
 	bool  m_hit_slowmo_jump;
-#endif	
-
+	
     // media
     SndShockEffector* m_sndShockEffector;
     xr_vector<ref_sound> sndHit[ALife::eHitTypeMax];

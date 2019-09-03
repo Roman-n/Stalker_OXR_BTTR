@@ -233,7 +233,7 @@ void CUIZoneMap::UpdateRadar(Fvector pos)
     m_clipFrame.Update();
     m_background.Update();
     m_activeMap->SetActivePoint(pos);
-#ifdef DIST_TO_POINT_CS
+
     if (__type_hud_veter_vremeni || __type_hud_soc || __type_hud_lost_alpha)
     {
         if (IsGameTypeSingle())
@@ -264,7 +264,7 @@ void CUIZoneMap::UpdateRadar(Fvector pos)
             }
         }
     }
-#endif
+
 }
 
 bool CUIZoneMap::ZoomIn() { return true; }

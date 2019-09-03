@@ -88,7 +88,6 @@ CDetailManager::CDetailManager() : xrc("detail manager")
     m_time_pos = 0;
     m_global_time_old = 0;
 
-#ifdef DETAIL_RADIUS
     // KD: variable detail radius
     dm_size = dm_current_size;
     dm_cache_line = dm_current_cache_line;
@@ -112,12 +111,6 @@ CDetailManager::CDetailManager() : xrc("detail manager")
     
     for (u32 i = 0; i < dm_cache_size; ++i)
         new(&cache_pool[i]) Slot();
-    /*
-    CacheSlot1 cache_level1[dm_cache1_line][dm_cache1_line];
-    Slot* cache [dm_cache_line][dm_cache_line]; // grid-cache itself
-    Slot cache_pool [dm_cache_size]; // just memory for slots 
-    */
-#endif
 }
 
 CDetailManager::~CDetailManager()
@@ -127,7 +120,7 @@ CDetailManager::~CDetailManager()
         FS.r_close(dtFS);
         dtFS = NULL;
     }
-#ifdef DETAIL_RADIUS
+
     for (u32 i = 0; i < dm_cache_size; ++i)
         cache_pool[i].~Slot();
     xr_free(cache_pool);
@@ -143,20 +136,10 @@ CDetailManager::~CDetailManager()
         xr_free(cache_level1[i]);
     }
     xr_free(cache_level1);
-#endif
+
 }
 
 #ifndef _EDITOR
-
-/*
-void dump(CDetailManager::vis_list& lst)
-{
-    for (int i = 0; i<lst.size(); i++)
-    {
-        Msg("%8x / %8x / %8x",  lst[i]._M_start, lst[i]._M_finish, lst[i]._M_end_of_storage._M_data);
-    }
-}
-*/
 void CDetailManager::Load()
 {
     // Open file stream

@@ -19,10 +19,8 @@ private:
     CUIStatic m_center;
     CUIStatic m_compass;
     CUIWindow m_clipFrame;
-#ifdef DIST_TO_POINT_CS
     CUIStatic* m_pointerDistanceText;
     CUIStatic* m_pointerDistanceText_16_9;
-#endif	
     CUIStatic m_Counter;
     CUITextWnd m_Counter_text;
     u8 m_current_map_idx;

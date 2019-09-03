@@ -27,9 +27,9 @@ light::light(void) : SpatialBase(g_SpatialSpace)
     m_volumetric_distance = 1;
 
     frame_render = 0;
-#ifdef FIX_FLASHING_POINTS_LAMPS
+
 	virtual_size = .1f;
-#endif	
+
 #if (RENDER == R_R2) || (RENDER == R_R3) || (RENDER == R_R4) || (RENDER == R_GL)
     ZeroMemory(omnipart, sizeof(omnipart));
     s_spot = NULL;
@@ -352,9 +352,8 @@ void light::Export(light_Package& package)
                 L->spatial.sector = spatial.sector; //. dangerous?
                 L->s_spot = s_spot;
                 L->s_point = s_point;
-#ifdef FIX_FLASHING_POINTS_LAMPS			
 				L->set_virtual_size(virtual_size);
-#endif				
+		
 // Holger - do we need to export msaa stuff as well ?
 #if (RENDER == R_R3) || (RENDER == R_R4) || (RENDER == R_GL)
                 if (RImplementation.o.dx10_msaa)

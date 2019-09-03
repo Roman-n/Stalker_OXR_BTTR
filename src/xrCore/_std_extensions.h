@@ -82,13 +82,12 @@ IC T _sqr(T a)
 {
     return a * a;
 }
-#ifdef _STD_EXTENSIONS_SATURATE__LERP
+
 template <class T>
 IC T		saturate(T a)			{ return clampr(a, (T)0, (T)1); }
 
 template <class T>
 IC T		_lerp	(T v0, T v1, T t) { return fma(t, v1, fma(-t, v0, v0)); }
-#endif
 
 IC bool _valid(const float x) noexcept
 {

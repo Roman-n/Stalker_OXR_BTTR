@@ -85,7 +85,7 @@ SCRIPT_EXPORT(CSE_ALifeItemWeapon, (CSE_ALifeItem),
             .def_readwrite("grenade_launcher_status", &CSE_ALifeItemWeapon::m_grenade_launcher_status)
             .def_readwrite("silencer_status", &CSE_ALifeItemWeapon::m_silencer_status)
             .def_readwrite("scope_status", &CSE_ALifeItemWeapon::m_scope_status)
-		.    def("get_ammo_type",		&CSE_ALifeItemWeapon::get_ammo_type)
+			.def("get_ammo_type",		&CSE_ALifeItemWeapon::get_ammo_type)
 		    .def("get_ammo_type2",		&CSE_ALifeItemWeapon::get_ammo_type2)
 		    .def("set_ammo_type",		&CSE_ALifeItemWeapon::set_ammo_type)
 		    .def("set_ammo_type2",		&CSE_ALifeItemWeapon::set_ammo_type2)

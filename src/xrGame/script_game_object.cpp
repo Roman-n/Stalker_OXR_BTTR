@@ -45,6 +45,8 @@
 #include "ui/UIActorMenu.h"
 #include "InventoryBox.h"
 
+#include "ActorCondition.h"
+
 class CScriptBinderObject;
 
 //////////////////////////////////////////////////////////////////////////
@@ -176,40 +178,42 @@ cphysics_shell_scripted* CScriptGameObject::get_physics_shell() const
         return NULL;
     return get_script_wrapper<cphysics_shell_scripted>(*ph_shell_holder->PPhysicsShell());
 }
-#ifdef FIX_ACTORCONDITION
-#include "ActorCondition.h"
+
 float CScriptGameObject::GetSatiety() const 
 { 
-return Actor()->conditions().GetSatiety(); 
+	return Actor()->conditions().GetSatiety(); 
 } 
 
 void CScriptGameObject::ChangeSatiety(float fNewValue) 
 { 
-Actor()->conditions().ChangeSatiety(fNewValue); 
+	Actor()->conditions().ChangeSatiety(fNewValue); 
 }
+
 #ifdef ENGINE_THIRST
-float CScriptGameObject::GetThirst() const 
+	float CScriptGameObject::GetThirst() const 
 { 
-return Actor()->conditions().GetThirst(); 
+	return Actor()->conditions().GetThirst(); 
 } 
 
 void CScriptGameObject::ChangeThirst(float fNewValue) 
 { 
-Actor()->conditions().ChangeThirst(fNewValue); 
+	Actor()->conditions().ChangeThirst(fNewValue); 
 }
 #endif
+
 #ifdef ENGINE_SLEEP
-float CScriptGameObject::GetSleep() const 
+	float CScriptGameObject::GetSleep() const 
 { 
 return Actor()->conditions().GetSleep(); 
 } 
 
 void CScriptGameObject::ChangeSleep(float fNewValue) 
 { 
-Actor()->conditions().ChangeSleep(fNewValue); 
+	Actor()->conditions().ChangeSleep(fNewValue); 
 }
 #endif
-#endif
+
+
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

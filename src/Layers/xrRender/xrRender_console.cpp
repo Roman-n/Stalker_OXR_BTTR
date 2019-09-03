@@ -241,7 +241,6 @@ int ps_r3_dyn_wet_surf_sm_res = 256; // 256
 Flags32 ps_common_flags = {0}; // r1-only
 u32 ps_steep_parallax = 0;
 int ps_r__detail_radius = 49;
-#ifdef DETAIL_RADIUS // управление радиусом отрисовки травы
 u32 dm_size = 24;
 u32 dm_cache1_line = 12; //dm_size*2/dm_cache1_count
 u32 dm_cache_line = 49; //dm_size+1+dm_size
@@ -252,7 +251,6 @@ u32 dm_current_cache1_line = 12; //dm_current_size*2/dm_cache1_count
 u32 dm_current_cache_line = 49; //dm_current_size+1+dm_current_size
 u32 dm_current_cache_size = 2401; //dm_current_cache_line*dm_current_cache_line
 float dm_current_fade = 47.5; //float(2*dm_current_size)-.5f;
-#endif
 float ps_current_detail_density = 0.6f;
 float ps_current_detail_height = 1.f;
 float ps_current_detail_scale = 1.f;
@@ -279,7 +277,7 @@ float ps_r2_gloss_factor = 4.0f;
 //-----------------------------------------------------------------------
 
 //AVO: detail draw radius
-#ifdef DETAIL_RADIUS
+
 class CCC_detail_radius : public CCC_Integer
 {
 public:
@@ -307,7 +305,7 @@ public:
 };
 
 //-AVO
-#endif
+
 
 class CCC_tf_Aniso : public CCC_Integer
 {

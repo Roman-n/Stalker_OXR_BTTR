@@ -3,13 +3,6 @@
 #define TYPES_H
 #include <cstdint>
 #include <limits>
-#ifdef OLD_TYPEDEF
-typedef signed short s16_;
-typedef unsigned short u16_;
-
-typedef signed int s32_;
-typedef unsigned int u32_;
-#endif
 
 // Type defs
 using s8 = std::int8_t;
@@ -17,9 +10,13 @@ using u8 = std::uint8_t;
 
 using s16 = std::int16_t;
 using u16 = std::uint16_t;
+typedef signed short s16_;
+typedef unsigned short u16_;
 
 using s32 = std::int32_t;
 using u32 = std::uint32_t;
+typedef signed int s32_;
+typedef unsigned int u32_;
 
 using s64 = std::int64_t;
 using u64 = std::uint64_t;

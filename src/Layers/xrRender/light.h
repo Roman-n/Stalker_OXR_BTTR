@@ -35,9 +35,8 @@ public:
     float m_volumetric_quality;
     float m_volumetric_intensity;
     float m_volumetric_distance;
-#ifdef FIX_FLASHING_POINTS_LAMPS
 	float virtual_size;
-#endif
+	
 #if (RENDER == R_R2) || (RENDER == R_R3) || (RENDER == R_R4) || (RENDER == R_GL)
     float falloff; // precalc to make light equal to zero at light range
     float attenuation0; // Constant attenuation
@@ -115,11 +114,7 @@ public:
     virtual void set_rotation(const Fvector& D, const Fvector& R);
     virtual void set_cone(float angle);
     virtual void set_range(float R);
-#ifdef FIX_FLASHING_POINTS_LAMPS	
 	virtual void set_virtual_size (float R){ virtual_size = R; };
-#else
-    virtual void set_virtual_size(float){};
-#endif	
     virtual void set_color(const Fcolor& C) { color.set(C); }
     virtual void set_color(float r, float g, float b) { color.set(r, g, b, 1); }
     virtual void set_texture(LPCSTR name);

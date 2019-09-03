@@ -85,9 +85,7 @@ void CZombie::reinit()
     time_dead_start = 0;
     last_hit_frame = 0;
     time_resurrect = 0;
-#ifdef NEW_ZOMBIE
 	fakedeath_is_active		= false;
-#endif	
     fake_death_left = fake_death_count;
 
     active_triple_idx = u8(-1);
@@ -170,9 +168,9 @@ void CZombie::Hit(SHit* pHDS)
                 com_man().ta_activate(anim_triple_death[active_triple_idx]);
                 move().stop();
                 time_dead_start = Device.dwTimeGlobal;
-#ifdef NEW_ZOMBIE				
+				
 				fakedeath_is_active	= true;
-#endif
+				
                 if (fake_death_left == 0)
                     fake_death_left = 1;
                 fake_death_left--;
@@ -192,9 +190,9 @@ void CZombie::shedule_Update(u32 dt)
         if (time_dead_start + TIME_FAKE_DEATH < Device.dwTimeGlobal)
         {
             time_dead_start = 0;
-#ifdef NEW_ZOMBIE
+
 			fakedeath_is_active = false;
-#endif			
+		
             com_man().ta_pointbreak();
 
             time_resurrect = Device.dwTimeGlobal;
@@ -209,9 +207,9 @@ bool CZombie::fake_death_fall_down()
 
     com_man().ta_activate(anim_triple_death[u8(Random.randI(FAKE_DEATH_TYPES_COUNT))]);
     move().stop();
-#ifdef NEW_ZOMBIE
+
 	fakedeath_is_active	= true;
-#endif	
+
     return true;
 }
 
@@ -229,23 +227,8 @@ void CZombie::fake_death_stand_up()
     }
     if (!active)
         return;
-#ifdef NEW_ZOMBIE
+
 	fakedeath_is_active	= false;
-#endif	
+
     com_man().ta_pointbreak();
 }
-
-#ifdef _DEBUG
-void CZombie::debug_on_key(int key)
-{
-    switch (key)
-    {
-    case DIK_MINUS: { fake_death_fall_down();
-    }
-    break;
-    case DIK_EQUALS: { fake_death_stand_up();
-    }
-    break;
-    }
-}
-#endif

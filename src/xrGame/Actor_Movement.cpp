@@ -28,12 +28,11 @@ static const float s_fLandingTime2 = 0.3f; // через сколько снят
 static const float s_fJumpTime = 0.3f;
 static const float s_fJumpGroundTime = 0.1f; // для снятия флажка Jump если на земле
 const float s_fFallTime = 0.2f;
-#ifdef DSAJ
-// Rietmon: Уменьшение скорости после прыжка
+								 // Rietmon: Уменьшение скорости после прыжка
 float f_CoefReturnSpeed = 11.5f; // Rietmon: этот коэф. * DT 
-float s_fDecreaseSpeed = 14.f; // Rietmon: насколько уменьшаем скорость после прыжка
+float s_fDecreaseSpeed = 14.f;   // Rietmon: насколько уменьшаем скорость после прыжка
 float m_fDecreaseWalkAccel;
-#endif
+
 IC static void generate_orthonormal_basis1(const Fvector& dir, Fvector& updir, Fvector& right)
 {
     right.crossproduct(dir, updir); //. <->
@@ -224,10 +223,8 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
         }
         // jump
         m_fJumpTime -= dt;
-#ifdef DSAJ
 		if (m_fDecreaseWalkAccel > 0) m_fDecreaseWalkAccel -= dt * f_CoefReturnSpeed;
-		if (m_fDecreaseWalkAccel < 0) m_fDecreaseWalkAccel = 0;
-#endif		
+		if (m_fDecreaseWalkAccel < 0) m_fDecreaseWalkAccel = 0;	
         if (CanJump() && (mstate_wf & mcJump))
         {
             mstate_real |= mcJump;
@@ -253,9 +250,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 
             Jump = jumpSpd;
             m_fJumpTime = s_fJumpTime;
-#ifdef DSAJ
-			m_fDecreaseWalkAccel = s_fDecreaseSpeed;
-#endif			
+			m_fDecreaseWalkAccel = s_fDecreaseSpeed;		
             //уменьшить силу игрока из-за выполненого прыжка
             if (!GodMode())
                 conditions().ConditionJump(inventory().TotalWeight() / MaxCarryWeight());
@@ -344,11 +339,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 
 				if (inventory().TotalWeight() > MaxCarryWeight())
 					accel_k *= m_fOverweightWalkAccel;
-#ifdef DSAJ
 				scale	=	(accel_k- m_fDecreaseWalkAccel)/scale;
-#else
-				scale	=	accel_k/scale;
-#endif				
 				if (bAccelerated)
 					if (mstate_real&mcBack)
 						scale *= m_fRunBackFactor;
@@ -657,13 +648,8 @@ bool CActor::CanSprint()
 
 bool CActor::CanJump()
 {
-#ifdef HIT_SLOWMO
     bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() && ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && 
 	( !m_hit_slowmo_jump || fis_zero( m_hit_slowmo ) ) && !m_bJumpKeyPressed && !IsZoomAimingMode();
-#else	
-    bool can_Jump = !conditions().IsCantSprint() && !character_physics_support()->movement()->PHCapture() && ((mstate_real & mcJump) == 0) && (m_fJumpTime <= 0.f) && 
-	!m_bJumpKeyPressed && !IsZoomAimingMode();
-#endif	
     return can_Jump;
 }
 
