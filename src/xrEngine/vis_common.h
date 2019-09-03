@@ -1,10 +1,14 @@
 #pragma once
 #include "xrCore/_sphere.h"
 #include "xrCore/_fbox.h"
+#include "vis_object_data.h"
 
 #pragma pack(push, 4)
 struct vis_data
 { 
+private:
+    vis_object_data obj_data_self;
+
 public:
     Fsphere sphere; //
     Fbox box; //
@@ -12,6 +16,13 @@ public:
     u32 accept_frame; // when it was requisted accepted for main render
     u32 hom_frame; // when to perform test - shedule
     u32 hom_tested; // when it was last time tested
+
+	vis_object_data* obj_data;
+                               
+    vis_data() //--#SM+#--
+    {
+        obj_data = &obj_data_self;
+    }
 
     IC void clear()
     {

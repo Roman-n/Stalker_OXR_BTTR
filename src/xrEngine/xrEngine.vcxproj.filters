@@ -561,6 +561,9 @@
     <ClInclude Include="splash.h">
       <Filter>General</Filter>
     </ClInclude>
+	<ClInclude Include="vis_object_data.h">
+      <Filter>Render\Visibility</Filter>
+    </ClInclude>
     <ClInclude Include="ShadersExternalData.h">
       <Filter>Render\Visibility</Filter>
     </ClInclude>

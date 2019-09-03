@@ -210,6 +210,7 @@ public:
     virtual CAttachableItem* cast_attachable_item() override { return NULL; }
     virtual CHolderCustom* cast_holder_custom() override { return NULL; }
     virtual CBaseMonster* cast_base_monster() override { return NULL; }
+	CShellLauncher* cast_shell_launcher() override { return nullptr; }
     virtual bool feel_touch_on_contact(IGameObject*) override { return TRUE; }
     // Utilities
     // XXX: move out
@@ -217,7 +218,9 @@ public:
     static void u_EventSend(NET_Packet& P, u32 dwFlags = 0x0008 /*DPNSEND_GUARANTEED*/);
     // Methods
     virtual void Load(LPCSTR section) override;
+	void PostLoad(LPCSTR section) override;
     virtual void UpdateCL() override; // Called each frame, so no need for dt
+	void PostUpdateCL(bool bUpdateCL_disabled) override;
     virtual void OnChangeVisual() override;
     // object serialization
     virtual void net_Save(NET_Packet& packet) override;
@@ -239,6 +242,8 @@ public:
     virtual GameObjectSavedPosition ps_Element(u32 ID) const override;
     virtual void ForceTransform(const Fmatrix& m) override {}
     virtual void OnHUDDraw(CCustomHUD* hud) override {}
+	void OnRenderHUD(IGameObject* pCurViewEntity) override {} 
+    void OnOwnedCameraMove(CCameraBase* pCam, float fOldYaw, float fOldPitch) override  {}
     virtual BOOL Ready() override { return getReady(); } // update only if active and fully initialized by/for network
     virtual void renderable_Render() override;
     virtual void OnEvent(NET_Packet& P, u16 type) override;

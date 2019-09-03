@@ -44,42 +44,51 @@ DECLARE_TREE_BIND(c_scale);
 DECLARE_TREE_BIND(c_bias);
 DECLARE_TREE_BIND(c_sun);
 
+// SM_TODO: RCache.hemi заменить на более "логичное" место
 static class cl_hud_params : public R_constant_setup //--#SM+#--
 {
-	virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->hud_params); }
-} binder_hud_params;
+    virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->hud_params); }
+}   binder_hud_params;
 
 static class cl_script_params : public R_constant_setup //--#SM+#--
 {
-	virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->m_script_params); }
-} binder_script_params;
+    virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->m_script_params); }
+}   binder_script_params;
 
 static class cl_blend_mode : public R_constant_setup //--#SM+#--
 {
-	virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->m_blender_mode); }
-} binder_blend_mode;
+    virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->m_blender_mode); }
+} 	binder_blend_mode;
 
+class cl_camo_data : public R_constant_setup //--#SM+#--
+{
+   virtual void setup(R_constant* C) { RCache.hemi.c_camo_data = C; }
+}; static cl_camo_data binder_camo_data;
+
+class cl_custom_data : public R_constant_setup //--#SM+#--
+{
+    virtual void setup(R_constant* C) { RCache.hemi.c_custom_data = C; }
+};  static cl_custom_data binder_custom_data;
+
+class cl_entity_data : public R_constant_setup //--#SM+#--
+{
+    virtual void setup(R_constant* C) { RCache.hemi.c_entity_data = C; }
+};  static cl_entity_data binder_entity_data;
 
 class cl_hemi_cube_pos_faces : public R_constant_setup
 {
     virtual void setup(R_constant* C) { RCache.hemi.set_c_pos_faces(C); }
-};
-
-static cl_hemi_cube_pos_faces binder_hemi_cube_pos_faces;
+};  static cl_hemi_cube_pos_faces binder_hemi_cube_pos_faces;
 
 class cl_hemi_cube_neg_faces : public R_constant_setup
 {
     virtual void setup(R_constant* C) { RCache.hemi.set_c_neg_faces(C); }
-};
-
-static cl_hemi_cube_neg_faces binder_hemi_cube_neg_faces;
+};  static cl_hemi_cube_neg_faces binder_hemi_cube_neg_faces;
 
 class cl_material : public R_constant_setup
 {
     virtual void setup(R_constant* C) { RCache.hemi.set_c_material(C); }
-};
-
-static cl_material binder_material;
+};  static cl_material binder_material;
 
 class cl_texgen : public R_constant_setup
 {
@@ -352,9 +361,13 @@ void CBlender_Compile::SetMapping()
 {
     r_Constant("ogse_c_screen", &binder_screen_params);
 	
-	r_Constant				("m_hud_params",	&binder_hud_params);	//--#SM+#--
-	r_Constant				("m_script_params", &binder_script_params); //--#SM+#--
+	r_Constant				("m_hud_params",	&binder_hud_params);	  //--#SM+#--
+	r_Constant				("m_script_params", &binder_script_params);  //--#SM+#--
 	r_Constant				("m_blender_mode",	&binder_blend_mode);	//--#SM+#--
+	
+	r_Constant("m_obj_camo_data", &binder_camo_data); 		 //--#SM+#--
+    r_Constant("m_obj_custom_data", &binder_custom_data);   //--#SM+#--
+    r_Constant("m_obj_entity_data", &binder_entity_data);  //--#SM+#--
 	
     // matrices
     r_Constant("m_W", &binder_w);

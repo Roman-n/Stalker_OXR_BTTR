@@ -105,12 +105,29 @@ void CKinematics::CalculateBones(BOOL bForceExact)
 }
 
 void CKinematics::BuildBoneMatrix(
-    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /*= (1<<0)*/)
+    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
 {
     bi.mTransform.mul_43(*parent, bd->bind_transform);
+	CalculateBonesAdditionalTransforms(bd, bi, parent, channel_mask); //--#SM+#--
 }
 
-void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /*= (1<<0)*/)
+void CKinematics::CalculateBonesAdditionalTransforms(
+    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /* = (1<<0)*/)
+{
+    // bi.mTransform.c - содержит смещение относительно первой кости модели\центра сцены (0, 0, 0)
+    for (auto& it : m_bones_offsets)
+    {
+        if (it.m_bone_id == bd->GetSelfID())
+        {
+            const Fvector vOldPos = bi.mTransform.c;
+            bi.mTransform.mulB_43(it.m_transform); // Rotation
+            bi.mTransform.c.add(vOldPos, it.m_transform.c); // Translation
+        }
+    }
+}
+
+
+void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
 {
     u16 SelfID = bd->GetSelfID();
 

@@ -52,6 +52,7 @@ IGameObject* IGame_ObjectPool::create(LPCSTR name)
     }
     O->cNameSect_set(name);
     O->Load(name);
+	O->PostLoad(name);
     return O;
 }
 

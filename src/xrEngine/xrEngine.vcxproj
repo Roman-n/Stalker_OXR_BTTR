@@ -360,6 +360,7 @@
     <ClInclude Include="thunderbolt.h" />
     <ClInclude Include="tntQAVI.h" />
     <ClInclude Include="vis_common.h" />
+	<ClInclude Include="vis_object_data.h" />
     <ClInclude Include="WaveForm.h" />
     <ClInclude Include="xrHemisphere.h" />
     <ClInclude Include="xrImage_Resampler.h" />

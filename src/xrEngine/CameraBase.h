@@ -88,6 +88,33 @@ public:
     virtual float CheckLimPitch();
     virtual float CheckLimRoll();
 
+private: //--#SM+#--
+    float saved_yaw, saved_pitch, saved_roll;
+    Fvector vSavedPosition;
+    Fvector vSavedDirection;
+    Fvector vSavedNormal;
+
+public: //--#SM+#--
+    virtual void SaveCamVec()
+    {
+        saved_yaw = yaw;
+        saved_pitch = pitch;
+        saved_roll = roll;
+        vSavedPosition = vPosition;
+        vSavedDirection = vDirection;
+        vSavedNormal = vNormal;
+    }
+    virtual void RestoreCamVec()
+    {
+        yaw = saved_yaw;
+        pitch = saved_pitch;
+        roll = saved_roll;
+        vPosition = vSavedPosition;
+        vDirection = vSavedDirection;
+        vNormal = vSavedNormal;
+    }
+    virtual IGameObject* GetOwner() { return parent; }
+
 };
 
 template <typename T>

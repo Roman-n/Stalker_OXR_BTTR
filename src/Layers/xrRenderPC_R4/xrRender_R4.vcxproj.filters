@@ -719,7 +719,10 @@
     </ClInclude>
     <ClInclude Include="blender_rain_drops.h">
       <Filter>Shading templates</Filter>
-    </ClInclude>	
+    </ClInclude>
+	<ClInclude Include="..\xrRender\KinematicsAddBoneTransform.hpp">
+      <Filter>Refactored\Execution &amp; 3D\Visuals\Skeleton</Filter>
+    </ClInclude>
     <ClInclude Include="blender_ss_sunshafts.h">
       <Filter>Shading templates</Filter>
     </ClInclude>

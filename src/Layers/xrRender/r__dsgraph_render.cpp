@@ -186,6 +186,8 @@ void D3DXRenderBase::r_dsgraph_render_graph(u32 _priority)
 #ifdef USE_DX11
                                         RCache.LOD.set_LOD(LOD);
 #endif
+										RCache.hemi.c_update(it_it.pVisual);
+										
                                         it_it.pVisual->Render(LOD);
                                     }
                                     items.clear();
@@ -301,6 +303,8 @@ void D3DXRenderBase::r_dsgraph_render_graph(u32 _priority)
 #ifdef USE_DX11
                                     RCache.LOD.set_LOD(LOD);
 #endif
+									RCache.hemi.c_update(ni_it.pVisual);
+									
                                     ni_it.pVisual->Render(LOD);
                                 }
                                 items.clear();
@@ -395,6 +399,7 @@ IC void render_item(T &item)
     RCache.set_xform_world(item.second.Matrix);
     RImplementation.apply_object(item.second.pObject);
     RImplementation.apply_lmaterial();
+	RCache.hemi.c_update(V);
     V->Render(calcLOD(item.first, V->vis.sphere.R));
 }
 

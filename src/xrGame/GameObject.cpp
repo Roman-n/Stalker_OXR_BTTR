@@ -249,6 +249,9 @@ void CGameObject::Load(LPCSTR section)
     }
 }
 
+void CGameObject::PostLoad(LPCSTR section) {}
+void CGameObject::PostUpdateCL(bool bUpdateCL_disabled) {}
+
 void CGameObject::init()
 {
     m_lua_game_object = 0;

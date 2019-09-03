@@ -281,6 +281,12 @@ void CObjectList::Update(bool bForce)
             for (IGameObject** i = b; i != e; ++i)
                 SingleUpdate(*i);
 			
+			for (auto& object : objects_active)
+                object->PostUpdateCL(false);
+
+            for (auto& object : objects_sleeping)
+                object->PostUpdateCL(true);
+			
             stats.Update.End();
         }
     }
