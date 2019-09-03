@@ -17,7 +17,7 @@
 #ifdef COLLISION_WPN
 ENGINE_API float psHUD_FOV_def = 0.35f; //--#SM+#--	Дефолтный HUD FOV (В % от Camera FOV) [default hud_fov (perc. of g_fov)]
 ENGINE_API float psHUD_FOV = psHUD_FOV_def; //--#SM+#-- Текущий HUD FOV (В % от Camera FOV) [current hud_fov (perc. of g_fov)]
-ENGINE_API float VIEWPORT_NEAR = 0.05f; //--#SM+#-- (Old: 0.2f)
+ENGINE_API float VIEWPORT_NEAR = 0.2f; //--#SM+#-- (Old: 0.2f)
 #endif
 
 ENGINE_API xr_vector<xr_token> AvailableVideoModes;
@@ -679,14 +679,9 @@ void CCC_Register()
 	CMD3(CCC_Mask, "rs_fps", &psDeviceFlags, rsShowFPS);
     CMD4(CCC_Float, "rs_vis_distance", &psVisDistance, 0.4f, 1.5f);
 
-	CMD4(CCC_Float, "r_viewport_near", &VIEWPORT_NEAR, 0.05f, 1.f);
+	CMD4(CCC_Float, "r_viewport_near", &VIEWPORT_NEAR, 0.2f, 1.f);
 
     CMD3(CCC_Mask, "rs_cam_pos", &psDeviceFlags, rsCameraPos);
-#ifdef DEBUG
-    CMD3(CCC_Mask, "rs_occ_draw", &psDeviceFlags, rsOcclusionDraw);
-    CMD3(CCC_Mask, "rs_occ_stats", &psDeviceFlags, rsOcclusionStats);
-// CMD4(CCC_Integer, "rs_skeleton_update", &psSkeletonUpdate, 2, 128 );
-#endif // DEBUG
 
     CMD2(CCC_Gamma, "rs_c_gamma", &ps_gamma);
     CMD2(CCC_Gamma, "rs_c_brightness", &ps_brightness);
