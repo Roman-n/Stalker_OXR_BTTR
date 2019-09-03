@@ -787,6 +787,14 @@ bool CScriptGameObject::Use(CScriptGameObject* obj)
     return false;
 }
 
+void CScriptGameObject::SetAmmoElapsed(int ammo_elapsed)
+{
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
+    if (!weapon)
+        return;
+    weapon->SetAmmoElapsed(ammo_elapsed);
+}
+
 void CScriptGameObject::StartTrade(CScriptGameObject* obj)
 {
     CActor* actor = smart_cast<CActor*>(&obj->object());
