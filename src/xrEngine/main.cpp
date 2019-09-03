@@ -17,9 +17,6 @@
 #include "xrSASH.h"
 #include "xr_ioc_cmd.h"
 
-#ifdef __DISCORD_API
-#include "DiscordRichPresense.h"
-#endif
 
 #ifdef MASTER_GOLD
 #define NO_MULTI_INSTANCES
@@ -144,10 +141,7 @@ ENGINE_API void Startup()
     R_ASSERT(g_pGamePersistent);
     g_SpatialSpace = new ISpatial_DB("Spatial obj");
     g_SpatialSpacePhysic = new ISpatial_DB("Spatial phys");
-#ifdef __DISCORD_API
-    g_discord.Initialize();
-    g_discord.Shutdown();
-#endif
+
     // Main cycle
     Device.Run();
     // Destroy APP

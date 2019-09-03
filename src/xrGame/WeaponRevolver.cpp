@@ -33,7 +33,7 @@ void CWeaponRevolver::PlayAnimShow()
 {
     VERIFY(GetState()==eShowing);
 
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
         PlayHUDMotion("anm_show_empty", false, this, GetState());
     else
         inherited::PlayAnimShow();
@@ -41,7 +41,7 @@ void CWeaponRevolver::PlayAnimShow()
 
 void CWeaponRevolver::PlayAnimBore()
 {
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
         PlayHUDMotion("anm_bore_empty", true, this, GetState());
     else
         inherited::PlayAnimBore();
@@ -49,7 +49,7 @@ void CWeaponRevolver::PlayAnimBore()
 
 void CWeaponRevolver::PlayAnimIdleSprint()
 {
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
         PlayHUDMotion("anm_idle_sprint_empty", true, nullptr, GetState());
     else
         inherited::PlayAnimIdleSprint();
@@ -57,7 +57,7 @@ void CWeaponRevolver::PlayAnimIdleSprint()
 
 void CWeaponRevolver::PlayAnimIdleMoving()
 {
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
         PlayHUDMotion("anm_idle_moving_empty", true, nullptr, GetState());
     else
         inherited::PlayAnimIdleMoving();
@@ -68,7 +68,7 @@ void CWeaponRevolver::PlayAnimIdle()
 {
     if (TryPlayAnimIdle()) return;
 
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
         PlayHUDMotion("anm_idle_empty", true, nullptr, GetState());
     else
         inherited::PlayAnimIdle();
@@ -76,7 +76,7 @@ void CWeaponRevolver::PlayAnimIdle()
 
 void CWeaponRevolver::PlayAnimAim()
 {
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
         PlayHUDMotion("anm_idle_aim_empty", true, nullptr, GetState());
     else
         inherited::PlayAnimAim();
@@ -86,15 +86,15 @@ void CWeaponRevolver::PlayAnimReload()
 {
     auto state = GetState();
     VERIFY(state  == eReload);
-    if (m_ammoElapsed.type1 == 1)
+    if (iAmmoElapsed == 1)
         PlayHUDMotion("anm_reload_1", true, this, state);
-    else if (m_ammoElapsed.type1 == 2)
+    else if (iAmmoElapsed == 2)
         PlayHUDMotion("anm_reload_2", true, this, state);
-    else if (m_ammoElapsed.type1 == 3)
+    else if (iAmmoElapsed == 3)
         PlayHUDMotion("anm_reload_3", true, this, state);
-    else if (m_ammoElapsed.type1 == 4)
+    else if (iAmmoElapsed  == 4)
         PlayHUDMotion("anm_reload_4", true, this, state);
-    else if (m_ammoElapsed.type1 == 5)
+    else if (iAmmoElapsed == 5)
         PlayHUDMotion("anm_reload_5", true, this, state);
     else
         PlayHUDMotion("anm_reload", true, this, state);
@@ -105,7 +105,7 @@ void CWeaponRevolver::PlayAnimReload()
 void CWeaponRevolver::PlayAnimHide()
 {
     VERIFY(GetState()==eHiding);
-    if (m_ammoElapsed.type1 == 0)
+    if (iAmmoElapsed == 0)
     {
         PlaySound("sndClose", get_LastFP());
         PlayHUDMotion("anm_hide_empty", true, this, GetState());
@@ -117,7 +117,7 @@ void CWeaponRevolver::PlayAnimHide()
 void CWeaponRevolver::PlayAnimShoot()
 {
     VERIFY(GetState()==eFire);
-    if (m_ammoElapsed.type1 > 1)
+    if (iAmmoElapsed > 1)
         PlayHUDMotion("anm_shots", false, this, GetState());
     else
         PlayHUDMotion("anm_shot_l", false, this, GetState());

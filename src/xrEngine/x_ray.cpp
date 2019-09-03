@@ -18,9 +18,7 @@
 #include "xrSASH.h"
 #include "xrServerEntities/smart_cast.h"
 #include "xr_input.h"
-#ifdef __DISCORD_API
-#include "DiscordRichPresense.h"
-#endif
+
 //---------------------------------------------------------------------
 
 ENGINE_API CApplication* pApp = nullptr;
@@ -414,9 +412,6 @@ void CApplication::Level_Set(u32 L)
 
     if (path[0] && loadingScreen)
         loadingScreen->SetLevelLogo(path);
-#ifdef __DISCORD_API	
-	g_discord.SetStatus(xrDiscordPresense::StatusId::In_Game);
-#endif	
 }
 
 int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
@@ -449,13 +444,7 @@ int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
     for (u32 I = 0; I < Levels.size(); ++I)
     {
         if (0 == xr_stricmp(buffer, Levels[I].folder))
-        {
-#ifdef __DISCORD_API			
-			if (Levels[I].name == nullptr)
-			{
-				Levels[I].name = strdup(name);
-			}
-#endif			
+        {	
             result = int(I);
             break;
         }

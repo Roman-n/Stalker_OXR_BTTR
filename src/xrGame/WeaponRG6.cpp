@@ -19,14 +19,14 @@ BOOL CWeaponRG6::net_Spawn(CSE_Abstract* DC)
     if (!l_res)
         return l_res;
 
-    if (m_ammoElapsed.type1 && !getCurrentRocket())
+    if (iAmmoElapsed && !getCurrentRocket())
     {
         shared_str grenade_name = m_ammoTypes[0];
         shared_str fake_grenade_name = pSettings->r_string(grenade_name, "fake_grenade_name");
 
         if (fake_grenade_name.size())
         {
-            int k = m_ammoElapsed.type1;
+            int k = iAmmoElapsed;
             while (k)
             {
                 k--;
@@ -46,7 +46,7 @@ void CWeaponRG6::Load(LPCSTR section)
 
 void CWeaponRG6::FireStart()
 {
-    if (GetState() == eIdle && getRocketCount() && m_ammoElapsed.type1)
+    if (GetState() == eIdle && getRocketCount() && iAmmoElapsed)
     {
         inheritedSG::FireStart();
 
@@ -126,7 +126,7 @@ u8 CWeaponRG6::AddCartridge(u8 cnt)
 {
     u8 t = inheritedSG::AddCartridge(cnt);
     u8 k = cnt - t;
-    shared_str fake_grenade_name = pSettings->r_string(m_ammoTypes[m_ammoType.type1].c_str(), "fake_grenade_name");
+    shared_str fake_grenade_name = pSettings->r_string(m_ammoTypes[iAmmoElapsed].c_str(), "fake_grenade_name");
     while (k)
     {
         --k;

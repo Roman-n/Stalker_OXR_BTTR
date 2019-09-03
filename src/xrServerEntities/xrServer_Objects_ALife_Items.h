@@ -166,6 +166,53 @@ class CSE_ALifeItemWeapon : public CSE_ALifeItem
     using inherited = CSE_ALifeItem;
 
 public:
+
+    typedef ALife::EWeaponAddonStatus EWeaponAddonStatus;
+
+    //текущее состояние аддонов
+    enum EWeaponAddonState
+    {
+        eWeaponAddonScope = 0x01,
+        eWeaponAddonGrenadeLauncher = 0x02,
+        eWeaponAddonSilencer = 0x04
+    };
+
+    EWeaponAddonStatus m_scope_status;
+    EWeaponAddonStatus m_silencer_status;
+    EWeaponAddonStatus m_grenade_launcher_status;
+
+    u32 timestamp;
+    u8 wpn_flags;
+    u8 wpn_state;
+    u8 ammo_type;
+    u16 a_current;
+    u16 a_elapsed;
+    u8 cur_scope;
+    // count of grenades to spawn in grenade launcher [ttcccccc]
+    // WARNING! hight 2 bits (tt bits) indicate type of grenade, so maximum grenade count is 2^6 = 64
+    struct grenade_count_t
+    {
+        u8 grenades_count : 6;
+        u8 grenades_type : 2;
+        u8 pack_to_byte() const { return (grenades_type << 6) | grenades_count; }
+        void unpack_from_byte(u8 const b)
+        {
+            grenades_type = (b >> 6);
+            grenades_count = b & 0x3f; // 111111
+        }
+    }; // struct grenade_count_t
+    grenade_count_t a_elapsed_grenades;
+
+    float m_fHitPower;
+    ALife::EHitType m_tHitType;
+    LPCSTR m_caAmmoSections;
+    u32 m_dwAmmoAvailable;
+    Flags8 m_addon_flags;
+    u8 m_bZoom;
+    u32 m_ef_main_weapon_type;
+    u32 m_ef_weapon_type;
+
+    /*
     typedef ALife::EWeaponAddonStatus EWeaponAddonStatus;
 
     //текущее состояние аддонов
@@ -235,7 +282,7 @@ public:
     u8 m_bZoom;
     u32 m_ef_main_weapon_type;
     u32 m_ef_weapon_type;
-
+*/
     CSE_ALifeItemWeapon(LPCSTR caSection);
     virtual ~CSE_ALifeItemWeapon();
     virtual void OnEvent(NET_Packet& P, u16 type, u32 time, ClientID sender);
@@ -244,6 +291,8 @@ public:
     u8 get_slot();
     u16 get_ammo_limit();
     u16 get_ammo_total();
+
+    /*
 	u16								get_ammo_elapsed() { return a_elapsed.type1; };
 	void							set_ammo_elapsed(u16 count) { a_elapsed.type1 = count; };
 	u16								get_ammo_elapsed2() { return a_elapsed.type2; };
@@ -252,6 +301,16 @@ public:
 	void							set_ammo_type(u8 count) { ammo_type.type1 = count; };
 	u8								get_ammo_type2() { return ammo_type.type2; };
 	void							set_ammo_type2(u8 count) { ammo_type.type2 = count; };
+    */
+
+    u16                             get_ammo_elapsed() { return a_elapsed; };
+    void                            set_ammo_elapsed(u16 count) { a_elapsed = count; };
+    u16                             get_ammo_elapsed2() { return a_elapsed; };
+    void                            set_ammo_elapsed2(u16 count) { a_elapsed = count; };
+    u8                              get_ammo_type() { return ammo_type; };
+    void                            set_ammo_type(u8 count) { ammo_type = count; };
+    u8                              get_ammo_type2() { return ammo_type; };
+    void                            set_ammo_type2(u8 count) { ammo_type = count; };
 
     u16 get_ammo_magsize();
     Flags8& get_addon_flags() { return m_addon_flags; }

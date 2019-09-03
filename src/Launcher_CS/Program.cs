@@ -4,13 +4,11 @@
 
 #define BTTR
 using System;
-
-/*
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-*/
+
 
 namespace launcher_stalker
 {
@@ -93,7 +91,23 @@ namespace launcher_stalker
                             Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
+/*
+                    case 's':
+                        {
+                            System.Diagnostics.Process.Start("OpenXRay");
+                            CC(ConsoleColor.Cyan);
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
+                            break;
+                        }
 
+                    case 'c':
+                        {
+                            System.Diagnostics.Process.Start("OpenXRay - console");
+                            CC(ConsoleColor.Cyan);
+                            Console.WriteLine("\nСтарт... обновление ввода команды");
+                            break;
+                        }
+*/
                     case '7':
                         {
                             Environment.Exit(0);
@@ -171,8 +185,12 @@ namespace launcher_stalker
             Command("5", "DirectX 11");
 
             Command("6", "Render OpenGL - не работает");
+/*
+            Command1("s", "Запуск без ключей рендеров, разрешены все команды");
 
-            Command("7", "Выход из лаунчера");
+            Command1("c", "Запуск игры с разрешенной консолью, без ключа рендера");
+*/
+            Command1("7", "Выход из лаунчера");
 
 
             Console.WriteLine();
@@ -192,9 +210,9 @@ namespace launcher_stalker
                 {
                     Console.ForegroundColor = color;
                 }
-            static void Command_other(string s1, string s2)
+            static void Command1(string s1, string s2)
                 {
-                    CC1(ConsoleColor.Green); Console.Write(s1); CC1(ConsoleColor.Cyan); Console.Write(" - " + s2 + "\n");
+                    CC1(ConsoleColor.Yellow); Console.Write(s1); CC1(ConsoleColor.Cyan); Console.Write(" - " + s2 + "\n");
                 }
     }
 }

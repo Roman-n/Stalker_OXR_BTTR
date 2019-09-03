@@ -249,8 +249,6 @@ void CGameObject::Load(LPCSTR section)
     }
 }
 
-void CGameObject::PostLoad(LPCSTR section) {}
-
 void CGameObject::init()
 {
     m_lua_game_object = 0;
@@ -1364,118 +1362,8 @@ void CGameObject::UpdateCL()
     m_previous_matrix = XFORM();
 }
 
-void CGameObject::PostUpdateCL(bool bUpdateCL_disabled) {}
 
 void CGameObject::on_matrix_change(const Fmatrix& previous) { obstacle().on_move(); }
-#ifdef DEBUG
-
-void render_box(
-    IRenderVisual* visual, const Fmatrix& xform, const Fvector& additional, bool draw_child_boxes, const u32& color)
-{
-    CDebugRenderer& renderer = Level().debug_renderer();
-    IKinematics* kinematics = smart_cast<IKinematics*>(visual);
-    VERIFY(kinematics);
-    u16 bone_count = kinematics->LL_BoneCount();
-    VERIFY(bone_count);
-    u16 visible_bone_count = kinematics->LL_VisibleBoneCount();
-    if (!visible_bone_count)
-        return;
-
-    Fmatrix matrix;
-    Fvector* points = (Fvector*)_alloca(visible_bone_count * 8 * sizeof(Fvector));
-    Fvector* I = points;
-    for (u16 i = 0; i < bone_count; ++i)
-    {
-        if (!kinematics->LL_GetBoneVisible(i))
-            continue;
-
-        const Fobb& obb = kinematics->LL_GetData(i).obb;
-        if (fis_zero(obb.m_halfsize.square_magnitude()))
-        {
-            VERIFY(visible_bone_count > 1);
-            --visible_bone_count;
-            continue;
-        }
-
-        Fmatrix Mbox;
-        obb.xform_get(Mbox);
-
-        const Fmatrix& Mbone = kinematics->LL_GetBoneInstance(i).mTransform;
-        Fmatrix X;
-        matrix.mul_43(xform, X.mul_43(Mbone, Mbox));
-
-        Fvector half_size = Fvector().add(obb.m_halfsize, additional);
-        matrix.mulB_43(Fmatrix().scale(half_size));
-
-        if (draw_child_boxes)
-            renderer.draw_obb(matrix, color);
-
-        static const Fvector local_points[8] = {Fvector().set(-1.f, -1.f, -1.f), Fvector().set(-1.f, -1.f, +1.f),
-            Fvector().set(-1.f, +1.f, +1.f), Fvector().set(-1.f, +1.f, -1.f), Fvector().set(+1.f, +1.f, +1.f),
-            Fvector().set(+1.f, +1.f, -1.f), Fvector().set(+1.f, -1.f, +1.f), Fvector().set(+1.f, -1.f, -1.f)};
-
-        for (u32 i = 0; i < 8; ++i, ++I)
-            matrix.transform_tiny(*I, local_points[i]);
-    }
-
-    VERIFY(visible_bone_count);
-    if (visible_bone_count == 1)
-    {
-        renderer.draw_obb(matrix, color);
-        return;
-    }
-
-    VERIFY((I - points) == (visible_bone_count * 8));
-    MagicBox3 box = MagicMinBox(visible_bone_count * 8, points);
-    box.ComputeVertices(points);
-
-    Fmatrix result;
-    result.identity();
-
-    result.c = box.Center();
-
-    result.i.sub(points[3], points[2]).normalize();
-    result.j.sub(points[2], points[1]).normalize();
-    result.k.sub(points[2], points[6]).normalize();
-
-    Fvector scale;
-    scale.x = points[3].distance_to(points[2]) * .5f;
-    scale.y = points[2].distance_to(points[1]) * .5f;
-    scale.z = points[2].distance_to(points[6]) * .5f;
-    result.mulB_43(Fmatrix().scale(scale));
-
-    renderer.draw_obb(result, color);
-}
-
-void CGameObject::OnRender()
-{
-    if (!ai().get_level_graph())
-        return;
-
-    CDebugRenderer& renderer = Level().debug_renderer();
-    if (/**bDebug && /**/ Visual())
-    {
-        float half_cell_size = 1.f * ai().level_graph().header().cell_size() * .5f;
-        Fvector additional = Fvector().set(half_cell_size, half_cell_size, half_cell_size);
-
-        render_box(Visual(), XFORM(), Fvector().set(0.f, 0.f, 0.f), true, color_rgba(0, 0, 255, 255));
-        render_box(Visual(), XFORM(), additional, false, color_rgba(0, 255, 0, 255));
-    }
-
-    if (0)
-    {
-        Fvector bc, bd;
-        Visual()->getVisData().box.get_CD(bc, bd);
-        Fmatrix M = Fidentity;
-        float half_cell_size = ai().level_graph().header().cell_size() * .5f;
-        bd.add(Fvector().set(half_cell_size, half_cell_size, half_cell_size));
-        M.scale(bd);
-        Fmatrix T = XFORM();
-        T.c.add(bc);
-        renderer.draw_obb(T, bd, color_rgba(255, 255, 255, 255));
-    }
-}
-#endif // DEBUG
 
 using namespace luabind; // XXX: is it required here?
 

@@ -1776,7 +1776,7 @@ void CScriptGameObject::Weapon_AddonDetach(pcstr item_section, bool b_spawn_item
     if (weapon->CanDetach(item_section))
         weapon->Detach(item_section, b_spawn_item);
 }
-
+/*
 void CScriptGameObject::Weapon_SetCurrentScope(u8 type)
 {
     CWeaponMagazined* weapon = smart_cast<CWeaponMagazined*>(&object());
@@ -1786,7 +1786,7 @@ void CScriptGameObject::Weapon_SetCurrentScope(u8 type)
         return;
     }
 
-    weapon->m_cur_addon.scope = type;
+    weapon->cur_scope = type;
 }
 
 u8 CScriptGameObject::Weapon_GetCurrentScope()
@@ -1799,7 +1799,7 @@ u8 CScriptGameObject::Weapon_GetCurrentScope()
     }
     return weapon->m_cur_addon.scope;
 }
-
+*/
 LPCSTR CScriptGameObject::Weapon_GetAmmoSection(u8 ammo_type)
 {
     CWeaponMagazined* weapon = smart_cast<CWeaponMagazined*>(&object());

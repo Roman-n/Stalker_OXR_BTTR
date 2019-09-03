@@ -199,6 +199,9 @@ public:
     _DECLARE_FUNCTION10(getEnabled, BOOL);
     _DECLARE_FUNCTION10(story_id, ALife::_STORY_ID);
 
+    u8 GetWeaponSubstate();
+    u8 GetAmmoType();
+
     LPCSTR Name() const;
     shared_str cName() const;
     LPCSTR Section() const;
@@ -484,7 +487,7 @@ public:
 
     LPCSTR GetPatrolPathName();
     u32 GetAmmoElapsed();
-    void SetAmmoElapsed(int ammo_elapsed);
+//    void SetAmmoElapsed(int ammo_elapsed);
     u32 GetSuitableAmmoTotal() const;
     void SetQueueSize(u32 queue_size);
     CScriptGameObject* GetBestEnemy();
@@ -861,8 +864,7 @@ public:
     void SetWeaponType(u32 type);
     u32 GetMainWeaponType();
     u32 GetWeaponType();
-    u8 GetWeaponSubstate();
-    u8 GetAmmoType();
+  
 
     //CWeaponAmmo
     u16 AmmoGetCount();

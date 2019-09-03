@@ -456,11 +456,11 @@ void CSE_ALifeItemTorch::FillProps(LPCSTR pref, PropItemVec& values) { inherited
 ////////////////////////////////////////////////////////////////////////////
 CSE_ALifeItemWeapon::CSE_ALifeItemWeapon(LPCSTR caSection) : CSE_ALifeItem(caSection)
 {
-    a_elapsed.data = 0;
+    a_elapsed = 0;
 
     wpn_flags = 0;
     wpn_state = 0;
-    ammo_type.data = 0;
+    ammo_type = 0;
 	cur_scope = 0;
 
     m_fHitPower = pSettings->r_float(caSection, "hit_power");
@@ -497,9 +497,9 @@ void CSE_ALifeItemWeapon::UPDATE_Read(NET_Packet& tNetPacket)
 
     tNetPacket.r_float_q8(m_fCondition, 0.0f, 1.0f);
     tNetPacket.r_u8(wpn_flags);
-    tNetPacket.r_u16(a_elapsed.data);
+    tNetPacket.r_u16(a_elapsed);
     tNetPacket.r_u8(m_addon_flags.flags);
-    tNetPacket.r_u8(ammo_type.data);
+    tNetPacket.r_u8(ammo_type);
     tNetPacket.r_u8(wpn_state);
     tNetPacket.r_u8(m_bZoom);
 	if (m_wVersion > 128)
@@ -517,9 +517,9 @@ void CSE_ALifeItemWeapon::UPDATE_Write(NET_Packet& tNetPacket)
 
     tNetPacket.w_float_q8(m_fCondition, 0.0f, 1.0f);
     tNetPacket.w_u8(wpn_flags);
-    tNetPacket.w_u16(a_elapsed.data);
+    tNetPacket.w_u16(a_elapsed);
     tNetPacket.w_u8(m_addon_flags.get());
-    tNetPacket.w_u8(ammo_type.data);
+    tNetPacket.w_u8(ammo_type);
     tNetPacket.w_u8(wpn_state);
     tNetPacket.w_u8(m_bZoom);
 	tNetPacket.w_u8(cur_scope);
@@ -528,17 +528,17 @@ void CSE_ALifeItemWeapon::UPDATE_Write(NET_Packet& tNetPacket)
 void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
     inherited::STATE_Read(tNetPacket, size);
-	a_current_addon.data = tNetPacket.r_u16();
- 	if (a_current_addon.data == 90) //Alun: Hack because all.spawn ammo_current all set to 90. Since this unlikely anyway (launcher=26, silencer=1, scope=0), this hack is okay.
-		a_current_addon.data = 0;
- 	tNetPacket.r_u16(a_elapsed.data);
+	a_current = tNetPacket.r_u16();
+ 	if (a_current == 90) //Alun: Hack because all.spawn ammo_current all set to 90. Since this unlikely anyway (launcher=26, silencer=1, scope=0), this hack is okay.
+		a_current = 0;
+ 	tNetPacket.r_u16(a_elapsed);
 	tNetPacket.r_u8(wpn_state);
 
     if (m_wVersion > 40)
         tNetPacket.r_u8(m_addon_flags.flags);
 
     if (m_wVersion > 46)
-        tNetPacket.r_u8(ammo_type.data);
+        tNetPacket.r_u8(ammo_type);
 
     if (m_wVersion > 122)
         tNetPacket.r_u8(); // Alun: Currently unused
@@ -550,11 +550,11 @@ void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
 void CSE_ALifeItemWeapon::STATE_Write(NET_Packet& tNetPacket)
 {
     inherited::STATE_Write(tNetPacket);
-    tNetPacket.w_u16(a_current_addon.data);
-    tNetPacket.w_u16(a_elapsed.data);
+    tNetPacket.w_u16(a_current);
+    tNetPacket.w_u16(a_elapsed);
     tNetPacket.w_u8(wpn_state);
     tNetPacket.w_u8(m_addon_flags.get());
-    tNetPacket.w_u8(ammo_type.data);
+    tNetPacket.w_u8(ammo_type);
     tNetPacket.w_u8(0);
 	tNetPacket.w_u8(cur_scope);
 }

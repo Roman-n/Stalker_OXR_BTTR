@@ -15,15 +15,10 @@ IC bool pred_sp_sort(ISpatial* _1, ISpatial* _2)
 void CRender::render_main(Fmatrix& m_ViewProjection, bool _fportals)
 {
     PIX_EVENT(render_main);
-    //	Msg						("---begin");
     marker++;
 
-    // Calculate sector(s) and their objects
     if (pLastSector)
     {
-        //!!!
-        //!!! BECAUSE OF PARALLEL HOM RENDERING TRY TO DELAY ACCESS TO HOM AS MUCH AS POSSIBLE
-        //!!!
         {
             // Traverse object database
             g_SpatialSpace->q_frustum(
@@ -559,20 +554,4 @@ void CRender::render_forward()
     }
 
     RImplementation.o.distortion = FALSE; // disable distorion
-}
-
-// Перед началом рендера мира --#SM+#-- +SecondVP+
-void CRender::BeforeWorldRender() {}
-
-// После рендера мира и пост-эффектов --#SM+#-- +SecondVP+
-void CRender::AfterWorldRender()
-{
-    if (Device.m_SecondViewport.IsSVPFrame())
-    {
-        // Делает копию бэкбуфера (текущего экрана) в рендер-таргет второго вьюпорта
-        ID3D10Texture2D* pBuffer = NULL;
-        HW.m_pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (LPVOID*)&pBuffer);
-        HW.pDevice->CopyResource(Target->rt_secondVP->pSurface, pBuffer);
-        pBuffer->Release(); // Корректно очищаем ссылку на бэкбуфер (иначе игра зависнет в опциях)
-    }
 }

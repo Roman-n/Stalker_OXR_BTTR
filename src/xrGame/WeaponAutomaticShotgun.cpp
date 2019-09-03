@@ -210,17 +210,17 @@ bool CWeaponAutomaticShotgun::HaveCartridgeInInventory(u8 cnt)
     if (!m_pInventory)
         return false;
 
-    u32 ac = GetAmmoCount(m_ammoType.type1);
+    u32 ac = GetAmmoCount(m_ammoType);
     if (ac < cnt)
     {
         for (u8 i = 0; i < u8(m_ammoTypes.size()); ++i)
         {
-            if (m_ammoType.type1 == i)
+            if (m_ammoType == i)
                 continue;
             ac += GetAmmoCount(i);
             if (ac >= cnt)
             {
-                m_ammoType.type1 = i;
+                m_ammoType = i;
                 break;
             }
         }
@@ -235,18 +235,18 @@ u8 CWeaponAutomaticShotgun::AddCartridge(u8 cnt)
 
     if (m_set_next_ammoType_on_reload != undefined_ammo_type)
     {
-        m_ammoType.type1 = m_set_next_ammoType_on_reload;
+        m_ammoType = m_set_next_ammoType_on_reload;
         m_set_next_ammoType_on_reload = undefined_ammo_type;
     }
 
     if (!HaveCartridgeInInventory(1))
         return 0;
 
-    m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType.type1].c_str()));
+    m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[m_ammoType].c_str()));
     VERIFY((u32)m_ammoElapsed.type1 == m_magazine.size());
 
-    if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType.type1)
-        m_DefaultCartridge.Load(m_ammoTypes[m_ammoType.type1].c_str(), m_ammoType.type1, m_APk);
+    if (m_DefaultCartridge.m_LocalAmmoType != m_ammoType)
+        m_DefaultCartridge.Load(m_ammoTypes[m_ammoType].c_str(), m_ammoType, m_APk);
     CCartridge l_cartridge = m_DefaultCartridge;
     while (cnt)
     {
@@ -256,8 +256,8 @@ u8 CWeaponAutomaticShotgun::AddCartridge(u8 cnt)
                 break;
         }
         --cnt;
-        ++m_ammoElapsed.type1;
-        l_cartridge.m_LocalAmmoType = m_ammoType.type1;
+        ++iAmmoElapsed;
+        l_cartridge.m_LocalAmmoType = m_ammoType;
         m_magazine.push_back(l_cartridge);
         //		m_fCurrentCartirdgeDisp = l_cartridge.m_kDisp;
     }

@@ -347,21 +347,7 @@ void CCameraManager::ApplyDevice(float _viewport_near)
     Device.fFOV = m_cam_info.fFov;
     Device.fASPECT = m_cam_info.fAspect;
 
-    //--#SM+# Begin-- +SecondVP+
-    // Пересчитываем FOV для второго вьюпорта [Recalculate scene FOV for SecondVP frame]
-    if (Device.m_SecondViewport.IsSVPFrame())
-    {
-        // Для второго вьюпорта FOV выставляем здесь
-        Device.fFOV = fFovSecond;
-
-        // Предупреждаем что мы изменили настройки камеры
-        Device.m_SecondViewport.isCamReady = true;
-    }
-    else
-        Device.m_SecondViewport.isCamReady = false;
-
-	Device.mProject.build_projection(deg2rad(m_cam_info.fFov), m_cam_info.fAspect, _viewport_near, m_cam_info.fFar);
-    //--#SM+# End--
+    Device.mProject.build_projection(deg2rad(m_cam_info.fFov), m_cam_info.fAspect, _viewport_near, m_cam_info.fFar);
 
     if (g_pGamePersistent && g_pGamePersistent->m_pMainMenu->IsActive())
         ResetPP();

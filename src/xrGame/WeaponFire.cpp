@@ -105,7 +105,7 @@ void CWeapon::FireTrace(const Fvector& P, const Fvector& D)
     //выстерлить пулю (с учетом возможной стрельбы дробью)
     for (int i = 0; i < l_cartridge.param_s.buckShot; ++i)
     {
-        FireBullet(P, D, fire_disp, l_cartridge, H_Parent()->ID(), ID(), SendHit, m_ammoElapsed.type1);
+        FireBullet(P, D, fire_disp, l_cartridge, H_Parent()->ID(), ID(), SendHit, iAmmoElapsed);
     }
 
     StartShotParticles();
@@ -115,9 +115,9 @@ void CWeapon::FireTrace(const Fvector& P, const Fvector& D)
 
     // Ammo
     m_magazine.pop_back();
-    --m_ammoElapsed.type1;
+    --iAmmoElapsed;
 
-    VERIFY((u32)m_ammoElapsed.type1 == m_magazine.size());
+    VERIFY((u32)m_ammoElapsed == m_magazine.size());
 }
 
 void CWeapon::StopShooting()

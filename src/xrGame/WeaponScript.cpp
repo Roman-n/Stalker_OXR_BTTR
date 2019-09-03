@@ -51,7 +51,7 @@ SCRIPT_EXPORT(CWeapon, (CGameObject),
             .def("SetZoomFactor", &CWeapon::SetZoomFactor)
             .def("Weight", (float (CWeapon::*)() const) & CWeapon::Weight)
             .def("Cost", (u32(CWeapon::*)() const) & CWeapon::Cost)
-            .def("GetMagazine", &CWeapon::GetMagazine, return_stl_iterator())
+//            .def("GetMagazine", &CWeapon::GetMagazine, return_stl_iterator())
     ];
 });
 

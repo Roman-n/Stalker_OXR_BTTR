@@ -207,9 +207,6 @@ void CLevel::cl_Process_Event(u16 dest, u16 type, NET_Packet& P)
     IGameObject* O = Objects.net_Find(dest);
     if (0 == O)
     {
-#ifdef DEBUG
-        Msg("* WARNING: c_EVENT[%d] to [%d]: unknown dest", type, dest);
-#endif
         return;
     }
     CGameObject* GO = smart_cast<CGameObject*>(O);
@@ -357,17 +354,12 @@ void CLevel::MakeReconnect()
 
 void CLevel::OnFrame()
 {
-#ifdef DEBUG
-    DBG_RenderUpdate();
-#endif
     Fvector temp_vector;
     m_feel_deny.feel_touch_update(temp_vector, 0.f);
     psDeviceFlags.set(rsDisableObjectsAsCrows, false);
-    // commit events from bullet manager from prev-frame
     stats.BulletManagerCommit.Begin();
     BulletManager().CommitEvents();
     stats.BulletManagerCommit.End();
-    // Client receive
     stats.ClientRecv.Begin();
     ClientReceive();
     stats.ClientRecv.End();
@@ -383,32 +375,13 @@ void CLevel::OnFrame()
             MapManager().Update();
         if (IsGameTypeSingle() && Device.dwPrecacheFrame == 0)
         {
-            // XXX nitrocaster: was enabled in x-ray 1.5; to be restored or removed
-            // if (g_mt_config.test(mtMap))
-            //{
-            //    Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(
-            //    m_game_task_manager,&CGameTaskManager::UpdateTasks));
-            //}
-            // else
             GameTaskManager().UpdateTasks();
         }
     }
-    // Inherited update
     inherited::OnFrame();
-    // Draw client/server stats
-    if (!GEnv.isDedicatedServer && psDeviceFlags.test(rsStatistic))
-    {
-    }
-    else
-    {
-#ifdef DEBUG
-        if (pStatGraphR)
-            xr_delete(pStatGraphR);
-#endif
-    }
-#ifdef DEBUG
-    g_pGamePersistent->Environment().m_paused = m_bEnvPaused;
-#endif
+
+    if (!GEnv.isDedicatedServer && psDeviceFlags.test(rsStatistic)) {}else{}
+
     g_pGamePersistent->Environment().SetGameTime(GetEnvironmentGameDayTimeSec(), game->GetEnvironmentGameTimeFactor());
     if (!GEnv.isDedicatedServer)
         GEnv.ScriptEngine->script_process(ScriptProcessor::Level)->update();
@@ -447,138 +420,16 @@ void CLevel::OnFrame()
 
 int psLUA_GCSTEP = 10;
 void CLevel::script_gc() { lua_gc(GEnv.ScriptEngine->lua(), LUA_GCSTEP, psLUA_GCSTEP); }
-#ifdef DEBUG_PRECISE_PATH
-void test_precise_path();
-#endif
-
-#ifdef DEBUG
-extern Flags32 dbg_net_Draw_Flags;
-#endif
-
 extern void draw_wnds_rects();
 
 void CLevel::OnRender()
 {
-    GEnv.Render->BeforeWorldRender();	//--#SM+#-- +SecondVP+
-
     inherited::OnRender();
     if (!game)
         return;
     Game().OnRender();
-    // Device.Statistic->TEST1.Begin();
     BulletManager().Render();
-    // Device.Statistic->TEST1.End();
-
-    GEnv.Render->AfterWorldRender(); //--#SM+#-- +SecondVP+
-
     HUD().RenderUI();
-#ifdef DEBUG
-    draw_wnds_rects();
-    physics_world()->OnRender();
-#endif
-#ifdef DEBUG
-    if (ai().get_level_graph())
-        levelGraphDebugRender->Render(ai().game_graph(), ai().level_graph());
-#ifdef DEBUG_PRECISE_PATH
-    test_precise_path();
-#endif
-    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(Level().CurrentEntity());
-    if (stalker)
-        stalker->OnRender();
-    if (bDebug)
-    {
-        for (u32 I = 0; I < Level().Objects.o_count(); I++)
-        {
-            IGameObject* _O = Level().Objects.o_get_by_iterator(I);
-            CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(_O);
-            if (stalker)
-                stalker->OnRender();
-            CCustomMonster* monster = smart_cast<CCustomMonster*>(_O);
-            if (monster)
-                monster->OnRender();
-            CPhysicObject* physic_object = smart_cast<CPhysicObject*>(_O);
-            if (physic_object)
-                physic_object->OnRender();
-            CSpaceRestrictor* space_restrictor = smart_cast<CSpaceRestrictor*>(_O);
-            if (space_restrictor)
-                space_restrictor->OnRender();
-            CClimableObject* climable = smart_cast<CClimableObject*>(_O);
-            if (climable)
-                climable->OnRender();
-            CTeamBaseZone* team_base_zone = smart_cast<CTeamBaseZone*>(_O);
-            if (team_base_zone)
-                team_base_zone->OnRender();
-            if (GameID() != eGameIDSingle)
-            {
-                CInventoryItem* pIItem = smart_cast<CInventoryItem*>(_O);
-                if (pIItem)
-                    pIItem->OnRender();
-            }
-            if (dbg_net_Draw_Flags.test(dbg_draw_skeleton)) // draw skeleton
-            {
-                CGameObject* pGO = smart_cast<CGameObject*>(_O);
-                if (pGO && pGO != Level().CurrentViewEntity() && !pGO->H_Parent())
-                {
-                    if (pGO->Position().distance_to_sqr(Device.vCameraPosition) < 400.0f)
-                    {
-                        pGO->dbg_DrawSkeleton();
-                    }
-                }
-            }
-        }
-        //  [7/5/2005]
-        if (Server && Server->GetGameState())
-            Server->GetGameState()->OnRender();
-        //  [7/5/2005]
-        ObjectSpace.dbgRender();
-        UI().Font().pFontStat->OutSet(170, 630);
-        UI().Font().pFontStat->SetHeight(16.0f);
-        UI().Font().pFontStat->SetColor(0xffff0000);
-        if (Server)
-            UI().Font().pFontStat->OutNext("Client Objects:      [%d]", Server->GetEntitiesNum());
-        UI().Font().pFontStat->OutNext("Server Objects:      [%d]", Objects.o_count());
-        UI().Font().pFontStat->OutNext("Interpolation Steps: [%d]", Level().GetInterpolationSteps());
-        if (Server)
-        {
-            UI().Font().pFontStat->OutNext("Server updates size: [%d]", Server->GetLastUpdatesSize());
-        }
-        UI().Font().pFontStat->SetHeight(8.0f);
-    }
-#endif
-
-#ifdef DEBUG
-    if (bDebug)
-    {
-        DBG().draw_object_info();
-        DBG().draw_text();
-        DBG().draw_level_info();
-    }
-    debug_renderer().render();
-    DBG().draw_debug_text();
-    if (psAI_Flags.is(aiVision))
-    {
-        for (u32 I = 0; I < Level().Objects.o_count(); I++)
-        {
-            IGameObject* object = Objects.o_get_by_iterator(I);
-            CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(object);
-            if (!stalker)
-                continue;
-            stalker->dbg_draw_vision();
-        }
-    }
-
-    if (psAI_Flags.test(aiDrawVisibilityRays))
-    {
-        for (u32 I = 0; I < Level().Objects.o_count(); I++)
-        {
-            IGameObject* object = Objects.o_get_by_iterator(I);
-            CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(object);
-            if (!stalker)
-                continue;
-            stalker->dbg_draw_visibility_rays();
-        }
-    }
-#endif
 }
 
 void CLevel::OnEvent(EVENT E, u64 P1, u64 /**P2/**/)
@@ -601,17 +452,8 @@ void CLevel::OnEvent(EVENT E, u64 P1, u64 /**P2/**/)
         xr_strcat(RealName, ".xrdemo");
         Cameras().AddCamEffector(new CDemoPlay(RealName, 1.3f, 0));
     }
-    else if (E == eChangeTrack && P1)
-    {
-        // int id = atoi((char*)P1);
-        // Environment->Music_Play(id);
-    }
-    else if (E == eEnvironment)
-    {
-        // int id=0; float s=1;
-        // sscanf((char*)P1,"%d,%f",&id,&s);
-        // Environment->set_EnvMode(id,s);
-    }
+    else if (E == eChangeTrack && P1) {}
+    else if (E == eEnvironment){}
 }
 
 void CLevel::DumpStatistics(IGameFont& font, IPerformanceAlert* alert)
@@ -689,15 +531,12 @@ void CLevel::make_NetCorrectionPrediction()
         m_dwNumSteps = 10;
     }
     physics_world()->Freeze();
-    // setting UpdateData and determining number of PH steps from last received update
     for (CGameObject* obj : pObjects4CrPr)
     {
         if (!obj)
             continue;
         obj->PH_B_CrPr();
     }
-    // first prediction from "delivered" to "real current" position
-    // making enought PH steps to calculate current objects position based on their updated state
     for (u32 i = 0; i < m_dwNumSteps; i++)
     {
         physics_world()->Step();
@@ -768,18 +607,6 @@ void CLevel::PhisStepsCallback(u32 Time0, u32 Time1)
         return;
     if (GameID() == eGameIDSingle)
         return;
-    //#pragma todo("Oles to all: highly inefficient and slow!!!")
-    // fixed (Andy)
-    /*
-    for (xr_vector<IGameObject*>::iterator O=Level().Objects.objects.begin(); O!=Level().Objects.objects.end(); ++O)
-    {
-    if( smart_cast<CActor*>((*O)){
-    CActor* pActor = smart_cast<CActor*>(*O);
-    if (!pActor || pActor->Remote()) continue;
-    pActor->UpdatePosStack(Time0, Time1);
-    }
-    };
-    */
 }
 
 void CLevel::SetNumCrSteps(u32 NumSteps)
