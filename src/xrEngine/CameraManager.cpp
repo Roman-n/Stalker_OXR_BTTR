@@ -19,14 +19,13 @@
 float psCamInert = 0.f;
 float psCamSlideInert = 0.25f;
 
+extern ENGINE_API float VIEWPORT_NEAR;
+
 SPPInfo pp_identity;
 SPPInfo pp_zero;
 
 CCameraManager::CCameraManager(bool bApplyOnUpdate)
 {
-#ifdef DEBUG
-    dbg_upd_frame = 0;
-#endif
 
     m_bAutoApply = bApplyOnUpdate;
 
@@ -174,13 +173,6 @@ void CCameraManager::UpdateFromCamera(const CCameraBase* C)
 void CCameraManager::Update(const Fvector& P, const Fvector& D, const Fvector& N, float fFOV_Dest, float fASPECT_Dest,
     float fFAR_Dest, u32 flags)
 {
-#ifdef DEBUG
-    if (!Device.Paused())
-    {
-        VERIFY(dbg_upd_frame != Device.dwFrame); // already updated !!!
-        dbg_upd_frame = Device.dwFrame;
-    }
-#endif // DEBUG
     // camera
     if (flags & CCameraBase::flPositionRigid)
         m_cam_info.p.set(P);

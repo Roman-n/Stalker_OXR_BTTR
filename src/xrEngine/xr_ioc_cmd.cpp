@@ -14,11 +14,11 @@
 #include "xr_object.h"
 #include "xr_object_list.h"
 
-#ifdef COLLISION_WPN
+
 ENGINE_API float psHUD_FOV_def = 0.35f; //--#SM+#--	Дефолтный HUD FOV (В % от Camera FOV) [default hud_fov (perc. of g_fov)]
 ENGINE_API float psHUD_FOV = psHUD_FOV_def; //--#SM+#-- Текущий HUD FOV (В % от Camera FOV) [current hud_fov (perc. of g_fov)]
 ENGINE_API float VIEWPORT_NEAR = 0.2f; //--#SM+#-- (Old: 0.2f)
-#endif
+
 
 ENGINE_API xr_vector<xr_token> AvailableVideoModes;
 xr_vector<xr_token> vid_quality_token;
@@ -605,9 +605,7 @@ public:
     virtual void Status(TStatus& S) { S[0] = 0; }
     virtual void Info(TInfo& I) { xr_sprintf(I, sizeof(I), "hide console"); }
 };
-#ifndef COLLISION_WPN
-ENGINE_API float psHUD_FOV = 0.45f;
-#endif
+
 // extern int psSkeletonUpdate;
 extern int rsDVB_Size;
 extern int rsDIB_Size;
