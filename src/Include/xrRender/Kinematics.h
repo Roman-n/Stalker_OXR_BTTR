@@ -3,7 +3,6 @@
 #pragma once
 
 #include "RenderVisual.h"
-#include "Layers\xrRender\KinematicsAddBoneTransform.hpp" //--#SM+#--
 
 typedef void (*UpdateCallback)(IKinematics* P);
 
@@ -22,7 +21,6 @@ template <class T>
 struct _obb;
 typedef _obb<float> Fobb;
 
-// 100 ms = 10 fps
 #define UCalc_Interval (u32(100))
 
 class IKinematics
@@ -78,9 +76,6 @@ public:
     virtual u64 LL_GetBonesVisible() = 0;
     virtual void LL_SetBonesVisible(u64 mask) = 0;
 
-    virtual void LL_AddTransformToBone(KinematicsABT::additional_bone_transform& offset) = 0; //--#SM+#--
-    virtual void LL_ClearAdditionalTransform(u16 bone_id) = 0; //--#SM+#--
-
     // Main functionality
     virtual void CalculateBones(BOOL bForceExact = FALSE) = 0; // Recalculate skeleton
     virtual void CalculateBones_Invalidate() = 0;
@@ -92,8 +87,6 @@ public:
 
     virtual UpdateCallback GetUpdateCallback() = 0;
     virtual void* GetUpdateCallbackParam() = 0;
-    // UpdateCallback						Update_Callback;
-    // void*								Update_Callback_Param;
     virtual IRenderVisual* dcast_RenderVisual() = 0;
     virtual IKinematicsAnimated* dcast_PKinematicsAnimated() = 0;
 
@@ -105,4 +98,4 @@ public:
 };
 
 IC IKinematics* PKinematics(IRenderVisual* V) { return V ? V->dcast_PKinematics() : 0; }
-#endif //	Kinematics_included
+#endif 
