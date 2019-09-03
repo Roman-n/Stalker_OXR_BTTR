@@ -283,13 +283,6 @@ CRenderTarget::CRenderTarget()
     if (RImplementation.o.dx10_msaa)
         SampleCount = RImplementation.o.dx10_msaa_samples;
 
-#ifdef DEBUG
-    Msg("MSAA samples = %d", SampleCount);
-    if (RImplementation.o.dx10_msaa_opt)
-        Msg("dx10_MSAA_opt = on");
-    if (RImplementation.o.dx10_gbuffer_opt)
-        Msg("dx10_gbuffer_opt = on");
-#endif // DEBUG
     param_blur = 0.f;
     param_gray = 0.f;
     param_noise = 0.f;
@@ -424,6 +417,8 @@ CRenderTarget::CRenderTarget()
         rt_Generic_0.create(r2_RT_generic0, w, h, D3DFMT_A8R8G8B8, 1);
         rt_Generic_1.create(r2_RT_generic1, w, h, D3DFMT_A8R8G8B8, 1);
         rt_Generic.create(r2_RT_generic, w, h, D3DFMT_A8R8G8B8, 1);
+
+		rt_secondVP.create(r2_RT_secondVP,w,h,D3DFMT_A8R8G8B8, 1); //--#SM+#--
 
         // RT - KD
         rt_sunshafts_0.create(r2_RT_sunshafts0, w, h, D3DFMT_A8R8G8B8);

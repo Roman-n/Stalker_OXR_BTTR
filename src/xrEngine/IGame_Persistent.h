@@ -94,6 +94,9 @@ public:
     void Prefetch();
 #endif
     IMainMenu* m_pMainMenu;
+	
+	ShadersExternalData* m_pGShaderConstants; //--#SM+#--
+	
     static bool IsMainMenuActive();
 
     ParticleStatistics stats;

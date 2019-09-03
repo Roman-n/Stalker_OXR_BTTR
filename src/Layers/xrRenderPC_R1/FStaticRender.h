@@ -188,6 +188,9 @@ public:
     virtual void ScreenshotAsyncEnd(CMemoryWriter& memory_writer) override;
     virtual void OnFrame() override;
 
+	virtual void BeforeWorldRender(); //--#SM+#--
+	virtual void AfterWorldRender();  //--#SM+#--
+
     // Render mode
     virtual void rmNear() override;
     virtual void rmFar() override;

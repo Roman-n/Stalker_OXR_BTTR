@@ -58,17 +58,6 @@ public:
     IBlender* b_hdao_cs;
     IBlender* b_hdao_msaa_cs;
 
-#ifdef DEBUG
-    struct dbg_line_t
-    {
-        Fvector P0, P1;
-        u32 color;
-    };
-    xr_vector<std::pair<Fsphere, Fcolor>> dbg_spheres;
-    xr_vector<dbg_line_t> dbg_lines;
-    xr_vector<Fplane> dbg_planes;
-#endif
-
     // MRT-path
     ref_rt rt_Depth; // Z-buffer like - initial depth
     ref_rt rt_MSAADepth; // z-buffer for MSAA deferred shading
@@ -99,6 +88,8 @@ public:
     ref_rt rt_LUM_pool[CHWCaps::MAX_GPUS * 2]; // 1xfp32,1x1,		exp-result -> scaler
     ref_texture t_LUM_src; // source
     ref_texture t_LUM_dest; // destination & usage for current frame
+
+	ref_rt rt_secondVP;
 
     // env
     ref_texture t_envmap_0; // env-0

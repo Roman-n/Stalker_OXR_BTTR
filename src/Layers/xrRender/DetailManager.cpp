@@ -379,6 +379,7 @@ void CDetailManager::Render()
     MT_SYNC();
 
     RImplementation.BasicStats.DetailRender.Begin();
+	g_pGamePersistent->m_pGShaderConstants->m_blender_mode.w = 1.0f; //--#SM+#--
 
 #ifndef _EDITOR
     float factor = g_pGamePersistent->Environment().wind_strength_factor;
@@ -394,7 +395,9 @@ void CDetailManager::Render()
     else
         soft_Render();
     RCache.set_CullMode(CULL_CCW);
-
+	
+	g_pGamePersistent->m_pGShaderConstants->m_blender_mode.w = 0.0f; //--#SM+#-
+	
     RImplementation.BasicStats.DetailRender.End();
     m_frame_rendered = RDEVICE.dwFrame;
 }

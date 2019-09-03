@@ -34,6 +34,8 @@ IGame_Persistent::IGame_Persistent()
 
     m_pMainMenu = nullptr;
 
+	m_pGShaderConstants = new ShadersExternalData(); //--#SM+#--
+
     if (RDEVICE.editor())
         pEnvironment = new editor::environment::manager();
     else
@@ -51,6 +53,7 @@ IGame_Persistent::~IGame_Persistent()
 #ifndef _EDITOR
     xr_delete(pEnvironment);
 #endif
+	xr_delete(m_pGShaderConstants); //--#SM+#--
 }
 
 void IGame_Persistent::OnAppActivate() {}

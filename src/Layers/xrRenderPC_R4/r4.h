@@ -354,6 +354,9 @@ public:
     virtual void ScreenshotAsyncEnd(CMemoryWriter& memory_writer);
     virtual void OnFrame();
 
+	virtual void BeforeWorldRender(); //--#SM+#--
+	virtual void AfterWorldRender();  //--#SM+#-- 
+
     // Render mode
     virtual void rmNear();
     virtual void rmFar();

@@ -44,6 +44,22 @@ DECLARE_TREE_BIND(c_scale);
 DECLARE_TREE_BIND(c_bias);
 DECLARE_TREE_BIND(c_sun);
 
+static class cl_hud_params : public R_constant_setup //--#SM+#--
+{
+	virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->hud_params); }
+} binder_hud_params;
+
+static class cl_script_params : public R_constant_setup //--#SM+#--
+{
+	virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->m_script_params); }
+} binder_script_params;
+
+static class cl_blend_mode : public R_constant_setup //--#SM+#--
+{
+	virtual void setup(R_constant* C) { RCache.set_c(C, g_pGamePersistent->m_pGShaderConstants->m_blender_mode); }
+} binder_blend_mode;
+
+
 class cl_hemi_cube_pos_faces : public R_constant_setup
 {
     virtual void setup(R_constant* C) { RCache.hemi.set_c_pos_faces(C); }
@@ -335,6 +351,10 @@ static cl_screen_params binder_screen_params;
 void CBlender_Compile::SetMapping()
 {
     r_Constant("ogse_c_screen", &binder_screen_params);
+	
+	r_Constant				("m_hud_params",	&binder_hud_params);	//--#SM+#--
+	r_Constant				("m_script_params", &binder_script_params); //--#SM+#--
+	r_Constant				("m_blender_mode",	&binder_blend_mode);	//--#SM+#--
 	
     // matrices
     r_Constant("m_W", &binder_w);

@@ -3,11 +3,6 @@
 
 class light;
 
-//#define DU_SPHERE_NUMVERTEX 92
-//#define DU_SPHERE_NUMFACES	180
-//#define DU_CONE_NUMVERTEX	18
-//#define DU_CONE_NUMFACES	32
-//	no less than 2
 #define VOLUMETRIC_SLICES 100
 
 class CRenderTarget : public IRender_Target
@@ -67,6 +62,8 @@ public:
     ref_rt rt_Bloom_2; // 32bit, dim/4	(r,g,b,?)
     ref_rt rt_LUM_64; // 64bit, 64x64,	log-average in all components
     ref_rt rt_LUM_8; // 64bit, 8x8,		log-average in all components
+
+	ref_rt rt_secondVP;
 
     //	Igor: for async screenshots
     IDirect3DSurface9* pFB; // 32bit		(r,g,b,a) is situated in the system memory

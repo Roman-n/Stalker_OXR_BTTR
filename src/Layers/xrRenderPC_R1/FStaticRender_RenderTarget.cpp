@@ -5,6 +5,7 @@
 static LPCSTR RTname = "$user$rendertarget";
 static LPCSTR RTname_color_map = "$user$rendertarget_color_map";
 static LPCSTR RTname_distort = "$user$distort";
+static LPCSTR RTname_SecondVP = "$user$viewport2"; 
 
 CRenderTarget::CRenderTarget()
 {
@@ -22,6 +23,8 @@ CRenderTarget::CRenderTarget()
     param_duality_v = 0.f;
     param_noise_fps = 25.f;
     param_noise_scale = 1.f;
+
+	RT_SecondVP	= nullptr; //--#SM+#
 
     param_color_map_influence = 0.0f;
     param_color_map_interpolate = 0.0f;
@@ -63,6 +66,8 @@ BOOL CRenderTarget::Create()
         RT_color_map.create(RTname_color_map, curWidth, curHeight, HW.Caps.fTarget);
     }
     // RImplementation.o.color_mapping = RT_color_map->valid();
+
+	RT_SecondVP.create(RTname_SecondVP, rtWidth, rtHeight, HW.Caps.fTarget); //--#SM+#--
 
     if ((rtHeight != Device.dwHeight) || (rtWidth != Device.dwWidth))
     {
@@ -114,20 +119,15 @@ CRenderTarget::~CRenderTarget()
     RT_distort.destroy();
     RT_color_map.destroy();
     RT.destroy();
+	RT_SecondVP.destroy			(); //--#SM+#--
 }
 
 void CRenderTarget::calc_tc_noise(Fvector2& p0, Fvector2& p1)
 {
-    //. CTexture*   T                   = RCache.get_ActiveTexture  (2);
-    //. VERIFY2     (T, "Texture #3 in noise shader should be setted up");
-    //. u32         tw                  = iCeil(float(T->get_Width  ())*param_noise_scale+EPS_S);
-    //. u32         th                  = iCeil(float(T->get_Height ())*param_noise_scale+EPS_S);
     u32 tw = iCeil(256 * param_noise_scale + EPS_S);
     u32 th = iCeil(256 * param_noise_scale + EPS_S);
     VERIFY2(tw && th, "Noise scale can't be zero in any way");
-    //. if (bDebug) Msg         ("%d,%d,%f",tw,th,param_noise_scale);
-
-    // calculate shift from FPSes
+	
     im_noise_time -= Device.fTimeDelta;
     if (im_noise_time < 0)
     {

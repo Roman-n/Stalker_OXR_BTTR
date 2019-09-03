@@ -1071,3 +1071,18 @@ static inline bool match_shader_id(
 #endif // #ifdef DEBUG
 #endif // #if 1
 }
+
+
+
+void CRender::BeforeWorldRender() {}
+void CRender::AfterWorldRender()
+{
+	if (Device.m_SecondViewport.IsSVPFrame())
+	{
+		IRender_Target* T = getTarget();
+		IDirect3DSurface9* pBackBuffer = nullptr;
+		HW.pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
+		D3DXLoadSurfaceFromSurface(Target->RT_SecondVP->pRT, 0, 0, pBackBuffer, 0, 0, D3DX_DEFAULT, 0);
+		pBackBuffer->Release(); 
+	}
+} 

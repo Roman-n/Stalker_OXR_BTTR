@@ -424,12 +424,14 @@ extern void draw_wnds_rects();
 
 void CLevel::OnRender()
 {
+    GEnv.Render->BeforeWorldRender();
     inherited::OnRender();
     if (!game)
         return;
     Game().OnRender();
     BulletManager().Render();
     HUD().RenderUI();
+    GEnv.Render->AfterWorldRender();
 }
 
 void CLevel::OnEvent(EVENT E, u64 P1, u64 /**P2/**/)

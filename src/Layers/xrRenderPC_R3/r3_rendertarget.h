@@ -4,11 +4,6 @@
 
 class light;
 
-//#define DU_SPHERE_NUMVERTEX 92
-//#define DU_SPHERE_NUMFACES	180
-//#define DU_CONE_NUMVERTEX	18
-//#define DU_CONE_NUMFACES	32
-//	no less than 2
 #define VOLUMETRIC_SLICES 100
 
 class CRenderTarget : public IRender_Target
@@ -20,8 +15,8 @@ class CRenderTarget : public IRender_Target
 public:
     enum eStencilOptimizeMode
     {
-        SO_Light = 0, //	Default
-        SO_Combine, //	Default
+        SO_Light = 0,
+        SO_Combine,
     };
 
     u32 dwLightMarkerID;
@@ -82,6 +77,7 @@ public:
     ref_rt rt_Generic_0; // 32bit		(r,g,b,a)				// post-process, intermidiate results, etc.
     ref_rt rt_Generic_1; // 32bit		(r,g,b,a)				// post-process, intermidiate results, etc.
 
+	ref_rt rt_secondVP;
 
     //	Igor: for volumetric lights
     ref_rt rt_Generic_2; // 32bit		(r,g,b,a)				// post-process, intermidiate results, etc.
