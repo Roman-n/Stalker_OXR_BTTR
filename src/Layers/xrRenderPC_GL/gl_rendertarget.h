@@ -65,6 +65,7 @@ public:
     ref_rt rt_MSAADepth; // z-buffer for MSAA deferred shading
     ref_rt rt_Generic_0_r; // MRT generic 0
     ref_rt rt_Generic_1_r; // MRT generic 1
+	ref_rt rt_secondVP;
     ref_rt rt_Generic;
     ref_rt rt_Position; // 64bit,	fat	(x,y,z,?)				(eye-space)
     ref_rt rt_Normal; // 64bit,	fat	(x,y,z,hemi)			(eye-space)

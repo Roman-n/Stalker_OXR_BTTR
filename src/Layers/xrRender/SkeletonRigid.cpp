@@ -105,12 +105,12 @@ void CKinematics::CalculateBones(BOOL bForceExact)
 }
 
 void CKinematics::BuildBoneMatrix(
-    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
+    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /*= (1<<0)*/)
 {
     bi.mTransform.mul_43(*parent, bd->bind_transform);
 }
 
-void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
+void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /*= (1<<0)*/)
 {
     u16 SelfID = bd->GetSelfID();
 

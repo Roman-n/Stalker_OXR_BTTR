@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "rgl.h"
+#include "gl_rendertarget.h"
 #include "Layers/xrRender/FBasicVisual.h"
 #include "xrEngine/xr_object.h"
 #include "xrEngine/CustomHUD.h"
@@ -1376,3 +1377,6 @@ HRESULT CRender::shader_compile(
     CHK_GL(glDeleteShader(shader));
     return S_OK;
 }
+
+void CRender::BeforeWorldRender(){}
+void CRender::AfterWorldRender() {} 

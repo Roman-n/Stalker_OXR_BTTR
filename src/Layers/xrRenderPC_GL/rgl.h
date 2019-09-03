@@ -227,6 +227,10 @@ public:
     IRender_Sector* detectSector(const Fvector& P, Fvector& D);
     int translateSector(IRender_Sector* pSector);
 
+	virtual void BeforeWorldRender(); //--#SM+#-- 
+	virtual void AfterWorldRender();  //--#SM+#--
+
+
     // HW-occlusion culling
     u32 occq_begin(u32& ID) { return HWOCC.occq_begin(ID); }
     void occq_end(u32& ID) { HWOCC.occq_end(ID); }
