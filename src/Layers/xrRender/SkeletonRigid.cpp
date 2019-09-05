@@ -97,6 +97,22 @@ void CKinematics::CalculateBones(BOOL bForceExact)
             vis.box.vMax = (Box.vMax);
             vis.box.getsphere(vis.sphere.P, vis.sphere.R);
         }
+#ifdef DEBUG
+        // Validate
+        VERIFY3(_valid(vis.box.vMin) && _valid(vis.box.vMax), "Invalid bones-xform in model", dbg_name.c_str());
+        if (vis.sphere.R > 1000.f)
+        {
+            for (u16 ii = 0; ii < LL_BoneCount(); ++ii)
+            {
+                Fmatrix tr;
+                tr = LL_GetTransform(ii);
+                Log("bone ", LL_BoneName_dbg(ii));
+                Log("bone_matrix", tr);
+            }
+            Log("end-------");
+        }
+        VERIFY3(vis.sphere.R < 1000.f, "Invalid bones-xform in model", dbg_name.c_str());
+#endif
     }
 
     //
@@ -104,13 +120,64 @@ void CKinematics::CalculateBones(BOOL bForceExact)
         Update_Callback(this);
 }
 
-void CKinematics::BuildBoneMatrix(
-    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
+#ifdef DEBUG
+void check_kinematics(CKinematics* _k, LPCSTR s)
 {
-    bi.mTransform.mul_43(*parent, bd->bind_transform);
-	CalculateBonesAdditionalTransforms(bd, bi, parent/*,channel_mask*/); //--#SM+#--
+    CKinematics* K = _k;
+    Fmatrix& MrootBone = K->LL_GetBoneInstance(K->LL_GetBoneRoot()).mTransform;
+    if (MrootBone.c.y > 10000)
+    {
+        Msg("all bones transform:--------[%s]", s);
+
+        for (u16 ii = 0; ii < K->LL_BoneCount(); ++ii)
+        {
+            Fmatrix tr;
+
+            tr = K->LL_GetTransform(ii);
+            Log("bone ", K->LL_BoneName_dbg(ii));
+            Log("bone_matrix", tr);
+        }
+        Log("end-------");
+        VERIFY3(0, "check_kinematics failed for ", s);
+    }
+}
+#endif
+
+// Добавить скриптовое смещение для кости --#SM+#--
+void CKinematics::LL_AddTransformToBone(KinematicsABT::additional_bone_transform& offset)
+{
+    m_bones_offsets.push_back(offset);
 }
 
+// Обнулить скриптовое смещение для конкретной кости или всех сразу (bone_id = BI_NONE) --#SM+#--
+void CKinematics::LL_ClearAdditionalTransform(u16 bone_id)
+{
+    if (bone_id == BI_NONE)
+    {
+        m_bones_offsets.clear();
+        return;
+    }
+
+    BONE_TRANSFORM_VECTOR_IT it = m_bones_offsets.begin();
+    while (it != m_bones_offsets.end())
+    {
+        if (it->m_bone_id == bone_id)
+        {
+            it = m_bones_offsets.erase(it);
+        }
+        else
+            ++it;
+    }
+}
+
+void CKinematics::BuildBoneMatrix(
+    const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /*= (1<<0)*/)
+{
+    bi.mTransform.mul_43(*parent, bd->bind_transform);
+    CalculateBonesAdditionalTransforms(bd, bi, parent, channel_mask); //--#SM+#--
+}
+
+// Добавляем константные смещения к нужным костям --#SM+#--
 void CKinematics::CalculateBonesAdditionalTransforms(
     const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /* = (1<<0)*/)
 {
@@ -126,8 +193,7 @@ void CKinematics::CalculateBonesAdditionalTransforms(
     }
 }
 
-
-void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 /*channel_mask /*= (1<<0)*/)
+void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* parent, u8 channel_mask /*= (1<<0)*/)
 {
     u16 SelfID = bd->GetSelfID();
 
@@ -140,7 +206,7 @@ void CKinematics::CLBone(const CBoneData* bd, CBoneInstance& bi, const Fmatrix* 
         }
         else
         {
-            BuildBoneMatrix(bd, bi, parent/*, channel_mask*/);
+            BuildBoneMatrix(bd, bi, parent, channel_mask);
 #ifndef MASTER_GOLD
             R_ASSERT2(_valid(bi.mTransform), "anim kils bone matrix");
 #endif // #ifndef MASTER_GOLD

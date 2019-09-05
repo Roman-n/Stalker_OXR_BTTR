@@ -35,10 +35,10 @@ void CRenderTarget::phase_combine()
         t_LUM_dest->surface_set(rt_LUM_pool[gpu_id * 2 + 1]->pSurface);
     }
 
-	if (Device.m_SecondViewport.IsSVPActive())	//--#SM+#-- 
-	{
-		gpu_id = (Device.dwFrame - 1) % HW.Caps.iGPUNum;	
-	}
+    if (Device.m_SecondViewport.IsSVPActive()) //--#SM+#--
+    {
+        gpu_id = (Device.dwFrame - 1) % HW.Caps.iGPUNum;
+    }
 
     RCache.set_CullMode(CULL_NONE);
 
@@ -108,7 +108,7 @@ void CRenderTarget::phase_combine()
             _max(envdesc.ambient.z * 2, minamb), 0};
         ambclr.mul(ps_r2_sun_lumscale_amb);
 
-        //Fvector4 envclr = { envdesc.sky_color.x*2+EPS, envdesc.sky_color.y*2+EPS,
+        // Fvector4 envclr = { envdesc.sky_color.x*2+EPS, envdesc.sky_color.y*2+EPS,
         //    envdesc.sky_color.z*2+EPS, envdesc.weight};
         Fvector4 envclr = {envdesc.hemi_color.x * 2 + EPS, envdesc.hemi_color.y * 2 + EPS,
             envdesc.hemi_color.z * 2 + EPS, envdesc.weight};
@@ -183,7 +183,7 @@ void CRenderTarget::phase_combine()
         // Draw
         RCache.set_Element(s_combine->E[0]);
         RCache.set_Geometry(g_combine_VP);
-        //RCache.set_Geometry(g_combine);
+        // RCache.set_Geometry(g_combine);
 
         RCache.set_c("m_v2w", m_v2w);
         RCache.set_c("L_ambient", ambclr);
@@ -241,15 +241,15 @@ void CRenderTarget::phase_combine()
         if (ps_r_sun_shafts > 0 && ps_sunshafts_mode == R2SS_SCREEN_SPACE)
             phase_sunshafts();
     }
-#endif	
-#ifdef RAINDROPS
-	if (ps_r2_rain_drops)
-	{
-		PIX_EVENT(rain_drops);
-		phase_rain_drops();
-	}
 #endif
-    //FXAA
+#ifdef RAINDROPS
+    if (ps_r2_rain_drops)
+    {
+        PIX_EVENT(rain_drops);
+        phase_rain_drops();
+    }
+#endif
+    // FXAA
     if (ps_r2_fxaa)
     {
         PIX_EVENT(FXAA);

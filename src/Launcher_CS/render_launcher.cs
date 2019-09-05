@@ -91,7 +91,7 @@ namespace launcher_stalker
                             Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
-/*
+
                     case 's':
                         {
                             System.Diagnostics.Process.Start("OpenXRay");
@@ -99,15 +99,15 @@ namespace launcher_stalker
                             Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
-
-                    case 'c':
-                        {
+                    
+                     case 'c':
+                       {
                             System.Diagnostics.Process.Start("OpenXRay - console");
                             CC(ConsoleColor.Cyan);
                             Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
-                        }
-*/
+                       }
+
                     case '7':
                         {
                             Environment.Exit(0);
@@ -123,19 +123,19 @@ namespace launcher_stalker
                 }
             };
 
-            ConsoleTitle(); char ch; do
+           ConsoleTitle(); char ch; do
             {
                 CC(ConsoleColor.Green);
 
-                Console.Write("Введите цифру соответствующую рендеру: ");
+                Console.Write("Введите ключ команды: ");
 
                 ConsoleKeyInfo key;
 
                 {                               //--' Чтобы окно не было мелким
-                    Console.BufferHeight = 40;
+                    Console.BufferHeight = 100;
                     Console.WindowHeight = 40;
-                    Console.BufferWidth = 100;
-                    Console.WindowWidth = 100;
+                    Console.BufferWidth = 100; // Высота по x от прямой 
+                    Console.WindowWidth = 100; // Ширина по y от угла
                 }
 
                 key = Console.ReadKey();
@@ -160,7 +160,6 @@ namespace launcher_stalker
 #else  
 			+ "\nCall of Chernobyl [OpenXRay]: 2018\n"
 #endif
-            + "\nAMK - наше всё\n"
 
             + "\nLanguage: C#, .NET Framework 4.7.2\n"
 
@@ -185,13 +184,12 @@ namespace launcher_stalker
             Command("5", "DirectX 11");
 
             Command("6", "Render OpenGL - не работает");
-/*
+
             Command1("s", "Запуск без ключей рендеров, разрешены все команды");
-
+ 
             Command1("c", "Запуск игры с разрешенной консолью, без ключа рендера");
-*/
-            Command1("7", "Выход из лаунчера");
 
+            Command1("7", "Выход из лаунчера");
 
             Console.WriteLine();
 

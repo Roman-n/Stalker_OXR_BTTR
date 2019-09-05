@@ -74,6 +74,73 @@ void CWeaponMagazinedWGrenade::UpdateSecondVP(bool bInGrenade)
 	inherited::UpdateSecondVP(m_bGrenadeMode);
 }
 
+BOOL CWeaponMagazinedWGrenade::net_Spawn(CSE_Abstract* DC)
+{
+    CSE_ALifeItemWeapon* const weapon = smart_cast<CSE_ALifeItemWeapon*>(DC);
+    R_ASSERT(weapon);
+    if (IsGameTypeSingle())
+    {
+    }
+
+    BOOL l_res = inherited::net_Spawn(DC);
+
+    if (m_eGrenadeLauncherStatus == ALife::eAddonAttachable)
+    {
+        m_ammoTypes2.clear();
+        LPCSTR S = pSettings->r_string(GetGrenadeLauncherName(), "grenade_class");
+        if (S && S[0])
+        {
+            string128 _ammoItem;
+            int count = _GetItemCount(S);
+            for (int it = 0; it < count; ++it)
+            {
+                _GetItem(S, it, _ammoItem);
+                m_ammoTypes2.push_back(_ammoItem);
+            }
+        }
+    }
+
+    if (m_ammoType >= m_ammoTypes2.size())
+        m_ammoType = 0;
+
+    m_DefaultCartridge2.Load(m_ammoTypes2[m_ammoType].c_str(), m_ammoType);
+    if (iAmmoElapsed2)
+    {
+        for (int i = 0; i < iAmmoElapsed2; ++i)
+            m_magazine2.push_back(m_DefaultCartridge2);
+
+        if (!getRocketCount())
+        {
+            shared_str fake_grenade_name = pSettings->r_string(m_magazine2.back().m_ammoSect, "fake_grenade_name");
+            CRocketLauncher::SpawnRocket(*fake_grenade_name, this);
+        }
+    }
+    UpdateGrenadeVisibility(m_bGrenadeMode && !!iAmmoElapsed2 ? true : false);
+    SetPending(FALSE);
+
+    if (!IsGameTypeSingle())
+    {
+        if (m_bGrenadeMode && IsGrenadeLauncherAttached())
+        {
+            std::swap(iMagazineSize, iMagazineSize2);
+            u8 old = m_ammoType;
+            m_ammoType = iAmmoElapsed2;
+            m_ammoType = old;
+            m_ammoTypes.swap(m_ammoTypes2);
+            std::swap(m_DefaultCartridge, m_DefaultCartridge2);
+            m_magazine.swap(m_magazine2);
+            iAmmoElapsed = (u16)m_magazine.size();
+            iAmmoElapsed2 = (u16)m_magazine2.size();
+        }
+        else // In the case of config change or upgrade that removes GL
+        {
+            m_bGrenadeMode = false;
+        }
+    }
+    return l_res;
+}
+
+/*
 BOOL CWeaponMagazinedWGrenade::net_Spawn(CSE_Abstract* DC) 
 {
 	CSE_ALifeItemWeapon* const weapon		= smart_cast<CSE_ALifeItemWeapon*>(DC);
@@ -124,7 +191,7 @@ BOOL CWeaponMagazinedWGrenade::net_Spawn(CSE_Abstract* DC)
 	}
 	return l_res;
 }
-
+*/
 void CWeaponMagazinedWGrenade::switch2_Reload()
 {
 	VERIFY(GetState()==eReload);

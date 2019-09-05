@@ -1083,8 +1083,10 @@ void CActor::UpdateCL()
         }
     }
     else
-    {
-        if (Level().CurrentEntity() && this->ID() == Level().CurrentEntity()->ID())
+    
+	{
+		
+		if (Level().CurrentEntity() && this->ID() == Level().CurrentEntity()->ID())
         {
             HUD().SetCrosshairDisp(0.f);
             HUD().ShowCrosshair(false);
@@ -1097,7 +1099,8 @@ void CActor::UpdateCL()
             }
 
             // Очищаем информацию об оружии в шейдерах
-            g_pGamePersistent->m_pGShaderConstants->m_blender_mode.set(0.f, 0.f, 0.f, 0.f); //--#SM+#--
+            g_pGamePersistent->m_pGShaderConstants->hud_params.set(0.f, 0.f, 0.f, 0.f); //--#SM+#--
+			g_pGamePersistent->m_pGShaderConstants->m_blender_mode.set(0.f, 0.f, 0.f, 0.f); //--#SM+#--
 
             // Отключаем второй вьюпорт [Turn off SecondVP]
             //CWeapon::UpdateSecondVP();
