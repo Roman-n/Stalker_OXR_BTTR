@@ -15,7 +15,7 @@ public:
 	virtual			~CWeaponMagazinedWGrenade	();
 
 	virtual void	Load				(LPCSTR section);
-	
+    virtual float   Weight() const;
 	virtual BOOL	net_Spawn			(CSE_Abstract* DC);
 	virtual void	net_Destroy			();
 	virtual void	net_Export			(NET_Packet& P);
@@ -87,7 +87,6 @@ private:
 public:
 	//дополнительные параметры патронов 
 	//для подствольника
-//-	CWeaponAmmo*			m_pAmmo2;
 	xr_vector<shared_str>	m_ammoTypes2;
 	u8						m_ammoType2;
 

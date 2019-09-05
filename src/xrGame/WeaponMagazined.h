@@ -28,6 +28,7 @@ protected:
 	ESoundTypes		m_eSoundShot;
 	ESoundTypes		m_eSoundEmptyClick;
 	ESoundTypes		m_eSoundReload;
+	ESoundTypes 	m_eSoundReloadEmpty;
 	bool			m_sounds_enabled;
 	// General
 	//кадр момента пересчета UpdateSounds
@@ -145,16 +146,21 @@ public:
 	virtual void	OnZoomOut			();
 			void	OnNextFireMode		();
 			void	OnPrevFireMode		();
-			bool	HasFireModes		() { return m_bHasDifferentFireModes; };
-	virtual	int		GetCurrentFireMode	() { return m_aFireModes[m_iCurFireMode]; };	
+			bool HasFireModes			() { return m_bHasDifferentFireModes; }
+
+    int GetCurrentFireMode() override
+    {
+        //AVO: fixed crash due to original GSC assumption that CWeaponMagazined will always have firemodes specified in configs.
+        if (HasFireModes())
+            return m_aFireModes[m_iCurFireMode];
+        return 1;
+    }
 
 	virtual void	save				(NET_Packet &output_packet);
 	virtual void	load				(IReader &input_packet);
 
 protected:
 	virtual bool	install_upgrade_impl( LPCSTR section, bool test );
-
-protected:
 	virtual bool	AllowFireWhileWorking() {return false;}
 
 	//виртуальные функции для проигрывания анимации HUD
