@@ -30,7 +30,6 @@
 #include "ui/UIWindow.h"
 #include "ui/UIXmlInit.h"
 #include "Torch.h"
-#include "ActorNightVision.h"
 #include "actor_flags.h"
 
 #define WEAPON_REMOVE_TIME		60000

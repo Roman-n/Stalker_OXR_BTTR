@@ -29,12 +29,9 @@ class CSE_ALifeTraderAbstract
 public:
     enum eTraderFlags
     {
-        eTraderFlagInfiniteAmmo = u32(1) << 0,
-        eTraderFlagNightVisionActive = u32(1) << 1,
-        eTraderFlagDummy = u32(-1),
+        eTraderFlagInfiniteAmmo		= u32(1) << 0,
+		eTraderFlagDummy			= u32(-1),
     };
-    //  float                           m_fCumulativeItemMass;
-    //  int                             m_iCumulativeItemVolume;
     u32 m_dwMoney;
     float m_fMaxItemMass;
     Flags32 m_trader_flags;

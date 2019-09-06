@@ -440,7 +440,8 @@ void CUIActorMenu::InitInventoryContents(CUIDragDropListEx* pBagList)
             InitCellForSlot(i);
         else
         {
-            if (i != BOLT_SLOT && i != PDA_SLOT && !m_pActorInvOwner->inventory().SlotIsPersistent(i))
+			//Тест
+            if (i != BOLT_SLOT && i != PDA_SLOT && i != TORCH_SLOT && !m_pActorInvOwner->inventory().SlotIsPersistent(i))
                 InitCellForSlot(i);
         }
     }

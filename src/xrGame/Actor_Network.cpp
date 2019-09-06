@@ -708,10 +708,6 @@ BOOL CActor::net_Spawn(CSE_Abstract* DC)
     psHUD_Flags.set(HUD_WEAPON_RT, TRUE);
     psHUD_Flags.set(HUD_WEAPON_RT2, TRUE);
 
-    // Alun: In theory it will call SwitchNightVision 'true' when outfit or helmet spawn and moved to slot if
-    // m_bNightVisionOn is true
-    m_bNightVisionOn = !!m_trader_flags.test(CSE_ALifeTraderAbstract::eTraderFlagNightVisionActive);
-
     return TRUE;
 }
 

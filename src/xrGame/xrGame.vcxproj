@@ -325,7 +325,6 @@
     <ClInclude Include="ActorCondition.h" />
     <ClInclude Include="ActorEffector.h" />
     <ClInclude Include="ActorHelmet.h" />
-    <ClInclude Include="ActorNightVision.h" />
     <ClInclude Include="actor_anim_defs.h" />
     <ClInclude Include="actor_defs.h" />
     <ClInclude Include="Actor_Flags.h" />
@@ -1747,7 +1746,6 @@
     </ClCompile>
     <ClCompile Include="ActorHelmet.cpp" />
     <ClCompile Include="ActorInput.cpp" />
-    <ClCompile Include="ActorNightVision.cpp" />
     <ClCompile Include="actor_communication.cpp">
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
