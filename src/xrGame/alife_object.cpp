@@ -187,7 +187,9 @@ void CSE_ALifeObject::spawn_supplies(LPCSTR ini_string)
                             if (W->m_scope_status == ALife::eAddonAttachable)
 							{
                                 W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonScope, bScope);
+#ifdef D_TEST
 								W->cur_scope = cur_scope;
+#endif
 							}
                             if (W->m_silencer_status == ALife::eAddonAttachable)
                                 W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonSilencer, bSilencer);

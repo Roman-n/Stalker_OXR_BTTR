@@ -23,14 +23,12 @@ CCartridge::CCartridge()
 
 void CCartridge::Load(LPCSTR section, u8 LocalAmmoType) 
 {
-	m_ammoSect				= section;
-	m_LocalAmmoType			= LocalAmmoType;
+	m_ammoSect				    = section;
+	m_LocalAmmoType			    = LocalAmmoType;
 	param_s.kDist				= pSettings->r_float(section, "k_dist");
 	param_s.kDisp				= pSettings->r_float(section, "k_disp");
 	param_s.kHit				= pSettings->r_float(section, "k_hit");
-//.	param_s.kCritical			= pSettings->r_float(section, "k_hit_critical");
 	param_s.kImpulse			= pSettings->r_float(section, "k_impulse");
-	//m_kPierce				= pSettings->r_float(section, "k_pierce");
 	param_s.kAP					= pSettings->r_float(section, "k_ap");
 	param_s.u8ColorID			= READ_IF_EXISTS(pSettings, r_u8, section, "tracer_color_ID", 0);
 	
@@ -73,14 +71,6 @@ void CCartridge::Load(LPCSTR section, u8 LocalAmmoType)
 	m_InvShortName			= CStringTable().translate( pSettings->r_string(section, "inv_name_short"));
 }
 
-CWeaponAmmo::CWeaponAmmo(void) 
-{
-}
-
-CWeaponAmmo::~CWeaponAmmo(void)
-{
-}
-
 void CWeaponAmmo::Load(LPCSTR section) 
 {
 	inherited::Load			(section);
@@ -88,9 +78,7 @@ void CWeaponAmmo::Load(LPCSTR section)
 	cartridge_param.kDist		= pSettings->r_float(section, "k_dist");
 	cartridge_param.kDisp		= pSettings->r_float(section, "k_disp");
 	cartridge_param.kHit		= pSettings->r_float(section, "k_hit");
-//.	cartridge_param.kCritical	= pSettings->r_float(section, "k_hit_critical");
 	cartridge_param.kImpulse	= pSettings->r_float(section, "k_impulse");
-	//m_kPierce				= pSettings->r_float(section, "k_pierce");
 	cartridge_param.kAP			= pSettings->r_float(section, "k_ap");
 	cartridge_param.u8ColorID	= READ_IF_EXISTS(pSettings, r_u8, section, "tracer_color_ID", 0);
 
@@ -125,15 +113,11 @@ BOOL CWeaponAmmo::net_Spawn(CSE_Abstract* DC)
 	return					bResult;
 }
 
-void CWeaponAmmo::net_Destroy() 
-{
-	inherited::net_Destroy	();
-}
-
-void CWeaponAmmo::OnH_B_Chield() 
-{
-	inherited::OnH_B_Chield	();
-}
+void CWeaponAmmo::net_Destroy()  { inherited::net_Destroy	(); }
+void CWeaponAmmo::OnH_B_Chield() { inherited::OnH_B_Chield	(); }
+bool CWeaponAmmo::Useful() const { return !!m_boxCurr;          }
+CWeaponAmmo::CWeaponAmmo(void)   {                              }
+CWeaponAmmo::~CWeaponAmmo(void)  {                              }
 
 void CWeaponAmmo::OnH_B_Independent(bool just_before_destroy) 
 {
@@ -147,24 +131,6 @@ void CWeaponAmmo::OnH_B_Independent(bool just_before_destroy)
 	inherited::OnH_B_Independent(just_before_destroy);
 }
 
-
-bool CWeaponAmmo::Useful() const
-{
-	// Если IItem еще не полностью использованый, вернуть true
-	return !!m_boxCurr;
-}
-/*
-s32 CWeaponAmmo::Sort(PIItem pIItem) 
-{
-	// Если нужно разместить IItem после this - вернуть 1, если
-	// перед - -1. Если пофиг то 0.
-	CWeaponAmmo *l_pA = smart_cast<CWeaponAmmo*>(pIItem);
-	if(!l_pA) return 0;
-	if(xr_strcmp(cNameSect(), l_pA->cNameSect())) return 0;
-	if(m_boxCurr <= l_pA->m_boxCurr) return 1;
-	else return -1;
-}
-*/
 bool CWeaponAmmo::Get(CCartridge &cartridge) 
 {
 	if(!m_boxCurr) return false;

@@ -3,24 +3,19 @@
 #include "WeaponKnife.h"
 #include "Entity.h"
 #include "Actor.h"
-#include "level.h"
+#include "Level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../xrEngine/gamemtllib.h"
+#include "Include/xrRender/Kinematics.h"
+#include "xrEngine/GameMtlLib.h"
 #include "level_bullet_manager.h"
 #include "ai_sounds.h"
 #include "game_cl_single.h"
-#include "../xrEngine/SkeletonMotions.h"
+#include "xrCore/Animation/SkeletonMotions.hpp"
 #include "player_hud.h"
 #include "ActorEffector.h"
 
 #define KNIFE_MATERIAL_NAME "objects\\knife"
-
-#ifdef DEBUG
-#	include "debug_renderer.h"
-	extern BOOL g_bDrawBulletHit;
-#endif //#ifdef DEBUG
 
 CWeaponKnife::CWeaponKnife()
 {
@@ -71,78 +66,77 @@ void CWeaponKnife::Load	(LPCSTR section)
 	knife_material_idx =  GMLib.GetMaterialIdx(KNIFE_MATERIAL_NAME);
 }
 
-void CWeaponKnife::OnStateSwitch	(u32 S)
+void CWeaponKnife::OnStateSwitch(u32 S, u32 oldState)
 {
-	inherited::OnStateSwitch(S);
-	switch (S)
-	{
-	case eIdle:
-		switch2_Idle	();
-		break;
-	case eShowing:
-		switch2_Showing	();
-		break;
-	case eHiding:
-		switch2_Hiding	();
-		break;
-	case eHidden:
-		switch2_Hidden	();
-		break;
-	case eFire:
-		{
-			//-------------------------------------------
-			m_eHitType		= m_eHitType_1;
-			//fHitPower		= fHitPower_1;
-			if (ParentIsActor())
-			{
-				if (GameID() == eGameIDSingle)
-				{
-					fCurrentHit			= fvHitPower_1[g_SingleGameDifficulty];
-				}
-				else
-				{
-					fCurrentHit			= fvHitPower_1[egdMaster];
-				}
-			}
-			else
-			{
-				fCurrentHit			= fvHitPower_1[egdMaster];
-			}
-			fHitImpulse_cur	= fHitImpulse_1;
-			//-------------------------------------------
-			switch2_Attacking	(S);
-		}break;
-	case eFire2:
-		{
-			//-------------------------------------------
-			m_eHitType		= m_eHitType_2;
-			//fHitPower		= fHitPower_2;
-			if (ParentIsActor())
-			{
-				if (GameID() == eGameIDSingle)
-				{
-					fCurrentHit			= fvHitPower_2[g_SingleGameDifficulty];
-				}
-				else
-				{
-					fCurrentHit			= fvHitPower_2[egdMaster];
-				}
-			}
-			else
-			{
-				fCurrentHit			= fvHitPower_2[egdMaster];
-			}
-			fHitImpulse_cur	= fHitImpulse_2;
-			//-------------------------------------------
-			switch2_Attacking	(S);
-		}break;
-	}
+    inherited::OnStateSwitch(S, oldState);
+    switch (S)
+    {
+    case eIdle: switch2_Idle(); break;
+    case eShowing: switch2_Showing(); break;
+    case eHiding:
+    {
+        if (oldState != eHiding)
+            switch2_Hiding();
+        break;
+    }
+    case eHidden: switch2_Hidden(); break;
+    case eFire:
+    {
+        //-------------------------------------------
+        m_eHitType = m_eHitType_1;
+        // fHitPower		= fHitPower_1;
+        if (ParentIsActor())
+        {
+            if (GameID() == eGameIDSingle)
+            {
+                fCurrentHit = fvHitPower_1[g_SingleGameDifficulty];
+            }
+            else
+            {
+                fCurrentHit = fvHitPower_1[egdMaster];
+            }
+        }
+        else
+        {
+            fCurrentHit = fvHitPower_1[egdMaster];
+        }
+        fHitImpulse_cur = fHitImpulse_1;
+        //-------------------------------------------
+        switch2_Attacking(S);
+    }
+    break;
+    case eFire2:
+    {
+        //-------------------------------------------
+        m_eHitType = m_eHitType_2;
+        // fHitPower		= fHitPower_2;
+        if (ParentIsActor())
+        {
+            if (GameID() == eGameIDSingle)
+            {
+                fCurrentHit = fvHitPower_2[g_SingleGameDifficulty];
+            }
+            else
+            {
+                fCurrentHit = fvHitPower_2[egdMaster];
+            }
+        }
+        else
+        {
+            fCurrentHit = fvHitPower_2[egdMaster];
+        }
+        fHitImpulse_cur = fHitImpulse_2;
+        //-------------------------------------------
+        switch2_Attacking(S);
+    }
+    break;
+    }
 }
 
 
 void CWeaponKnife::KnifeStrike(const Fvector& pos, const Fvector& dir)
 {
-	CObject* real_victim = TryPick(pos, dir, m_hit_dist);
+	IGameObject* real_victim = TryPick(pos, dir, m_hit_dist);
 	if (real_victim)
 	{
 		float new_khit = m_eHitType == m_eHitType_1 ? 
@@ -567,7 +561,7 @@ void CWeaponKnife::fill_shapes_list(CEntityAlive const * entity,
 	if (!entity)
 		return;
 
-	CCF_Skeleton*	tmp_skeleton = smart_cast<CCF_Skeleton*>(entity->CFORM());
+	CCF_Skeleton* tmp_skeleton = smart_cast<CCF_Skeleton*>(entity->GetCForm());
 	if (!tmp_skeleton)
 		return;
 
@@ -670,7 +664,7 @@ void CWeaponKnife::create_victims_list(spartial_base_t spartial_result,
 	for (spartial_base_t::const_iterator i = spartial_result.begin(),
 		ie = spartial_result.end(); i != ie; ++i)
 	{
-		CObject* tmp_obj = (*i)->dcast_CObject();
+        IGameObject* tmp_obj = (*i)->dcast_GameObject();
 		VERIFY(tmp_obj);
 		if (!tmp_obj)
 			continue;
@@ -823,7 +817,7 @@ BOOL CWeaponKnife::RayQueryCallback(collide::rq_result& result, LPVOID this_ptr)
 	return TRUE;
 }
 
-CObject* CWeaponKnife::TryPick(Fvector const & start_pos, Fvector const & dir, float const dist)
+IGameObject* CWeaponKnife::TryPick(Fvector const & start_pos, Fvector const & dir, float const dist)
 {
 	collide::ray_defs		tmp_rdefs(start_pos, dir, dist, CDB::OPT_FULL_TEST, collide::rqtObject);
 	m_ray_query_results.r_clear();
@@ -862,7 +856,7 @@ CWeaponKnife::victim_filter::victim_filter(victim_filter const & copy) :
 
 bool CWeaponKnife::victim_filter::operator()(spartial_base_t::value_type const & left) const
 {
-	CObject* const tmp_obj = left->dcast_CObject();
+    IGameObject* const tmp_obj = left->dcast_GameObject();
 	VERIFY			(tmp_obj);
 	if (!tmp_obj)
 		return true;
@@ -912,7 +906,7 @@ CWeaponKnife::best_victim_selector::best_victim_selector(
 void CWeaponKnife::best_victim_selector::operator()(
 	spartial_base_t::value_type const & left)
 {
-	CObject* const tmp_obj = left->dcast_CObject();
+    IGameObject* const tmp_obj = left->dcast_GameObject();
 	VERIFY			(tmp_obj);
 	if (!tmp_obj)
 		return;

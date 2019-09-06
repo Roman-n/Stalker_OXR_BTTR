@@ -8,16 +8,10 @@
 #include "Actor.h"
 #include "xr_level_controller.h"
 #include "level.h"
-#include "object_broker.h"
+#include "Common/object_broker.h"
 #include "game_base_space.h"
 #include "../xrphysics/MathUtils.h"
 #include "player_hud.h"
-
-#include "../build_config_defines.h"
-
-#ifdef DEBUG
-#	include "phdebug.h"
-#endif
 
 CWeaponMagazinedWGrenade::CWeaponMagazinedWGrenade(ESoundTypes eSoundType) : CWeaponMagazined(eSoundType)
 {
@@ -179,8 +173,8 @@ void  CWeaponMagazinedWGrenade::PerformSwitchGL()
 
     m_ammoTypes.swap(m_ammoTypes2);
 
-    swap(m_ammoType, m_ammoType2);
-    swap(m_DefaultCartridge, m_DefaultCartridge2);
+    std::swap(m_ammoType, m_ammoType2);
+    std::swap(m_DefaultCartridge, m_DefaultCartridge2);
 
     xr_vector<CCartridge> l_magazine;
     while (m_magazine.size())
@@ -240,34 +234,9 @@ void CWeaponMagazinedWGrenade::state_Fire(float dt)
 {
     VERIFY(fOneShotTime > 0.f);
 
-    //режим стрельбы подствольника
-    if (m_bGrenadeMode)
-    {
-        /*
-        fTime					-=dt;
-        while (fTime<=0 && (iAmmoElapsed>0) && (IsWorking() || m_bFireSingleShot))
-        {
-        ++m_iShotNum;
-        OnShot			();
-
-        // Ammo
-        if(Local())
-        {
-        VERIFY				(m_magazine.size());
-        m_magazine.pop_back	();
-        --iAmmoElapsed;
-
-        VERIFY((u32)iAmmoElapsed == m_magazine.size());
-        }
-        }
-        UpdateSounds				();
-        if(m_iShotNum == m_iQueueSize)
-        FireEnd();
-        */
-    }
-    //режим стрельбы очередями
-    else
-        inherited::state_Fire(dt);
+    // {} стрельбы подствольника или стрельба очередями (dt);
+    if (m_bGrenadeMode){}
+    else inherited::state_Fire(dt);
 }
 
 void CWeaponMagazinedWGrenade::OnEvent(NET_Packet& P, u16 type)
@@ -350,20 +319,10 @@ void  CWeaponMagazinedWGrenade::LaunchGrenade()
                 Fvector					Transference;
                 Transference.mul(d, RQ.range);
                 Fvector					res[2];
-#ifdef		DEBUG
-                //.				DBG_OpenCashedDraw();
-                //.				DBG_DrawLine(p1,Fvector().add(p1,d),D3DCOLOR_XRGB(255,0,0));
-#endif
                 u8 canfire0 = TransferenceAndThrowVelToThrowDir(Transference,
                     CRocketLauncher::m_fLaunchSpeed,
                     EffectiveGravity(),
                     res);
-#ifdef DEBUG
-                //.				if(canfire0>0)DBG_DrawLine(p1,Fvector().add(p1,res[0]),D3DCOLOR_XRGB(0,255,0));
-                //.				if(canfire0>1)DBG_DrawLine(p1,Fvector().add(p1,res[1]),D3DCOLOR_XRGB(0,0,255));
-                //.				DBG_ClosedCashedDraw(30000);
-#endif
-
                 if (canfire0 != 0)
                 {
                     d = res[0];
@@ -426,7 +385,7 @@ void CWeaponMagazinedWGrenade::ReloadMagazine()
     }
 }
 
-void CWeaponMagazinedWGrenade::OnStateSwitch(u32 S)
+void CWeaponMagazinedWGrenade::OnStateSwitch(u32 S, u32 oldState)
 {
     switch (S)
     {
@@ -440,7 +399,7 @@ void CWeaponMagazinedWGrenade::OnStateSwitch(u32 S)
     }break;
     }
 
-    inherited::OnStateSwitch(S);
+    inherited::OnStateSwitch(S, oldState);
     UpdateGrenadeVisibility(!!iAmmoElapsed || S == eReload);
 }
 
@@ -615,7 +574,7 @@ void CWeaponMagazinedWGrenade::PlayAnimReload()
     {
         if (bMisfire)
         {
-            if (HudAnimationExist("anm_reload_misfire_w_gl"))
+            if (isHUDAnimationExist("anm_reload_misfire_w_gl"))
                 PlayHUDMotion("anm_reload_misfire_w_gl", TRUE, this, GetState());
             else
                 PlayHUDMotion("anm_reload_w_gl", TRUE, this, GetState());
@@ -624,7 +583,7 @@ void CWeaponMagazinedWGrenade::PlayAnimReload()
         {
             if (iAmmoElapsed == 0)
             {
-                if (HudAnimationExist("anm_reload_empty_w_gl"))
+                if (isHUDAnimationExist("anm_reload_empty_w_gl"))
                     PlayHUDMotion("anm_reload_empty_w_gl", TRUE, this, GetState());
                 else
                     PlayHUDMotion("anm_reload_w_gl", TRUE, this, GetState());
@@ -694,7 +653,7 @@ void CWeaponMagazinedWGrenade::PlayAnimIdle()
                             if (act_state == 3)
                             {
 #ifdef NEW_ANIMS //AVO: custom move animation
-                                if (HudAnimationExist("anm_idle_moving_crouch_g")) 
+                                if (isHUDAnimationExist("anm_idle_moving_crouch_g")) 
                                     PlayHUDMotion("anm_idle_moving_crouch_g", TRUE, NULL, GetState());
 #endif //-NEW_ANIMS
                             }
@@ -713,7 +672,7 @@ void CWeaponMagazinedWGrenade::PlayAnimIdle()
                             if (act_state == 3)
                             {
 #ifdef NEW_ANIMS //AVO: custom move animation
-                                if (HudAnimationExist("anm_idle_moving_crouch_w_gl"))
+                                if (isHUDAnimationExist("anm_idle_moving_crouch_w_gl"))
                                     PlayHUDMotion("anm_idle_moving_crouch_w_gl", TRUE, NULL, GetState());
 #endif //-NEW_ANIMS
                             }

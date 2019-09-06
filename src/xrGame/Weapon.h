@@ -282,7 +282,7 @@ protected:
         Fvector			m_ZoomDof;
         Fvector4		m_ReloadDof;
         Fvector4		m_ReloadEmptyDof; //Swartz: reload when empty mag. DOF
-        BOOL			m_bUseDynamicZoom;
+        bool            m_bUseDynamicZoom;
         shared_str		m_sUseZoomPostprocess;
         shared_str		m_sUseBinocularVision;
         CBinocularsVision*		m_pVision;
@@ -428,7 +428,7 @@ protected:
     virtual void			SetDefaults();
 
     virtual bool			MovingAnimAllowedNow();
-    virtual void			OnStateSwitch(u32 S);
+    virtual void			OnStateSwitch(u32 S, u32 oldState);
     virtual void			OnAnimationEnd(u32 state);
 
     //трассирование полета пули

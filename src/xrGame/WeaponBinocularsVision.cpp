@@ -7,13 +7,13 @@
 #include "actor.h"
 #include "actor_memory.h"
 #include "relation_registry.h"
-#include "object_broker.h"
+#include "Common/object_broker.h"
 
 #include "game_base_space.h"
 #include "Level.h"
 #include "game_cl_base.h"
 #include "AI/Monsters/BaseMonster/base_monster.h"
-#include "../xrEngine/igame_persistent.h"
+#include "xrEngine/IGame_Persistent.h"
 
 #define RECT_SIZE	11
 
@@ -22,8 +22,8 @@ extern u32 C_ON_NEUTRAL;
 extern u32 C_ON_FRIEND;
 
 struct FindVisObjByObject{
-	const CObject*			O;
-	FindVisObjByObject(const CObject* o):O(o){}
+    const IGameObject* O;
+    FindVisObjByObject(const IGameObject* o) : O(o) {}
 	bool operator () (const SBinocVisibleObj* vis){
 		return (O==vis->m_object);
 	}
@@ -193,7 +193,7 @@ CBinocularsVision::~CBinocularsVision()
 
 void CBinocularsVision::Update()
 {
-	if (g_dedicated_server)
+    if (GEnv.isDedicatedServer)
 		return;
 	//-----------------------------------------------------
 	const CActor* pActor = NULL;
@@ -217,11 +217,11 @@ void CBinocularsVision::Update()
 	CVisualMemoryManager::VISIBLES::const_iterator v_it = vVisibles.begin();
 	for (; v_it!=vVisibles.end(); ++v_it)
 	{
-		const CObject*	_object_			= (*v_it).m_object;
+		const IGameObject*	_object_			= (*v_it).m_object;
 		if (!pActor->memory().visual().visible_now(smart_cast<const CGameObject*>(_object_)))
 			continue;
 
-		CObject* object_ = const_cast<CObject*>(_object_);
+		IGameObject* object_ = const_cast<IGameObject*>(_object_);
 		
 
 		CEntityAlive*	EA = smart_cast<CEntityAlive*>(object_);
@@ -235,7 +235,7 @@ void CBinocularsVision::Update()
 		if( found != m_active_objects.end() ){
 			(*found)->m_flags.set			(flVisObjNotValid,FALSE);
 		}else{
-			m_active_objects.push_back		(xr_new<SBinocVisibleObj>() );
+			m_active_objects.push_back		(new SBinocVisibleObj() );
 			SBinocVisibleObj* new_vis_obj	= m_active_objects.back();
 			new_vis_obj->m_flags.set		(flVisObjNotValid,FALSE);
 			new_vis_obj->m_object			= object_;
@@ -282,7 +282,7 @@ void CBinocularsVision::Load(const shared_str& section)
 	m_sounds.LoadSound	(section.c_str(),"catch_snd", "catch_snd", false, SOUND_TYPE_NO_SOUND);
 }
 
-void CBinocularsVision::remove_links(CObject *object)
+void CBinocularsVision::remove_links(IGameObject *object)
 {
 	VIS_OBJECTS::iterator	I = std::find_if(m_active_objects.begin(),m_active_objects.end(),FindVisObjByObject(object));
 	if (I == m_active_objects.end())

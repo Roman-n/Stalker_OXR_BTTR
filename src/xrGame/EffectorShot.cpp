@@ -50,39 +50,9 @@ void CWeaponShotEffector::Shot(CWeapon* weapon)
     }
     m_single_shot = (weapon->GetCurrentFireMode() == 1);
 
-    CCartridge* ammo = !weapon->m_magazine.empty() ? &weapon->m_magazine.back() : (0);
-    float k_cam_disp = ammo ? ammo->param_s.k_cam_dispersion : 1.0f;
-    float angle = m_cam_recoil.Dispersion * weapon->cur_silencer_koef.cam_dispersion * k_cam_disp;
+    float angle = m_cam_recoil.Dispersion * weapon->cur_silencer_koef.cam_dispersion;
     angle += m_cam_recoil.DispersionInc * weapon->cur_silencer_koef.cam_disper_inc * (float)m_shot_numer;
-    
-    m_angle_vert += angle * m_cam_recoil.DispersionFrac;
-
-    clamp(m_angle_vert, 0.f, m_cam_recoil.MaxAngleVert);
-    if (fis_zero(m_angle_vert - m_cam_recoil.MaxAngleVert))
-    {
-        m_angle_vert *= m_Random.randF(0.96f, 1.04f);
-    }
-
-    float vert = abs(m_angle_vert);
-    if (vert > abs(m_angle_horz))
-    {
-        static float fSub = 0.25f;
-        static float fAlt = 1.0f;
-
-        float val = (vert * 4 / m_cam_recoil.MaxAngleVert) * m_cam_recoil.StepAngleHorz;
-        clamp(val, -m_cam_recoil.StepAngleHorz, m_cam_recoil.StepAngleHorz);
-        m_angle_horz -= fAlt * val;
-
-        clamp(m_angle_horz, -m_cam_recoil.MaxAngleHorz, m_cam_recoil.MaxAngleHorz);
-
-        fAlt += fSub;
-        if (fAlt >= 1.0f || fAlt <= -0.5f)
-            fSub = -fSub;
-    }
-
-    m_first_shot = true;
-    m_actived = true;
-    m_shot_end = false;
+    Shot2(angle);
 }
 
 void CWeaponShotEffector::Shot2(float angle)

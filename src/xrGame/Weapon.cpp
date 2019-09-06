@@ -16,10 +16,11 @@
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
 #include "../Include/xrRender/Kinematics.h"
-#include "ai_object_location.h"
+#include "xrAICore/Navigation/ai_object_location.h"
 #include "../xrphysics/mathutils.h"
-#include "object_broker.h"
+#include "Common/object_broker.h"
 #include "player_hud.h"
+#include "HUDManager.h"
 #include "gamepersistent.h"
 #include "effectorFall.h"
 #include "debug_renderer.h"
@@ -29,6 +30,8 @@
 #include "ui/UIWindow.h"
 #include "ui/UIXmlInit.h"
 #include "Torch.h"
+#include "ActorNightVision.h"
+#include "actor_flags.h"
 
 #define WEAPON_REMOVE_TIME		60000
 #define ROTATION_TIME			0.25f
@@ -416,12 +419,12 @@ void CWeapon::Load(LPCSTR section)
     {
         shared_str scope_tex_name = pSettings->r_string(cNameSect(), "scope_texture");
         m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(cNameSect(), "scope_zoom_factor");
-        if (!g_dedicated_server)
+        if (!GEnv.isDedicatedServer)
         {
-            m_UIScope = xr_new<CUIWindow>();
+            m_UIScope = new CUIWindow();
             if (!pWpnScopeXml)
             {
-                pWpnScopeXml = xr_new<CUIXml>();
+                pWpnScopeXml = new CUIXml();
                 pWpnScopeXml->Load(CONFIG_PATH, UI_PATH, "scopes.xml");
             }
             CUIXmlInit::InitWindow(*pWpnScopeXml, scope_tex_name.c_str(), 0, m_UIScope);
@@ -689,7 +692,7 @@ void CWeapon::OnEvent(NET_Packet& P, u16 type)
             m_set_next_ammoType_on_reload = NextAmmo;
 
         if (OnClient()) SetAmmoElapsed(int(AmmoElapsed));
-        OnStateSwitch(u32(state));
+        OnStateSwitch(u32(state), GetState());
     }
     break;
     default:
@@ -1061,7 +1064,7 @@ void CWeapon::SpawnAmmo(u32 boxCurr, LPCSTR ammoSect, u32 ParentID)
         D->ID_Phantom = 0xffff;
         D->s_flags.assign(M_SPAWN_OBJECT_LOCAL);
         D->RespawnTime = 0;
-        l_pA->m_tNodeID = g_dedicated_server ? u32(-1) : ai_location().level_vertex_id();
+        l_pA->m_tNodeID = GEnv.isDedicatedServer ? u32(-1) : ai_location().level_vertex_id();
 
         if (boxCurr == 0xffffffff)
             boxCurr = l_pA->m_boxSize;
@@ -1384,7 +1387,7 @@ void CWeapon::OnZoomIn()
         GamePersistent().SetPickableEffectorDOF(true);
 
     if (m_zoom_params.m_sUseBinocularVision.size() && IsScopeAttached() && NULL == m_zoom_params.m_pVision)
-        m_zoom_params.m_pVision = xr_new<CBinocularsVision>(m_zoom_params.m_sUseBinocularVision/*"wpn_binoc"*/);
+        m_zoom_params.m_pVision = new CBinocularsVision(m_zoom_params.m_sUseBinocularVision);
 
     if (m_zoom_params.m_sUseZoomPostprocess.size() && IsScopeAttached())
     {
@@ -1393,7 +1396,7 @@ void CWeapon::OnZoomIn()
         {
             if (NULL == m_zoom_params.m_pNight_vision)
             {
-                m_zoom_params.m_pNight_vision = xr_new<CNightVisionEffector>(m_zoom_params.m_sUseZoomPostprocess/*"device_torch"*/);
+                m_zoom_params.m_pNight_vision = new CNightVisionEffector(m_zoom_params.m_sUseZoomPostprocess);
             }
         }
     }
@@ -1822,14 +1825,14 @@ float CWeapon::GetConditionToShow() const
 
 BOOL CWeapon::ParentMayHaveAimBullet()
 {
-    CObject* O = H_Parent();
+    IGameObject* O = H_Parent();
     CEntityAlive* EA = smart_cast<CEntityAlive*>(O);
     return EA->cast_actor() != 0;
 }
 
 BOOL CWeapon::ParentIsActor()
 {
-    CObject* O = H_Parent();
+    IGameObject* O = H_Parent();
     if (!O)
         return FALSE;
 
@@ -1842,24 +1845,7 @@ BOOL CWeapon::ParentIsActor()
 
 extern u32 hud_adj_mode;
 
-void CWeapon::debug_draw_firedeps()
-{
-#ifdef DEBUG
-    if(hud_adj_mode==5||hud_adj_mode==6||hud_adj_mode==7)
-    {
-        CDebugRenderer			&render = Level().debug_renderer();
-
-        if(hud_adj_mode==5)
-            render.draw_aabb(get_LastFP(),	0.005f,0.005f,0.005f,D3DCOLOR_XRGB(255,0,0));
-
-        if(hud_adj_mode==6)
-            render.draw_aabb(get_LastFP2(),	0.005f,0.005f,0.005f,D3DCOLOR_XRGB(0,0,255));
-
-        if(hud_adj_mode==7)
-            render.draw_aabb(get_LastSP(),		0.005f,0.005f,0.005f,D3DCOLOR_XRGB(0,255,0));
-    }
-#endif // DEBUG
-}
+void CWeapon::debug_draw_firedeps(){}
 
 const float &CWeapon::hit_probability() const
 {
@@ -1867,9 +1853,9 @@ const float &CWeapon::hit_probability() const
     return					(m_hit_probability[egdNovice]);
 }
 
-void CWeapon::OnStateSwitch(u32 S)
+void CWeapon::OnStateSwitch(u32 S, u32 oldState)
 {
-    inherited::OnStateSwitch(S);
+    inherited::OnStateSwitch(S, oldState);
     m_BriefInfo_CalcFrame = 0;
 
     if (GetState() == eReload)
@@ -1880,7 +1866,7 @@ void CWeapon::OnStateSwitch(u32 S)
             {
                 CActor* current_actor = smart_cast<CActor*>(H_Parent());
                 if (current_actor)
-                    current_actor->Cameras().AddCamEffector(xr_new<CEffectorDOF>(m_zoom_params.m_ReloadEmptyDof));
+                    current_actor->Cameras().AddCamEffector(new CEffectorDOF(m_zoom_params.m_ReloadEmptyDof));
             }
         }
         else
@@ -1889,7 +1875,7 @@ void CWeapon::OnStateSwitch(u32 S)
             {
                 CActor* current_actor = smart_cast<CActor*>(H_Parent());
                 if (current_actor)
-                    current_actor->Cameras().AddCamEffector(xr_new<CEffectorDOF>(m_zoom_params.m_ReloadDof));
+                    current_actor->Cameras().AddCamEffector(new CEffectorDOF(m_zoom_params.m_ReloadDof));
             }
         }
     }

@@ -2,10 +2,6 @@
 #include "Actor_Flags.h"
 #include "HUDManager.h"
 
-#ifdef DEBUG
-#include "PHDebug.h"
-#endif // DEBUG
-
 #include "alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"

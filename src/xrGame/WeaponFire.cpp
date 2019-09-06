@@ -13,9 +13,6 @@
 
 #include "level_bullet_manager.h"
 
-#include "game_cl_mp.h"
-#include "reward_event_generator.h"
-
 #define FLAME_TIME 0.05f
 
 
@@ -47,11 +44,6 @@ void random_dir(Fvector& tgt_dir, const Fvector& src_dir, float dispersion)
 	tgt_dir.add			(src_dir,T).normalize();
 }
 
-float CWeapon::GetWeaponDeterioration	()
-{
-	return conditionDecreasePerShot;
-};
-
 void CWeapon::FireTrace		(const Fvector& P, const Fvector& D)
 {
 	VERIFY		(m_magazine.size());
@@ -69,31 +61,25 @@ void CWeapon::FireTrace		(const Fvector& P, const Fvector& D)
 		l_cartridge.param_s.u8ColorID	= m_u8TracerColorID;
 	//-------------------------------------------------------------
 	//повысить изношенность оружия с учетом влияния конкретного патрона
-//	float Deterioration = GetWeaponDeterioration();
-//	Msg("Deterioration = %f", Deterioration);
 	ChangeCondition(-GetWeaponDeterioration()*l_cartridge.param_s.impair);
 
 	
 	float fire_disp = 0.f;
 	CActor* tmp_actor = NULL;
-	if (!IsGameTypeSingle())
-	{
-		tmp_actor = smart_cast<CActor*>(Level().CurrentControlEntity());
-		if (tmp_actor)
-		{
-			CEntity::SEntityState state;
-			tmp_actor->g_State(state);
-			if (m_first_bullet_controller.is_bullet_first(state.fVelocity))
-			{
-				fire_disp = m_first_bullet_controller.get_fire_dispertion();
-				m_first_bullet_controller.make_shot();
-			}
-		}
-		game_cl_mp*	tmp_mp_game = smart_cast<game_cl_mp*>(&Game());
-		VERIFY(tmp_mp_game);
-		if (tmp_mp_game->get_reward_generator())
-			tmp_mp_game->get_reward_generator()->OnWeapon_Fire(H_Parent()->ID(), ID());
-	}
+    if (!IsGameTypeSingle())
+    {
+        tmp_actor = smart_cast<CActor*>(Level().CurrentControlEntity());
+        if (tmp_actor)
+        {
+            CEntity::SEntityState state;
+            tmp_actor->g_State(state);
+            if (m_first_bullet_controller.is_bullet_first(state.fVelocity))
+            {
+                fire_disp = m_first_bullet_controller.get_fire_dispertion();
+                m_first_bullet_controller.make_shot();
+            }
+        }
+    }
 	if (fsimilar(fire_disp, 0.f))
 	{
 		//CActor* tmp_actor = smart_cast<CActor*>(Level().CurrentControlEntity());
@@ -140,22 +126,8 @@ void CWeapon::StopShooting()
 	bWorking = false;
 }
 
-void CWeapon::FireEnd() 
-{
-	CShootingObject::FireEnd();
-	StopShotEffector();
-}
-
-
-void CWeapon::StartFlameParticles2	()
-{
-	CShootingObject::StartParticles (m_pFlameParticles2, *m_sFlameParticles2, get_LastFP2());
-}
-void CWeapon::StopFlameParticles2	()
-{
-	CShootingObject::StopParticles (m_pFlameParticles2);
-}
-void CWeapon::UpdateFlameParticles2	()
-{
-	if (m_pFlameParticles2)			CShootingObject::UpdateParticles (m_pFlameParticles2, get_LastFP2());
-}
+float CWeapon::GetWeaponDeterioration(){ return conditionDecreasePerShot; };
+void CWeapon::FireEnd()                { CShootingObject::FireEnd(); StopShotEffector(); }
+void CWeapon::StartFlameParticles2	() { CShootingObject::StartParticles (m_pFlameParticles2, *m_sFlameParticles2, get_LastFP2()); }
+void CWeapon::StopFlameParticles2	() { CShootingObject::StopParticles (m_pFlameParticles2); }
+void CWeapon::UpdateFlameParticles2	() { if (m_pFlameParticles2) CShootingObject::UpdateParticles (m_pFlameParticles2, get_LastFP2()); }

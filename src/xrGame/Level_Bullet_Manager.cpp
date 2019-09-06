@@ -39,7 +39,6 @@ void SBullet::Init(const Fvector& position, const Fvector& direction, float star
 {
     flags._storage = 0;
     bullet_pos = position;
-    starting_speed *= cartridge.param_s.kBulletSpeed;
     speed = max_speed = starting_speed;
     VERIFY(speed > 0.f);
 
@@ -73,15 +72,12 @@ void SBullet::Init(const Fvector& position, const Fvector& direction, float star
 
     flags.allow_tracer = !!cartridge.m_flags.test(CCartridge::cfTracer);
 
-    //Alundaio: Tracer for every 5th bullet
     if (flags.allow_tracer && cartridge.m_4to1_tracer && iShotNum % 5 != 0)
         flags.allow_tracer = false;
-    //-Alundaio
 
     flags.allow_ricochet = !!cartridge.m_flags.test(CCartridge::cfRicochet);
     flags.explosive = !!cartridge.m_flags.test(CCartridge::cfExplosive);
     flags.magnetic_beam = !!cartridge.m_flags.test(CCartridge::cfMagneticBeam);
-    //	flags.skipped_frame		= 0;
 
     init_frame_num = Device.dwFrame;
 

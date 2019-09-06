@@ -3,10 +3,10 @@
 
 #include "xr_level_controller.h"
 
-#include "level.h"
+#include "Level.h"
 #include "ui\UIFrameWindow.h"
 #include "WeaponBinocularsVision.h"
-#include "object_broker.h"
+#include "Common/object_broker.h"
 #include "inventory.h"
 
 CWeaponBinoculars::CWeaponBinoculars()
@@ -52,7 +52,7 @@ void CWeaponBinoculars::OnZoomIn		()
 		if(m_bVision && !m_binoc_vision) 
 		{
 			//.VERIFY			(!m_binoc_vision);
-			m_binoc_vision	= xr_new<CBinocularsVision>(cNameSect());
+			m_binoc_vision	= new CBinocularsVision(cNameSect());
 		}
 	}
 	inherited::OnZoomIn		();
@@ -157,7 +157,7 @@ bool CWeaponBinoculars::GetBriefInfo( II_BriefInfo& info )
 	return true;
 }
 
-void CWeaponBinoculars::net_Relcase	(CObject *object)
+void CWeaponBinoculars::net_Relcase	(IGameObject *object)
 {
 	if (!m_binoc_vision)
 		return;
