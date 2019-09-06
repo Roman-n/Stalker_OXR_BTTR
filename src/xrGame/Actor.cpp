@@ -1059,7 +1059,7 @@ void CActor::UpdateCL()
             }
 
             psHUD_Flags.set(HUD_DRAW_RT, pWeapon->show_indicators());
-            
+#ifdef D_TEST          
             // Обновляем двойной рендер от оружия [Update SecondVP with weapon data]
             pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
 			bool bUseMark = !!pWeapon->bMarkCanShow();
@@ -1070,6 +1070,7 @@ void CActor::UpdateCL()
 			g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPFov(); //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->hud_params.z = bUseMark; //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x = bNVEnbl;  //--#SM+#--
+#endif
         }
     }
     else
@@ -1787,7 +1788,6 @@ void CActor::UpdateArtefactsOnBeltAndOutfit()
     {
 		CTorch* pTorch = smart_cast<CTorch*>(inventory().ItemFromSlot(TORCH_SLOT));
 		if (pTorch && pTorch->GetNightVisionStatus())
-      if (GetNightVisionStatus())
         {
             pTorch->SwitchNightVision(false);
 		} 

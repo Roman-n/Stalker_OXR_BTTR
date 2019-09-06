@@ -154,14 +154,14 @@ SCRIPT_EXPORT(CCartridge, (), {
             .def_readwrite("kImpulse ", &SCartridgeParam::kImpulse)
             .def_readwrite("kAP ", &SCartridgeParam::kAP)
             .def_readwrite("kAirRes ", &SCartridgeParam::kAirRes)
-            .def_readwrite("kBulletSpeed ", &SCartridgeParam::kBulletSpeed)
-            .def_readwrite("k_cam_dispersion", &SCartridgeParam::k_cam_dispersion)
+            //.def_readwrite("kBulletSpeed ", &SCartridgeParam::kBulletSpeed)
+            //.def_readwrite("k_cam_dispersion", &SCartridgeParam::k_cam_dispersion)
             .def_readwrite("buckShot", &SCartridgeParam::buckShot)
             .def_readwrite("impair", &SCartridgeParam::impair)
             .def_readwrite("u8ColorID", &SCartridgeParam::u8ColorID),
         class_<CCartridge>("CCartridge")
             .def(constructor<>())
-            .def("Weight", &CCartridge::Weight)
+            //.def("Weight", &CCartridge::Weight)
             .def_readwrite("m_LocalAmmoType", &CCartridge::m_LocalAmmoType)
             .def_readwrite("m_4to1_tracer", &CCartridge::m_4to1_tracer)
             .def_readwrite("bullet_material_idx", &CCartridge::bullet_material_idx)
@@ -172,5 +172,5 @@ SCRIPT_EXPORT(CCartridge, (), {
                 value("cfCanBeUnlimited", int(CCartridge::cfCanBeUnlimited)),
                 value("cfExplosive", int(CCartridge::cfExplosive)),
                 value("cfMagneticBeam", int(CCartridge::cfMagneticBeam))]
-            .def("GetInventoryName", &CCartridge::GetInventoryName)];
+            /*.def("GetInventoryName", &CCartridge::GetInventoryName)*/];
 });

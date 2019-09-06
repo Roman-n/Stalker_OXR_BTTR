@@ -110,7 +110,7 @@ void CTorch::SwitchNightVision(bool vision_on, bool use_sounds)
 		return;
 	}
 	if(!m_night_vision)
-		m_night_vision			= xr_new<CNightVisionEffector>(cNameSect());
+		m_night_vision			= new CNightVisionEffector(cNameSect());
 
 
 	LPCSTR disabled_names	= pSettings->r_string(cNameSect(),"disabled_maps");
