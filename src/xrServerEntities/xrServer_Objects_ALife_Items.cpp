@@ -454,28 +454,30 @@ void CSE_ALifeItemTorch::FillProps(LPCSTR pref, PropItemVec& values) { inherited
 ////////////////////////////////////////////////////////////////////////////
 // CSE_ALifeItemWeapon
 ////////////////////////////////////////////////////////////////////////////
-CSE_ALifeItemWeapon::CSE_ALifeItemWeapon(LPCSTR caSection) : CSE_ALifeItem(caSection)
+CSE_ALifeItemWeapon::CSE_ALifeItemWeapon	(LPCSTR caSection) : CSE_ALifeItem(caSection)
 {
-    a_elapsed = 0;
+	a_current					= 90;
+	a_elapsed					= 0;
+	a_elapsed_grenades.grenades_count	=	0;
+	a_elapsed_grenades.grenades_type	=	0;
 
-    wpn_flags = 0;
-    wpn_state = 0;
-    ammo_type = 0;
-	cur_scope = 0;
+	wpn_flags					= 0;
+	wpn_state					= 0;
+	ammo_type					= 0;
 
-    m_fHitPower = pSettings->r_float(caSection, "hit_power");
-    m_tHitType = ALife::g_tfString2HitType(pSettings->r_string(caSection, "hit_type"));
-    m_caAmmoSections = pSettings->r_string(caSection, "ammo_class");
-    if (pSettings->section_exist(caSection) && pSettings->line_exist(caSection, "visual"))
-        set_visual(pSettings->r_string(caSection, "visual"));
+	m_fHitPower					= pSettings->r_float(caSection,"hit_power");
+	m_tHitType					= ALife::g_tfString2HitType(pSettings->r_string(caSection,"hit_type"));
+	m_caAmmoSections			= pSettings->r_string(caSection,"ammo_class");
+	if (pSettings->section_exist(caSection) && pSettings->line_exist(caSection,"visual"))
+        set_visual				(pSettings->r_string(caSection,"visual"));
 
-    m_addon_flags.zero();
+	m_addon_flags.zero			();
 
-    m_scope_status = (EWeaponAddonStatus)pSettings->r_s32(s_name, "scope_status");
-    m_silencer_status = (EWeaponAddonStatus)pSettings->r_s32(s_name, "silencer_status");
-    m_grenade_launcher_status = (EWeaponAddonStatus)pSettings->r_s32(s_name, "grenade_launcher_status");
-    m_ef_main_weapon_type = READ_IF_EXISTS(pSettings, r_u32, caSection, "ef_main_weapon_type", u32(-1));
-    m_ef_weapon_type = READ_IF_EXISTS(pSettings, r_u32, caSection, "ef_weapon_type", u32(-1));
+	m_scope_status				=	(EWeaponAddonStatus)pSettings->r_s32(s_name,"scope_status");
+	m_silencer_status			=	(EWeaponAddonStatus)pSettings->r_s32(s_name,"silencer_status");
+	m_grenade_launcher_status	=	(EWeaponAddonStatus)pSettings->r_s32(s_name,"grenade_launcher_status");
+	m_ef_main_weapon_type		= READ_IF_EXISTS(pSettings,r_u32,caSection,"ef_main_weapon_type",u32(-1));
+	m_ef_weapon_type			= READ_IF_EXISTS(pSettings,r_u32,caSection,"ef_weapon_type",u32(-1));
 }
 
 CSE_ALifeItemWeapon::~CSE_ALifeItemWeapon() {}
@@ -491,17 +493,17 @@ u32 CSE_ALifeItemWeapon::ef_weapon_type() const
     return (m_ef_weapon_type);
 }
 
-void CSE_ALifeItemWeapon::UPDATE_Read(NET_Packet& tNetPacket)
+void CSE_ALifeItemWeapon::UPDATE_Read(NET_Packet	&tNetPacket)
 {
-    inherited::UPDATE_Read(tNetPacket);
+	inherited::UPDATE_Read		(tNetPacket);
 
-    tNetPacket.r_float_q8(m_fCondition, 0.0f, 1.0f);
-    tNetPacket.r_u8(wpn_flags);
-    tNetPacket.r_u16(a_elapsed);
-    tNetPacket.r_u8(m_addon_flags.flags);
-    tNetPacket.r_u8(ammo_type);
-    tNetPacket.r_u8(wpn_state);
-    tNetPacket.r_u8(m_bZoom);
+	tNetPacket.r_float_q8		(m_fCondition,0.0f,1.0f);
+	tNetPacket.r_u8				(wpn_flags);
+	tNetPacket.r_u16			(a_elapsed);
+	tNetPacket.r_u8				(m_addon_flags.flags);
+	tNetPacket.r_u8				(ammo_type);
+	tNetPacket.r_u8				(wpn_state);
+	tNetPacket.r_u8				(m_bZoom);
 	if (m_wVersion > 128)
 		tNetPacket.r_u8             (cur_scope);
 }
@@ -513,35 +515,32 @@ void CSE_ALifeItemWeapon::clone_addons(CSE_ALifeItemWeapon* parent)
 
 void CSE_ALifeItemWeapon::UPDATE_Write(NET_Packet& tNetPacket)
 {
-    inherited::UPDATE_Write(tNetPacket);
+	inherited::UPDATE_Write		(tNetPacket);
 
-    tNetPacket.w_float_q8(m_fCondition, 0.0f, 1.0f);
-    tNetPacket.w_u8(wpn_flags);
-    tNetPacket.w_u16(a_elapsed);
-    tNetPacket.w_u8(m_addon_flags.get());
-    tNetPacket.w_u8(ammo_type);
-    tNetPacket.w_u8(wpn_state);
-    tNetPacket.w_u8(m_bZoom);
-	tNetPacket.w_u8(cur_scope);
+	tNetPacket.w_float_q8		(m_fCondition,0.0f,1.0f);
+	tNetPacket.w_u8				(wpn_flags);
+	tNetPacket.w_u16			(a_elapsed);
+	tNetPacket.w_u8				(m_addon_flags.get());
+	tNetPacket.w_u8				(ammo_type);
+	tNetPacket.w_u8				(wpn_state);
+	tNetPacket.w_u8				(m_bZoom);
 }
 
 void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-    inherited::STATE_Read(tNetPacket, size);
-	a_current = tNetPacket.r_u16();
- 	if (a_current == 90) //Alun: Hack because all.spawn ammo_current all set to 90. Since this unlikely anyway (launcher=26, silencer=1, scope=0), this hack is okay.
-		a_current = 0;
- 	tNetPacket.r_u16(a_elapsed);
-	tNetPacket.r_u8(wpn_state);
+	inherited::STATE_Read		(tNetPacket, size);
+	tNetPacket.r_u16			(a_current);
+	tNetPacket.r_u16			(a_elapsed);
+	tNetPacket.r_u8				(wpn_state);
+	
+	if (m_wVersion > 40)
+		tNetPacket.r_u8			(m_addon_flags.flags);
 
-    if (m_wVersion > 40)
-        tNetPacket.r_u8(m_addon_flags.flags);
-
-    if (m_wVersion > 46)
-        tNetPacket.r_u8(ammo_type);
-
-    if (m_wVersion > 122)
-        tNetPacket.r_u8(); // Alun: Currently unused
+	if (m_wVersion > 46)
+		tNetPacket.r_u8			(ammo_type);
+	
+	if (m_wVersion > 122)
+		a_elapsed_grenades.unpack_from_byte(tNetPacket.r_u8());
 	
 	if (m_wVersion > 128)
 		tNetPacket.r_u8(cur_scope);

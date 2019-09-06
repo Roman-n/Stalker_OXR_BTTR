@@ -121,15 +121,15 @@ bool CWeapon::install_upgrade_disp( LPCSTR section, bool test )
 	result |= process_if_exists( section, "misfire_start_prob",			&CInifile::r_float, misfireStartProbability,		test );
 	result |= process_if_exists( section, "misfire_end_prob",			&CInifile::r_float, misfireEndProbability,			test );
 
-	bool value = m_zoom_params.m_bZoomEnabled;
-    bool result2 = process_if_exists_set(section, "zoom_enabled", &CInifile::r_bool, value, test);
-    if (result2 && !test)
-    {
-        m_zoom_params.m_bZoomEnabled = !!value;
-    }
-    result |= result2;
-
-    return result;
+	BOOL value = m_zoom_params.m_bZoomEnabled;
+	bool result2 = process_if_exists_set( section, "zoom_enabled", &CInifile::r_bool, value, test );
+	if ( result2 && !test )
+	{
+		m_zoom_params.m_bZoomEnabled = !!value;
+	}
+	result |= result2;
+	
+	return result;
 }
 
 bool CWeapon::install_upgrade_hit( LPCSTR section, bool test )
@@ -141,13 +141,13 @@ bool CWeapon::install_upgrade_hit( LPCSTR section, bool test )
 	if ( result2 && !test )
 	{
 		string32 buffer;
-		fvHitPower[egdMaster] = (float)atof( _GetItem( *s_sHitPower, 0, buffer ) );
+		fvHitPower[egdMaster] += (float)atof( _GetItem( *s_sHitPower, 0, buffer ) );
 		fvHitPower[egdNovice] = fvHitPower[egdStalker] = fvHitPower[egdVeteran] = fvHitPower[egdMaster];
 
 		int num_game_diff_param = _GetItemCount( *s_sHitPower );
-		if ( num_game_diff_param > 1 ) { fvHitPower[egdVeteran]	= (float)atof( _GetItem( *s_sHitPower, 1, buffer ) ); }
-		if ( num_game_diff_param > 2 ) { fvHitPower[egdStalker]	= (float)atof( _GetItem( *s_sHitPower, 2, buffer ) ); }
-		if ( num_game_diff_param > 3 ) { fvHitPower[egdNovice]	= (float)atof( _GetItem( *s_sHitPower, 3, buffer ) ); }
+		if ( num_game_diff_param > 1 ) { fvHitPower[egdVeteran]	+= (float)atof( _GetItem( *s_sHitPower, 1, buffer ) ); }
+		if ( num_game_diff_param > 2 ) { fvHitPower[egdStalker]	+= (float)atof( _GetItem( *s_sHitPower, 2, buffer ) ); }
+		if ( num_game_diff_param > 3 ) { fvHitPower[egdNovice]	+= (float)atof( _GetItem( *s_sHitPower, 3, buffer ) ); }
 	}
 	result |= result2;
 
@@ -211,60 +211,35 @@ bool CWeapon::install_upgrade_addon( LPCSTR section, bool test )
 		{
 			result |= process_if_exists( section, "holder_range_modifier", &CInifile::r_float, m_addon_holder_range_modifier, test );
 			result |= process_if_exists( section, "holder_fov_modifier",   &CInifile::r_float, m_addon_holder_fov_modifier,   test );
-			bUseAltScope = pSettings->line_exist(section, "scopes");
 
-			if (bUseAltScope)
+			if ( m_eScopeStatus == ALife::eAddonAttachable )
 			{
-				LPCSTR str = pSettings->r_string(section, "scopes");
-				for (int i = 0, count = _GetItemCount(str); i < count; ++i)
+				if(pSettings->line_exist(section, "scopes_sect"))		
 				{
-					string128 scope_section;
-					_GetItem(str, i, scope_section);
-
-					if (!xr_strcmp(scope_section, "none"))
+					LPCSTR str = pSettings->r_string(section, "scopes_sect");
+					for(int i = 0, count = _GetItemCount(str); i < count; ++i )	
 					{
-						bUseAltScope = 0;
-					}
-					else
-					{
-						m_scopes.push_back(scope_section);
-					}
-				}
-			}
-
-			if (!bUseAltScope)
-			{
-				if (m_eScopeStatus == ALife::eAddonAttachable)
-				{
-					if (pSettings->line_exist(section, "scopes_sect"))
-					{
-						LPCSTR str = pSettings->r_string(section, "scopes_sect");
-						for (int i = 0, count = _GetItemCount(str); i < count; ++i)
-						{
-							string128						scope_section;
-							_GetItem(str, i, scope_section);
-							m_scopes.push_back(scope_section);
-						}
-					}
-					else
-					{
-						m_scopes.push_back(section);
+						string128						scope_section;
+						_GetItem						(str, i, scope_section);
+						m_scopes.push_back				(scope_section);
 					}
 				}
 				else
 				{
 					m_scopes.push_back(section);
-					if (m_eScopeStatus == ALife::eAddonPermanent)
-						InitAddons();
 				}
 			}
-
+			else
+			{
+				m_scopes.push_back(section);
+				if(m_eScopeStatus==ALife::eAddonPermanent)
+					InitAddons();
+			}
 		}
 	}
-
-    result |= process_if_exists_set(section, "scope_dynamic_zoom", &CInifile::r_bool, m_zoom_params.m_bUseDynamicZoom, test);
-    result |= process_if_exists_set(section, "scope_nightvision", &CInifile::r_string_wb, m_zoom_params.m_sUseZoomPostprocess, test);
-    result |= process_if_exists_set(section, "scope_alive_detector", &CInifile::r_string_wb, m_zoom_params.m_sUseBinocularVision, test);
+	result |= process_if_exists_set( section, "scope_dynamic_zoom", &CInifile::r_bool, m_zoom_params.m_bUseDynamicZoom, test );
+	result |= process_if_exists_set( section, "scope_nightvision", &CInifile::r_string_wb, m_zoom_params.m_sUseZoomPostprocess, test );
+	result |= process_if_exists_set( section, "scope_alive_detector", &CInifile::r_string_wb, m_zoom_params.m_sUseBinocularVision, test );
 
 	result |= result2;
 

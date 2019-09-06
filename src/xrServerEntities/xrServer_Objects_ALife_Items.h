@@ -167,163 +167,88 @@ class CSE_ALifeItemWeapon : public CSE_ALifeItem
 
 public:
 
-    typedef ALife::EWeaponAddonStatus EWeaponAddonStatus;
+    typedef	ALife::EWeaponAddonStatus	EWeaponAddonStatus;
+	
+	enum EWeaponAddonState 
+	{
+		eWeaponAddonScope = 0x01,
+		eWeaponAddonGrenadeLauncher = 0x02,
+		eWeaponAddonSilencer = 0x04
+	};
 
-    //текущее состояние аддонов
-    enum EWeaponAddonState
-    {
-        eWeaponAddonScope = 0x01,
-        eWeaponAddonGrenadeLauncher = 0x02,
-        eWeaponAddonSilencer = 0x04
-    };
+    EWeaponAddonStatus				m_scope_status;
+	EWeaponAddonStatus				m_silencer_status;				
+	EWeaponAddonStatus				m_grenade_launcher_status;
 
-    EWeaponAddonStatus m_scope_status;
-    EWeaponAddonStatus m_silencer_status;
-    EWeaponAddonStatus m_grenade_launcher_status;
+	u8								wpn_flags;
+	u8								wpn_state;
+	u8								ammo_type;
+	u16								a_current;
+	u16								a_elapsed;
+	u32								timestamp;
 
-    u32 timestamp;
-    u8 wpn_flags;
-    u8 wpn_state;
-    u8 ammo_type;
-    u16 a_current;
-    u16 a_elapsed;
-    u8 cur_scope;
-    // count of grenades to spawn in grenade launcher [ttcccccc]
-    // WARNING! hight 2 bits (tt bits) indicate type of grenade, so maximum grenade count is 2^6 = 64
-    struct grenade_count_t
-    {
-        u8 grenades_count : 6;
-        u8 grenades_type : 2;
-        u8 pack_to_byte() const { return (grenades_type << 6) | grenades_count; }
-        void unpack_from_byte(u8 const b)
-        {
-            grenades_type = (b >> 6);
-            grenades_count = b & 0x3f; // 111111
-        }
-    }; // struct grenade_count_t
-    grenade_count_t a_elapsed_grenades;
+    struct 							grenade_count_t
+	{
+		u8	grenades_count	:	6;
+		u8	grenades_type	:	2;
+		u8	pack_to_byte() const { return (grenades_type << 6) | grenades_count; }
+		void unpack_from_byte(u8 const b) { grenades_type	=	(b >> 6); grenades_count	=	b & 0x3f; }
+	}; 
+	
+	grenade_count_t 				a_elapsed_grenades;
 
-    float m_fHitPower;
-    ALife::EHitType m_tHitType;
-    LPCSTR m_caAmmoSections;
-    u32 m_dwAmmoAvailable;
-    Flags8 m_addon_flags;
-    u8 m_bZoom;
-    u32 m_ef_main_weapon_type;
-    u32 m_ef_weapon_type;
+    float							m_fHitPower;
+	ALife::EHitType					m_tHitType;
+	LPCSTR							m_caAmmoSections;
+	u32								m_dwAmmoAvailable;
+	Flags8							m_addon_flags;
+	u8								m_bZoom;
+	u32								m_ef_main_weapon_type;
+	u32								m_ef_weapon_type;
 
-    /*
-    typedef ALife::EWeaponAddonStatus EWeaponAddonStatus;
+    								CSE_ALifeItemWeapon	(LPCSTR caSection);
+	virtual							~CSE_ALifeItemWeapon();
+	
+    virtual void					OnEvent (NET_Packet& P, u16 type, u32 time, ClientID sender );
+    virtual u32						ef_main_weapon_type	() const;
+	virtual u32						ef_weapon_type		() const;
+	
+    u8								get_slot			();
+	u16								get_ammo_limit		();
+	u16								get_ammo_total		();
+	
+	u16								get_ammo_elapsed	();
+	u16								get_ammo_magsize	();
+	void 							set_ammo_elapsed	(u16 count);
 
-    //текущее состояние аддонов
-    enum EWeaponAddonState
-    {
-        eWeaponAddonScope = 0x01,
-        eWeaponAddonGrenadeLauncher = 0x02,
-        eWeaponAddonSilencer = 0x04
-    };
+	Flags8&							get_addon_flags() { return m_addon_flags; }
+    void							clone_addons	(CSE_ALifeItemWeapon* parent);
 
-    EWeaponAddonStatus m_scope_status;
-    EWeaponAddonStatus m_silencer_status;
-    EWeaponAddonStatus m_grenade_launcher_status;
-
-    u32 timestamp;
-    u8 wpn_flags;
-    u8 wpn_state;
-
-	u8 cur_scope;
-
-    struct ammo_type_t
-    {
-        union
-        {
-            u8 data;
-            struct
-            {
-                u8 type1 : 4; // Type1 is normal ammo unless in grenade mode it's swapped 2^4 = 16
-                u8 type2 : 4; // Type2 is grenade ammo unless in grenade mode it's swapped
-            };
-        };
-    };
-    ammo_type_t ammo_type;
-    struct ammo_elapsed_t
-    {
-        union
-        {
-            u16 data;
-            struct
-            {
-                u16 type1 : 8; // Type1 is normal ammo unless in grenade mode it's swapped  2^8 = 256 max ammo
-                u16 type2 : 8; // Type2 is grenade ammo unless in grenade mode it's swapped
-            };
-        };
-    };
-    ammo_elapsed_t a_elapsed;
-    struct current_addon_t
-    {
-        union
-        {
-            u16 data;
-            struct
-            {
-                u16 launcher : 5;
-                u16 silencer : 5; // 2^5 possible silencer/launcher sections
-                u16 scope : 6; // 2^6 possible scope sections
-            };
-        };
-    };
-    current_addon_t a_current_addon;
-
-    float m_fHitPower;
-    ALife::EHitType m_tHitType;
-    LPCSTR m_caAmmoSections;
-    u32 m_dwAmmoAvailable;
-    Flags8 m_addon_flags;
-    u8 m_bZoom;
-    u32 m_ef_main_weapon_type;
-    u32 m_ef_weapon_type;
-*/
-    CSE_ALifeItemWeapon(LPCSTR caSection);
-    virtual ~CSE_ALifeItemWeapon();
-    virtual void OnEvent(NET_Packet& P, u16 type, u32 time, ClientID sender);
-    virtual u32 ef_main_weapon_type() const;
-    virtual u32 ef_weapon_type() const;
-    u8 get_slot();
-    u16 get_ammo_limit();
-    u16 get_ammo_total();
-
-    /*
-	u16								get_ammo_elapsed() { return a_elapsed.type1; };
-	void							set_ammo_elapsed(u16 count) { a_elapsed.type1 = count; };
-	u16								get_ammo_elapsed2() { return a_elapsed.type2; };
-	void							set_ammo_elapsed2(u16 count) {a_elapsed.type2 = count; };
-	u8								get_ammo_type() { return ammo_type.type1; };
-	void							set_ammo_type(u8 count) { ammo_type.type1 = count; };
-	u8								get_ammo_type2() { return ammo_type.type2; };
-	void							set_ammo_type2(u8 count) { ammo_type.type2 = count; };
-    */
-
-    u16                             get_ammo_elapsed() { return a_elapsed; };
-    void                            set_ammo_elapsed(u16 count) { a_elapsed = count; };
-    u16                             get_ammo_elapsed2() { return a_elapsed; };
-    void                            set_ammo_elapsed2(u16 count) { a_elapsed = count; };
-    u8                              get_ammo_type() { return ammo_type; };
-    void                            set_ammo_type(u8 count) { ammo_type = count; };
-    u8                              get_ammo_type2() { return ammo_type; };
-    void                            set_ammo_type2(u8 count) { ammo_type = count; };
-
-    u16 get_ammo_magsize();
-    Flags8& get_addon_flags() { return m_addon_flags; }
-    //void set_addon_flags(const Flags8 &_flags) { m_addon_flags.flags = _flags.flags; }
-    void clone_addons(CSE_ALifeItemWeapon* parent);
-
-    virtual BOOL Net_Relevant();
-
-    virtual CSE_ALifeItemWeapon* cast_item_weapon() { return this; }
-    virtual void UPDATE_Read(NET_Packet& P);
-    virtual void UPDATE_Write(NET_Packet& P);
-    virtual void STATE_Read(NET_Packet& P, u16 size);
-    virtual void STATE_Write(NET_Packet& P);
+    virtual BOOL					Net_Relevant		();
+	// Структуры хранения пакетов
+    virtual 						CSE_ALifeItemWeapon* cast_item_weapon() 
+									{ 
+										return this; 
+									}
+									
+    virtual void 					UPDATE_Read
+									(
+										NET_Packet& P
+									);
+									
+    virtual void 					UPDATE_Write
+									(
+										NET_Packet& P
+									);
+									
+    virtual void 					STATE_Read
+									(
+										NET_Packet& P, u16 size
+									);
+    virtual void 					STATE_Write
+									(
+										NET_Packet& P
+									);
     SERVER_ENTITY_EDITOR_METHODS
 };
 

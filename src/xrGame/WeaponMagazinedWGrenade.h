@@ -15,7 +15,7 @@ public:
 	virtual			~CWeaponMagazinedWGrenade	();
 
 	virtual void	Load				(LPCSTR section);
-    virtual float   Weight() const;
+	
 	virtual BOOL	net_Spawn			(CSE_Abstract* DC);
 	virtual void	net_Destroy			();
 	virtual void	net_Export			(NET_Packet& P);
@@ -26,14 +26,6 @@ public:
 	virtual void	save				(NET_Packet &output_packet);
 	virtual void	load				(IReader &input_packet);
 
-	// Mortan: РќРѕРІС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·РґРµСЃСЏ
-	virtual	bool    bMarkCanShow() { return IsZoomed() && !m_bGrenadeMode; }
-	virtual	bool	bInZoomRightNow() const { return (m_zoom_params.m_fZoomRotationFactor > 0.05) && !m_bGrenadeMode; }
-
-
-	virtual void	UpdateSecondVP(bool bInGrenade = false);
-
-	//=========================================
 
 	virtual bool	Attach					(PIItem pIItem, bool b_send_event);
 	virtual bool	Detach					(const char* item_section_name, bool b_spawn_item);
@@ -46,10 +38,9 @@ public:
 	virtual void	FireEnd					();
 			void	LaunchGrenade			();
 	
-	virtual void    OnStateSwitch(u32 S, u32 oldState);
+	virtual void	OnStateSwitch	(u32 S);
 	
 	virtual void	switch2_Reload	();
-	virtual void    switch2_Unmis	();
 	virtual void	state_Fire		(float dt);
 	virtual void	OnShot			();
 	virtual void	OnEvent			(NET_Packet& P, u16 type);
@@ -59,7 +50,7 @@ public:
 
 	virtual void	UpdateSounds	();
 
-	//РїРµСЂРµРєР»СЋС‡РµРЅРёРµ РІ СЂРµР¶РёРј РїРѕРґСЃС‚РІРѕР»СЊРЅРёРєР°
+	//переключение в режим подствольника
 	virtual bool	SwitchMode		();
 	void			PerformSwitchGL	();
 	void			OnAnimationEnd	(u32 state);
@@ -68,7 +59,7 @@ public:
 
 	virtual bool	IsNecessaryItem	    (const shared_str& item_sect);
 
-	//РІРёСЂС‚СѓР°Р»СЊРЅС‹Рµ С„СѓРЅРєС†РёРё РґР»СЏ РїСЂРѕРёРіСЂС‹РІР°РЅРёСЏ Р°РЅРёРјР°С†РёРё HUD
+	//виртуальные функции для проигрывания анимации HUD
 	virtual void	PlayAnimShow		();
 	virtual void	PlayAnimHide		();
 	virtual void	PlayAnimReload		();
@@ -85,8 +76,9 @@ private:
 			int		GetAmmoCount2				( u8 ammo2_type ) const;
 
 public:
-	//РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РїР°С‚СЂРѕРЅРѕРІ 
-	//РґР»СЏ РїРѕРґСЃС‚РІРѕР»СЊРЅРёРєР°
+	//дополнительные параметры патронов 
+	//для подствольника
+//-	CWeaponAmmo*			m_pAmmo2;
 	xr_vector<shared_str>	m_ammoTypes2;
 	u8						m_ammoType2;
 

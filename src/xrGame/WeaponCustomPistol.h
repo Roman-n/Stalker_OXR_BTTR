@@ -1,16 +1,16 @@
 #pragma once
+
 #include "WeaponMagazined.h"
 
-class CWeaponCustomPistol : public CWeaponMagazined
+class CWeaponCustomPistol: public CWeaponMagazined
 {
-    using inherited = CWeaponMagazined;
-
+private:
+	typedef CWeaponMagazined inherited;
 public:
-    CWeaponCustomPistol();
-    virtual ~CWeaponCustomPistol();
-    int GetCurrentFireMode() override { return 1; }
-
+					CWeaponCustomPistol	();
+	virtual			~CWeaponCustomPistol();
+	virtual	int		GetCurrentFireMode	() { return 1; };
 protected:
-    void FireEnd() override;
-    void switch2_Fire() override;
+	virtual void	FireEnd				();
+	virtual void	switch2_Fire		();
 };

@@ -423,12 +423,11 @@ CSE_Abstract* try_to_clone_object(CALifeSimulator* self, CSE_Abstract* object, p
             return nullptr;
 
         clone->wpn_flags = wpnmag->wpn_flags;
-        clone->m_addon_flags = wpnmag->m_addon_flags;
-        clone->m_fCondition = wpnmag->m_fCondition;
-        clone->ammo_type = wpnmag->ammo_type;
-        clone->m_upgrades = wpnmag->m_upgrades;
-        clone->a_elapsed = wpnmag->a_elapsed;
-        clone->a_current = wpnmag->a_current;
+		clone->m_addon_flags = wpnmag->m_addon_flags;
+		clone->m_fCondition = wpnmag->m_fCondition;
+		clone->ammo_type = wpnmag->ammo_type;
+		clone->m_upgrades = wpnmag->m_upgrades;
+		clone->set_ammo_elapsed(wpnmag->get_ammo_elapsed());
 
         return bRegister ? reprocess_spawn(self, absClone) : absClone;
         // (self->server().Process_spawn(packet, clientID));
