@@ -23,8 +23,6 @@
 #include "HudSound.h"
 #include "CustomDetector.h"
 
-ENGINE_API	bool	g_dedicated_server;
-
 CUIXml*				pWpnScopeXml = NULL;
 
 void createWpnScopeXML()
@@ -1047,12 +1045,7 @@ bool CWeaponMagazined::Detach(const char* item_section_name, bool b_spawn_item)
     else
         return inherited::Detach(item_section_name, b_spawn_item);;
 }
-/*
-void CWeaponMagazined::LoadAddons()
-{
-m_zoom_params.m_fIronSightZoomFactor = READ_IF_EXISTS( pSettings, r_float, cNameSect(), "ironsight_zoom_factor", 50.0f );
-}
-*/
+
 void CWeaponMagazined::InitAddons()
 {
     m_zoom_params.m_fIronSightZoomFactor = READ_IF_EXISTS(pSettings, r_float, cNameSect(), "ironsight_zoom_factor", 50.0f);
@@ -1075,7 +1068,7 @@ void CWeaponMagazined::InitAddons()
                 xr_delete(m_UIScope);
             }
 
-            if (!g_dedicated_server)
+            if (!GEnv.isDedicatedServer)
             {
                 m_UIScope = new CUIWindow();
                 createWpnScopeXML();
@@ -1317,10 +1310,6 @@ void	CWeaponMagazined::SetQueueSize(int size)
 
 float	CWeaponMagazined::GetWeaponDeterioration()
 {
-    // modified by Peacemaker [17.10.08]
-    //	if (!m_bHasDifferentFireModes || m_iPrefferedFireMode == -1 || u32(GetCurrentFireMode()) <= u32(m_iPrefferedFireMode))
-    //		return inherited::GetWeaponDeterioration();
-    //	return m_iShotNum*conditionDecreasePerShot;
     return (m_iShotNum == 1) ? conditionDecreasePerShot : conditionDecreasePerQueueShot;
 };
 

@@ -524,44 +524,47 @@ void CEnvironment::mods_load()
         }
         FS.r_close(fs);
     }
-#ifndef AMBIENTSFILELOAD
-    load_level_specific_ambients();
-#endif	
+	
+	if(!strstr(Core.Params,"-loadoldambient")) 
+	{
+		load_level_specific_ambients();
+	}
 }
 
 void CEnvironment::mods_unload() { Modifiers.clear(); }
-#ifndef AMBIENTSFILELOAD	
+
 void CEnvironment::load_level_specific_ambients()
 {
-    const shared_str level_name = g_pGameLevel->name();
+	if(!strstr(Core.Params,"-loadoldambient")) 
+	{
+		const shared_str level_name = g_pGameLevel->name();
 
-    string_path path;
-    strconcat(sizeof(path), path, "environment\\ambients\\", level_name.c_str(), ".ltx");
+		string_path path;
+		strconcat(sizeof(path), path, "environment\\ambients\\", level_name.c_str(), ".ltx");
 
-    string_path full_path;
-    CInifile* level_ambients = new CInifile(FS.update_path(full_path, "$game_config$", path), TRUE, TRUE, FALSE);
+		string_path full_path;
+		CInifile* level_ambients = new CInifile(FS.update_path(full_path, "$game_config$", path), TRUE, TRUE, FALSE);
 
-    for (auto I = Ambients.begin(), E = Ambients.end(); I != E; ++I)
-    {
-        CEnvAmbient* ambient = *I;
+		for (auto I = Ambients.begin(), E = Ambients.end(); I != E; ++I)
+		{
+			CEnvAmbient* ambient = *I;
 
-        shared_str section_name = ambient->name();
+			shared_str section_name = ambient->name();
 
-        // choose a source ini file
-        CInifile* source =
-            (level_ambients && level_ambients->section_exist(section_name)) ? level_ambients : m_ambients_config;
+			CInifile* source =
+				(level_ambients && level_ambients->section_exist(section_name)) ? level_ambients : m_ambients_config;
 
-        // check and reload if needed
-        if (xr_strcmp(ambient->get_ambients_config_filename().c_str(), source->fname()))
-        {
-            ambient->destroy();
-            ambient->load(*source, *m_sound_channels_config, *m_effects_config, section_name);
-        }
+			if (xr_strcmp(ambient->get_ambients_config_filename().c_str(), source->fname()))
+			{
+				ambient->destroy();
+				ambient->load(*source, *m_sound_channels_config, *m_effects_config, section_name);
+			}
     }
 
     xr_delete(level_ambients);
+	}
 }
-#endif
+
 CEnvDescriptor* CEnvironment::create_descriptor(shared_str const& identifier, CInifile* config)
 {
     CEnvDescriptor* result = new CEnvDescriptor(identifier);

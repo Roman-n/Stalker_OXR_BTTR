@@ -67,6 +67,16 @@ CSE_ALifeInventoryItem::CSE_ALifeInventoryItem(LPCSTR caSection) : m_self(nullpt
     freezed = false;
 }
 
+u16	 CSE_ALifeItemWeapon::get_ammo_elapsed	()
+{
+	return						((u16)a_elapsed);
+}
+
+void CSE_ALifeItemWeapon::set_ammo_elapsed(u16 count)
+{
+	a_elapsed = count;
+}
+
 CSE_Abstract* CSE_ALifeInventoryItem::init()
 {
     m_self = smart_cast<CSE_ALifeObject*>(this);

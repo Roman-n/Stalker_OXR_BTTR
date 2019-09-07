@@ -362,9 +362,8 @@ protected:
     virtual void load_weather_effects();
     virtual void create_mixer();
     void destroy_mixer();
-#ifndef AMBIENTSFILELOAD
     void load_level_specific_ambients();
-#endif
+
 public:
     virtual SThunderboltDesc* thunderbolt_description(CInifile& config, shared_str const& section);
     virtual SThunderboltCollection* thunderbolt_collection(

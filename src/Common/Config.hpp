@@ -2,7 +2,6 @@
 
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl Back to the roots
-#define AMBIENTSFILELOAD 					        // Отключил загрузку отдельного файла амбиента для каждой локации -> ...level_name.c_str(), ".ltx");
 #define SCREENSPACE_OFF 					        // Лучи проходят через холм, если на них смотреть в сторону солнца
 #define RAINDROPS 							        // Капли на экран из XRay Oxygen, общие функции + R2
 #define RAINDROPS_R3 						        // Капли на экран R3, зависимость от дефайна RAINDROPS
