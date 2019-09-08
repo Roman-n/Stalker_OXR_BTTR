@@ -575,35 +575,6 @@ void CAI_Stalker::Die(IGameObject* who)
 
     //запретить использование слотов в инвенторе
     inventory().SetSlotsUseful(false);
-
-    // This is done in release manager script
-    /*
-    if (inventory().GetActiveSlot() == NO_ACTIVE_SLOT)
-        return;
-
-    CInventoryItem* active_item = inventory().ActiveItem();
-    if (!active_item)
-        return;
-
-    CWeapon* weapon = smart_cast<CWeapon*>(active_item);
-    if (!weapon)
-        return;
-
-    {
-        TIItemContainer::iterator I = inventory().m_all.begin();
-        TIItemContainer::iterator E = inventory().m_all.end();
-        for (; I != E; ++I)
-        {
-            if (std::find(weapon->m_ammoTypes.begin(), weapon->m_ammoTypes.end(), (*I)->object().cNameSect()) ==
-                weapon->m_ammoTypes.end())
-                continue;
-
-            NET_Packet packet;
-            u_EventGen(packet, GE_DESTROY, (*I)->object().ID());
-            u_EventSend(packet);
-        }
-    }
-	*/
 }
 
 void CAI_Stalker::Load(LPCSTR section)
@@ -623,12 +594,6 @@ BOOL CAI_Stalker::net_Spawn(CSE_Abstract* DC)
     CSE_Abstract* e = (CSE_Abstract*)(DC);
     CSE_ALifeHumanStalker* tpHuman = smart_cast<CSE_ALifeHumanStalker*>(e);
     R_ASSERT(tpHuman);
-
-    // static bool first_time			= true;
-    // if ( first_time ) {
-    //	tpHuman->o_Position.z		-= 3.f;
-    //	first_time					= false;
-    //}
 
     m_group_behaviour = !!tpHuman->m_flags.test(CSE_ALifeObject::flGroupBehaviour);
 
@@ -704,15 +669,6 @@ BOOL CAI_Stalker::net_Spawn(CSE_Abstract* DC)
 
     sight().setup(CSightAction(SightManager::eSightTypeCurrentDirection));
 
-#ifdef _DEBUG
-    if (ai().get_alife() && !Level().MapManager().HasMapLocation("debug_stalker", ID()))
-    {
-        CMapLocation* map_location = Level().MapManager().AddMapLocation("debug_stalker", ID());
-
-        map_location->SetHint(cName());
-    }
-#endif // _DEBUG
-
     if (SpecificCharacter().terrain_sect().size())
     {
         movement().locations().Load(*SpecificCharacter().terrain_sect());
@@ -733,13 +689,6 @@ void CAI_Stalker::net_Destroy()
     m_pPhysics_support->in_NetDestroy();
 
     Device.remove_from_seq_parallel(fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler));
-
-#ifdef DEBUG
-    fastdelegate::FastDelegate0<> f = fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler);
-    xr_vector<fastdelegate::FastDelegate0<>>::const_iterator I;
-    I = std::find(Device.seqParallel.begin(), Device.seqParallel.end(), f);
-    VERIFY(I == Device.seqParallel.end());
-#endif // DEBUG
 
     xr_delete(m_ce_close);
     xr_delete(m_ce_far);
@@ -764,18 +713,16 @@ void CAI_Stalker::net_Export(NET_Packet& P)
     // export last known packet
     R_ASSERT(!NET.empty());
     net_update& N = NET.back();
-    //	P.w_float						(inventory().TotalWeight());
-    //	P.w_u32							(m_dwMoney);
-
+   
     P.w_float(GetfHealth());
 
     P.w_u32(N.dwTimeStamp);
     P.w_u8(0);
     P.w_vec3(N.p_pos);
-    P.w_float /*w_angle8*/ (N.o_model);
-    P.w_float /*w_angle8*/ (N.o_torso.yaw);
-    P.w_float /*w_angle8*/ (N.o_torso.pitch);
-    P.w_float /*w_angle8*/ (N.o_torso.roll);
+    P.w_float  (N.o_model);
+    P.w_float  (N.o_torso.yaw);
+    P.w_float  (N.o_torso.pitch);
+    P.w_float  (N.o_torso.roll);
     P.w_u8(u8(g_Team()));
     P.w_u8(u8(g_Squad()));
     P.w_u8(u8(g_Group()));
@@ -815,15 +762,14 @@ void CAI_Stalker::net_Import(NET_Packet& P)
     float health;
     P.r_float(health);
     SetfHealth(health);
-    //	fEntityHealth = health;
 
     P.r_u32(N.dwTimeStamp);
     P.r_u8(flags);
     P.r_vec3(N.p_pos);
-    P.r_float /*r_angle8*/ (N.o_model);
-    P.r_float /*r_angle8*/ (N.o_torso.yaw);
-    P.r_float /*r_angle8*/ (N.o_torso.pitch);
-    P.r_float /*r_angle8*/ (N.o_torso.roll);
+    P.r_float (N.o_model);
+    P.r_float (N.o_torso.yaw);
+    P.r_float (N.o_torso.pitch);
+    P.r_float (N.o_torso.roll);
     id_Team = P.r_u8();
     id_Squad = P.r_u8();
     id_Group = P.r_u8();
@@ -859,13 +805,6 @@ void CAI_Stalker::update_object_handler()
         {
             CObjectHandler::update();
         }
-#ifdef DEBUG
-        catch (luabind::cast_failed& message)
-        {
-            Msg("! Expression \"%s\" from luabind::object to %s", message.what(), message.info().name());
-            throw;
-        }
-#endif
         catch (std::exception& message)
         {
             Msg("! Expression \"%s\"", message.what());
@@ -918,11 +857,6 @@ void CAI_Stalker::UpdateCL()
         if (g_mt_config.test(mtObjectHandler) && CObjectHandler::planner().initialized())
         {
             fastdelegate::FastDelegate0<> f = fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler);
-#ifdef DEBUG
-            xr_vector<fastdelegate::FastDelegate0<>>::const_iterator I;
-            I = std::find(Device.seqParallel.begin(), Device.seqParallel.end(), f);
-            VERIFY(I == Device.seqParallel.end());
-#endif
             Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(this, &CAI_Stalker::update_object_handler));
         }
         else
@@ -980,9 +914,6 @@ void CAI_Stalker::UpdateCL()
             weapon_shot_effector().Update();
         STOP_PROFILE
     }
-#ifdef DEBUG
-    debug_text();
-#endif
     STOP_PROFILE
     STOP_PROFILE
 }
@@ -1003,9 +934,7 @@ void CAI_Stalker::shedule_Update(u32 DT)
         update_object_handler();
         STOP_PROFILE
     }
-    //	if (Position().distance_to(Level().CurrentEntity()->Position()) <= 50.f)
-    //		Msg				("[%6d][SH][%s]",Device.dwTimeGlobal,*cName());
-    // Queue shrink
+    
     VERIFY(_valid(Position()));
     u32 dwTimeCL = Level().timeServer() - NET_Latency;
     VERIFY(!NET.empty());
@@ -1023,10 +952,9 @@ void CAI_Stalker::shedule_Update(u32 DT)
 
 #ifndef USE_SCHEDULER_IN_AGENT_MANAGER
         agent_manager().update();
-#endif // USE_SCHEDULER_IN_AGENT_MANAGER
+#endif 
 
-//		bool			check = !!memory().enemy().selected();
-#if 0 // def DEBUG
+#if 0 
 		memory().visual().check_visibles();
 #endif
         if (false && g_mt_config.test(mtAiVision))
@@ -1116,12 +1044,6 @@ void CAI_Stalker::shedule_Update(u32 DT)
     UpdateInventoryOwner(DT);
     STOP_PROFILE
 
-    //#ifdef DEBUG
-    //	if (psAI_Flags.test(aiALife)) {
-    //		smart_cast<CSE_ALifeHumanStalker*>(ai().alife().objects().object(ID()))->check_inventory_consistency();
-    //	}
-    //#endif
-
     START_PROFILE("stalker/schedule_update/physics")
     VERIFY(_valid(Position()));
     m_pPhysics_support->in_shedule_Update(DT);
@@ -1152,43 +1074,18 @@ void CAI_Stalker::Think()
     u32 update_delta = Device.dwTimeGlobal - m_dwLastUpdateTime;
 
     START_PROFILE("stalker/schedule_update/think/brain")
-    //	try {
-    //		try {
+
     brain().update(update_delta);
-//		}
-#ifdef DEBUG
-//		catch (luabind::cast_failed &message) {
-//			Msg						("! Expression \"%s\" from luabind::object to
-//%s",message.what(),message.info().name());
-// throw;
-//		}
-#endif
-//		catch (std::exception &message) {
-//			Msg						("! Expression \"%s\"",message.what());
-//			throw;
-//		}
-//		catch (...) {
-//			Msg						("! unknown exception occured");
-//			throw;
-//		}
-//	}
-//	catch(...) {
-#ifdef DEBUG
-//		Msg						("! Last action being executed : %s",brain().current_action().m_action_name);
-#endif
-    //		brain().setup			(this);
-    //		brain().update			(update_delta);
-    //	}
+
     STOP_PROFILE
 
     START_PROFILE("stalker/schedule_update/think/movement")
     if (!g_Alive())
         return;
 
-    //	try {
     movement().update(update_delta);
-//	}
-#if 0 // def DEBUG
+
+#if 0 
 	catch (luabind::cast_failed &message) {
 		Msg						("! Expression \"%s\" from luabind::object to %s",message.what(),message.info().name());
 		movement().initialize	();
@@ -1351,8 +1248,6 @@ float CAI_Stalker::shedule_Scale()
 
 void CAI_Stalker::aim_bone_id(shared_str const& bone_id)
 {
-    //	IKinematics				*kinematics = smart_cast<IKinematics*>(Visual());
-    //	VERIFY2					(kinematics->LL_BoneID(bone_id) != BI_NONE, make_string("Cannot find bone %s",bone_id));
     m_aim_bone_id = bone_id;
 }
 

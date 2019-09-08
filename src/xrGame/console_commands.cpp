@@ -66,7 +66,6 @@ extern BOOL net_cl_inputguaranteed;
 extern BOOL net_sv_control_hit;
 extern int g_dwInputUpdateDelta;
 extern BOOL g_bShowHitSectors;
-bool   bCheatEnable = READ_IF_EXISTS(pFFSettings, r_bool, "debug", "cheats_mode", false);
 extern ESingleGameDifficulty g_SingleGameDifficulty;
 extern BOOL g_show_wnd_rect2;
 //-----------------------------------------------------------
@@ -1200,12 +1199,10 @@ void CCC_RegisterCommands()
     CMD1(CCC_PHIterations, "ph_iterations");
 
     CMD1(CCC_JumpToLevel, "jump_to_level");
-    if (bCheatEnable)
-	{
-		CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
-		CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
-	}
-	
+
+	CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
+	CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
+
 	CMD3(CCC_Mask, "g_3d_scopes", &psActorFlags, AF_3DSCOPE_ENABLE);
 	CMD3(CCC_Mask, "g_pnv_in_scope", &psActorFlags, AF_PNV_W_SCOPE_DIS);
 	
