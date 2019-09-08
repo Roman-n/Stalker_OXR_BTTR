@@ -37,6 +37,50 @@ public:
     // Generic
     virtual void			Load(LPCSTR section);
 
+// [FFT++]: аддоны и управление аддонами
+			bool			bUseAltScope;
+			bool			bScopeIsHasTexture;
+			bool            bNVsecondVPavaible;
+			bool            bNVsecondVPstatus;
+
+	IC		bool			bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
+	IC		bool			bIsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+    virtual bool            bMarkCanShow() { return IsZoomed(); }
+			BOOL			bLoadAltScopesParams(LPCSTR section);
+			bool            bChangeNVSecondVPStatus();
+
+	virtual void			UpdateSecondVP(bool bInGrenade = false);
+			void			LoadModParams(LPCSTR section);
+			void			Load3DScopeParams(LPCSTR section);
+			void			LoadOriginalScopesParams(LPCSTR section);
+			void			LoadCurrentScopeParams(LPCSTR section);
+			void			GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor);
+			void			ZoomDynamicMod(bool bIncrement, bool bForceLimit);
+			void			UpdateAltScope();
+
+	virtual float			GetControlInertionFactor() const;
+	IC		float			GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
+	IC		float			GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
+			float			GetHudFov();
+			float			GetSecondVPFov() const;
+
+			shared_str		GetNameWithAttachment();
+
+
+			float			m_fScopeInertionFactor;
+			float           m_fZoomStepCount;
+			float           m_fZoomMinKoeff;
+	// SWM3.0 hud collision
+			float			m_hud_fov_add_mod;
+			float			m_nearwall_dist_max;
+			float			m_nearwall_dist_min;
+			float			m_nearwall_last_hud_fov;
+			float			m_nearwall_target_hud_fov;
+			float			m_nearwall_speed_mod;
+
+	//End=================================
+
+
     virtual BOOL			net_Spawn(CSE_Abstract* DC);
     virtual void			net_Destroy();
     virtual void			net_Export(NET_Packet& P);
@@ -58,7 +102,7 @@ public:
     {
         return inherited::net_SaveRelevant();
     }
-
+	
     virtual void			UpdateCL();
     virtual void			shedule_Update(u32 dt);
 
@@ -192,43 +236,15 @@ public:
     virtual void InitAddons();
 
     //для отоброажения иконок апгрейдов в интерфейсе
-    int	GetScopeX()
-    {
-        return pSettings->r_s32(m_scopes[m_cur_scope], "scope_x");
-    }
-    int	GetScopeY()
-    {
-        return pSettings->r_s32(m_scopes[m_cur_scope], "scope_y");
-    }
-    int	GetSilencerX()
-    {
-        return m_iSilencerX;
-    }
-    int	GetSilencerY()
-    {
-        return m_iSilencerY;
-    }
-    int	GetGrenadeLauncherX()
-    {
-        return m_iGrenadeLauncherX;
-    }
-    int	GetGrenadeLauncherY()
-    {
-        return m_iGrenadeLauncherY;
-    }
-
-    const shared_str& GetGrenadeLauncherName() const
-    {
-        return m_sGrenadeLauncherName;
-    }
-    const shared_str GetScopeName() const
-    {
-        return pSettings->r_string(m_scopes[m_cur_scope], "scope_name");
-    }
-    const shared_str& GetSilencerName() const
-    {
-        return m_sSilencerName;
-    }
+    int GetScopeX();
+	int GetScopeY();
+    int	GetSilencerX()		  						 {return m_iSilencerX;}
+    int	GetSilencerY()		  						 {return m_iSilencerY;}
+    int	GetGrenadeLauncherX() 						 {return m_iGrenadeLauncherX;}
+    int	GetGrenadeLauncherY() 						 {return m_iGrenadeLauncherY;}
+    const shared_str& GetGrenadeLauncherName() const {return m_sGrenadeLauncherName;}
+	const shared_str& GetSilencerName() const        {return m_sSilencerName;}
+    const shared_str GetScopeName() const;
 
     IC void	ForceUpdateAmmo()
     {
@@ -279,6 +295,8 @@ protected:
 
         float			m_fZoomRotationFactor;
 
+		float           m_fSecondVPFovFactor;
+		
         Fvector			m_ZoomDof;
         Fvector4		m_ReloadDof;
         Fvector4		m_ReloadEmptyDof; //Swartz: reload when empty mag. DOF

@@ -146,17 +146,16 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
     // Depth/stencil
     P.EnableAutoDepthStencil = TRUE;
     P.AutoDepthStencilFormat = fDepth;
-    P.Flags = 0; //. D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL;
-
+    P.Flags = 0; 
+	P.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	
     // Refresh rate
     if (bWindowed)
     {
-        P.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
         P.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
     }
     else
     {
-        P.PresentationInterval = selectPresentInterval(); // Vsync (R1\R2)
         P.FullScreen_RefreshRateInHz = selectRefresh(P.BackBufferWidth, P.BackBufferHeight, fTarget);
     }
 
@@ -193,10 +192,6 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
     case D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_PUREDEVICE: Log("* Vertex Processor: PURE HARDWARE"); break;
     }
 
-// Capture misc data
-#ifdef DEBUG
-    R_CHK(pDevice->CreateStateBlock(D3DSBT_ALL, &dwDebugSB));
-#endif
     R_CHK(pDevice->GetRenderTarget(0, &pBaseRT));
     R_CHK(pDevice->GetDepthStencilSurface(&pBaseZB));
     u32 memory = pDevice->GetAvailableTextureMem();
@@ -214,10 +209,6 @@ void CHW::DestroyDevice()
 
     _SHOW_REF("refCount:pBaseRT", pBaseRT);
     _RELEASE(pBaseRT);
-#ifdef DEBUG
-    _SHOW_REF("refCount:dwDebugSB", dwDebugSB);
-    _RELEASE(dwDebugSB);
-#endif
     _SHOW_REF("DeviceREF:", HW.pDevice);
     _RELEASE(HW.pDevice);
 
@@ -231,9 +222,7 @@ void CHW::DestroyDevice()
 //////////////////////////////////////////////////////////////////////
 void CHW::Reset(HWND hwnd)
 {
-#ifdef DEBUG
-    _RELEASE(dwDebugSB);
-#endif
+
     _SHOW_REF("refCount:pBaseZB", pBaseZB);
     _SHOW_REF("refCount:pBaseRT", pBaseRT);
     _RELEASE(pBaseZB);
@@ -250,14 +239,13 @@ void CHW::Reset(HWND hwnd)
     // Windoze
     DevPP.SwapEffect = bWindowed ? D3DSWAPEFFECT_COPY : D3DSWAPEFFECT_DISCARD;
     DevPP.Windowed = bWindowed;
+	DevPP.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
     if (!bWindowed)
     {
-        DevPP.PresentationInterval = selectPresentInterval(); // Vsync (R1\R2)
         DevPP.FullScreen_RefreshRateInHz = selectRefresh(DevPP.BackBufferWidth, DevPP.BackBufferHeight, Caps.fTarget);
     }
     else
     {
-        DevPP.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
         DevPP.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
     }
 
@@ -273,9 +261,6 @@ void CHW::Reset(HWND hwnd)
     }
     R_CHK(pDevice->GetRenderTarget(0, &pBaseRT));
     R_CHK(pDevice->GetDepthStencilSurface(&pBaseZB));
-#ifdef DEBUG
-    R_CHK(pDevice->CreateStateBlock(D3DSBT_ALL, &dwDebugSB));
-#endif
 
     updateWindowProps(hwnd);
     ShowWindow(hwnd, SW_SHOWNORMAL);

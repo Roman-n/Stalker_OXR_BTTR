@@ -942,6 +942,7 @@ float CActor::currentFOV()
 
 static bool bLook_cam_fp_zoom = false;
 BOOL g_b_COD_PickUpMode = FALSE;
+
 void CActor::UpdateCL()
 {
     if (g_Alive() && Level().CurrentViewEntity() == this)
@@ -1059,7 +1060,7 @@ void CActor::UpdateCL()
             }
 
             psHUD_Flags.set(HUD_DRAW_RT, pWeapon->show_indicators());
-#ifdef D_TEST          
+         
             // Обновляем двойной рендер от оружия [Update SecondVP with weapon data]
             pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
 			bool bUseMark = !!pWeapon->bMarkCanShow();
@@ -1070,7 +1071,7 @@ void CActor::UpdateCL()
 			g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPFov(); //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->hud_params.z = bUseMark; //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x = bNVEnbl;  //--#SM+#--
-#endif
+
         }
     }
     else

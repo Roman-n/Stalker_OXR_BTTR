@@ -10,8 +10,17 @@ C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\bin\Rele
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\bin\Release\Launcher Renders.exe
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\bin\Release\Launcher Renders.pdb
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\Launcher_renders.csprojAssemblyReference.cache
-C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\ConsoleApp1.Properties.Resources.resources
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\Launcher_renders.csproj.GenerateResource.cache
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\Launcher_renders.csproj.CoreCompileInputs.cache
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\Launcher Renders.exe
 C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\Launcher Renders.pdb
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\$(xrBinRootDir)$(xrPlatform)\Launcher Renders.exe.config
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\$(xrBinRootDir)$(xrPlatform)\Launcher Renders.exe
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\$(xrBinRootDir)$(xrPlatform)\Launcher Renders.pdb
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\_build\bin\Launcher Renders.exe.config
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\_build\bin\Launcher Renders.exe
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\_build\bin\Launcher Renders.pdb
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\_build\bin\Win64\Launcher Renders.exe.config
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\_build\bin\Win64\Launcher Renders.exe
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\_build\bin\Win64\Launcher Renders.pdb
+C:\Users\Сибирь\Documents\GitHub\Stalker_OXR_BTTR\src\Launcher_CS\obj\Release\Launcher_Renders.Properties.Resources.resources

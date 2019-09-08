@@ -163,5 +163,7 @@ public:
 
 // Main configuration file
 extern XRCORE_API CInifile const* pSettings;
+//[FF]Mortan: Forward Frontier core settings
+extern XRCORE_API CInifile const* pFFSettings;
 
 #endif //__XR_INI_H__

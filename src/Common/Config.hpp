@@ -29,9 +29,8 @@
 //#define FP_DEATH                                  // Смерть от первого лица
 #define DEAD_BODY_COLLISION                         // Коллизия мертвых тел спасибо malandrinus
 #define NEW_ANIMS                                   // Использование новых анимаций (?)
-#define CONFIG_SUN_MOVEMENT                         // Движение солнца по конфигам погоды в .ltx
-//#define NEW_SOUNDS                                  // Новые звуки для оружие Р1
-//#define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
+#define NEW_SOUNDS                                  // Новые звуки для оружие Р1
+#define LAYERED_SND_SHOOT                           // Новые звуки для оружие Р2
 #define RESTORE_EAX									// Восст. объемного звука в помещениях, требует расставление snd_env в sdk на локациях
 #define FIX_AURA_CONTROLLER							// Прервать звук ауры контролера при перезагрузке сейва, если гг умирает при ней
 #define CHIMERA_CS									// Химера из ЧН/ТЧ
@@ -42,7 +41,6 @@
 #define POLTERGEIST_CS								// Полтергейсты из ЧН/ТЧ
 #define NEW_AI_POLTER								// Новый AI(т.е старый) полтера ТЧ\ЧН
 #define MINI_DUMP_GENERATE							// Создание мини дампа в логе
-//#define D_TEST											// 3д прицелы, для теста
 
 //                                                  // - S.T.A.L.K.E.R. - Call of Chernobyl OpenXRay
 #ifdef Call_of_Chernobyl_OXR                        // Общий дефайн ЗЧ, для OpenXRay

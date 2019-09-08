@@ -19,7 +19,6 @@ ENGINE_API float psHUD_FOV_def = 0.35f; //--#SM+#--	Дефолтный HUD FOV (
 ENGINE_API float psHUD_FOV = psHUD_FOV_def; //--#SM+#-- Текущий HUD FOV (В % от Camera FOV) [current hud_fov (perc. of g_fov)]
 ENGINE_API float VIEWPORT_NEAR = 0.2f; //--#SM+#-- (Old: 0.2f)
 
-
 ENGINE_API xr_vector<xr_token> AvailableVideoModes;
 xr_vector<xr_token> vid_quality_token;
 

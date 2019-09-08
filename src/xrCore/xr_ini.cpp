@@ -4,6 +4,7 @@
 #include "xrCore/xr_token.h"
 
 XRCORE_API CInifile const* pSettings = nullptr;
+XRCORE_API CInifile const* pFFSettings = NULL;
 
 #if defined(LINUX)
 #include <stdint.h>

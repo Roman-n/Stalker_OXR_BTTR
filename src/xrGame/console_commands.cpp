@@ -52,7 +52,7 @@ extern u64 g_qwStartGameTime;
 extern u64 g_qwEStartGameTime;
 
 ENGINE_API
-extern	float	psHUD_FOV;
+extern	float	psHUD_FOV_def;
 extern	float	psSqueezeVelocity;
 extern	int		psLUA_GCSTEP;
 extern Fvector	m_hud_offset_pos;
@@ -66,7 +66,7 @@ extern BOOL net_cl_inputguaranteed;
 extern BOOL net_sv_control_hit;
 extern int g_dwInputUpdateDelta;
 extern BOOL g_bShowHitSectors;
-// extern	BOOL	g_bDebugDumpPhysicsStep	;
+bool   bCheatEnable = READ_IF_EXISTS(pFFSettings, r_bool, "debug", "cheats_mode", false);
 extern ESingleGameDifficulty g_SingleGameDifficulty;
 extern BOOL g_show_wnd_rect2;
 //-----------------------------------------------------------
@@ -1170,7 +1170,7 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "hud_crosshair", &psHUD_Flags, HUD_CROSSHAIR);
     CMD3(CCC_Mask, "hud_crosshair_dist", &psHUD_Flags, HUD_CROSSHAIR_DIST);
 
-    CMD4(CCC_Float, "hud_fov", &psHUD_FOV, 0.1f, 1.0f);
+    CMD4(CCC_Float, "hud_fov", &psHUD_FOV_def, 0.1f, 1.0f);
     CMD4(CCC_Float, "fov", &g_fov, 5.0f, 180.0f);
     CMD4(CCC_Float, "scope_fov", &g_scope_fov, 5.0f, 180.0f);
 
@@ -1200,8 +1200,11 @@ void CCC_RegisterCommands()
     CMD1(CCC_PHIterations, "ph_iterations");
 
     CMD1(CCC_JumpToLevel, "jump_to_level");
-    CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
-    CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
+    if (bCheatEnable)
+	{
+		CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
+		CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
+	}
 	
 	CMD3(CCC_Mask, "g_3d_scopes", &psActorFlags, AF_3DSCOPE_ENABLE);
 	CMD3(CCC_Mask, "g_pnv_in_scope", &psActorFlags, AF_PNV_W_SCOPE_DIS);

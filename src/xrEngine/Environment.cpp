@@ -115,6 +115,14 @@ CEnvironment::CEnvironment() : CurrentEnv(0), m_ambients_config(0)
     p_fog_color = config->r_float("environment", "fog_color");
 
     xr_delete(config);
+	
+	//[FF]Mortan: thx to OpenXray 1.6 https://github.com/OpenXRay/xray-16
+	useDynamicSunDir = READ_IF_EXISTS(pFFSettings, r_bool, "environment", "dynamic_sun_dir", true);
+	sunDirAzimuth = READ_IF_EXISTS(pFFSettings, r_float, "environment", "sun_dir_azimuth", 0.0f);
+	clamp(sunDirAzimuth, 0.0f, 360.0f);
+	sunDirAzimuth *= (PI / 180.0f);
+	//End
+	
 }
 
 CEnvironment::~CEnvironment()
@@ -478,13 +486,10 @@ void CEnvironment::OnFrame()
     float current_weight;
     lerp(current_weight);
 
-    //AVO: allow sun to move as defined in configs
-#ifndef CONFIG_SUN_MOVEMENT
-    // Igor. Dynamic sun position.
-    if (!GEnv.Render->is_sun_static())
-        calculate_dynamic_sun_dir();
-#endif
-    //-AVO
+	// Igor. Dynamic sun position.
+	if (!GEnv.Render->is_sun_static() && useDynamicSunDir)
+		calculate_dynamic_sun_dir();
+
 
 #ifndef MASTER_GOLD
     if (CurrentEnv->sun_dir.y > 0)
@@ -558,7 +563,7 @@ void CEnvironment::calculate_dynamic_sun_dir()
         cosAZ = (_sin(deg2rad(D)) - _sin(LatitudeR) * _cos(SZA)) / sin_SZA_X_cos_Latitude;
 
     clamp(cosAZ, -1.0f, 1.0f);
-    float AZ = acosf(cosAZ);
+    float AZ = acosf(cosAZ) + sunDirAzimuth;;
 
     const Fvector2 minAngle = Fvector2().set(deg2rad(1.0f), deg2rad(3.0f));
 

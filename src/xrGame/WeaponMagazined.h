@@ -35,6 +35,9 @@ protected:
     // General
     //кадр момента пересчета UpdateSounds
     u32				dwUpdateSounds_Frame;
+public:
+	// Mortan: Ќовые параметры здес€
+	virtual	bool    bMarkCanShow() { return IsZoomed(); }	
 protected:
     virtual void	OnMagazineEmpty();
 
@@ -71,10 +74,9 @@ public:
 
     virtual void	Load(LPCSTR section);
     void	LoadSilencerKoeffs();
-    virtual CWeaponMagazined*cast_weapon_magazined()
-    {
-        return this;
-    }
+    virtual CWeaponMagazined*cast_weapon_magazined() {return this;}
+	
+	virtual bool    UseScopeTexture();
 
     virtual void	SetDefaults();
     virtual void	FireStart();

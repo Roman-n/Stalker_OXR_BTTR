@@ -12,6 +12,7 @@
 #include "game_base_space.h"
 #include "../xrphysics/MathUtils.h"
 #include "player_hud.h"
+#include "string_table.h"
 
 CWeaponMagazinedWGrenade::CWeaponMagazinedWGrenade(ESoundTypes eSoundType) : CWeaponMagazined(eSoundType)
 {
@@ -875,20 +876,16 @@ bool CWeaponMagazinedWGrenade::install_upgrade_impl(LPCSTR section, bool test)
     return result;
 }
 
-void CWeaponMagazinedWGrenade::net_Spawn_install_upgrades(Upgrades_type saved_upgrades)
+void CWeaponMagazinedWGrenade::net_Spawn_install_upgrades(Upgrades_type saved_upgrades){}
+
+void CWeaponMagazinedWGrenade::UpdateSecondVP(bool bInGrenade)
 {
-    // do not delete this
-    // this is intended behaviour
+	inherited::UpdateSecondVP(m_bGrenadeMode);
 }
 
-#include "string_table.h"
 bool CWeaponMagazinedWGrenade::GetBriefInfo(II_BriefInfo& info)
 {
     VERIFY(m_pInventory);
-    /*
-        if(!inherited::GetBriefInfo(info))
-        return false;
-        */
     string32 int_str;
     int	ae = GetAmmoElapsed();
     xr_sprintf(int_str, "%d", ae);

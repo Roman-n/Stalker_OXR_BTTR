@@ -48,12 +48,17 @@ ENGINE_API void InitSettings()
     FS.update_path(fname, "$game_config$", "game_export.openxray");
     pSettings = new CInifile(fname, TRUE);
     CHECK_OR_EXIT(pSettings->section_count(),
-        make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
+        make_string("Cannot find file %s.\nStack trace:", fname));
 
-    FS.update_path(fname, "$game_config$", "game.ltx");
+    FS.update_path(fname, "$game_config$", "game_export.support_sdk.openxray");
     pGameIni = new CInifile(fname, TRUE);
     CHECK_OR_EXIT(pGameIni->section_count(),
-        make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
+        make_string("Cannot find file %s.\nStack trace:", fname));
+
+    FS.update_path(fname, "$game_config$", "game_export.engine_configs.ltx");
+    pGameIni = new CInifile(fname, TRUE);
+    CHECK_OR_EXIT(pGameIni->section_count(),
+        make_string("Cannot find file %s.\nStack trace:", fname));
 }
 
 ENGINE_API void InitConsole()

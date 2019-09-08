@@ -26,6 +26,10 @@ public:
 	virtual void	save				(NET_Packet &output_packet);
 	virtual void	load				(IReader &input_packet);
 
+	// Mortan: Новые параметры здеся
+	virtual void	UpdateSecondVP(bool bInGrenade = false);
+
+	//=========================================
 
 	virtual bool	Attach					(PIItem pIItem, bool b_send_event);
 	virtual bool	Detach					(const char* item_section_name, bool b_spawn_item);
@@ -90,5 +94,6 @@ public:
 	CCartridge				m_DefaultCartridge2;
 	u8						iAmmoElapsed2;
 
-	virtual void UpdateGrenadeVisibility(bool visibility);
+    virtual bool bMarkCanShow() { return IsZoomed() && !m_bGrenadeMode; }
+    virtual void UpdateGrenadeVisibility(bool visibility);
 };

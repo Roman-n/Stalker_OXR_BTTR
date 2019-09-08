@@ -186,6 +186,7 @@ public:
 	u16								a_current;
 	u16								a_elapsed;
 	u32								timestamp;
+	u8                              cur_scope;
 
     struct 							grenade_count_t
 	{

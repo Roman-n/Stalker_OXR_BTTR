@@ -10,7 +10,7 @@ using namespace R_dsgraph;
 extern float r_ssaHZBvsTEX;
 extern float r_ssaGLOD_start, r_ssaGLOD_end;
 
-ICF float calcLOD(float ssa /*fDistSq*/, float /*R*/)
+ICF float calcLOD(float ssa, float)
 {
     return _sqrt(clampr((ssa - r_ssaGLOD_end) / (r_ssaGLOD_start - r_ssaGLOD_end), 0.f, 1.f));
 }
@@ -338,8 +338,27 @@ void D3DXRenderBase::r_dsgraph_render_graph(u32 _priority)
 // Helper classes and functions
 
 /*
-Предназначен для установки режима отрисовки HUD и возврата оригинального после отрисовки.
+	Предназначен для установки режима отрисовки HUD и возврата оригинального после отрисовки.
 */
+
+/* 
+   XXX: Xottab_DUTY: custom FOV. Implement it someday
+   It should be something like this:
+   float customFOV;
+   if (isCustomFOV)
+    customFOV = V->getVisData().obj_data->m_hud_custom_fov;
+   else
+    customFOV = psHUD_FOV * Device.fFOV;
+
+   Device.mProject.build_projection(deg2rad(customFOV), Device.fASPECT,
+    VIEWPORT_NEAR, g_pGamePersistent->Environment().CurrentEnv->far_plane);
+
+   Look at the function:
+   void __fastcall sorted_L1_HUD(mapSorted_Node* N)
+   In the commit:
+	            https://github.com/ShokerStlk/xray-16-SWM/commit/869de0b6e74ac05990f541e006894b6fe78bd2a5#diff-4199ef700b18ce4da0e2b45dee1924d0R83
+*/
+
 class hud_transform_helper
 {
     Fmatrix Pold;
@@ -350,28 +369,11 @@ public:
     {
         extern ENGINE_API float psHUD_FOV;
 
-        // Change projection
         Pold  = Device.mProject;
         FTold = Device.mFullTransform;
 
-        // XXX: Xottab_DUTY: custom FOV. Implement it someday
-        // It should be something like this:
-        // float customFOV;
-        // if (isCustomFOV)
-        //     customFOV = V->getVisData().obj_data->m_hud_custom_fov;
-        // else
-        //     customFOV = psHUD_FOV * Device.fFOV;
-        //
-        // Device.mProject.build_projection(deg2rad(customFOV), Device.fASPECT,
-        //    VIEWPORT_NEAR, g_pGamePersistent->Environment().CurrentEnv->far_plane);
-        //
-        // Look at the function:
-        // void __fastcall sorted_L1_HUD(mapSorted_Node* N)
-        // In the commit:
-        // https://github.com/ShokerStlk/xray-16-SWM/commit/869de0b6e74ac05990f541e006894b6fe78bd2a5#diff-4199ef700b18ce4da0e2b45dee1924d0R83
-
         Device.mProject.build_projection(deg2rad(psHUD_FOV * Device.fFOV), Device.fASPECT,
-            0.05f, g_pGamePersistent->Environment().CurrentEnv->far_plane);
+            VIEWPORT_NEAR, g_pGamePersistent->Environment().CurrentEnv->far_plane);
 
         Device.mFullTransform.mul(Device.mProject, Device.mView);
         RCache.set_xform_project(Device.mProject);

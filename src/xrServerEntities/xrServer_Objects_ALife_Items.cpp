@@ -474,6 +474,7 @@ CSE_ALifeItemWeapon::CSE_ALifeItemWeapon	(LPCSTR caSection) : CSE_ALifeItem(caSe
 	wpn_flags					= 0;
 	wpn_state					= 0;
 	ammo_type					= 0;
+	cur_scope                   = 0;
 
 	m_fHitPower					= pSettings->r_float(caSection,"hit_power");
 	m_tHitType					= ALife::g_tfString2HitType(pSettings->r_string(caSection,"hit_type"));
@@ -514,10 +515,9 @@ void CSE_ALifeItemWeapon::UPDATE_Read(NET_Packet	&tNetPacket)
 	tNetPacket.r_u8				(ammo_type);
 	tNetPacket.r_u8				(wpn_state);
 	tNetPacket.r_u8				(m_bZoom);
-#ifdef D_TEST
 	if (m_wVersion > 128)
-		tNetPacket.r_u8             (cur_scope);
-#endif
+		tNetPacket.r_u8         (cur_scope);
+
 }
 
 void CSE_ALifeItemWeapon::clone_addons(CSE_ALifeItemWeapon* parent)
@@ -536,6 +536,7 @@ void CSE_ALifeItemWeapon::UPDATE_Write(NET_Packet& tNetPacket)
 	tNetPacket.w_u8				(ammo_type);
 	tNetPacket.w_u8				(wpn_state);
 	tNetPacket.w_u8				(m_bZoom);
+	tNetPacket.w_u8             (cur_scope);
 }
 
 void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
@@ -553,10 +554,10 @@ void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
 	
 	if (m_wVersion > 122)
 		a_elapsed_grenades.unpack_from_byte(tNetPacket.r_u8());
-#ifdef D_TEST	
+
 	if (m_wVersion > 128)
 		tNetPacket.r_u8(cur_scope);
-#endif
+
 }
 
 void CSE_ALifeItemWeapon::STATE_Write(NET_Packet& tNetPacket)
@@ -568,9 +569,7 @@ void CSE_ALifeItemWeapon::STATE_Write(NET_Packet& tNetPacket)
     tNetPacket.w_u8(m_addon_flags.get());
     tNetPacket.w_u8(ammo_type);
     tNetPacket.w_u8(0);
-#ifdef D_TEST
 	tNetPacket.w_u8(cur_scope);
-#endif
 }
 
 void CSE_ALifeItemWeapon::OnEvent(NET_Packet& tNetPacket, u16 type, u32 time, ClientID sender)
