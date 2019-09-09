@@ -51,7 +51,6 @@ struct hud_item_measures
     u16 m_fire_bone2;
     Fvector m_fire_point2_offset;
 	Fvector							m_fire_direction;
-
     u16 m_shell_bone;
     Fvector m_shell_point_offset;
 
@@ -69,6 +68,14 @@ struct hud_item_measures
         float m_origin_offset_aim;
         float m_tendto_speed;
         float m_tendto_speed_aim;
+        float m_tendto_ret_speed;
+        float m_tendto_ret_speed_aim;
+
+        Fvector4 m_offset_LRUD;
+        Fvector4 m_offset_LRUD_aim;
+
+        float m_min_angle;
+        float m_min_angle_aim;
     };
     inertion_params m_inertion_params; //--#SM+#--	
 };
@@ -153,6 +160,8 @@ public:
 private:
     void update_inertion(Fmatrix& trans);
     void update_additional(Fmatrix& trans);
+
+public:
     bool inertion_allowed();
 
 private:
