@@ -55,7 +55,7 @@ ENGINE_API void InitSettings()
     CHECK_OR_EXIT(pGameIni->section_count(),
         make_string("Cannot find file %s.\nStack trace:", fname));
 
-    FS.update_path(fname, "$game_config$", "game_export.engine_configs.ltx");
+    FS.update_path(fname, "$game_config$", "game_export_engine_configs.ltx");
     pGameIni = new CInifile(fname, TRUE);
     CHECK_OR_EXIT(pGameIni->section_count(),
         make_string("Cannot find file %s.\nStack trace:", fname));

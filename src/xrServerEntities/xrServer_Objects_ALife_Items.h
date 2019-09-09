@@ -222,6 +222,8 @@ public:
 	u16								get_ammo_magsize	();
 	void 							set_ammo_elapsed	(u16 count);
 
+	void							set_ammo_type(u8 count) { ammo_type = count; };
+
 	Flags8&							get_addon_flags() { return m_addon_flags; }
     void							clone_addons	(CSE_ALifeItemWeapon* parent);
 

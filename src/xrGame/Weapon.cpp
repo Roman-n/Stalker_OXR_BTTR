@@ -2285,11 +2285,11 @@ void CWeapon::LoadCurrentScopeParams(LPCSTR section)
 
 void CWeapon::Load3DScopeParams(LPCSTR section)
 {
-	bool SWM_3D_SCOPES = !!READ_IF_EXISTS(pFFSettings, r_bool, "gameplay", "SWM_3D_scopes", false);
+//	bool SWM_3D_SCOPES = !!READ_IF_EXISTS(pSettings, r_bool, "gameplay", "SWM_3D_scopes", false);
 
-	if (SWM_3D_SCOPES)
+//	if (SWM_3D_SCOPES)
 		m_zoom_params.m_fSecondVPFovFactor = READ_IF_EXISTS(pSettings, r_float, section, "3d_fov", 0.0f);
-	else
-		m_zoom_params.m_fSecondVPFovFactor = 0.0f;
+//	else
+//		m_zoom_params.m_fSecondVPFovFactor = 0.0f;
 
 }
