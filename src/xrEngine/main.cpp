@@ -17,24 +17,15 @@
 #include "xrSASH.h"
 #include "xr_ioc_cmd.h"
 
-
-#ifdef MASTER_GOLD
 #define NO_MULTI_INSTANCES
-#endif
 
-// global variables
 ENGINE_API CInifile* pGameIni = nullptr;
 ENGINE_API bool g_bBenchmark = false;
-string512 g_sBenchmarkName;
 ENGINE_API string512 g_sLaunchOnExit_params;
 ENGINE_API string512 g_sLaunchOnExit_app;
 ENGINE_API string_path g_sLaunchWorkingFolder;
-
-namespace
-{
-bool CheckBenchmark();
-void RunBenchmark(pcstr name);
-} // namespace
+string512  g_sBenchmarkName;
+namespace { bool CheckBenchmark(); void RunBenchmark(pcstr name); } 
 
 ENGINE_API void InitEngine()
 {
@@ -51,11 +42,6 @@ ENGINE_API void InitSettings()
         make_string("Cannot find file %s.\nStack trace:", fname));
 
     FS.update_path(fname, "$game_config$", "game_export.support_sdk.openxray");
-    pGameIni = new CInifile(fname, TRUE);
-    CHECK_OR_EXIT(pGameIni->section_count(),
-        make_string("Cannot find file %s.\nStack trace:", fname));
-
-    FS.update_path(fname, "$game_config$", "game_export_engine_configs.ltx");
     pGameIni = new CInifile(fname, TRUE);
     CHECK_OR_EXIT(pGameIni->section_count(),
         make_string("Cannot find file %s.\nStack trace:", fname));

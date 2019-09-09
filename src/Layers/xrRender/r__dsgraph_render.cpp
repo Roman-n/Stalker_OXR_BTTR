@@ -373,7 +373,7 @@ public:
         FTold = Device.mFullTransform;
 
         Device.mProject.build_projection(deg2rad(psHUD_FOV * Device.fFOV), Device.fASPECT,
-            VIEWPORT_NEAR, g_pGamePersistent->Environment().CurrentEnv->far_plane);
+            0.05f, g_pGamePersistent->Environment().CurrentEnv->far_plane);
 
         Device.mFullTransform.mul(Device.mProject, Device.mView);
         RCache.set_xform_project(Device.mProject);

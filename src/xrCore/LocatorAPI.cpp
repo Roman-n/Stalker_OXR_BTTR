@@ -30,7 +30,7 @@ std::unique_ptr<CLocatorAPI> xr_FS;
 #ifdef _EDITOR
 static constexpr pcstr FSLTX = "fs.ltx"
 #else
-static constexpr pcstr FSLTX = "fsgame.ltx";
+static constexpr pcstr FSLTX = "engine_way_export.openxray";
 #endif
 
 struct _open_file
@@ -854,7 +854,7 @@ void CLocatorAPI::_initialize(u32 flags, pcstr target_folder, pcstr fs_name)
 #endif // DEBUG
 
             CHECK_OR_EXIT(I.second,
-                "The file 'fsgame.ltx' is corrupted (it contains duplicated lines).\n"
+                "The file 'engine_way_export.openxray' is corrupted (it contains duplicated lines).\n"
                 "Please reinstall the game or fix the problem manually.");
         }
         r_close(pFSltx);

@@ -5,7 +5,7 @@
 void main(int argc, char* argv[])
 {
     xrDebug::Initialize(false);
-    Core.Initialize("mp_ballancer", NULL, TRUE, "fsgame.ltx");
+    Core.Initialize("mp_ballancer", NULL, TRUE, "engine_way_export.openxray");
 
     SetConsoleOutputCP(1251);
 
