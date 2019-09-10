@@ -1029,7 +1029,14 @@ static inline bool match_shader_id(
     return false;
 }
 
-void CRender::BeforeWorldRender() {}
+void CRender::BeforeWorldRender() 
+{
+	if (Device.m_SecondViewport.IsSVPFrame())
+	{
+		Device.m_SecondViewport.isR1 = true;
+	}
+}
+
 void CRender::AfterWorldRender()
 {
     if (Device.m_SecondViewport.IsSVPFrame())

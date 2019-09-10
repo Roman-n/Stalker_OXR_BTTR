@@ -986,6 +986,32 @@ bool CWeaponMagazinedWGrenade::GetBriefInfo(II_BriefInfo& info)
     return true;
 }
 
+void CWeaponMagazinedWGrenade::switch2_Unmis()
+{
+	VERIFY(GetState() == eUnMisfire);
+	if (m_bGrenadeMode)
+	{
+		if (m_sounds_enabled)
+		{
+			if (m_sounds.FindSoundItem("sndReloadMisfire", false))
+				PlaySound("sndReloadMisfire", get_LastFP());
+			else if (m_sounds.FindSoundItem("sndReloadEmpty", false))
+				PlaySound("sndReloadEmpty", get_LastFP());
+			else
+				PlaySound("sndReload", get_LastFP());
+		}
+
+		if (isHUDAnimationExist("anm_reload_w_gl_misfire"))
+			PlayHUDMotion("anm_reload_w_gl_misfire", TRUE, this, GetState());
+		else if (isHUDAnimationExist("anm_reload_w_gl_empty"))
+			PlayHUDMotion("anm_reload_w_gl_empty", TRUE, this, GetState());
+		else
+			PlayHUDMotion("anm_reload_w_gl", TRUE, this, GetState());
+	}
+	else
+		inherited::switch2_Unmis();
+} 
+
 int CWeaponMagazinedWGrenade::GetAmmoCount2(u8 ammo2_type) const
 {
     VERIFY(m_pInventory);

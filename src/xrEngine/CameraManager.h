@@ -35,9 +35,6 @@ protected:
     void OnEffectorReleased(SBaseEffector* e);
 
 public:
-#ifdef DEBUG
-    u32 dbg_upd_frame;
-#endif
 
     BENCH_SEC_SCRAMBLEMEMBER2
 

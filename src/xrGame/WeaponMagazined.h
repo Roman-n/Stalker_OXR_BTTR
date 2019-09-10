@@ -15,6 +15,9 @@ class CWeaponMagazined : public CWeapon
 private:
     typedef CWeapon inherited;
 protected:
+
+	int 			iMagSizeCurrent;
+
     //звук текущего выстрела
     shared_str		m_sSndShotCurrent;
 
@@ -48,6 +51,7 @@ protected:
     virtual void	switch2_Hiding();
     virtual void	switch2_Hidden();
     virtual void	switch2_Showing();
+	virtual void    switch2_Unmis();
 
     virtual void	OnShot();
 

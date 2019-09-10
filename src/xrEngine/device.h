@@ -129,10 +129,10 @@ public:
 	{
 		bool isActive; 
 		u8 frameDelay;  
-		
+
 	public:
 		bool isCamReady;
-
+        bool isR1;
 		IC bool IsSVPActive() { return isActive; }
 		IC void SetSVPActive(bool bState);
 		bool    IsSVPFrame();
@@ -154,11 +154,7 @@ private:
     void _SetupStates();
 
 public:
-    // HWND m_hWnd;
-    LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 
-    // u32 dwFrame;
-    // u32 dwPrecacheFrame;
     u32 dwPrecacheTotal;
 
     // u32 dwWidth, dwHeight;
@@ -212,6 +208,7 @@ public:
 		m_SecondViewport.SetSVPActive(false);
 		m_SecondViewport.SetSVPFrameDelay(2);
 		m_SecondViewport.isCamReady = false;
+        m_SecondViewport.isR1 = false;
     };
 
     void Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason);
@@ -244,7 +241,7 @@ public:
     void Reset(bool precache = true);
 
     void Initialize(void);
-    void ShutDown(void);
+
     virtual const RenderDeviceStatictics& GetStats() const override { return stats; }
     virtual void DumpStatistics(class IGameFont& font, class IPerformanceAlert* alert) override;
 
