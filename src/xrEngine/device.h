@@ -133,8 +133,8 @@ public:
 	public:
 		bool isCamReady;
         bool isR1;
-		IC bool IsSVPActive() { return isActive; }
-		IC void SetSVPActive(bool bState);
+		inline bool IsSVPActive() { return isActive; }
+		inline void SetSVPActive(bool bState);
 		bool    IsSVPFrame();
 
 		IC u8 GetSVPFrameDelay() { return frameDelay; }
@@ -251,7 +251,7 @@ public:
         TimerGlobal.time_factor(time_factor);
     }
 
-    IC const float time_factor() const
+    inline const float time_factor() const
     {
         VERIFY(Timer.time_factor() == TimerGlobal.time_factor());
         return (Timer.time_factor());
