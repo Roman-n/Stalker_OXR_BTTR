@@ -100,9 +100,6 @@ void player_hud_motion_container::load(IKinematicsAnimated* model, const shared_
                     pm->m_animations.resize(pm->m_animations.size() + 1);
                     pm->m_animations.back().mid = motion_ID;
                     pm->m_animations.back().name = buff;
-#ifdef DEBUG
-					//					Msg(" alias=[%s] base=[%s] name=[%s]",pm->m_alias_name.c_str(), pm->m_base_name.c_str(), buff);
-#endif // #ifdef DEBUG
                 }
             }
             R_ASSERT2(pm->m_animations.size(), make_string("motion not found [%s]", pm->m_base_name.c_str()).c_str());
@@ -215,7 +212,6 @@ void attachable_hud_item::render()
 {
     GEnv.Render->set_Transform(&m_item_transform);
     GEnv.Render->add_Visual(m_model->dcast_RenderVisual());
-    debug_draw_firedeps();
     m_parent_hud_item->render_hud_mode();
 }
 
@@ -544,26 +540,6 @@ u32 player_hud::motion_length(const MotionID& M, const CMotionDef*& md, float sp
         return iFloor(0.5f + 1000.f * motion->GetLength() / (md->Dequantize(md->speed) * speed));
     }
     return 0;
-}
-
-const Fvector& player_hud::attach_rot() const
-{
-    if (m_attached_items[0])
-        return m_attached_items[0]->hands_attach_rot();
-    else if (m_attached_items[1])
-        return m_attached_items[1]->hands_attach_rot();
-    else
-        return Fvector().set(0, 0, 0);
-}
-
-const Fvector& player_hud::attach_pos() const
-{
-    if (m_attached_items[0])
-        return m_attached_items[0]->hands_attach_pos();
-    else if (m_attached_items[1])
-        return m_attached_items[1]->hands_attach_pos();
-    else
-        return Fvector().set(0, 0, 0);
 }
 
 void player_hud::update(const Fmatrix& cam_trans)

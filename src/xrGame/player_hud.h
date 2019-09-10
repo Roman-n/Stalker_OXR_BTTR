@@ -102,7 +102,7 @@ struct attachable_hud_item
     bool render_item_ui_query();
     bool need_renderable();
     bool set_bone_visible(const shared_str& bone_name, BOOL bVisibility, BOOL bSilent = FALSE);
-    void debug_draw_firedeps();
+
 
     // hands bind position
     Fvector& hands_attach_pos();
@@ -114,7 +114,6 @@ struct attachable_hud_item
 
     // props
     u32 m_upd_firedeps_frame;
-    void tune(Ivector values);
     u32 anim_play(const shared_str& anim_name, BOOL bMixIn, const CMotionDef*& md, u8& rnd);
 };
 
@@ -145,7 +144,6 @@ public:
     };
 
     void calc_transform(u16 attach_slot_idx, const Fmatrix& offset, Fmatrix& result);
-    void tune(Ivector values);
     u32 motion_length(const MotionID& M, const CMotionDef*& md, float speed);
     u32 motion_length(const shared_str& anim_name, const shared_str& hud_name, const CMotionDef*& md);
     void OnMovementChanged(ACTOR_DEFS::EMoveCommand cmd);
