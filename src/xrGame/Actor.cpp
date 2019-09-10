@@ -1066,7 +1066,7 @@ void CActor::UpdateCL()
             // Обновляем двойной рендер от оружия [Update SecondVP with weapon data]
             pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
 			bool bUseMark = !!pWeapon->bMarkCanShow();
-			bool bInZoom  = !!pWeapon->bInZoomRightNow();
+			bool bInZoom  = !!(pWeapon->bInZoomRightNow() && pWeapon->bIsSecondVPZoomPresent() && psActorFlags.test(AF_3DSCOPE_ENABLE));
 			bool bNVEnbl  = !!pWeapon->bNVsecondVPstatus;
             // Обновляем информацию об оружии в шейдерах
             g_pGamePersistent->m_pGShaderConstants->hud_params.x = bInZoom;  //--#SM+#--

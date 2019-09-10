@@ -43,10 +43,10 @@ public:
 			bool            bNVsecondVPavaible;
 			bool            bNVsecondVPstatus;
 
-	IC		bool			bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
+	virtual	bool			bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
 	IC		bool			bIsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
     virtual bool            bMarkCanShow() { return IsZoomed(); }
-			BOOL			bLoadAltScopesParams(LPCSTR section);
+			bool			bLoadAltScopesParams(LPCSTR section);
 			bool            bChangeNVSecondVPStatus();
 
 	virtual void			UpdateSecondVP(bool bInGrenade = false);
@@ -235,7 +235,7 @@ public:
 
     virtual bool UseScopeTexture()
     {
-        return true;
+        return bScopeIsHasTexture;
     };
 	
     //обновление видимости для косточек аддонов
@@ -302,6 +302,8 @@ protected:
         float			m_fIronSightZoomFactor;	//коэффициент увеличения прицеливания
         float			m_fScopeZoomFactor;		//коэффициент увеличения прицела
 
+		float           m_f3dZoomFactor;        //коэффициент мирового зума при использовании второго вьюпорта
+
         float			m_fZoomRotationFactor;
 
 		float           m_fSecondVPFovFactor;
@@ -316,7 +318,8 @@ protected:
         CNightVisionEffector*	m_pNight_vision;
     } m_zoom_params;
 
-    float			m_fRTZoomFactor; //run-time zoom factor
+    float			m_fRTZoomFactor;		//run-time zoom factor
+	float           m_fSecondRTZoomFactor;  //текущий зум для 3д прицела
     CUIWindow*		m_UIScope;
 public:
 

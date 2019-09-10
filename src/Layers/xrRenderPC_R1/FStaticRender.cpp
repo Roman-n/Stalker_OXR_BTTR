@@ -17,20 +17,18 @@
 CRender RImplementation;
 
 //////////////////////////////////////////////////////////////////////////
-ShaderElement* CRender::rimp_select_sh_dynamic(dxRender_Visual* pVisual, float /*cdist_sq*/)
+ShaderElement* CRender::rimp_select_sh_dynamic(dxRender_Visual* pVisual, float)
 {
     switch (phase)
     {
     case PHASE_NORMAL:
-        return (RImplementation.L_Projector->shadowing() ?
-            pVisual->shader->E[SE_R1_NORMAL_HQ] : pVisual->shader->E[SE_R1_NORMAL_LQ])._get();
+        return (RImplementation.L_Projector->shadowing() ? pVisual->shader->E[SE_R1_NORMAL_HQ] :
+                                                           pVisual->shader->E[SE_R1_NORMAL_LQ])
+            ._get();
     case PHASE_POINT: return pVisual->shader->E[SE_R1_LPOINT]._get();
     case PHASE_SPOT: return pVisual->shader->E[SE_R1_LSPOT]._get();
     default: NODEFAULT;
     }
-#ifdef DEBUG
-    return nullptr;
-#endif
 }
 //////////////////////////////////////////////////////////////////////////
 ShaderElement* CRender::rimp_select_sh_static(dxRender_Visual* pVisual, float cdist_sq)
@@ -45,9 +43,6 @@ ShaderElement* CRender::rimp_select_sh_static(dxRender_Visual* pVisual, float cd
     case PHASE_SPOT: return pVisual->shader->E[SE_R1_LSPOT]._get();
     default: NODEFAULT;
     }
-#ifdef DEBUG
-    return nullptr;
-#endif
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -59,12 +54,10 @@ void CRender::create()
 
     Device.seqFrame.Add(this, REG_PRIORITY_HIGH + 0x12345678);
 
-    // c-setup
     Resources->RegisterConstantSetup("L_dynamic_pos", &r1_dlight_binder_PR);
     Resources->RegisterConstantSetup("L_dynamic_color", &r1_dlight_binder_color);
     Resources->RegisterConstantSetup("L_dynamic_xform", &r1_dlight_binder_xform);
 
-    // distortion
     u32 v_dev = CAP_VERSION(HW.Caps.raster_major, HW.Caps.raster_minor);
     u32 v_need = CAP_VERSION(1, 4);
     if (v_dev >= v_need)
@@ -75,7 +68,6 @@ void CRender::create()
         o.distortion = FALSE;
     Msg("* distortion: %s, dev(%d),need(%d)", o.distortion ? "used" : "unavailable", v_dev, v_need);
 
-    //	Color mapping
     if (v_dev >= v_need)
         o.color_mapping = TRUE;
     else
@@ -86,7 +78,6 @@ void CRender::create()
 
     m_skinning = -1;
 
-    // disasm
     o.disasm = (strstr(Core.Params, "-disasm")) ? TRUE : FALSE;
     o.forceskinw = (strstr(Core.Params, "-skinw")) ? TRUE : FALSE;
     o.no_detail_textures = !ps_r2_ls_flags.test(R1FLAG_DETAIL_TEXTURES);
@@ -94,12 +85,11 @@ void CRender::create()
 
     m_bMakeAsyncSS = false;
 
-    Target = new CRenderTarget(); // Main target
+    Target = new CRenderTarget();
 
     Models = new CModelPool();
     L_Dynamic = new CLightR_Manager();
     PSLibrary.OnCreate();
-    //.	HWOCC.occq_create			(occq_size);
 
     xrRender_apply_tf();
     ::PortalTraverser.initialize();
@@ -109,13 +99,12 @@ void CRender::destroy()
 {
     m_bMakeAsyncSS = false;
     ::PortalTraverser.destroy();
-    //.	HWOCC.occq_destroy			();
+
     PSLibrary.OnDestroy();
 
     xr_delete(L_Dynamic);
     xr_delete(Models);
 
-    //*** Components
     xr_delete(Target);
     Device.seqFrame.Remove(this);
     r_dsgraph_destroy();
@@ -123,20 +112,17 @@ void CRender::destroy()
 
 void CRender::reset_begin()
 {
-    //AVO: let's reload details while changed details options on vid_restart
     if (b_loaded && (dm_current_size != dm_size || ps_r__Detail_density != ps_current_detail_density))
     {
         Details->Unload();
         xr_delete(Details);
     }
     xr_delete(Target);
-    //HWOCC.occq_destroy();
 }
 
 void CRender::reset_end()
 {
     xrRender_apply_tf();
-    //.	HWOCC.occq_create			(occq_size);
     Target = new CRenderTarget();
     if (L_Projector)
         L_Projector->invalidate();
@@ -303,7 +289,7 @@ void CRender::set_Object(IRenderable* O)
 {
     val_pObject = O; // NULL is OK, trust me :)
     if (!dynamic_cast<IGameObject*>(O) && !dynamic_cast<CPS_Instance*>(O))
-        val_pObject = NULL; //Alun: Hack!
+        val_pObject = NULL; // Alun: Hack!
 
     if (val_pObject)
     {
@@ -339,7 +325,7 @@ void CRender::apply_object(IRenderable* O)
         CROS_impl& LT = *((CROS_impl*)O->GetRenderData().pROS);
         VERIFY(dynamic_cast<IGameObject*>(O) || dynamic_cast<CPS_Instance*>(O));
         if (!dynamic_cast<IGameObject*>(O) && !dynamic_cast<CPS_Instance*>(O))
-            return; //Alun: Hack!
+            return; // Alun: Hack!
         VERIFY(dynamic_cast<CROS_impl*>(O->GetRenderData().pROS));
         float o_hemi = 0.5f * LT.get_hemi();
         float o_sun = 0.5f * LT.get_sun();
@@ -544,13 +530,8 @@ void CRender::Calculate()
                             // It may be an glow
                             CGlow* glow = dynamic_cast<CGlow*>(spatial);
                             VERIFY(glow);
-#ifdef DEBUG
-                            BasicStats.Glows.Begin();
-#endif
+
                             L_Glows->add(glow);
-#ifdef DEBUG
-                            BasicStats.Glows.End();
-#endif
                         }
                         else
                         {
@@ -675,17 +656,6 @@ void CRender::Render()
     Env->RenderFlares(); // lens-flares
     Env->RenderLast(); // rain/thunder-bolts
 
-#ifdef DEBUG
-    for (int _priority = 0; _priority < 2; ++_priority)
-    {
-        for (u32 iPass = 0; iPass < SHADER_PASSES_MAX; ++iPass)
-        {
-            R_ASSERT(mapNormalPasses[_priority][iPass].size() == 0);
-            R_ASSERT(mapMatrixPasses[_priority][iPass].size() == 0);
-        }
-    }
-
-#endif
     // Postprocess, if necessary
     Target->End();
     if (L_Projector)
@@ -783,13 +753,14 @@ static HRESULT create_shader(LPCSTR const pTarget, DWORD const* buffer, u32 cons
     return _hr;
 }
 
-inline HRESULT create_shader(LPCSTR const pTarget, DWORD const* buffer, u32 const buffer_size, LPCSTR const file_name, void*& result, bool const disasm)
+inline HRESULT create_shader(LPCSTR const pTarget, DWORD const* buffer, u32 const buffer_size, LPCSTR const file_name,
+    void*& result, bool const disasm)
 {
     if (pTarget[0] == 'p')
         return create_shader(pTarget, buffer, buffer_size, file_name, (SPS*&)result, disasm);
     else if (pTarget[0] == 'v')
         return create_shader(pTarget, buffer, buffer_size, file_name, (SVS*&)result, disasm);
-    
+
     NODEFAULT;
     return E_FAIL;
 }
@@ -832,8 +803,8 @@ public:
 static inline bool match_shader_id(
     LPCSTR const debug_shader_id, LPCSTR const full_shader_id, FS_FileSet const& file_set, string_path& result);
 
-HRESULT CRender::shader_compile(LPCSTR name, IReader* fs, LPCSTR pFunctionName, LPCSTR pTarget, DWORD Flags,
-    void*& result)
+HRESULT CRender::shader_compile(
+    LPCSTR name, IReader* fs, LPCSTR pFunctionName, LPCSTR pTarget, DWORD Flags, void*& result)
 {
     D3DXMACRO defines[128];
     int def_it = 0;
@@ -963,7 +934,8 @@ HRESULT CRender::shader_compile(LPCSTR name, IReader* fs, LPCSTR pFunctionName, 
                 u32 savedBytecodeCrc = file->r_u32();
                 u32 bytecodeCrc = crc32(file->pointer(), file->elapsed());
                 if (bytecodeCrc == savedBytecodeCrc)
-                    _result = create_shader(pTarget, (DWORD*)file->pointer(), file->elapsed(), file_name, result, o.disasm);
+                    _result =
+                        create_shader(pTarget, (DWORD*)file->pointer(), file->elapsed(), file_name, result, o.disasm);
             }
         }
         file->close();
@@ -1034,55 +1006,38 @@ static inline bool match_shader(
 static inline bool match_shader_id(
     LPCSTR const debug_shader_id, LPCSTR const full_shader_id, FS_FileSet const& file_set, string_path& result)
 {
-#if 0
-	strcpy_s					( result, "" );
-	return						false;
-#else // #if 1
-#ifdef DEBUG
-    LPCSTR temp = "";
-    bool found = false;
-    FS_FileSet::const_iterator i = file_set.begin();
-    FS_FileSet::const_iterator const e = file_set.end();
-    for (; i != e; ++i)
+    //--' Disabled precompiled shaders usage.
+    //--' Тест
+    if (!strstr(Core.Params, "-dpsu"))
     {
-        if (match_shader(debug_shader_id, full_shader_id, (*i).name.c_str(), (*i).name.size()))
+        strcpy_s(result, "");
+        return false;
+    }
+    else
+    {
+        FS_FileSet::const_iterator i = file_set.begin();
+        FS_FileSet::const_iterator const e = file_set.end();
+        for (; i != e; ++i)
         {
-            VERIFY(!found);
-            found = true;
-            temp = (*i).name.c_str();
+            if (match_shader(debug_shader_id, full_shader_id, (*i).name.c_str(), (*i).name.size()))
+            {
+                xr_strcpy(result, (*i).name.c_str());
+                return true;
+            }
         }
     }
-
-    xr_strcpy(result, temp);
-    return found;
-#else // #ifdef DEBUG
-    FS_FileSet::const_iterator i = file_set.begin();
-    FS_FileSet::const_iterator const e = file_set.end();
-    for (; i != e; ++i)
-    {
-        if (match_shader(debug_shader_id, full_shader_id, (*i).name.c_str(), (*i).name.size()))
-        {
-            xr_strcpy(result, (*i).name.c_str());
-            return true;
-        }
-    }
-
     return false;
-#endif // #ifdef DEBUG
-#endif // #if 1
 }
-
-
 
 void CRender::BeforeWorldRender() {}
 void CRender::AfterWorldRender()
 {
-	if (Device.m_SecondViewport.IsSVPFrame())
-	{
-		IRender_Target* T = getTarget();
-		IDirect3DSurface9* pBackBuffer = nullptr;
-		HW.pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
-		D3DXLoadSurfaceFromSurface(Target->RT_SecondVP->pRT, 0, 0, pBackBuffer, 0, 0, D3DX_DEFAULT, 0);
-		pBackBuffer->Release(); 
-	}
-} 
+    if (Device.m_SecondViewport.IsSVPFrame())
+    {
+        IRender_Target* T = getTarget();
+        IDirect3DSurface9* pBackBuffer = nullptr;
+        HW.pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
+        D3DXLoadSurfaceFromSurface(Target->RT_SecondVP->pRT, 0, 0, pBackBuffer, 0, 0, D3DX_DEFAULT, 0);
+        pBackBuffer->Release();
+    }
+}

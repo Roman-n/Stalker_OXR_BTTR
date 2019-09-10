@@ -1218,35 +1218,25 @@ static inline bool match_shader(
 static inline bool match_shader_id(
     LPCSTR const debug_shader_id, LPCSTR const full_shader_id, FS_FileSet const& file_set, string_path& result)
 {
-#ifdef DEBUG
-    LPCSTR temp = "";
-    bool found = false;
-    FS_FileSet::const_iterator i = file_set.begin();
-    FS_FileSet::const_iterator const e = file_set.end();
-    for (; i != e; ++i)
+    //--' Disabled precompiled shaders usage.
+    //--' Тест
+    if (!strstr(Core.Params, "-dpsu"))
     {
-        if (match_shader(debug_shader_id, full_shader_id, (*i).name.c_str(), (*i).name.size()))
+        strcpy_s(result, "");
+        return false;
+    }
+    else
+    {
+        FS_FileSet::const_iterator i = file_set.begin();
+        FS_FileSet::const_iterator const e = file_set.end();
+        for (; i != e; ++i)
         {
-            VERIFY(!found);
-            found = true;
-            temp = (*i).name.c_str();
+            if (match_shader(debug_shader_id, full_shader_id, (*i).name.c_str(), (*i).name.size()))
+            {
+                xr_strcpy(result, (*i).name.c_str());
+                return true;
+            }
         }
     }
-
-    xr_strcpy(result, temp);
-    return found;
-#else // #ifdef DEBUG
-    FS_FileSet::const_iterator i = file_set.begin();
-    FS_FileSet::const_iterator const e = file_set.end();
-    for (; i != e; ++i)
-    {
-        if (match_shader(debug_shader_id, full_shader_id, (*i).name.c_str(), (*i).name.size()))
-        {
-            xr_strcpy(result, (*i).name.c_str());
-            return true;
-        }
-    }
-
     return false;
-#endif // #ifdef DEBUG
 }

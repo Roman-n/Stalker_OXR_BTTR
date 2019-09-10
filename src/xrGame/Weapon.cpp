@@ -71,7 +71,6 @@ CWeapon::CWeapon()
 
     m_zoom_params.m_fCurrentZoomFactor  = g_fov;
     m_zoom_params.m_fZoomRotationFactor = 0.f;
-	m_zoom_params.m_fSecondVPFovFactor  = 0.0f;
     m_fCurrentCartirdgeDisp             = 1.f;
     m_strap_bone0                       = 0;
     m_strap_bone1                       = 0;
@@ -89,6 +88,9 @@ CWeapon::CWeapon()
 	bNVsecondVPavaible                  = false;
 	bNVsecondVPstatus                   = false;
 	m_nearwall_last_hud_fov             = psHUD_FOV_def;
+	m_zoom_params.m_f3dZoomFactor	   = 0.0f;
+	m_zoom_params.m_fSecondVPFovFactor = 0.0f;
+	m_fSecondRTZoomFactor			   = -1.0f;
     m_fZoomStepCount                    = 3.0f;
     m_fZoomMinKoeff                     = 0.3f;
 	m_fLR_MovingFactor					= 0.f;
@@ -780,6 +782,7 @@ void CWeapon::save(NET_Packet &output_packet)
     save_data(m_zoom_params.m_bIsZoomModeNow, output_packet);
     save_data(m_bRememberActorNVisnStatus, output_packet);
 	save_data(bNVsecondVPstatus,output_packet);
+	save_data(m_fSecondRTZoomFactor,output_packet);
 }
 
 void CWeapon::load(IReader &input_packet)
@@ -799,6 +802,7 @@ void CWeapon::load(IReader &input_packet)
 
     load_data(m_bRememberActorNVisnStatus, input_packet);
 	load_data(bNVsecondVPstatus,input_packet);
+	load_data(m_fSecondRTZoomFactor,input_packet);
 }
 
 void CWeapon::OnEvent(NET_Packet& P, u16 type)
@@ -856,8 +860,6 @@ void CWeapon::OnH_B_Independent(bool just_before_destroy)
     m_zoom_params.m_bIsZoomModeNow = false;
     UpdateXForm();
 	m_nearwall_last_hud_fov	= psHUD_FOV_def;
-	m_fZoomStepCount = 3.0f;
-	m_fZoomMinKoeff = 0.3f;
 }
 
 void CWeapon::OnH_A_Independent()
@@ -1511,7 +1513,14 @@ void CWeapon::InitAddons()
 
 float CWeapon::CurrentZoomFactor()
 {
-    return IsScopeAttached() ? m_zoom_params.m_fScopeZoomFactor : m_zoom_params.m_fIronSightZoomFactor;
+    if (psActorFlags.test(AF_3DSCOPE_ENABLE) && IsScopeAttached())
+	{
+		return bIsSecondVPZoomPresent() ? m_zoom_params.m_f3dZoomFactor : m_zoom_params.m_fScopeZoomFactor;
+	}
+	else
+	{
+		return IsScopeAttached() ? m_zoom_params.m_fScopeZoomFactor : m_zoom_params.m_fIronSightZoomFactor;
+	}
 };
 
 float CWeapon::GetControlInertionFactor() const
@@ -1535,12 +1544,12 @@ void CWeapon::GetZoomData(const float scope_factor, float& delta, float& min_zoo
 void CWeapon::OnZoomIn()
 {
     m_zoom_params.m_bIsZoomModeNow = true;
-    if (bIsSecondVPZoomPresent() && m_zoom_params.m_bUseDynamicZoom)
-	{
+    if (m_fSecondRTZoomFactor == -1)
+		ZoomDynamicMod(true, true);
+
+	if (!m_zoom_params.m_bUseDynamicZoom)
 		SetZoomFactor(CurrentZoomFactor());
-	}
-    else
-        SetZoomFactor(m_zoom_params.m_bUseDynamicZoom ? m_fRTZoomFactor : CurrentZoomFactor());
+	else SetZoomFactor(psActorFlags.test(AF_3DSCOPE_ENABLE) ? m_zoom_params.m_f3dZoomFactor : m_fRTZoomFactor);
 
     if (m_zoom_params.m_bZoomDofEnabled && !IsScopeAttached())
         GamePersistent().SetEffectorDOF(m_zoom_params.m_ZoomDof);
@@ -1551,10 +1560,19 @@ void CWeapon::OnZoomIn()
     if (m_zoom_params.m_sUseBinocularVision.size() && IsScopeAttached() && NULL == m_zoom_params.m_pVision)
         m_zoom_params.m_pVision = new CBinocularsVision(m_zoom_params.m_sUseBinocularVision);
 
-    if (m_zoom_params.m_sUseZoomPostprocess.size() && IsScopeAttached())
+    CActor* pA = smart_cast<CActor*>(H_Parent());
+
+	if (pA && IsScopeAttached())
     {
-        CActor *pA = smart_cast<CActor *>(H_Parent());
-        if (pA)
+        if (psActorFlags.test(AF_PNV_W_SCOPE_DIS) && UseScopeTexture())
+		{
+			CTorch* pTorch = smart_cast<CTorch*>(pA->inventory().ItemFromSlot(TORCH_SLOT));
+			if (pTorch && pTorch->GetNightVisionStatus())
+			{
+				OnZoomOut();
+			}
+		}
+		else if (m_zoom_params.m_sUseZoomPostprocess.size() && !psActorFlags.test(AF_3DSCOPE_ENABLE))
         {
             if (NULL == m_zoom_params.m_pNight_vision)
             {
@@ -1564,10 +1582,9 @@ void CWeapon::OnZoomIn()
     }
 }
 
-
 void CWeapon::OnZoomOut()
 {
-	if(!bIsSecondVPZoomPresent())
+	if(!bIsSecondVPZoomPresent() && !psActorFlags.test(AF_3DSCOPE_ENABLE))
 		m_fRTZoomFactor = GetZoomFactor();
 	
     m_zoom_params.m_bIsZoomModeNow = false;
@@ -1590,7 +1607,7 @@ void CWeapon::OnZoomOut()
 
 CUIWindow* CWeapon::ZoomTexture()
 {
-    if (UseScopeTexture())
+    if (UseScopeTexture()&& !psActorFlags.test(AF_3DSCOPE_ENABLE))
         return m_UIScope;
     else
         return NULL;
@@ -1808,17 +1825,6 @@ bool CWeapon::ready_to_kill() const
         ((GetState() == eIdle) || (GetState() == eFire) || (GetState() == eFire2)) &&
         GetAmmoElapsed()
         );
-}
-
-void _inertion(float& _val_cur, const float& _val_trgt, const float& _friction)
-{
-	float friction_i = 1.f - _friction;
-	_val_cur = _val_cur * _friction + _val_trgt * friction_i;
-}
-
-float _lerp(const float& _val_a, const float& _val_b, const float& _factor)
-{
-	return (_val_a * (1.0 - _factor)) + (_val_b * _factor);
 }
 
 void CWeapon::UpdateHudAdditonal(Fmatrix& trans)
@@ -2174,22 +2180,27 @@ void CWeapon::ZoomDynamicMod(bool bIncrement, bool bForceLimit)
 
 	float delta, min_zoom_factor, max_zoom_factor;
 
-	max_zoom_factor = ( bIsSecondVPZoomPresent() ? GetSecondVPZoomFactor() * 100.0f : m_zoom_params.m_fScopeZoomFactor);
+	bool bIsSecondZOOM = bIsSecondVPZoomPresent() && psActorFlags.test(AF_3DSCOPE_ENABLE);
+
+	max_zoom_factor = (bIsSecondZOOM ? GetSecondVPZoomFactor() * 100.0f : m_zoom_params.m_fScopeZoomFactor);
 
 	GetZoomData(max_zoom_factor, delta, min_zoom_factor);
 
 	if (bForceLimit)
 	{
-		m_fRTZoomFactor = (bIncrement ? max_zoom_factor : min_zoom_factor);
+		if(bIsSecondZOOM)
+			m_fSecondRTZoomFactor = (bIncrement ? max_zoom_factor : min_zoom_factor);
+		else
+			m_fRTZoomFactor = (bIncrement ? max_zoom_factor : min_zoom_factor);
 	}
 	else
 	{
-		float f = (bIsSecondVPZoomPresent() ? m_fRTZoomFactor : GetZoomFactor());
+		float f = (bIsSecondZOOM ? m_fSecondRTZoomFactor : GetZoomFactor());
 		f -= delta * (bIncrement ? 1.f : -1.f);
 		clamp(f, max_zoom_factor, min_zoom_factor);
 
-		if (bIsSecondVPZoomPresent())
-			m_fRTZoomFactor = f;
+		if (bIsSecondZOOM)
+			m_fSecondRTZoomFactor = f;
 		else
 			SetZoomFactor(f);
 	}
@@ -2251,7 +2262,7 @@ float CWeapon::GetHudFov()
 float CWeapon::GetSecondVPFov() const
 {
 	if (m_zoom_params.m_bUseDynamicZoom && bIsSecondVPZoomPresent())
-		return (m_fRTZoomFactor / 100.f) * 75.0f;
+		return (m_fSecondRTZoomFactor / 100.f) * 75.0f;//g_fov;
 
 	return GetSecondVPZoomFactor() * 75.0f;
 }
@@ -2265,19 +2276,19 @@ void CWeapon::UpdateSecondVP(bool bInGrenade)
 	CActor* pActor = smart_cast<CActor*>(H_Parent());
 
 	bool bCond_1 = bInZoomRightNow();																						
-	bool bCond_2 = bIsSecondVPZoomPresent();	
+	bool bCond_2 = bIsSecondVPZoomPresent() && psActorFlags.test(AF_3DSCOPE_ENABLE);
 	bool bCond_3 = pActor->cam_Active() == pActor->cam_FirstEye();
 
 	Device.m_SecondViewport.SetSVPActive(bCond_1 && bCond_2 && bCond_3 && !bInGrenade);
 }
 
-BOOL CWeapon::bLoadAltScopesParams(LPCSTR section)
+bool CWeapon::bLoadAltScopesParams(LPCSTR section)
 {
 	if (!pSettings->line_exist(section, "scopes"))
-		return FALSE;
+		return false;
 
 	if(!xr_strcmp(pSettings->r_string(section, "scopes"), "none"))
-		return FALSE;
+		return false;
 
 	if (m_eScopeStatus == ALife::eAddonAttachable)
 	{
@@ -2294,7 +2305,7 @@ BOOL CWeapon::bLoadAltScopesParams(LPCSTR section)
 		LoadCurrentScopeParams(section);
 	}
 
-	return TRUE;
+	return true;
 }
 
 void CWeapon::LoadOriginalScopesParams(LPCSTR section)
@@ -2344,24 +2355,16 @@ void CWeapon::LoadCurrentScopeParams(LPCSTR section)
 
 	Load3DScopeParams(section);
 
-	if (bIsSecondVPZoomPresent())
-	{
-		bScopeIsHasTexture = false;
-		m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(section, "3d_zoom_factor");
-	}
-	else
-	{
-		m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(section, "scope_zoom_factor");
-	}
+	m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(section, "scope_zoom_factor");
 	
-
 	if (bScopeIsHasTexture || bIsSecondVPZoomPresent())
 	{
 		if (bIsSecondVPZoomPresent())
 			bNVsecondVPavaible = !!pSettings->line_exist(section, "scope_nightvision");
-		else m_zoom_params.m_sUseZoomPostprocess = READ_IF_EXISTS(pSettings, r_string, section, "scope_nightvision", 0);
-
-		m_zoom_params.m_bUseDynamicZoom = READ_IF_EXISTS(pSettings, r_bool, section, "scope_dynamic_zoom", FALSE);
+		
+		m_zoom_params.m_sUseZoomPostprocess = READ_IF_EXISTS(pSettings, r_string, section, "scope_nightvision", 0);			
+		m_zoom_params.m_bUseDynamicZoom		= READ_IF_EXISTS(pSettings, r_bool, section, "scope_dynamic_zoom", FALSE);
+		
 		if (m_zoom_params.m_bUseDynamicZoom)
 		{
 			m_fZoomStepCount = READ_IF_EXISTS(pSettings, r_u8, section, "scope_zoom_steps", 3.0f);
@@ -2395,5 +2398,6 @@ void CWeapon::LoadCurrentScopeParams(LPCSTR section)
 
 void CWeapon::Load3DScopeParams(LPCSTR section)
 {
-		m_zoom_params.m_fSecondVPFovFactor = READ_IF_EXISTS(pSettings, r_float, section, "3d_fov", 0.0f);
+	m_zoom_params.m_fSecondVPFovFactor = READ_IF_EXISTS(pSettings, r_float, section, "3d_fov", 0.0f);
+	m_zoom_params.m_f3dZoomFactor	   = READ_IF_EXISTS(pSettings, r_float, section, "3d_zoom_factor", 100.0f);
 }
