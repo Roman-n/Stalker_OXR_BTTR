@@ -148,14 +148,16 @@ public:
     u32 motion_length(const shared_str& anim_name, const shared_str& hud_name, const CMotionDef*& md);
     void OnMovementChanged(ACTOR_DEFS::EMoveCommand cmd);
 
+   
+
 private:
+
+    const Fvector& attach_rot() const;
+    const Fvector& attach_pos() const;
+
     void update_inertion(Fmatrix& trans);
     void update_additional(Fmatrix& trans);
     bool inertion_allowed();
-
-private:
-    const Fvector& attach_rot() const;
-    const Fvector& attach_pos() const;
 
     shared_str m_sect_name;
 

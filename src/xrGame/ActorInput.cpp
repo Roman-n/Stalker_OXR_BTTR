@@ -229,12 +229,6 @@ void CActor::IR_OnKeyboardPress(int cmd)
 
 void CActor::IR_OnMouseWheel(int direction)
 {
-    if (hud_adj_mode)
-    {
-        g_player_hud->tune(Ivector().set(0, 0, direction));
-        return;
-    }
-
     if (inventory().Action((direction > 0) ? (u16)kWPN_ZOOM_DEC : (u16)kWPN_ZOOM_INC, CMD_START))
         return;
 
@@ -336,12 +330,6 @@ void CActor::IR_OnKeyboardHold(int cmd)
 
 void CActor::IR_OnMouseMove(int dx, int dy)
 {
-    if (hud_adj_mode)
-    {
-        g_player_hud->tune(Ivector().set(dx, dy, 0));
-        return;
-    }
-
     PIItem iitem = inventory().ActiveItem();
     if (iitem && iitem->cast_hud_item())
         iitem->cast_hud_item()->ResetSubStateTime();
