@@ -1007,7 +1007,7 @@ static inline bool match_shader_id(
     LPCSTR const debug_shader_id, LPCSTR const full_shader_id, FS_FileSet const& file_set, string_path& result)
 {
     //--' Disabled precompiled shaders usage.
-    //--' Тест
+    //--' РўРµСЃС‚
     if (!strstr(Core.Params, "-dpsu"))
     {
         strcpy_s(result, "");
@@ -1029,14 +1029,7 @@ static inline bool match_shader_id(
     return false;
 }
 
-void CRender::BeforeWorldRender() 
-{
-	if (Device.m_SecondViewport.IsSVPFrame())
-	{
-		Device.m_SecondViewport.isR1 = true;
-	}
-}
-
+void CRender::BeforeWorldRender() {}
 void CRender::AfterWorldRender()
 {
     if (Device.m_SecondViewport.IsSVPFrame())

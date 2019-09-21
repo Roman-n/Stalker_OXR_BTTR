@@ -51,3 +51,4 @@ IC bool CInventoryItem::process_if_exists_set(
     }
     return true;
 }
+

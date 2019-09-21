@@ -52,13 +52,13 @@ extern u64 g_qwStartGameTime;
 extern u64 g_qwEStartGameTime;
 
 ENGINE_API
-extern	float	psHUD_FOV_def;
-extern	float	psSqueezeVelocity;
-extern	int		psLUA_GCSTEP;
-extern Fvector	m_hud_offset_pos;
-extern Fvector	m_hand_offset_pos;
+extern float psHUD_FOV_def;
+extern float psSqueezeVelocity;
+extern int psLUA_GCSTEP;
+extern Fvector m_hud_offset_pos;
+extern Fvector m_hand_offset_pos;
 
-float minimap_zoom_factor =1.0f;
+float minimap_zoom_factor = 1.0f;
 
 extern int x_m_x;
 extern int x_m_z;
@@ -87,16 +87,16 @@ int g_hand_hide_inventory = 0;
 
 ENGINE_API extern float g_console_sensitive;
 
-//Alundaio
+// Alundaio
 extern BOOL g_ai_die_in_anomaly;
 int g_inv_highlight_equipped = 0;
 //-Alundaio
 
 int __type_hud_lost_alpha = 0;
 int __type_hud_veter_vremeni = 0;
-int __type_hud_soc  = 0;
-int __type_hud_coc  = 1;
-int __type_hud_cop  = 0;
+int __type_hud_soc = 0;
+int __type_hud_coc = 1;
+int __type_hud_cop = 0;
 
 #ifdef Call_of_Chernobyl_OXR
 extern u32 gLanguage;
@@ -117,7 +117,6 @@ enum E_COMMON_FLAGS
     flAiUseTorchDynamicLights = 1
 };
 
-
 static void full_memory_stats()
 {
     Memory.mem_compact();
@@ -136,13 +135,14 @@ static void full_memory_stats()
     xrMemory::SProcessMemInfo memCounters;
     ::Memory.GetProcessMemInfo(memCounters);
     Msg("~ %I64dMB physical memory installed, %I64dMB available, %ld percent of memory in use",
-        memCounters.TotalPhysicalMemory / (1024 * 1024), memCounters.FreePhysicalMemory / (1024 * 1024), memCounters.MemoryLoad);
+        memCounters.TotalPhysicalMemory / (1024 * 1024), memCounters.FreePhysicalMemory / (1024 * 1024),
+        memCounters.MemoryLoad);
 
-    Msg("~ PageFile usage: %I64dMB, Peak PageFile usage: %I64dMB,",
-        memCounters.PagefileUsage / (1024 * 1024), memCounters.PeakPagefileUsage / (1024 * 1024));
+    Msg("~ PageFile usage: %I64dMB, Peak PageFile usage: %I64dMB,", memCounters.PagefileUsage / (1024 * 1024),
+        memCounters.PeakPagefileUsage / (1024 * 1024));
 
     Log("--------------------------------------------------------------------------------");
-	Log("# Build engine for <OpenXRay Call of Chernobyl DEV>");
+    Log("# Build engine for <OpenXRay Call of Chernobyl DEV 885>");
     Log("--------------------------------------------------------------------------------");
 }
 
@@ -368,7 +368,6 @@ public:
         : CCC_Vector3(N, &p, Fvector().set(-FLT_MAX, -FLT_MAX, -FLT_MAX), Fvector().set(FLT_MAX, FLT_MAX, FLT_MAX)){};
     virtual void Execute(LPCSTR args)
     {
-
         CDemoRecord::GetGlobalPosition(p);
         CCC_Vector3::Execute(args);
         CDemoRecord::SetGlobalPosition(p);
@@ -383,7 +382,6 @@ public:
     CCC_DemoPlay(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
     virtual void Execute(LPCSTR args)
     {
-
         if (0 == g_pGameLevel)
         {
             Msg("! There are no level(s) started");
@@ -552,22 +550,6 @@ public:
             return;
         }
 
-        /*     moved to level_network_messages.cpp
-                CSavedGameWrapper			wrapper(args);
-                if (wrapper.level_id() == ai().level_graph().level_id()) {
-                    if (Device.Paused())
-                        Device.Pause		(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
-
-                    Level().remove_objects	();
-
-                    game_sv_Single			*game = smart_cast<game_sv_Single*>(Level().Server->game);
-                    R_ASSERT				(game);
-                    game->restart_simulator	(saved_game);
-
-                    return;
-                }
-        */
-
         if (MainMenu()->IsActive())
             MainMenu()->Activate(false);
 
@@ -671,31 +653,31 @@ public:
     }
 };
 
-class CCC_Spawn_to_inventory : public IConsole_Command {
+class CCC_Spawn_to_inventory : public IConsole_Command
+{
 public:
-	CCC_Spawn_to_inventory(LPCSTR N) : IConsole_Command(N) { };
-	virtual void Execute(LPCSTR args) {
-		if (!g_pGameLevel)
-		{
-			Log("Error: No game level!");
-			return;
-		}
+    CCC_Spawn_to_inventory(LPCSTR N) : IConsole_Command(N){};
+    virtual void Execute(LPCSTR args)
+    {
+        if (!g_pGameLevel)
+        {
+            Log("Error: No game level!");
+            return;
+        }
 
-		if (!pSettings->section_exist(args))
-		{
-			Msg("! Section [%s] isn`t exist...", args);
-			return;
-		}
+        if (!pSettings->section_exist(args))
+        {
+            Msg("! Section [%s] isn`t exist...", args);
+            return;
+        }
 
-		char	Name[128];	Name[0] = 0;
-		sscanf(args, "%s", Name);
+        char Name[128];
+        Name[0] = 0;
+        sscanf(args, "%s", Name);
 
-		Level().spawn_item(Name, Actor()->Position(), false, Actor()->ID());
-	}
-	virtual void	Info(TInfo& I)
-	{
-		strcpy(I, "name,team,squad,group");
-	}
+        Level().spawn_item(Name, Actor()->Position(), false, Actor()->ID());
+    }
+    virtual void Info(TInfo& I) { strcpy(I, "name,team,squad,group"); }
 };
 
 class CCC_FloatBlock : public CCC_Float
@@ -805,7 +787,6 @@ struct CCC_JumpToLevel : public IConsole_Command
     }
 };
 
-
 class CCC_Script : public IConsole_Command
 {
 public:
@@ -882,36 +863,37 @@ public:
     }
 };
 
-class CCC_Spawn : public IConsole_Command {
+class CCC_Spawn : public IConsole_Command
+{
 public:
-	CCC_Spawn(LPCSTR N) : IConsole_Command(N) { };
-	virtual void Execute(LPCSTR args) {
-		if (!g_pGameLevel) return;
+    CCC_Spawn(LPCSTR N) : IConsole_Command(N){};
+    virtual void Execute(LPCSTR args)
+    {
+        if (!g_pGameLevel)
+            return;
 
-		//#ifndef	DEBUG
-		if (GameID() != eGameIDSingle)
-		{
-			Msg("For this game type entity-spawning is disabled.");
-			return;
-		};
-		//#endif
+        //#ifndef	DEBUG
+        if (GameID() != eGameIDSingle)
+        {
+            Msg("For this game type entity-spawning is disabled.");
+            return;
+        };
+        //#endif
 
-		if (!pSettings->section_exist(args))
-		{
-			Msg("! Section [%s] isn`t exist...", args);
-			return;
-		}
+        if (!pSettings->section_exist(args))
+        {
+            Msg("! Section [%s] isn`t exist...", args);
+            return;
+        }
 
-		char	Name[128];	Name[0] = 0;
-		sscanf(args, "%s", Name);
-		Fvector pos = Actor()->Position();
-		pos.y += 3.0f;
-		Level().g_cl_Spawn(Name, 0xff, M_SPAWN_OBJECT_LOCAL, pos);
-	}
-	virtual void	Info(TInfo& I)
-	{
-		strcpy(I, "name,team,squad,group");
-	}
+        char Name[128];
+        Name[0] = 0;
+        sscanf(args, "%s", Name);
+        Fvector pos = Actor()->Position();
+        pos.y += 3.0f;
+        Level().g_cl_Spawn(Name, 0xff, M_SPAWN_OBJECT_LOCAL, pos);
+    }
+    virtual void Info(TInfo& I) { strcpy(I, "name,team,squad,group"); }
 };
 
 class CCC_TimeFactor : public IConsole_Command
@@ -923,7 +905,7 @@ public:
         float time_factor = (float)atof(args);
         clamp(time_factor, EPS, 1000.f);
         Device.time_factor(time_factor);
-		psSpeedOfSound	= time_factor;
+        psSpeedOfSound = time_factor;
     }
     virtual void Status(TStatus& S) { xr_sprintf(S, sizeof(S), "%f", Device.time_factor()); }
     virtual void Info(TInfo& I) { xr_strcpy(I, "[0.001 - 1000.0]"); }
@@ -1058,7 +1040,7 @@ public:
             Msg("! ActorMenu is not in state `Inventory`");
         }
     }
-}; 
+};
 
 class CCC_DbgVar : public IConsole_Command
 {
@@ -1089,7 +1071,7 @@ public:
 class CCC_SetWeather : public IConsole_Command
 {
 public:
-    CCC_SetWeather(LPCSTR N) : IConsole_Command(N) {};
+    CCC_SetWeather(LPCSTR N) : IConsole_Command(N){};
     virtual void Execute(LPCSTR args)
     {
         if (!xr_strlen(args))
@@ -1122,7 +1104,6 @@ public:
     }
 };
 
-
 void CCC_RegisterCommands()
 {
     // options
@@ -1130,9 +1111,9 @@ void CCC_RegisterCommands()
     CMD1(CCC_MemStats, "stat_memory");
     // game
     CMD3(CCC_Mask, "g_crouch_toggle", &psActorFlags, AF_CROUCH_TOGGLE);
-	CMD3(CCC_Mask, "hud_crosshair_collide", &psActorFlags, AF_CROSSHAIR_COLLIDE);
-	CMD3(CCC_Mask, "hud_crosshair_inert", &psActorFlags, AF_CROSSHAIR_INERT);
-	CMD3(CCC_Mask, "hud_crosshair_standart", &psActorFlags, AF_CROSSHAIR_STANDART);
+    CMD3(CCC_Mask, "hud_crosshair_collide", &psActorFlags, AF_CROSSHAIR_COLLIDE);
+    CMD3(CCC_Mask, "hud_crosshair_inert", &psActorFlags, AF_CROSSHAIR_INERT);
+    CMD3(CCC_Mask, "hud_crosshair_standart", &psActorFlags, AF_CROSSHAIR_STANDART);
     CMD1(CCC_GameDifficulty, "g_game_difficulty");
 #ifdef Call_of_Chernobyl_OXR
     CMD1(CCC_GameLanguage, "g_language");
@@ -1140,7 +1121,7 @@ void CCC_RegisterCommands()
 
     CMD3(CCC_Mask, "g_backrun", &psActorFlags, AF_RUN_BACKWARD);
 
-// alife
+    // alife
 
     CMD1(CCC_ALifeSave, "save"); // save game
     CMD1(CCC_ALifeLoadFrom, "load"); // load game from ...
@@ -1154,7 +1135,6 @@ void CCC_RegisterCommands()
     CMD1(CCC_ALifeProcessTime, "al_process_time"); // set process time
     CMD1(CCC_ALifeObjectsPerUpdate, "al_objects_per_update"); // set process time
     CMD1(CCC_ALifeSwitchFactor, "al_switch_factor"); // set switch factor
-
 
     CMD3(CCC_Mask, "hud_weapon", &psHUD_Flags, HUD_WEAPON);
     CMD3(CCC_Mask, "hud_info", &psHUD_Flags, HUD_INFO);
@@ -1178,7 +1158,6 @@ void CCC_RegisterCommands()
     CMD1(CCC_DemoRecord, "demo_record");
     CMD1(CCC_DemoRecordSetPos, "demo_set_cam_position");
 
-
     // ai
     CMD3(CCC_Mask, "mt_ai_vision", &g_mt_config, mtAiVision);
     CMD3(CCC_Mask, "mt_level_path", &g_mt_config, mtLevelPath);
@@ -1200,21 +1179,23 @@ void CCC_RegisterCommands()
 
     CMD1(CCC_JumpToLevel, "jump_to_level");
 
-	CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
-	CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
+    CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
+    CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
 
-	CMD3(CCC_Mask, "g_3d_scopes", &psActorFlags, AF_3DSCOPE_ENABLE);
-	CMD3(CCC_Mask, "g_pnv_in_scope", &psActorFlags, AF_PNV_W_SCOPE_DIS);
-	
+    if (!psDeviceFlags.test(rsR1))
+    {
+        CMD3(CCC_Mask, "g_3d_scopes", &psActorFlags, AF_3DSCOPE_ENABLE);
+        CMD3(CCC_Mask, "g_pnv_in_scope", &psActorFlags, AF_PNV_W_SCOPE_DIS);
+    }
+
     CMD1(CCC_TimeFactor, "time_factor");
-	CMD1(CCC_Spawn,         "g_spawn");
-	CMD1(CCC_Spawn_to_inventory, "g_spawn_to_inventory");
+    CMD1(CCC_Spawn, "g_spawn");
+    CMD1(CCC_Spawn_to_inventory, "g_spawn_to_inventory");
     CMD1(CCC_Script, "run_script");
     CMD1(CCC_ScriptCommand, "run_string");
     CMD3(CCC_Mask, "g_no_clip", &psActorFlags, AF_NO_CLIP);
     CMD1(CCC_SetWeather, "set_weather");
     CMD1(CCC_GiveMoney, "give_money");
-
 
     CMD4(CCC_Integer, "__type_hud_lost_alpha", &__type_hud_lost_alpha, 0, 1); // Лост Альфа
     CMD4(CCC_Integer, "__type_hud_veter_vremeni", &__type_hud_veter_vremeni, 0, 1); // Ветер Времени 1.3
@@ -1222,14 +1203,12 @@ void CCC_RegisterCommands()
     CMD4(CCC_Integer, "__type_hud_call_of_chernobyl", &__type_hud_coc, 0, 1); // Зов Чернобыля 1.4.22
     CMD4(CCC_Integer, "__type_hud_call_of_pripyat", &__type_hud_cop, 0, 1); // Зов Припяти
 
-
     CMD3(CCC_Mask, "g_autopickup", &psActorFlags, AF_AUTOPICKUP);
     CMD3(CCC_Mask, "g_dynamic_music", &psActorFlags, AF_DYNAMIC_MUSIC);
     CMD3(CCC_Mask, "g_important_save", &psActorFlags, AF_IMPORTANT_SAVE);
     CMD4(CCC_Integer, "g_inv_highlight_equipped", &g_inv_highlight_equipped, 0, 1);
 
-	CMD4(CCC_Float, "rs_minimap_zoom_factor", &minimap_zoom_factor, 0.5, 3.5);
-
+    CMD4(CCC_Float, "rs_minimap_zoom_factor", &minimap_zoom_factor, 0.5, 3.5);
 
     CMD3(CCC_Mask, "cl_dynamiccrosshair", &psHUD_Flags, HUD_CROSSHAIR_DYNAMIC);
     CMD1(CCC_MainMenu, "main_menu");
@@ -1242,7 +1221,7 @@ void CCC_RegisterCommands()
 
     CMD3(CCC_Mask, "ai_use_torch_dynamic_lights", &g_uCommonFlags, flAiUseTorchDynamicLights);
 
-	CMD1(CCC_InvDropAllItems, "inv_drop_all_items");// Выкинуть все вещи из инвентаря
+    CMD1(CCC_InvDropAllItems, "inv_drop_all_items"); // Выкинуть все вещи из инвентаря
 
     CMD4(CCC_Float, "con_sensitive", &g_console_sensitive, 0.01f, 1.0f);
     CMD4(CCC_Integer, "wpn_aim_toggle", &b_toggle_weapon_aim, 0, 1);
@@ -1254,11 +1233,11 @@ void CCC_RegisterCommands()
 
     CMD4(CCC_Integer, "ai_use_old_vision", &g_ai_use_old_vision, 0, 1);
 
-    CMD4(CCC_Integer, "ai_die_in_anomaly", &g_ai_die_in_anomaly, 0, 1); //Alundaio
+    CMD4(CCC_Integer, "ai_die_in_anomaly", &g_ai_die_in_anomaly, 0, 1); // Alundaio
 
     CMD4(CCC_Float, "ai_aim_predict_time", &g_aim_predict_time, 0.f, 10.f);
 
-    //Alundaio: Scoped outside DEBUG
+    // Alundaio: Scoped outside DEBUG
     extern BOOL g_ai_aim_use_smooth_aim;
     CMD4(CCC_Integer, "ai_aim_use_smooth_aim", &g_ai_aim_use_smooth_aim, 0, 1);
 
@@ -1279,9 +1258,8 @@ void CCC_RegisterCommands()
     CMD3(CCC_String, "slot_3", g_quick_use_slots[3], 32);
 
     CMD4(CCC_Integer, "keypress_on_start", &g_keypress_on_start, 0, 1);
-	
-	CMD4(CCC_Integer, "sprint_reload_wpn", &g_sprint_reload_wpn, 0, 1);
-	
-	CMD4(CCC_Integer, "hand_hide_inventory", &g_hand_hide_inventory, 0, 1);
-	
+
+    CMD4(CCC_Integer, "sprint_reload_wpn", &g_sprint_reload_wpn, 0, 1);
+
+    CMD4(CCC_Integer, "hand_hide_inventory", &g_hand_hide_inventory, 0, 1);
 }

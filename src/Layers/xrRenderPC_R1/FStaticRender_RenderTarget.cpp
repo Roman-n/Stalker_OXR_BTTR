@@ -67,7 +67,7 @@ BOOL CRenderTarget::Create()
     }
     // RImplementation.o.color_mapping = RT_color_map->valid();
 
-	RT_SecondVP.create(RTname_SecondVP, rtWidth/u32(2), rtHeight/u32(2), HW.Caps.fTarget); //--#SM+#--
+	RT_SecondVP.create(RTname_SecondVP, rtWidth, rtHeight, HW.Caps.fTarget); //--#SM+#--
 
     if ((rtHeight != Device.dwHeight) || (rtWidth != Device.dwWidth))
     {

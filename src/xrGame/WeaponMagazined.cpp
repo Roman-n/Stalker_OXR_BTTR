@@ -662,28 +662,14 @@ void CWeaponMagazined::OnShot()
 	//Alundaio: Actor sounds
 	if (ParentIsActor())
 	{
-		/*
-		if (strcmp(m_sSndShotCurrent.c_str(), "sndShot") == 0 && pSettings->line_exist(m_section_id,"snd_shoot_actor") && m_layered_sounds.FindSoundItem("sndShotActor", false))
-			m_layered_sounds.PlaySound("sndShotActor", get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
-		else if (strcmp(m_sSndShotCurrent.c_str(), "sndSilencerShot") == 0 && pSettings->line_exist(m_section_id,"snd_silncer_shot_actor") && m_layered_sounds.FindSoundItem("sndSilencerShotActor", false))
-			m_layered_sounds.PlaySound("sndSilencerShotActor", get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
-		else 
-		*/
-			m_layered_sounds.PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
+		m_layered_sounds.PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
 	} else
 		m_layered_sounds.PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), H_Root(), !!GetHUDmode(), false, (u8)-1);
 #else
 	//Alundaio: Actor sounds
 	if (ParentIsActor())
 	{
-		/*
-		if (strcmp(m_sSndShotCurrent.c_str(), "sndShot") == 0 && pSettings->line_exist(m_section_id, "snd_shoot_actor")&& snd_silncer_shot m_sounds.FindSoundItem("sndShotActor", false))
-			PlaySound("sndShotActor", get_LastFP(), (u8)(m_iShotNum - 1));
-		else if (strcmp(m_sSndShotCurrent.c_str(), "sndSilencerShot") == 0 && pSettings->line_exist(m_section_id, "snd_silncer_shot_actor") && m_sounds.FindSoundItem("sndSilencerShotActor", false))
-			PlaySound("sndSilencerShotActor", get_LastFP(), (u8)(m_iShotNum - 1));
-		else
-		*/
-			PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), (u8)-1);
+		PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), (u8)-1);
 	}
 	else
 		PlaySound(m_sSndShotCurrent.c_str(), get_LastFP(), (u8)-1); //Alundaio: Play sound at index (ie. snd_shoot, snd_shoot1, snd_shoot2, snd_shoot3)
@@ -1042,7 +1028,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
     {
 		if (pScope && bUseAltScope)
 		{
-			bNVsecondVPstatus = !!pSettings->line_exist(pIItem->object().cNameSect(), "scope_nightvision");
+			bNVsecondVPstatus = pSettings->line_exist(pIItem->object().cNameSect(), "scope_nightvision");
 		}
         if (b_send_event && OnServer())
         {

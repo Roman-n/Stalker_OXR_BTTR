@@ -7,10 +7,10 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4995)
-#if defined(WINDOWS)
+
 #include <direct.h>
 #include <sys/stat.h>
-#endif
+
 #include <fcntl.h>
 #pragma warning(pop)
 
@@ -18,20 +18,13 @@
 #include "stream_reader.h"
 #include "file_stream_reader.h"
 #include "xrCore/Threading/Lock.hpp"
-#if defined(LINUX)
-#include "xrstring.h"
-#include <glob.h>
-#endif
 
 const u32 BIG_FILE_READER_WINDOW_SIZE = 1024 * 1024;
 
 std::unique_ptr<CLocatorAPI> xr_FS;
 
-#ifdef _EDITOR
-static constexpr pcstr FSLTX = "fs.ltx"
-#else
-static constexpr pcstr FSLTX = "engine_way_export.openxray";
-#endif
+static constexpr pcstr FSLTX = "database_loader.openxray";
+
 
 struct _open_file
 {
@@ -336,7 +329,6 @@ void CLocatorAPI::LoadArchive(archive& A, pcstr entrypoint)
             if (P != pathes.end())
             {
                 FS_Path* root = P->second;
-                // R_ASSERT3 (root, "path not found ", read_path.c_str());
                 xr_strcpy(fs_entry_point, sizeof fs_entry_point, root->m_Path);
             }
             xr_strcat(fs_entry_point, "gamedata//");
@@ -777,31 +769,6 @@ void CLocatorAPI::_initialize(u32 flags, pcstr target_folder, pcstr fs_name)
     else
     {
         IReader* pFSltx = setup_fs_ltx(fs_name);
-        /*
-         pcstr fs_ltx = (fs_name&&fs_name[0])?fs_name:FSLTX;
-         F = r_open(fs_ltx);
-         if (!F&&m_Flags.is(flScanAppRoot))
-         F = r_open("$app_root$",fs_ltx);
-
-         if (!F)
-         {
-         string_path tmpAppPath = "";
-         xr_strcpy(tmpAppPath,sizeof(tmpAppPath), Core.ApplicationPath);
-         if (xr_strlen(tmpAppPath))
-         {
-         tmpAppPath[xr_strlen(tmpAppPath)-1] = 0;
-         if (strrchr(tmpAppPath, '\\'))
-         *(strrchr(tmpAppPath, '\\')+1) = 0;
-
-         FS_Path* pFSRoot = FS.get_path("$fs_root$");
-         pFSRoot->_set_root (tmpAppPath);
-         rescan_path (pFSRoot->m_Path, pFSRoot->m_Flags.is(FS_Path::flRecurse));
-         }
-         F = r_open("$fs_root$",fs_ltx);
-         }
-
-         Log ("using fs-ltx",fs_ltx);
-         */
         // append all pathes
         string_path id, root, add, def, capt;
         pcstr lp_add, lp_def, lp_capt;
@@ -854,7 +821,7 @@ void CLocatorAPI::_initialize(u32 flags, pcstr target_folder, pcstr fs_name)
 #endif // DEBUG
 
             CHECK_OR_EXIT(I.second,
-                "The file 'engine_way_export.openxray' is corrupted (it contains duplicated lines).\n"
+                "The file 'call_of_chernobyl_database.openxray' is corrupted (it contains duplicated lines).\n"
                 "Please reinstall the game or fix the problem manually.");
         }
         r_close(pFSltx);

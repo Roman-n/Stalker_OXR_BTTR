@@ -8,21 +8,21 @@
 #include "actoreffector.h"
 #include "xrEngine/IGame_Persistent.h"
 
-//Alun: defined in HudItem.cpp now
-extern const float PITCH_OFFSET_R;		// barrel movement sideways (to the left) with vertical camera turns
-extern const float PITCH_OFFSET_N;		// barrel rise / fall with vertical camera turns
-extern const float PITCH_OFFSET_D;		// barrel toward / away when the camera rotates vertically
-extern const float PITCH_LOW_LIMIT;		// minimum pitch value when used in conjunction with PITCH_OFFSET_N
-extern const float ORIGIN_OFFSET;		// inertia factor influence on position of torso (the smaller, the larger the inertia)
-extern const float ORIGIN_OFFSET_AIM;	// (zoomed inertia factor)
-extern const float TENDTO_SPEED;		// barrel return speed
-extern const float TENDTO_SPEED_AIM;	// (zoomed return speed)
+// Alun: defined in HudItem.cpp now
+extern const float PITCH_OFFSET_R; // barrel movement sideways (to the left) with vertical camera turns
+extern const float PITCH_OFFSET_N; // barrel rise / fall with vertical camera turns
+extern const float PITCH_OFFSET_D; // barrel toward / away when the camera rotates vertically
+extern const float PITCH_LOW_LIMIT; // minimum pitch value when used in conjunction with PITCH_OFFSET_N
+extern const float ORIGIN_OFFSET; // inertia factor influence on position of torso (the smaller, the larger the inertia)
+extern const float ORIGIN_OFFSET_AIM; // (zoomed inertia factor)
+extern const float TENDTO_SPEED; // barrel return speed
+extern const float TENDTO_SPEED_AIM; // (zoomed return speed)
 
 player_hud* g_player_hud = NULL;
 Fvector _ancor_pos;
 Fvector _wpn_root_pos;
-Fvector m_hud_offset_pos = { 0.f, 0.f, 0.f }; //only in hud adj mode
-Fvector m_hand_offset_pos = { 0.f, 0.f, 0.f };
+Fvector m_hud_offset_pos = {0.f, 0.f, 0.f}; // only in hud adj mode
+Fvector m_hand_offset_pos = {0.f, 0.f, 0.f};
 
 float CalcMotionSpeed(const shared_str& anim_name)
 {
@@ -109,8 +109,16 @@ void player_hud_motion_container::load(IKinematicsAnimated* model, const shared_
 
 Fvector& attachable_hud_item::hands_attach_pos() { return m_measures.m_hands_attach[0]; }
 Fvector& attachable_hud_item::hands_attach_rot() { return m_measures.m_hands_attach[1]; }
-Fvector& attachable_hud_item::hands_offset_pos() { u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx(); return m_measures.m_hands_offset[0][idx]; }
-Fvector& attachable_hud_item::hands_offset_rot() { u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx(); return m_measures.m_hands_offset[1][idx]; }
+Fvector& attachable_hud_item::hands_offset_pos()
+{
+    u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx();
+    return m_measures.m_hands_offset[0][idx];
+}
+Fvector& attachable_hud_item::hands_offset_rot()
+{
+    u8 idx = m_parent_hud_item->GetCurrentHudOffsetIdx();
+    return m_measures.m_hands_offset[1][idx];
+}
 
 bool attachable_hud_item::set_bone_visible(const shared_str& bone_name, BOOL bVisibility, BOOL bSilent)
 {
@@ -121,9 +129,10 @@ bool attachable_hud_item::set_bone_visible(const shared_str& bone_name, BOOL bVi
     {
         if (bSilent)
             return false;
-        R_ASSERT2(0, make_string("model [%s] has no bone [%s]", pSettings->r_string(m_sect_name, "item_visual"),
-                         bone_name.c_str())
-                         .c_str());
+        R_ASSERT2(0,
+            make_string(
+                "model [%s] has no bone [%s]", pSettings->r_string(m_sect_name, "item_visual"), bone_name.c_str())
+                .c_str());
     }
     bVisibleNow = m_model->LL_GetBoneVisible(bone_id);
     if (bVisibleNow != bVisibility)
@@ -176,7 +185,7 @@ void attachable_hud_item::setup_firedeps(firedeps& fd)
         fire_mat.transform_tiny(fd.vLastFP, m_measures.m_fire_point_offset);
         m_item_transform.transform_tiny(fd.vLastFP);
 
-		fd.vLastFD.set(m_measures.m_fire_direction);
+        fd.vLastFD.set(m_measures.m_fire_direction);
         m_item_transform.transform_dir(fd.vLastFD);
         VERIFY(_valid(fd.vLastFD));
         VERIFY(_valid(fd.vLastFD));
@@ -239,8 +248,8 @@ void hud_item_measures::load(const shared_str& sect_name, IKinematics* K)
         bone_name = pSettings->r_string(sect_name, "fire_bone");
         m_fire_bone = K->LL_BoneID(bone_name);
         m_fire_point_offset = pSettings->r_fvector3(sect_name, "fire_point");
-		m_fire_direction = READ_IF_EXISTS(pSettings, r_fvector3, sect_name, "fire_direction", Fvector().set(0.f, 0.f, 1.0f));
-
+        m_fire_direction =
+            READ_IF_EXISTS(pSettings, r_fvector3, sect_name, "fire_direction", Fvector().set(0.f, 0.f, 1.0f));
     }
     else
         m_fire_point_offset.set(0, 0, 0);
@@ -288,15 +297,23 @@ void hud_item_measures::load(const shared_str& sect_name, IKinematics* K)
     m_prop_flags.set(e_16x9_mode_now, is_16x9);
 
     //Загрузка параметров инерции --#SM+# Begin--
-    m_inertion_params.m_pitch_offset_r = READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_right", PITCH_OFFSET_R);
-    m_inertion_params.m_pitch_offset_n = READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_up", PITCH_OFFSET_N);
-    m_inertion_params.m_pitch_offset_d = READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_forward", PITCH_OFFSET_D);
-    m_inertion_params.m_pitch_low_limit = READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_up_low_limit", PITCH_LOW_LIMIT);
+    m_inertion_params.m_pitch_offset_r =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_right", PITCH_OFFSET_R);
+    m_inertion_params.m_pitch_offset_n =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_up", PITCH_OFFSET_N);
+    m_inertion_params.m_pitch_offset_d =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_forward", PITCH_OFFSET_D);
+    m_inertion_params.m_pitch_low_limit =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "pitch_offset_up_low_limit", PITCH_LOW_LIMIT);
 
-    m_inertion_params.m_origin_offset = READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_origin_offset", ORIGIN_OFFSET);
-    m_inertion_params.m_origin_offset_aim = READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_origin_aim_offset", ORIGIN_OFFSET_AIM);
-    m_inertion_params.m_tendto_speed = READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_tendto_speed", TENDTO_SPEED);
-    m_inertion_params.m_tendto_speed_aim = READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_tendto_aim_speed", TENDTO_SPEED_AIM);
+    m_inertion_params.m_origin_offset =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_origin_offset", ORIGIN_OFFSET);
+    m_inertion_params.m_origin_offset_aim =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_origin_aim_offset", ORIGIN_OFFSET_AIM);
+    m_inertion_params.m_tendto_speed =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_tendto_speed", TENDTO_SPEED);
+    m_inertion_params.m_tendto_speed_aim =
+        READ_IF_EXISTS(pSettings, r_float, sect_name, "inertion_tendto_aim_speed", TENDTO_SPEED_AIM);
     //--#SM+# End--
 }
 
@@ -329,9 +346,10 @@ u32 attachable_hud_item::anim_play(const shared_str& anm_name_b, BOOL bMixIn, co
     player_hud_motion* anm = m_hand_motions.find_motion(anim_name_r);
     R_ASSERT2(
         anm, make_string("model [%s] has no motion alias defined [%s]", m_sect_name.c_str(), anim_name_r).c_str());
-    R_ASSERT2(anm->m_animations.size(), make_string("model [%s] has no motion defined in motion_alias [%s]",
-                                            pSettings->r_string(m_sect_name, "item_visual"), anim_name_r)
-                                            .c_str());
+    R_ASSERT2(anm->m_animations.size(),
+        make_string("model [%s] has no motion defined in motion_alias [%s]",
+            pSettings->r_string(m_sect_name, "item_visual"), anim_name_r)
+            .c_str());
 
     float speed = anm->m_anim_speed;
 
@@ -596,101 +614,144 @@ void player_hud::update_additional(Fmatrix& trans)
         m_attached_items[1]->update_hud_additional(trans);
 }
 
+const Fvector& player_hud::attach_rot() const
+{
+    if (m_attached_items[0])
+    {
+        return m_attached_items[0]->hands_attach_rot();
+    }
+
+    if (m_attached_items[1])
+    {
+        return m_attached_items[1]->hands_attach_rot();
+    }
+        return Fvector().set(0, 0, 0);
+    /*
+    if (m_attached_items[0])
+        return m_attached_items[0]->hands_attach_rot();
+    else if (m_attached_items[1])
+        return m_attached_items[1]->hands_attach_rot();
+    else
+        return Fvector().set(0, 0, 0);
+*/
+}
+
+const Fvector& player_hud::attach_pos() const
+{
+    if (m_attached_items[0])
+    {
+        return m_attached_items[0]->hands_attach_pos();
+    }
+
+    if (m_attached_items[1])
+    {
+        return m_attached_items[1]->hands_attach_pos();
+    }
+        return Fvector().set(0, 0, 0);
+
+    /*
+        if (m_attached_items[0])
+            return m_attached_items[0]->hands_attach_pos();
+        else if (m_attached_items[1])
+            return m_attached_items[1]->hands_attach_pos();
+        else
+            return Fvector().set(0, 0, 0);
+    */
+}
+
 void player_hud::update_inertion(Fmatrix& trans)
 {
-	if (inertion_allowed())
-	{
-		attachable_hud_item* pMainHud = m_attached_items[0];
+    if (inertion_allowed())
+    {
+        attachable_hud_item* pMainHud = m_attached_items[0];
 
-		Fmatrix								xform;
-		Fvector& origin = trans.c;
-		xform = trans;
+        Fmatrix xform;
+        Fvector& origin = trans.c;
+        xform = trans;
 
+        static Fvector st_last_dir = {0, 0, 0};
 
-		static Fvector						st_last_dir = { 0, 0, 0 };
+        // load params
+        float m_pitch_offset_r = PITCH_OFFSET_R;
+        float m_pitch_offset_n = PITCH_OFFSET_N;
+        float m_pitch_offset_d = PITCH_OFFSET_D;
+        float m_pitch_low_limit = PITCH_LOW_LIMIT;
+        float m_origin_offset = ORIGIN_OFFSET;
+        float m_origin_offset_aim = ORIGIN_OFFSET_AIM;
+        float m_tendto_speed = TENDTO_SPEED;
+        float m_tendto_speed_aim = TENDTO_SPEED_AIM;
 
-		// load params
-		float m_pitch_offset_r = PITCH_OFFSET_R;
-		float m_pitch_offset_n = PITCH_OFFSET_N;
-		float m_pitch_offset_d = PITCH_OFFSET_D;
-		float m_pitch_low_limit = PITCH_LOW_LIMIT;
-		float m_origin_offset = ORIGIN_OFFSET;
-		float m_origin_offset_aim = ORIGIN_OFFSET_AIM;
-		float m_tendto_speed = TENDTO_SPEED;
-		float m_tendto_speed_aim = TENDTO_SPEED_AIM;
+        if (pMainHud)
+        { // Load the inertia parameters from the main Hud
+            CHudItem* itm = pMainHud->m_parent_hud_item;
+            if (itm)
+            {
+                m_pitch_offset_r = itm->m_inertion_params.m_pitch_offset_r;
+                m_pitch_offset_n = itm->m_inertion_params.m_pitch_offset_n;
+                m_pitch_offset_d = itm->m_inertion_params.m_pitch_offset_d;
+                m_pitch_low_limit = itm->m_inertion_params.m_pitch_low_limit;
+                m_origin_offset = itm->m_inertion_params.m_origin_offset;
+                m_origin_offset_aim = itm->m_inertion_params.m_origin_offset_aim;
+                m_tendto_speed = itm->m_inertion_params.m_tendto_speed;
+                m_tendto_speed_aim = itm->m_inertion_params.m_tendto_speed_aim;
+            }
+        }
 
-		if (pMainHud)
-		{ // Load the inertia parameters from the main Hud
-			CHudItem* itm = pMainHud->m_parent_hud_item;
-			if (itm)
-			{
-				m_pitch_offset_r = itm->m_inertion_params.m_pitch_offset_r;
-				m_pitch_offset_n = itm->m_inertion_params.m_pitch_offset_n;
-				m_pitch_offset_d = itm->m_inertion_params.m_pitch_offset_d;
-				m_pitch_low_limit = itm->m_inertion_params.m_pitch_low_limit;
-				m_origin_offset = itm->m_inertion_params.m_origin_offset;
-				m_origin_offset_aim = itm->m_inertion_params.m_origin_offset_aim;
-				m_tendto_speed = itm->m_inertion_params.m_tendto_speed;
-				m_tendto_speed_aim = itm->m_inertion_params.m_tendto_speed_aim;
-			}
-		}
+        // calc difference
+        Fvector diff_dir;
+        diff_dir.sub(xform.k, st_last_dir);
 
-		// calc difference
-		Fvector								diff_dir;
-		diff_dir.sub(xform.k, st_last_dir);
+        // clamp by PI_DIV_2
+        Fvector last;
+        last.normalize_safe(st_last_dir);
+        float dot = last.dotproduct(xform.k);
+        if (dot < EPS)
+        {
+            Fvector v0;
+            v0.crossproduct(st_last_dir, xform.k);
+            st_last_dir.crossproduct(xform.k, v0);
+            diff_dir.sub(xform.k, st_last_dir);
+        }
 
-		// clamp by PI_DIV_2
-		Fvector last;
-		last.normalize_safe(st_last_dir);
-		float dot = last.dotproduct(xform.k);
-		if (dot<EPS)
-		{
-			Fvector v0;
-			v0.crossproduct(st_last_dir, xform.k);
-			st_last_dir.crossproduct(xform.k, v0);
-			diff_dir.sub(xform.k, st_last_dir);
-		}
+        // tend to forward
+        float _tendto_speed, _origin_offset;
+        if (pMainHud != NULL && pMainHud->m_parent_hud_item->GetCurrentHudOffsetIdx() > 0)
+        { // inertia while "aiming"
+            _tendto_speed = m_tendto_speed_aim - (m_tendto_speed_aim - m_tendto_speed) * 1;
+            _origin_offset = m_origin_offset_aim - (m_origin_offset_aim - m_origin_offset) * 1;
+        }
+        else
+        { // inertia while "crouching"
+            _tendto_speed = m_tendto_speed;
+            _origin_offset = m_origin_offset;
+        }
 
-		// tend to forward
-		float _tendto_speed, _origin_offset;
-		if (pMainHud != NULL && pMainHud->m_parent_hud_item->GetCurrentHudOffsetIdx() > 0)
-		{ // inertia while "aiming"
-			_tendto_speed = m_tendto_speed_aim - (m_tendto_speed_aim - m_tendto_speed) * 1;
-			_origin_offset =
-				m_origin_offset_aim - (m_origin_offset_aim - m_origin_offset) * 1;
-		}
-		else
-		{ // inertia while "crouching"
-			_tendto_speed = m_tendto_speed;
-			_origin_offset = m_origin_offset;
-		}
+        // Inertia factor
+        if (pMainHud != NULL)
+        {
+            _tendto_speed *= 1;
+            _origin_offset *= 1;
+        }
 
-		// Inertia factor
-		if (pMainHud != NULL)
-		{
-			_tendto_speed *= 1;
-			_origin_offset *= 1;
-		}
+        st_last_dir.mad(diff_dir, _tendto_speed * Device.fTimeDelta);
+        origin.mad(diff_dir, _origin_offset);
 
-		st_last_dir.mad(diff_dir, _tendto_speed * Device.fTimeDelta);
-		origin.mad(diff_dir, _origin_offset);
+        // pitch compensation
+        float pitch = angle_normalize_signed(xform.k.getP());
 
-		// pitch compensation
-		float pitch = angle_normalize_signed(xform.k.getP());
+        if (pMainHud != NULL)
+            pitch *= 1;
 
-		if (pMainHud != NULL)
-			pitch *= 1;
+        // movement in/out
+        origin.mad(xform.k, -pitch * m_pitch_offset_d);
 
-		// movement in/out
-		origin.mad(xform.k, -pitch * m_pitch_offset_d);
+        // movement left
+        origin.mad(xform.i, -pitch * m_pitch_offset_r);
 
-		// movement left
-		origin.mad(xform.i, -pitch * m_pitch_offset_r);
-
-		// movement up/down
-		clamp(pitch, m_pitch_low_limit, PI);
-		origin.mad(xform.j, -pitch * m_pitch_offset_n);
-	}
+        // movement up/down
+        clamp(pitch, m_pitch_low_limit, PI);
+        origin.mad(xform.j, -pitch * m_pitch_offset_n);
+    }
 }
 
 attachable_hud_item* player_hud::create_hud_item(const shared_str& sect)

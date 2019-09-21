@@ -209,13 +209,12 @@ bool CWeapon::install_upgrade_addon( LPCSTR section, bool test )
 		{
 			result |= process_if_exists( section, "holder_range_modifier", &CInifile::r_float, m_addon_holder_range_modifier, test );
 			result |= process_if_exists( section, "holder_fov_modifier",   &CInifile::r_float, m_addon_holder_fov_modifier,   test );
-
 			bUseAltScope = pSettings->line_exist(section, "scopes");
 
-			if ( bUseAltScope )
+			if (bUseAltScope)
 			{
 				LPCSTR str = pSettings->r_string(section, "scopes");
-				for (int i = 0, count = _GetItemCount(str); i < count; ++i)	
+				for (int i = 0, count = _GetItemCount(str); i < count; ++i)
 				{
 					string128 scope_section;
 					_GetItem(str, i, scope_section);
@@ -257,6 +256,7 @@ bool CWeapon::install_upgrade_addon( LPCSTR section, bool test )
 						InitAddons();
 				}
 			}
+
 		}
 	}
 	result |= process_if_exists_set( section, "scope_dynamic_zoom", &CInifile::r_bool, m_zoom_params.m_bUseDynamicZoom, test );

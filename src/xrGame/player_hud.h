@@ -148,8 +148,6 @@ public:
     u32 motion_length(const shared_str& anim_name, const shared_str& hud_name, const CMotionDef*& md);
     void OnMovementChanged(ACTOR_DEFS::EMoveCommand cmd);
 
-   
-
 private:
 
     const Fvector& attach_rot() const;

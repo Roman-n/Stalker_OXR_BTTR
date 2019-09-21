@@ -1,9 +1,0 @@
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\bin\Release\ConsoleApp1.exe.config
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\bin\Release\ConsoleApp1.exe
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\bin\Release\ConsoleApp1.pdb
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\obj\Release\ConsoleApp1.csproj.CoreCompileInputs.cache
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\obj\Release\ConsoleApp1.exe
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\obj\Release\ConsoleApp1.pdb
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\obj\Release\ConsoleApp1.csprojAssemblyReference.cache
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\obj\Release\ConsoleApp1.Properties.Resources.resources
-C:\Users\Сибирь\Desktop\ConsoleApp1\ConsoleApp1\obj\Release\ConsoleApp1.csproj.GenerateResource.cache

@@ -2,24 +2,28 @@
 // --' Консольный лаунчер на C# с выбором рендера
 // --' АМК - наше всё
 
-#define BTTR
+#define V_ONE
+#undef SYSTEM
+
 using System;
+
+#if SYSTEM
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+#endif
 
 namespace launcher_stalker
 {
-    class launcher_class : EventArgs {public char ch;}
+    class Launcher_class : EventArgs {public char ch;}
 
     class KeyAction
     {
-        public event EventHandler<launcher_class> KeyDown;
+        public event EventHandler<Launcher_class> KeyDown;
         public void OnKeyDown(char ch)
         {
-            launcher_class c = new launcher_class();
+            Launcher_class c = new Launcher_class();
             if (KeyDown != null)
             {
                 c.ch = ch;
@@ -38,7 +42,7 @@ namespace launcher_stalker
                 {
                     case '0':
                         {
-                            System.Diagnostics.Process.Start("OpenXRay - DX8");
+                            System.Diagnostics.Process.Start("OpenXRay - DX9a");
                             CC(ConsoleColor.Cyan);
                             Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
@@ -86,9 +90,10 @@ namespace launcher_stalker
 
                     case '6':
                         {
-                            System.Diagnostics.Process.Start("OpenXRay - OpenGL");
-                            CC(ConsoleColor.Cyan);
-                            Console.WriteLine("\nСтарт... обновление ввода команды");
+//                            System.Diagnostics.Process.Start("OpenXRay - OpenGL");
+                            CC(ConsoleColor.Red);
+                            Console.WriteLine("\nРендер OpenGL отключен, команда не доступна");
+//                            Console.WriteLine("\nСтарт... обновление ввода команды");
                             break;
                         }
 
@@ -117,7 +122,7 @@ namespace launcher_stalker
                     default:
                         {
                             CC(ConsoleColor.Red);
-                            Console.WriteLine("\nТакой команды нет");
+                            Console.WriteLine("\nОшибка ввода команды");
                             break;
                         }
                 }
@@ -155,23 +160,20 @@ namespace launcher_stalker
             Console.WriteLine(
 
             "****************************************************************\n"
-#if BTTR
-            + "\nCall of Chernobyl [OpenXRay]: Back to the roots\n"
+#if V_ONE
+            + "\nS.T.A.L.K.E.R.: Call of Chernobyl [OpenXRay]: Back to the roots\n"
 #else  
-			+ "\nCall of Chernobyl [OpenXRay]: 2018\n"
+			+ "\nS.T.A.L.K.E.R.: Call of Chernobyl [OpenXRay]: 2018\n"
 #endif
-
-            + "\nLanguage: C#, .NET Framework 4.7.2\n"
-
-            + "\nAuthor: oldSèrpski stalker\n"
+            + "\nОриентир на новое, с памятью о старом. (с) Collector\n"
 
             + "\n****************************************************************\n");
 
             CC(ConsoleColor.Yellow);
 
-            Console.WriteLine("Информация о запуске игры с определенным рендером: \n");
+            Console.WriteLine("Информация о запуске игры с определенным ключом: \n");
 
-            Command("0", "DirectX 8");
+            Command("0", "DirectX 9a");
 
             Command("1", "DirectX 9");
 
@@ -183,7 +185,7 @@ namespace launcher_stalker
 
             Command("5", "DirectX 11");
 
-            Command("6", "Render OpenGL - не работает");
+            Command("6", "Render OpenGL - отключен(!)");
 
             Command1("s", "Запуск без ключей рендеров, разрешены все команды");
  

@@ -14,9 +14,10 @@
 #include "xr_object.h"
 #include "xr_object_list.h"
 
-
-ENGINE_API float psHUD_FOV_def = 0.35f; //--#SM+#--	Дефолтный HUD FOV (В % от Camera FOV) [default hud_fov (perc. of g_fov)]
-ENGINE_API float psHUD_FOV = psHUD_FOV_def; //--#SM+#-- Текущий HUD FOV (В % от Camera FOV) [current hud_fov (perc. of g_fov)]
+ENGINE_API float psHUD_FOV_def =
+    0.35f; //--#SM+#--	Дефолтный HUD FOV (В % от Camera FOV) [default hud_fov (perc. of g_fov)]
+ENGINE_API float psHUD_FOV =
+    psHUD_FOV_def; //--#SM+#-- Текущий HUD FOV (В % от Camera FOV) [current hud_fov (perc. of g_fov)]
 ENGINE_API float VIEWPORT_NEAR = 0.2f; //--#SM+#-- (Old: 0.2f)
 
 ENGINE_API xr_vector<xr_token> AvailableVideoModes;
@@ -503,7 +504,6 @@ public:
         r2_advanced_pp = (renderer_value >= 3);
 
         cmd_lock = true;
-
     }
 
     void Save(IWriter* F) override
@@ -659,32 +659,31 @@ void CCC_Register()
     CMD3(CCC_Mask, "rs_render_statics", &psDeviceFlags, rsDrawStatic);
     CMD3(CCC_Mask, "rs_render_dynamics", &psDeviceFlags, rsDrawDynamic);
 #endif
-	CMD3(CCC_Mask, "mt_particles", &psDeviceFlags, mtParticles);
-	CMD3(CCC_Mask, "mt_sound", &psDeviceFlags, mtSound);
-	CMD3(CCC_Mask, "mt_physics", &psDeviceFlags, mtPhysics);
-	CMD3(CCC_Mask, "mt_network", &psDeviceFlags, mtNetwork);
+    CMD3(CCC_Mask, "mt_particles", &psDeviceFlags, mtParticles);
+    CMD3(CCC_Mask, "mt_sound", &psDeviceFlags, mtSound);
+    CMD3(CCC_Mask, "mt_physics", &psDeviceFlags, mtPhysics);
+    CMD3(CCC_Mask, "mt_network", &psDeviceFlags, mtNetwork);
 
     // Render device states
     CMD4(CCC_Integer, "r__supersample", &ps_r__Supersample, 1, 4);
 
     CMD4(CCC_Integer, "rs_loadingstages", &ps_rs_loading_stages, 0, 1);
-    CMD3(CCC_Mask, "rs_v_sync", &psDeviceFlags, rsVSync);
-    // CMD3(CCC_Mask, "rs_disable_objects_as_crows",&psDeviceFlags, rsDisableObjectsAsCrows );
+    if (!psDeviceFlags.test(rsR1) || !psDeviceFlags.test(rsR2))
+    {
+        CMD3(CCC_Mask, "rs_v_sync", &psDeviceFlags, rsVSync);
+    }
     CMD3(CCC_Mask, "rs_fullscreen", &psDeviceFlags, rsFullscreen);
     CMD3(CCC_Mask, "rs_refresh_60hz", &psDeviceFlags, rsRefresh60hz);
     CMD3(CCC_Mask, "rs_stats", &psDeviceFlags, rsStatistic);
-	CMD3(CCC_Mask, "rs_fps", &psDeviceFlags, rsShowFPS);
+    CMD3(CCC_Mask, "rs_fps", &psDeviceFlags, rsShowFPS);
     CMD4(CCC_Float, "rs_vis_distance", &psVisDistance, 0.4f, 1.5f);
-
-	CMD4(CCC_Float, "r_viewport_near", &VIEWPORT_NEAR, 0.2f, 1.f);
+    CMD4(CCC_Float, "r_viewport_near", &VIEWPORT_NEAR, 0.2f, 1.f);
 
     CMD3(CCC_Mask, "rs_cam_pos", &psDeviceFlags, rsCameraPos);
 
     CMD2(CCC_Gamma, "rs_c_gamma", &ps_gamma);
     CMD2(CCC_Gamma, "rs_c_brightness", &ps_brightness);
     CMD2(CCC_Gamma, "rs_c_contrast", &ps_contrast);
-    // CMD4(CCC_Integer, "rs_vb_size", &rsDVB_Size, 32, 4096);
-    // CMD4(CCC_Integer, "rs_ib_size", &rsDIB_Size, 32, 4096);
 
     // Texture manager
     CMD4(CCC_Integer, "texture_lod", &psTextureLOD, 0, 2);
@@ -693,23 +692,19 @@ void CCC_Register()
     // General video control
     CMD1(CCC_VidMode, "vid_mode");
 
-#ifdef DEBUG
-    CMD3(CCC_Token, "vid_bpp", &psCurrentBPP, vid_bpp_token);
-#endif // DEBUG
-
     CMD1(CCC_VID_Reset, "vid_restart");
 
     // Sound
     CMD2(CCC_Float, "snd_volume_eff", &psSoundVEffects);
     CMD2(CCC_Float, "snd_volume_music", &psSoundVMusic);
-	
-	CMD4(CCC_Float,	"snd_speed_of_sound",	&psSpeedOfSound,0.2f,2.0f	);
-	
+
+    CMD4(CCC_Float, "snd_speed_of_sound", &psSpeedOfSound, 0.2f, 2.0f);
+
     CMD1(CCC_SND_Restart, "snd_restart");
     CMD3(CCC_Mask, "snd_acceleration", &psSoundFlags, ss_Hardware);
     CMD3(CCC_Mask, "snd_efx", &psSoundFlags, ss_EAX);
-	//Максимально допустимое число звуков в игре
-	CMD4(CCC_Integer, "snd_targets", &psSoundTargets, 512, 1024);
+    //Максимально допустимое число звуков в игре
+    CMD4(CCC_Integer, "snd_targets", &psSoundTargets, 512, 1024);
     CMD4(CCC_Integer, "snd_cache_size", &psSoundCacheSizeMB, 8, 256);
 
 #ifdef DEBUG
@@ -733,8 +728,8 @@ void CCC_Register()
     CMD2(CCC_Float, "cam_slide_inert", &psCamSlideInert);
 
     CMD4(CCC_Integer, "always_active", &ps_always_active, 0, 1);
-	
-	CMD4(CCC_Integer, "demo_record_teleport", &ps_demo_record_teleport, 0, 1);
+
+    CMD4(CCC_Integer, "demo_record_teleport", &ps_demo_record_teleport, 0, 1);
 
     CMD1(CCC_renderer, "renderer");
 

@@ -12,7 +12,6 @@
 #include "xrCore/ModuleLookup.hpp"
 
 extern ENGINE_API float VIEWPORT_NEAR;
-
 #define DEVICE_RESET_PRECACHE_FRAME_COUNT 10
 
 #include "Include/editor/interfaces.hpp"
@@ -132,7 +131,6 @@ public:
 
 	public:
 		bool isCamReady;
-        bool isR1;
 		inline bool IsSVPActive() { return isActive; }
 		inline void SetSVPActive(bool bState);
 		bool    IsSVPFrame();
@@ -208,7 +206,6 @@ public:
 		m_SecondViewport.SetSVPActive(false);
 		m_SecondViewport.SetSVPFrameDelay(2);
 		m_SecondViewport.isCamReady = false;
-        m_SecondViewport.isR1 = false;
     };
 
     void Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason);
@@ -303,11 +300,7 @@ private:
 
 extern ENGINE_API CRenderDevice Device;
 
-#ifndef _EDITOR
 #define RDEVICE Device
-#else
-#define RDEVICE EDevice
-#endif
 
 extern ENGINE_API bool g_bBenchmark;
 
