@@ -6,6 +6,8 @@
 #undef SYSTEM
 
 using System;
+using System.Threading.Tasks;
+using System.Timers;
 
 #if SYSTEM
 using System.Collections.Generic;
@@ -31,6 +33,25 @@ namespace launcher_stalker
             }
         }
     }
+/*
+    class Example
+    {
+        static void timer_void()
+        {
+            Timer timer = new Timer(1000);
+            timer.Elapsed += async (sender, e) => await HandleTimer();
+            timer.Start();
+            Console.Write("Press any key to exit... ");
+            Console.ReadKey();
+        }
+
+        private static Task HandleTimer()
+        {
+            Console.WriteLine("\nHandler not implemented...");
+            throw new NotImplementedException();
+        }
+    }
+*/
     class Base
     {
         static void Main()

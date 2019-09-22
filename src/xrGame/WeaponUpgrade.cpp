@@ -112,6 +112,8 @@ bool CWeapon::install_upgrade_disp( LPCSTR section, bool test )
 	result |= process_if_exists( section, "PDM_disp_crouch",        &CInifile::r_float, m_pdm.m_fPDM_disp_crouch,        test );
 	result |= process_if_exists( section, "PDM_disp_crouch_no_acc", &CInifile::r_float, m_pdm.m_fPDM_disp_crouch_no_acc, test );
 
+//	result |= process_if_exists( section, "misfire_probability", &CInifile::r_float, misfireProbability,       test );
+//	result |= process_if_exists( section, "misfire_condition_k", &CInifile::r_float, misfireConditionK,        test );
 	result |= process_if_exists( section, "condition_shot_dec",			&CInifile::r_float, conditionDecreasePerShot,		test );
 	result |= process_if_exists( section, "condition_queue_shot_dec",	&CInifile::r_float, conditionDecreasePerQueueShot,	test );
 	result |= process_if_exists( section, "misfire_start_condition",	&CInifile::r_float, misfireStartCondition,			test );
@@ -209,54 +211,30 @@ bool CWeapon::install_upgrade_addon( LPCSTR section, bool test )
 		{
 			result |= process_if_exists( section, "holder_range_modifier", &CInifile::r_float, m_addon_holder_range_modifier, test );
 			result |= process_if_exists( section, "holder_fov_modifier",   &CInifile::r_float, m_addon_holder_fov_modifier,   test );
-			bUseAltScope = pSettings->line_exist(section, "scopes");
 
-			if (bUseAltScope)
+			if ( m_eScopeStatus == ALife::eAddonAttachable )
 			{
-				LPCSTR str = pSettings->r_string(section, "scopes");
-				for (int i = 0, count = _GetItemCount(str); i < count; ++i)
+				if(pSettings->line_exist(section, "scopes_sect"))		
 				{
-					string128 scope_section;
-					_GetItem(str, i, scope_section);
-
-					if (!xr_strcmp(scope_section, "none"))
+					LPCSTR str = pSettings->r_string(section, "scopes_sect");
+					for(int i = 0, count = _GetItemCount(str); i < count; ++i )	
 					{
-						bUseAltScope = 0;
-					}
-					else
-					{
-						m_scopes.push_back(scope_section);
-					}
-				}
-			}
-
-			if (!bUseAltScope)
-			{
-				if (m_eScopeStatus == ALife::eAddonAttachable)
-				{
-					if (pSettings->line_exist(section, "scopes_sect"))
-					{
-						LPCSTR str = pSettings->r_string(section, "scopes_sect");
-						for (int i = 0, count = _GetItemCount(str); i < count; ++i)
-						{
-							string128						scope_section;
-							_GetItem(str, i, scope_section);
-							m_scopes.push_back(scope_section);
-						}
-					}
-					else
-					{
-						m_scopes.push_back(section);
+						string128						scope_section;
+						_GetItem						(str, i, scope_section);
+						m_scopes.push_back				(scope_section);
 					}
 				}
 				else
 				{
 					m_scopes.push_back(section);
-					if (m_eScopeStatus == ALife::eAddonPermanent)
-						InitAddons();
 				}
 			}
-
+			else
+			{
+				m_scopes.push_back(section);
+				if(m_eScopeStatus==ALife::eAddonPermanent)
+					InitAddons();
+			}
 		}
 	}
 	result |= process_if_exists_set( section, "scope_dynamic_zoom", &CInifile::r_bool, m_zoom_params.m_bUseDynamicZoom, test );
