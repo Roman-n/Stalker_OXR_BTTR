@@ -920,7 +920,7 @@ void CActor::g_Physics(Fvector& _accel, float jump, float dt)
 }
 
 float g_fov = 55.0f;
-float g_scope_fov = 55.0f;
+float g_scope_fov = 75.0f;
 
 float CActor::currentFOV()
 {
@@ -1065,9 +1065,9 @@ void CActor::UpdateCL()
          
             // Обновляем двойной рендер от оружия [Update SecondVP with weapon data]
             pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
-			bool bUseMark = !!pWeapon->IsZoomed();
-			bool bInZoom  = !!pWeapon->bInZoomRightNow();
-			bool bNVEnbl  = !!pWeapon->NVScopeSecondVP;
+			bool bUseMark = !!pWeapon->bMarkCanShow();
+			bool bInZoom  = !!(pWeapon->bInZoomRightNow() && pWeapon->bIsSecondVPZoomPresent() && psActorFlags.test(AF_3DSCOPE_ENABLE));
+			bool bNVEnbl  = !!pWeapon->bNVsecondVPstatus;
             // Обновляем информацию об оружии в шейдерах
             g_pGamePersistent->m_pGShaderConstants->hud_params.x = bInZoom;  //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPFov(); //--#SM+#--
