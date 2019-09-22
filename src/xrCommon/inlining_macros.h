@@ -14,6 +14,7 @@
 #endif
 
 // XXX: remove IC/ICF/ICN
-#define IC inline
+#define IC  inline
+#define I_  inline
 #define ICF FORCE_INLINE
 #define ICN NO_INLINE

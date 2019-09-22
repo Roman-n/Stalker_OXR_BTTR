@@ -10,13 +10,13 @@ using u8 = std::uint8_t;
 
 using s16 = std::int16_t;
 using u16 = std::uint16_t;
-typedef signed short s16_;
-typedef unsigned short u16_;
+typedef signed short signed16;
+typedef unsigned short unsigned16;
 
 using s32 = std::int32_t;
 using u32 = std::uint32_t;
-typedef signed int s32_;
-typedef unsigned int u32_;
+typedef signed int signed32;
+typedef unsigned int unsignet32;
 
 using s64 = std::int64_t;
 using u64 = std::uint64_t;
