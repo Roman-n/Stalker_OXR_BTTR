@@ -121,7 +121,7 @@ bool CWeapon::install_upgrade_disp( LPCSTR section, bool test )
 	result |= process_if_exists( section, "misfire_start_prob",			&CInifile::r_float, misfireStartProbability,		test );
 	result |= process_if_exists( section, "misfire_end_prob",			&CInifile::r_float, misfireEndProbability,			test );
 
-	bool value = m_zoom_params.m_bZoomEnabled;
+    bool value = m_zoom_params.m_bZoomEnabled;
 	bool result2 = process_if_exists_set( section, "zoom_enabled", &CInifile::r_bool, value, test );
 	if ( result2 && !test )
 	{

@@ -11,7 +11,7 @@ enum{
 };
 struct SBinocVisibleObj{
 							SBinocVisibleObj		()					{};
-    IGameObject* m_object;
+    IGameObject*            m_object;
 	CUIStatic				m_lt;
 	CUIStatic				m_lb;
 	CUIStatic				m_rt;

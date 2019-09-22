@@ -16,9 +16,8 @@
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
 #include "../Include/xrRender/Kinematics.h"
-#include "xrAICore/Navigation/ai_object_location.h"
 #include "../xrphysics/mathutils.h"
-#include "Common/object_broker.h"
+#include "Common\object_broker.h"
 #include "player_hud.h"
 #include "gamepersistent.h"
 #include "effectorFall.h"
@@ -81,112 +80,6 @@ CWeapon::CWeapon()
     m_activation_speed_is_overriden = false;
     m_cur_scope = NULL;
     m_bRememberActorNVisnStatus = false;
-	UseAltScope = false;
-	ScopeIsHasTexture = false;
-}
-
-const shared_str CWeapon::GetScopeName() const
-{
-	if (UseAltScope)
-	{
-		return m_scopes[m_cur_scope];
-	}
-	else
-	{
-		return pSettings->r_string(m_scopes[m_cur_scope], "scope_name");
-	}
-}
-
-void CWeapon::UpdateAltScope()
-{
-	if (m_eScopeStatus == ALife::eAddonAttachable)
-	{
-		shared_str sectionNeedLoad;
-
-		if (!UseAltScope)
-			return;
-
-		if (IsScopeAttached())
-		{
-			if (pSettings->section_exist(GetNameWithAttachment()))
-			{
-				sectionNeedLoad = GetNameWithAttachment();
-			}
-			else
-			{
-				return;
-			}
-		}
-		else
-		{
-			sectionNeedLoad = m_section_id.c_str();
-		}
-
-		if (!pSettings->section_exist(sectionNeedLoad))
-			return;
-
-		shared_str vis = pSettings->r_string(sectionNeedLoad, "visual");
-
-		if (vis != cNameVisual())
-		{
-			cNameVisual_set(vis);
-		}
-
-		shared_str new_hud = pSettings->r_string(sectionNeedLoad, "hud");
-		if (new_hud != hud_sect)
-		{
-			hud_sect = new_hud;
-		}
-	}
-	else
-	{
-		return;
-	}
-}
-
-shared_str CWeapon::GetNameWithAttachment()
-{
-	string64 str;
-	xr_sprintf(str, "%s_%s", m_section_id.c_str(), GetScopeName().c_str());
-	return (shared_str)str;
-}
-
-int CWeapon::GetScopeX()
-{
-	if (UseAltScope)
-	{
-		if (m_eScopeStatus != ALife::eAddonPermanent && IsScopeAttached())
-		{
-			return pSettings->r_s32(GetNameWithAttachment(), "scope_x");
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	else
-	{
-		return pSettings->r_s32(m_scopes[m_cur_scope], "scope_x");
-	}
-}
-
-int CWeapon::GetScopeY()
-{
-	if (UseAltScope)
-	{
-		if (m_eScopeStatus != ALife::eAddonPermanent && IsScopeAttached())
-		{
-			return pSettings->r_s32(GetNameWithAttachment(), "scope_y");
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	else
-	{
-		return pSettings->r_s32(m_scopes[m_cur_scope], "scope_y");
-	}	
 }
 
 CWeapon::~CWeapon()
@@ -1950,21 +1843,6 @@ extern u32 hud_adj_mode;
 
 void CWeapon::debug_draw_firedeps()
 {
-#ifdef DEBUG
-    if(hud_adj_mode==5||hud_adj_mode==6||hud_adj_mode==7)
-    {
-        CDebugRenderer			&render = Level().debug_renderer();
-
-        if(hud_adj_mode==5)
-            render.draw_aabb(get_LastFP(),	0.005f,0.005f,0.005f,D3DCOLOR_XRGB(255,0,0));
-
-        if(hud_adj_mode==6)
-            render.draw_aabb(get_LastFP2(),	0.005f,0.005f,0.005f,D3DCOLOR_XRGB(0,0,255));
-
-        if(hud_adj_mode==7)
-            render.draw_aabb(get_LastSP(),		0.005f,0.005f,0.005f,D3DCOLOR_XRGB(0,255,0));
-    }
-#endif // DEBUG
 }
 
 const float &CWeapon::hit_probability() const

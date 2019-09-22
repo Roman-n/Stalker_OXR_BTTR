@@ -22,7 +22,7 @@ extern u32 C_ON_NEUTRAL;
 extern u32 C_ON_FRIEND;
 
 struct FindVisObjByObject{
-    const IGameObject* O;
+	const IGameObject*			O;
     FindVisObjByObject(const IGameObject* o) : O(o) {}
 	bool operator () (const SBinocVisibleObj* vis){
 		return (O==vis->m_object);
@@ -217,7 +217,7 @@ void CBinocularsVision::Update()
 	CVisualMemoryManager::VISIBLES::const_iterator v_it = vVisibles.begin();
 	for (; v_it!=vVisibles.end(); ++v_it)
 	{
-		const IGameObject*	_object_			= (*v_it).m_object;
+        const IGameObject* _object_ = (*v_it).m_object;
 		if (!pActor->memory().visual().visible_now(smart_cast<const CGameObject*>(_object_)))
 			continue;
 

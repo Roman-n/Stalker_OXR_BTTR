@@ -15,7 +15,6 @@
 #include "UIGameCustom.h"
 #include "Common\object_broker.h"
 #include "string_table.h"
-#include "MPPlayersBag.h"
 #include "ui/UIXmlInit.h"
 #include "ui/UIStatic.h"
 #include "game_object_space.h"
@@ -23,17 +22,13 @@
 #include "script_game_object.h"
 #include "HudSound.h"
 
-#include "../build_config_defines.h"
-
-ENGINE_API	bool	g_dedicated_server;
-
 CUIXml*				pWpnScopeXml = NULL;
 
 void createWpnScopeXML()
 {
     if (!pWpnScopeXml)
     {
-        pWpnScopeXml = xr_new<CUIXml>();
+        pWpnScopeXml = new CUIXml();
         pWpnScopeXml->Load(CONFIG_PATH, UI_PATH, "scopes.xml");
     }
 }
@@ -451,9 +446,9 @@ void CWeaponMagazined::ReloadMagazine()
     VERIFY((u32) iAmmoElapsed == m_magazine.size());
 }
 
-void CWeaponMagazined::OnStateSwitch(u32 S)
+void CWeaponMagazined::OnStateSwitch(u32 S, u32 oldState)
 {
-    inherited::OnStateSwitch(S);
+    inherited::OnStateSwitch(S, oldState);
     CInventoryOwner* owner = smart_cast<CInventoryOwner*>(this->H_Parent());
     switch (S)
     {
@@ -555,12 +550,7 @@ void CWeaponMagazined::state_Fire(float dt)
         d.set(get_LastFD());
 
         if (!H_Parent()) return;
-        if (smart_cast<CMPPlayersBag*>(H_Parent()) != NULL)
-        {
-            Msg("! WARNING: state_Fire of object [%d][%s] while parent is CMPPlayerBag...", ID(), cNameSect().c_str());
-            return;
-        }
-
+    
         CInventoryOwner* io = smart_cast<CInventoryOwner*>(H_Parent());
         if (NULL == io->inventory().ActiveItem())
         {
@@ -598,9 +588,9 @@ void CWeaponMagazined::state_Fire(float dt)
 
 			//Alundaio: Use fModeShotTime instead of fOneShotTime if current fire mode is 2-shot burst
 			//Alundaio: Cycle down RPM after two shots; used for Abakan/AN-94
-			if (GetCurrentFireMode() == 2 || (bCycleDown == true && m_iShotNum <= 1) )
+			if (GetCurrentFireMode() == 2 || (cycleDown == true && m_iShotNum <= 1) )
 			{
-				fShotTimeCounter = fModeShotTime;
+				fShotTimeCounter = modeShotTime;
 			}
 			else
 				fShotTimeCounter = fOneShotTime;
@@ -782,7 +772,7 @@ void CWeaponMagazined::switch2_Fire()
     m_bFireSingleShot = true;
     m_iShotNum = 0;
 
-    if ((OnClient() || Level().IsDemoPlay()) && !IsWorking())
+    if ((OnClient()) && !IsWorking())
         FireStart();
 }
 
@@ -1113,9 +1103,9 @@ void CWeaponMagazined::InitAddons()
                 xr_delete(m_UIScope);
             }
 
-            if (!g_dedicated_server)
+            if (!GEnv.isDedicatedServer)
             {
-                m_UIScope = xr_new<CUIWindow>();
+                m_UIScope = new CUIWindow();
                 createWpnScopeXML();
                 CUIXmlInit::InitWindow(*pWpnScopeXml, scope_tex_name.c_str(), 0, m_UIScope);
             }
@@ -1208,7 +1198,7 @@ void CWeaponMagazined::PlayAnimReload()
     if (bMisfire)
     {
         //Msg("AVO: ------ MISFIRE");
-        if (HudAnimationExist("anm_reload_misfire"))
+        if (isHUDAnimationExist("anm_reload_misfire"))
             PlayHUDMotion("anm_reload_misfire", TRUE, this, GetState());
         else
             PlayHUDMotion("anm_reload", TRUE, this, GetState());
@@ -1217,7 +1207,7 @@ void CWeaponMagazined::PlayAnimReload()
     {
         if (iAmmoElapsed == 0)
         {
-            if (HudAnimationExist("anm_reload_empty"))
+            if (isHUDAnimationExist("anm_reload_empty"))
                 PlayHUDMotion("anm_reload_empty", TRUE, this, GetState());
             else
                 PlayHUDMotion("anm_reload", TRUE, this, GetState());
@@ -1275,7 +1265,7 @@ void CWeaponMagazined::OnZoomIn()
         CEffectorZoomInertion* S = smart_cast<CEffectorZoomInertion*>	(pActor->Cameras().GetCamEffector(eCEZoom));
         if (!S)
         {
-            S = (CEffectorZoomInertion*) pActor->Cameras().AddCamEffector(xr_new<CEffectorZoomInertion>());
+            S = (CEffectorZoomInertion*) pActor->Cameras().AddCamEffector(new CEffectorZoomInertion());
             S->Init(this);
         };
         S->SetRndSeed(pActor->GetZoomRndSeed());

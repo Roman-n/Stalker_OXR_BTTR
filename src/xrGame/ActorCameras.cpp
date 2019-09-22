@@ -275,21 +275,16 @@ void CActor::cam_Lookout(const Fmatrix& xform, float camera_height)
         r_torso.roll = 0.f;
     }
 }
-#ifdef DEBUG
-BOOL ik_cam_shift = true;
-float ik_cam_shift_tolerance = 0.2f;
-float ik_cam_shift_speed = 0.01f;
-#else
+
 static const BOOL ik_cam_shift = true;
 static const float ik_cam_shift_tolerance = 0.2f;
 static const float ik_cam_shift_speed = 0.01f;
-#endif
 
 void CActor::cam_Update(float dt, float fFOV)
 {
     if (m_holder)
         return;
-
+    /*
 	// HUD FOV Update --#SM+#--
 	if (this == Level().CurrentControlEntity())
 	{
@@ -300,7 +295,7 @@ void CActor::cam_Update(float dt, float fFOV)
 			psHUD_FOV = psHUD_FOV_def;
 	}
 	//--#SM+#--
-	
+*/	
     if ((mstate_real & mcClimb) && (cam_active != eacFreeLook))
         camUpdateLadder(dt);
     on_weapon_shot_update();
