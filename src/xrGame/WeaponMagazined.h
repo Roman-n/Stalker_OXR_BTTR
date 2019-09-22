@@ -76,6 +76,7 @@ public:
         return this;
     }
 
+	virtual bool    UseScopeTexture();
     virtual void	SetDefaults();
     virtual void	FireStart();
     virtual void	FireEnd();
