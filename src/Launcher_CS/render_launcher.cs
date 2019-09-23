@@ -4,10 +4,12 @@
 
 #define V_ONE
 #undef SYSTEM
+#undef TIMER_C
 
 using System;
-using System.Threading.Tasks;
-using System.Timers;
+#if TIMER_C
+using System.Threading;
+#endif
 
 #if SYSTEM
 using System.Collections.Generic;
@@ -15,6 +17,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 #endif
+
+namespace timer_c
+{
+#if TIMER_C
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int num = 0;
+            // устанавливаем метод обратного вызова
+            TimerCallback tm = new TimerCallback(Count);
+            // создаем таймер
+            Timer timer = new Timer(tm, num, 0, 2000);
+
+            Console.ReadLine();
+        }
+        public static void Count(object obj)
+        {
+            int x = (int)obj;
+            for (int i = 1; i < 9; i++, x++)
+            {
+                Console.WriteLine("{0}", x * i);
+            }
+        }
+    }
+#endif
+}
 
 namespace launcher_stalker
 {
@@ -31,27 +60,9 @@ namespace launcher_stalker
                 c.ch = ch;
                 KeyDown(this, c);
             }
-        }
+        } 
     }
-/*
-    class Example
-    {
-        static void timer_void()
-        {
-            Timer timer = new Timer(1000);
-            timer.Elapsed += async (sender, e) => await HandleTimer();
-            timer.Start();
-            Console.Write("Press any key to exit... ");
-            Console.ReadKey();
-        }
 
-        private static Task HandleTimer()
-        {
-            Console.WriteLine("\nHandler not implemented...");
-            throw new NotImplementedException();
-        }
-    }
-*/
     class Base
     {
         static void Main()
@@ -183,7 +194,7 @@ namespace launcher_stalker
             "****************************************************************\n"
 #if V_ONE
             + "\nS.T.A.L.K.E.R.: Call of Chernobyl [OpenXRay]: Back to the roots\n"
-#else  
+#else
 			+ "\nS.T.A.L.K.E.R.: Call of Chernobyl [OpenXRay]: 2018\n"
 #endif
             + "\nОриентир на новое, с памятью о старом. (с) Collector\n"
