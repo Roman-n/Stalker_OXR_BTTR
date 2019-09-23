@@ -1062,17 +1062,17 @@ void CActor::UpdateCL()
             }
 
             psHUD_Flags.set(HUD_DRAW_RT, pWeapon->show_indicators());
-         
+		
             // Обновляем двойной рендер от оружия [Update SecondVP with weapon data]
-//            pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
-//			bool bUseMark = !!pWeapon->bMarkCanShow();
-//			bool bInZoom  = !!(pWeapon->bInZoomRightNow() && pWeapon->bIsSecondVPZoomPresent() && psActorFlags.test(AF_3DSCOPE_ENABLE));
-//			bool bNVEnbl  = !!pWeapon->bNVsecondVPstatus;
-            // Обновляем информацию об оружии в шейдерах
-//            g_pGamePersistent->m_pGShaderConstants->hud_params.x = bInZoom;  //--#SM+#--
-//			g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPFov(); //--#SM+#--
-//			g_pGamePersistent->m_pGShaderConstants->hud_params.z = bUseMark; //--#SM+#--
-//			g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x = bNVEnbl;  //--#SM+#--
+			pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
+			bool bUseMark = !!pWeapon->IsZoomed();
+			bool bInZoom  = !!pWeapon->bInZoomRightNow();
+			bool bNVEnbl  = !!pWeapon->NVScopeSecondVP;
+			
+			g_pGamePersistent->m_pGShaderConstants->hud_params.x = bInZoom;  //--#SM+#--
+			g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPFov(); //--#SM+#--
+			g_pGamePersistent->m_pGShaderConstants->hud_params.z = bUseMark; //--#SM+#--
+			g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x = bNVEnbl;  //--#SM+#--
 
         }
     }

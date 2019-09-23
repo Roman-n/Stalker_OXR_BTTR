@@ -284,7 +284,7 @@ void CActor::cam_Update(float dt, float fFOV)
 {
     if (m_holder)
         return;
-    /*
+
 	// HUD FOV Update --#SM+#--
 	if (this == Level().CurrentControlEntity())
 	{
@@ -295,7 +295,7 @@ void CActor::cam_Update(float dt, float fFOV)
 			psHUD_FOV = psHUD_FOV_def;
 	}
 	//--#SM+#--
-*/	
+
     if ((mstate_real & mcClimb) && (cam_active != eacFreeLook))
         camUpdateLadder(dt);
     on_weapon_shot_update();

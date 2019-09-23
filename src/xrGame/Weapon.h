@@ -14,8 +14,8 @@
 
 #include "CameraRecoil.h"
 
-class CEntity;
 class ENGINE_API CMotionDef;
+class CEntity;
 class CSE_ALifeItemWeapon;
 class CSE_ALifeItemWeaponAmmo;
 class CWeaponMagazined;
@@ -58,6 +58,40 @@ public:
     {
         return inherited::net_SaveRelevant();
     }
+
+	bool					UseAltScope;
+	void					UpdateAltScope();
+	bool					ScopeIsHasTexture;
+	bool                    NVScopeSecondVP;
+	shared_str				GetNameWithAttachment();
+	
+	void 					LoadModParams(LPCSTR section);
+	void 					Load3DScopeParams(LPCSTR section);
+	BOOL 					LoadAltScopesParams(LPCSTR section);
+	void 					LoadOriginalScopesParams(LPCSTR section);
+	void 					LoadCurrentScopeParams(LPCSTR section);
+
+
+	inline bool 			bInZoomRightNow() const { return m_zoom_params.m_fZoomRotationFactor > 0.05; }
+
+	float                   CWeapon::GetSecondVPFov() const;
+	inline float            GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
+	inline float            GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
+	inline bool  			IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+	void 					ZoomDynamicMod(bool bIncrement, bool bForceLimit);
+	float 					m_fScopeInertionFactor;
+	virtual float		    GetControlInertionFactor() const;
+
+	virtual void 			UpdateSecondVP(bool bInGrenade = false);
+
+	float					m_hud_fov_add_mod;
+	float					m_nearwall_dist_max;
+	float					m_nearwall_dist_min;
+	float					m_nearwall_last_hud_fov;
+	float					m_nearwall_target_hud_fov;
+	float					m_nearwall_speed_mod;
+
+	float					GetHudFov();	
 
     virtual void			UpdateCL();
     virtual void			shedule_Update(u32 dt);
@@ -192,14 +226,8 @@ public:
     virtual void InitAddons();
 
     //для отоброажения иконок апгрейдов в интерфейсе
-    int	GetScopeX()
-    {
-        return pSettings->r_s32(m_scopes[m_cur_scope], "scope_x");
-    }
-    int	GetScopeY()
-    {
-        return pSettings->r_s32(m_scopes[m_cur_scope], "scope_y");
-    }
+    int GetScopeX();
+	int GetScopeY();
     int	GetSilencerX()
     {
         return m_iSilencerX;
@@ -221,16 +249,13 @@ public:
     {
         return m_sGrenadeLauncherName;
     }
-    const shared_str GetScopeName() const
-    {
-        return pSettings->r_string(m_scopes[m_cur_scope], "scope_name");
-    }
+    const shared_str GetScopeName() const;
     const shared_str& GetSilencerName() const
     {
         return m_sSilencerName;
     }
 
-    IC void	ForceUpdateAmmo()
+    inline void	ForceUpdateAmmo()
     {
         m_BriefInfo_CalcFrame = 0;
     }
@@ -279,6 +304,9 @@ protected:
 
         float			m_fZoomRotationFactor;
 
+		float           m_fSecondVPFovFactor;
+
+
         Fvector			m_ZoomDof;
         Fvector4		m_ReloadDof;
         Fvector4		m_ReloadEmptyDof; //Swartz: reload when empty mag. DOF
@@ -293,7 +321,7 @@ protected:
     CUIWindow*		m_UIScope;
 public:
 
-    IC bool					IsZoomEnabled()	const
+    inline bool					IsZoomEnabled()	const
     {
         return m_zoom_params.m_bZoomEnabled;
     }
@@ -301,7 +329,7 @@ public:
     virtual	void			ZoomDec();
     virtual void			OnZoomIn();
     virtual void			OnZoomOut();
-    IC		bool			IsZoomed()	const
+    inline	bool			IsZoomed()	const
     {
         return m_zoom_params.m_bIsZoomModeNow;
     };
@@ -312,11 +340,11 @@ public:
         return m_zoom_params.m_bHideCrosshairInZoom || ZoomTexture();
     }
 
-    IC float				GetZoomFactor() const
+    inline float				GetZoomFactor() const
     {
         return m_zoom_params.m_fCurrentZoomFactor;
     }
-    IC void					SetZoomFactor(float f)
+    inline void                 SetZoomFactor(float f)
     {
         m_zoom_params.m_fCurrentZoomFactor = f;
     }
@@ -343,19 +371,19 @@ public:
     }
 
 public:
-    IC		LPCSTR			strap_bone0() const
+    I_		LPCSTR			strap_bone0() const
     {
         return m_strap_bone0;
     }
-    IC		LPCSTR			strap_bone1() const
+    I_		LPCSTR			strap_bone1() const
     {
         return m_strap_bone1;
     }
-    IC		void			strapped_mode(bool value)
+    inline void strapped_mode(bool value)
     {
         m_strapped_mode = value;
     }
-    IC		bool			strapped_mode() const
+    inline bool strapped_mode() const
     {
         return m_strapped_mode;
     }
@@ -385,7 +413,7 @@ protected:
     virtual void			UpdatePosition(const Fmatrix& transform);	//.
     virtual void			UpdateXForm();
     virtual void			UpdateHudAdditonal(Fmatrix&);
-    IC		void			UpdateFireDependencies()
+    inline	void			UpdateFireDependencies()
     {
         if (dwFP_Frame == Device.dwFrame) return; UpdateFireDependencies_internal();
     };
@@ -536,11 +564,11 @@ protected:
     int						GetAmmoCount(u8 ammo_type) const;
 
 public:
-    IC int					GetAmmoElapsed()	const
+    inline int					GetAmmoElapsed()	const
     {
         return /*int(m_magazine.size())*/iAmmoElapsed;
     }
-    IC int					GetAmmoMagSize()	const
+    inline int GetAmmoMagSize() const
     {
         return iMagazineSize;
     }
@@ -623,8 +651,8 @@ public:
     CCartridge				m_DefaultCartridge;
     float					m_fCurrentCartirdgeDisp;
 
-    bool				unlimited_ammo();
-    IC	bool				can_be_strapped() const
+    bool				    unlimited_ammo();
+    inline bool				can_be_strapped() const
     {
         return m_can_be_strapped;
     };
