@@ -9,7 +9,7 @@ void CRenderTarget::DoAsyncScreenshot()
 {
     //	Igor: screenshot will not have postprocess applied.
     //	TODO: fox that later
-    if (RImplementation.m_bMakeAsyncSS)
+    if (RImplementation.m_bMakeAsyncSS && !Device.m_SecondViewport.IsSVPFrame())
     {
         HRESULT hr;
 
