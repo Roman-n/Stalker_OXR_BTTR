@@ -8,7 +8,7 @@
 #include "WeaponBinocularsVision.h"
 #include "Common\object_broker.h"
 #include "inventory.h"
-
+#include "Weapon.h"
 CWeaponBinoculars::CWeaponBinoculars()
 {
 	m_binoc_vision	= NULL;
@@ -105,15 +105,15 @@ void CWeaponBinoculars::render_item_ui()
 	inherited::render_item_ui	();
 }
 
-void GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
+void CWeapon::GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor)
 {
-	float def_fov = float(g_fov);
-	float min_zoom_k = 0.3f;
-	float zoom_step_count = 3.0f;
+	float def_fov = IsSecondVPZoomPresent() ? 75.0f : g_fov;
+    float m_fZoomStepCount = 3.0f;
+    float m_fZoomMinKoeff = 0.3f;
 	float delta_factor_total = def_fov-scope_factor;
 	VERIFY(delta_factor_total>0);
-	min_zoom_factor = def_fov-delta_factor_total*min_zoom_k;
-	delta = (delta_factor_total*(1-min_zoom_k) )/zoom_step_count;
+	min_zoom_factor = def_fov - delta_factor_total * m_fZoomMinKoeff;
+	delta = (delta_factor_total * (1 - m_fZoomMinKoeff)) / m_fZoomStepCount;
 
 }
 

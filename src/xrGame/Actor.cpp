@@ -1066,7 +1066,7 @@ void CActor::UpdateCL()
 			pWeapon->UpdateSecondVP(); //--#SM+#-- +SecondVP+
 			bool bUseMark = !!pWeapon->IsZoomed();
 			bool bInZoom  = !!pWeapon->bInZoomRightNow();
-			bool bNVEnbl  = !!pWeapon->NVScopeSecondVP;
+			bool bNVEnbl  = !!pWeapon->bNVsecondVPstatus;
 			g_pGamePersistent->m_pGShaderConstants->hud_params.x = bInZoom;  //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPFov(); //--#SM+#--
 			g_pGamePersistent->m_pGShaderConstants->hud_params.z = bUseMark; //--#SM+#--

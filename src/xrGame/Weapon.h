@@ -71,8 +71,11 @@ public:
 	IC float GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
 	IC float GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
 	IC bool  IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.000f; }
+    void GetZoomData(const float scope_factor, float& delta, float& min_zoom_factor);
 	void ZoomDynamicMod(bool bIncrement, bool bForceLimit);
 	float m_fScopeInertionFactor;
+	float           m_fZoomStepCount;
+			float           m_fZoomMinKoeff;
 	virtual float GetControlInertionFactor() const;
 
 	virtual void UpdateSecondVP(bool bInGrenade = false);
@@ -81,11 +84,13 @@ public:
 	bool					UseAltScope;
 	void					UpdateAltScope();
 	bool					ScopeIsHasTexture;
-	bool                    NVScopeSecondVP;
+	bool                    bNVsecondVPavaible;
+	bool                    bNVsecondVPstatus;
+	bool                    ChangeNVSecondVPStatus();
 	shared_str				GetNameWithAttachment();
 
 	void LoadModParams(LPCSTR section);
-	void Load3DScopeParams(LPCSTR section);
+    void Load3DScopeParams(LPCSTR section);
 	BOOL LoadAltScopesParams(LPCSTR section);
 	void LoadOriginalScopesParams(LPCSTR section);
 	void LoadCurrentScopeParams(LPCSTR section);

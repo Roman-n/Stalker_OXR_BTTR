@@ -1182,11 +1182,11 @@ void CCC_RegisterCommands()
     CMD3(CCC_Mask, "g_god", &psActorFlags, AF_GODMODE);
     CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
 
-    if (!psDeviceFlags.test(rsR1))
-    {
+//    if (!psDeviceFlags.test(rsR1))
+//    {
         CMD3(CCC_Mask, "g_3d_scopes", &psActorFlags, AF_3DSCOPE_ENABLE);
         CMD3(CCC_Mask, "g_pnv_in_scope", &psActorFlags, AF_PNV_W_SCOPE_DIS);
-    }
+//    }
 
     CMD1(CCC_TimeFactor, "time_factor");
     CMD1(CCC_Spawn, "g_spawn");

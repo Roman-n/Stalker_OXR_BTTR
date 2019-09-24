@@ -78,16 +78,18 @@ CWeapon::CWeapon()
     m_ef_main_weapon_type = u32(-1);
     m_ef_weapon_type = u32(-1);
     m_UIScope = NULL;
-	NVScopeSecondVP	= false;
     m_set_next_ammoType_on_reload = undefined_ammo_type;
     m_crosshair_inertion = 0.f;
     m_activation_speed_is_overriden = false;
     m_cur_scope = NULL;
     m_bRememberActorNVisnStatus = false;
-	
+	bNVsecondVPavaible = false;
+	bNVsecondVPstatus = false;
 	UseAltScope = false;
 	ScopeIsHasTexture = false;
 	m_nearwall_last_hud_fov = psHUD_FOV_def;
+	m_fZoomStepCount = 3.0f;
+	m_fZoomMinKoeff = 0.3f;
 }
 
 const shared_str CWeapon::GetScopeName() const
@@ -104,49 +106,37 @@ const shared_str CWeapon::GetScopeName() const
 
 void CWeapon::UpdateAltScope()
 {
-	if (m_eScopeStatus == ALife::eAddonAttachable)
-	{
-		shared_str sectionNeedLoad;
-
-		if (!UseAltScope)
-			return;
-
-		if (IsScopeAttached())
-		{
-			if (pSettings->section_exist(GetNameWithAttachment()))
-			{
-				sectionNeedLoad = GetNameWithAttachment();
-			}
-			else
-			{
-				return;
-			}
-		}
-		else
-		{
-			sectionNeedLoad = m_section_id.c_str();
-		}
-
-		if (!pSettings->section_exist(sectionNeedLoad))
-			return;
-
-		shared_str vis = pSettings->r_string(sectionNeedLoad, "visual");
-
-		if (vis != cNameVisual())
-		{
-			cNameVisual_set(vis);
-		}
-
-		shared_str new_hud = pSettings->r_string(sectionNeedLoad, "hud");
-		if (new_hud != hud_sect)
-		{
-			hud_sect = new_hud;
-		}
-	}
-	else
-	{
+	if (m_eScopeStatus != ALife::eAddonAttachable || !UseAltScope)
 		return;
+
+	shared_str sectionNeedLoad;
+
+	sectionNeedLoad = IsScopeAttached() ? GetNameWithAttachment() : m_section_id;
+
+	if (!pSettings->section_exist(sectionNeedLoad))
+		return;
+
+	shared_str vis = pSettings->r_string(sectionNeedLoad, "visual");
+
+	if (vis != cNameVisual())	
+	{
+		cNameVisual_set(vis);
 	}
+
+	shared_str new_hud = pSettings->r_string(sectionNeedLoad, "hud");
+	if (new_hud != hud_sect)
+	{
+		hud_sect = new_hud;
+	}
+}
+
+bool CWeapon::ChangeNVSecondVPStatus()
+{
+	if (!bNVsecondVPavaible || !IsZoomed())
+		return false;
+
+	bNVsecondVPstatus = !bNVsecondVPstatus;
+    return true;
 }
 
 shared_str CWeapon::GetNameWithAttachment()
@@ -581,7 +571,7 @@ void CWeapon::Load(LPCSTR section)
 	m_flags.set( FUsingCondition, READ_IF_EXISTS( pSettings, r_bool, section, "use_condition", TRUE ));
 }
 
-void CWeapon::LoadModParams(LPCTSTR section)
+void CWeapon::LoadModParams(LPCSTR section)
 {
 	m_hud_fov_add_mod = READ_IF_EXISTS(pSettings, r_float, section, "hud_fov_addition_modifier", 0.f);
 
@@ -736,22 +726,42 @@ void CWeapon::LoadCurrentScopeParams(LPCSTR section)
 			ScopeIsHasTexture = true;
 	}
 
-	m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(section, "scope_zoom_factor");
+	
 	Load3DScopeParams(section);
 
 	if (IsSecondVPZoomPresent())
+	{
 		ScopeIsHasTexture = false;
-
+		m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(section, "3d_zoom_factor");
+	}
+	else
+	{
+		m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(section, "scope_zoom_factor");
+	}
+	
 	if (ScopeIsHasTexture || IsSecondVPZoomPresent())
 	{
 		if (IsSecondVPZoomPresent())
-			NVScopeSecondVP = pSettings->line_exist(section, "scope_nightvision");
+			bNVsecondVPavaible  = pSettings->line_exist(section, "scope_nightvision");
 		else m_zoom_params.m_sUseZoomPostprocess = READ_IF_EXISTS(pSettings, r_string, section, "scope_nightvision", 0);
 
 		m_zoom_params.m_bUseDynamicZoom = READ_IF_EXISTS(pSettings, r_bool, section, "scope_dynamic_zoom", FALSE);
+		
+		if (m_zoom_params.m_bUseDynamicZoom)
+		{
+			m_fZoomStepCount = READ_IF_EXISTS(pSettings, r_u8, section, "scope_zoom_steps", 3.0f);
+			m_fZoomMinKoeff  = READ_IF_EXISTS(pSettings, r_u8, section, "min_zoom_k",		0.3f);
+		}
+		
 		m_zoom_params.m_sUseBinocularVision = READ_IF_EXISTS(pSettings, r_string, section, "scope_alive_detector", 0);
-		m_fScopeInertionFactor = READ_IF_EXISTS(pSettings, r_float, section, "scope_inertion_factor", m_fControlInertionFactor);
 	}
+	else
+	{
+		bNVsecondVPavaible = false;
+		bNVsecondVPstatus  = false;
+	}
+
+	m_fScopeInertionFactor = READ_IF_EXISTS(pSettings, r_float, section, "scope_inertion_factor", m_fControlInertionFactor);
 
 	m_fRTZoomFactor = m_zoom_params.m_fScopeZoomFactor;
 
@@ -879,6 +889,7 @@ void CWeapon::save(NET_Packet &output_packet)
     save_data(m_ammoType, output_packet);
     save_data(m_zoom_params.m_bIsZoomModeNow, output_packet);
     save_data(m_bRememberActorNVisnStatus, output_packet);
+	save_data(bNVsecondVPstatus,output_packet);
 }
 
 void CWeapon::load(IReader &input_packet)
@@ -897,6 +908,7 @@ void CWeapon::load(IReader &input_packet)
         OnZoomOut();
 
     load_data(m_bRememberActorNVisnStatus, input_packet);
+	load_data(bNVsecondVPstatus,				input_packet);
 }
 
 void CWeapon::OnEvent(NET_Packet& P, u16 type)
@@ -1166,6 +1178,10 @@ bool CWeapon::Action(u16 cmd, u32 flags)
 
     switch (cmd)
     {
+	case kWPN_NV_CHANGE:
+	{
+		return ChangeNVSecondVPStatus();
+	}		
     case kWPN_FIRE:
     {
         //если оружие чем-то занято, то ничего не делать
@@ -1615,7 +1631,9 @@ void CWeapon::OnZoomIn()
 {
     m_zoom_params.m_bIsZoomModeNow = true;
     if (IsSecondVPZoomPresent() && m_zoom_params.m_bUseDynamicZoom)
+	{
 		SetZoomFactor(CurrentZoomFactor());
+	}
     else
         SetZoomFactor(m_zoom_params.m_bUseDynamicZoom ? m_fRTZoomFactor : CurrentZoomFactor());
 
@@ -1641,11 +1659,6 @@ void CWeapon::OnZoomIn()
             }
         }
     }
-}
-
-void CWeapon::ZoomDynamicMod(bool bIncrement, bool bForceLimit)
-{
-
 }
 
 void CWeapon::OnZoomOut()
@@ -2165,68 +2178,47 @@ bool CWeapon::IsHudModeNow()
     return (HudItemData() != NULL);
 }
 
-void CWeapon::ZoomInc()
+void CWeapon::ZoomDynamicMod(bool bIncrement, bool bForceLimit)
 {
     if (!IsScopeAttached())
 		return;
+	
 	if (!m_zoom_params.m_bUseDynamicZoom)
 		return;
 
-	if (IsSecondVPZoomPresent())
+	float delta, min_zoom_factor, max_zoom_factor;
+
+	max_zoom_factor = ( IsSecondVPZoomPresent() ? GetSecondVPZoomFactor() * 100.0f : m_zoom_params.m_fScopeZoomFactor);
+
+	GetZoomData(max_zoom_factor, delta, min_zoom_factor);
+
+	if (bForceLimit)
 	{
-		float delta, min_zoom_factor, max_zoom_factor;
-
-		max_zoom_factor = GetSecondVPZoomFactor() * 100.0f;
-
-		GetZoomData(max_zoom_factor, delta, min_zoom_factor);
-
-		float f = m_fRTZoomFactor - delta;
-
-		clamp(f, max_zoom_factor, min_zoom_factor);
-
-		m_fRTZoomFactor = f;
+		m_fRTZoomFactor = (bIncrement ? max_zoom_factor : min_zoom_factor);
 	}
 	else
 	{
-		float delta, min_zoom_factor;
-		GetZoomData(m_zoom_params.m_fScopeZoomFactor, delta, min_zoom_factor);
+		float f = (IsSecondVPZoomPresent() ? m_fRTZoomFactor : GetZoomFactor());
+		
+		f -= delta * (bIncrement ? 1.f : -1.f);
+		
+		clamp(f, max_zoom_factor, min_zoom_factor);
 
-		float f = GetZoomFactor() - delta;
-		clamp(f, m_zoom_params.m_fScopeZoomFactor, min_zoom_factor);
-		SetZoomFactor(f);
+		if (IsSecondVPZoomPresent())
+			m_fRTZoomFactor = f;
+		else
+			SetZoomFactor(f);
 	}
+}
+
+void CWeapon::ZoomInc()
+{
+	ZoomDynamicMod(true, false);	
 }
 
 void CWeapon::ZoomDec()
 {
-    if (!IsScopeAttached())
-		return;
-	if (!m_zoom_params.m_bUseDynamicZoom)
-		return;
-
-	if (IsSecondVPZoomPresent())
-	{
-		float delta, min_zoom_factor, max_zoom_factor;
-
-		max_zoom_factor = GetSecondVPZoomFactor() * 100.0f;
-
-    GetZoomData(max_zoom_factor, delta, min_zoom_factor);
-
-		float f = m_fRTZoomFactor + delta;
-
-		clamp(f, max_zoom_factor, min_zoom_factor);
-
-		m_fRTZoomFactor = f;
-	}
-	else
-	{
-		float delta, min_zoom_factor;
-		GetZoomData(m_zoom_params.m_fScopeZoomFactor, delta, min_zoom_factor);
-
-		float f = GetZoomFactor() + delta;
-		clamp(f, m_zoom_params.m_fScopeZoomFactor, min_zoom_factor);
-		SetZoomFactor(f);
-	}
+	ZoomDynamicMod(false, false);
 }
 
 u32 CWeapon::Cost() const
@@ -2286,9 +2278,9 @@ float CWeapon::GetHudFov()
 float CWeapon::GetSecondVPFov() const
 {
 	if (m_zoom_params.m_bUseDynamicZoom && IsSecondVPZoomPresent())
-		return (m_fRTZoomFactor / 100.f) * g_fov;
+		return (m_fRTZoomFactor / 100.f) * 75.0f;
 
-	return GetSecondVPZoomFactor() * g_fov;
+	return GetSecondVPZoomFactor() * 75.0f;
 }
 
 void CWeapon::UpdateSecondVP(bool bInGrenade)
